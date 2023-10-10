@@ -1,22 +1,24 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
+
 public class Launcher {
+    private final Servo servo;
 
-    // No clue what I'm doing ngl
+    public static double LAUNCH_POS = 1;
+    public static double IDLE_POS = 0;
 
-    public static double LAUNCH = 0;
-    public static double IDLE = 0;
-
-    public void init(HardwareMap hwMap) {
-        launcher = hwMap.get(Servo.class, "launcher");
+    public Launcher(HardwareMap hwMap) {
+        this.servo = hwMap.get(Servo.class, "launcher");
     }
 
     public void launch() {
-        launcher.setPosition(LAUNCH);
+        servo.setPosition(LAUNCH_POS);
     }
 
     public void reset() {
-        launcher.setPosition(IDLE);
+        servo.setPosition(IDLE_POS);
     }
 
 }
