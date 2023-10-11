@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -31,8 +32,8 @@ public class Lift {
         motors[0] = hwMap.get(DcMotorEx.class, "leftLift");
         motors[1] = hwMap.get(DcMotorEx.class, "rightLift");
 
-        motors[0].setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        motors[1].setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        motors[0].setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER); // might be wrong RunMode
+        motors[1].setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
 
         motors[0].setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         motors[1].setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
@@ -51,19 +52,19 @@ public class Lift {
         multipleTelemetry.addData("current position: ", motors[0].getCurrentPosition());
     }
 
-    public void goBottom() {
+    public void bottom() {
         setTarget(0);
     }
 
-    public void goLow() {
+    public void low() {
         setTarget(10);
     }
 
-    public void goMedium() {
+    public void medium() {
         setTarget(15);
     }
 
-    public void goHigh() {
+    public void high() {
         setTarget(20);
     }
 

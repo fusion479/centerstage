@@ -1,38 +1,31 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+@Config
 public class Deposit {
-  public static double intakePos = 0.69;
-  public static double scorePos = 0.69;
+    Servo deposit;
 
-  public static double open = 0.69;
-  public static double close = 0.69;
-  public void init(HardwareMap hwMap) {
-        claw = hwMap.get(Servo.class, "clawDep");
-        left = hwMap.get(Servo.class, "Left");
-        right = hwMap.get(Servo.class, "Right");
-  }
-  
+    public static double INTAKE_POS = 0.69;
+    public static double SCORE_POS = 0.69;
+
+    public static double OPEN_POS = 0.69;
+    public static double CLOSED_POS = 0.69;
+
+    public Deposit(HardwareMap hwMap) {
+        deposit = hwMap.get(Servo.class, "deposit");
+
+        close(); // on init, close the deposit
+    }
+
+    public void open() {
+        deposit.setPosition(OPEN_POS);
+    }
+
+    public void close() {
+        deposit.setPosition(CLOSED_POS);
+    }
+
 }
-
-public void collect {
-  left.setPosition(intakePos);
-  right.setPosition(intakePos - 1);
-}
-
-public void score {
-  left.setPosition(scorePos);
-  right.setPosition(scorePos - 1);
-}
-
-public void open {
-  claw.setPosition(open)
-}
-
-public void close {
-  claw.setPosition(close)
-}
-
-// i hope i know what im doing

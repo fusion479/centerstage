@@ -1,34 +1,40 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+@Config
 public class Arm {
     Servo left, right;
-    private double setPos = 0.44;
-    private boolean up;
-    public void init(HardwareMap hwmap) {
-        left = hwmap.get(Servo.class, "armLeft");
-        right = hwmap.get(Servo.class, "armRight");
-        up = false;
-    }
-    public void setUp() {
-        left.setPosition(setPos);
-        right.setPosition(setPos);
-        up = true;
-    }
-    public void setDown() {
-        left.setPosition(0);
-        right.setPosition(0);
-        up = false;
-    }
-    public void toggle() {
-        if (up) {
-            setDown();
-        }
-        else {
-            setUp();
-        }
+    public static double UP_POS = 0.44;
+    public static double DOWN_POS = 0;
 
+    private boolean isUp;
+
+    public Arm(HardwareMap hwMap) {
+        left = hwMap.get(Servo.class, "armLeft");
+        right = hwMap.get(Servo.class, "armRight");
+        isUp = false;
+    }
+
+    public void up() {
+        left.setPosition(UP_POS);
+        right.setPosition(1 - UP_POS);
+        isUp = true;
+    }
+
+    public void down() {
+        left.setPosition(DOWN_POS);
+        right.setPosition(1 - DOWN_POS);
+        isUp = false;
+    }
+
+    public void toggle() {
+        if (isUp) {
+            down();
+        } else {
+            up();
+        }
     }
 }
