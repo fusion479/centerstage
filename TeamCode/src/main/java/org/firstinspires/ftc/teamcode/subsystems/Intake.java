@@ -2,9 +2,11 @@ package org.firstinspires.ftc.teamcode.subsystems;
 
 import android.widget.ToggleButton;
 
+import com.qualcomm.robotcore.hardware.HardwareMap;
+
 public class Intake {
     public boolean Toggle = false;
-    public static float intakeVoltage = ;//idfk
+    public static float intakeVoltage = 1;
     public static float idleVoltage = 0;
 
     public void init(HardwareMap hwMap) {
@@ -16,16 +18,13 @@ public class Intake {
 {
         while // controller logic idk
         {
-        Toggle = true;
+        toggle = true;
         }
-        else Toggle = flase;
+        else toggle = false;
         }
-public static void intakeMotorVoltage()
+public void intakeMotorVoltage()
         {
             if (Toggle) {
-            }
-            intakeMotor.voltage = intakeVoltage;
-            }
-            else
-
+                intakeMotor.voltage = intakeVoltage;}
+            else intakeMotor.voltage = idleVoltage;
         }
