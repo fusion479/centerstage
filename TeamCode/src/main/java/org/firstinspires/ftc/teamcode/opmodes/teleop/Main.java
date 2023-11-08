@@ -12,8 +12,7 @@ public class Main extends LinearOpMode {
 
         waitForStart();
         while(opModeIsActive() && !isStopRequested()) {
-            // loop code
-            lift.loop();
+
 
         }
     }
