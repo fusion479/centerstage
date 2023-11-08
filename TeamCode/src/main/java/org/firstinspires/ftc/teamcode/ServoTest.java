@@ -27,11 +27,12 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.robotcontroller.external.samples;
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.Servo;
 
 /*
@@ -50,25 +51,18 @@ import com.qualcomm.robotcore.hardware.Servo;
  */
 @TeleOp(name = "Concept: Scan Servo", group = "Concept")
 @Disabled
-public class ConceptScanServo extends LinearOpMode {
+public class ServoTest extends LinearOpMode {
 
-    static final double INCREMENT   = 0.01;     // amount to slew servo each CYCLE_MS cycle
-    static final int    CYCLE_MS    =   50;     // period of each cycle
-    static final double MAX_POS     =  1.0;     // Maximum rotational position
-    static final double MIN_POS     =  0.0;     // Minimum rotational position
-
-    // Define class members
-    Servo   servo;
-    double  position = (MAX_POS - MIN_POS) / 2; // Start at halfway position
-    boolean rampUp = true;
-
-
+    AnalogInput axonServo1;
+    AnalogInput axonServo2;
+    double position1;
+    double position2;
     @Override
     public void runOpMode() {
 
-        // Connect to servo (Assume Robot Left Hand)
-        // Change the text in quotes to match any servo name on your robot.
-        servo = hardwareMap.get(Servo.class, "left_hand");
+        // Set Analog
+        axonServo1 =  hardwareMap.get(AnalogInput.class, "servo1");
+        axonServo2 = hardwareMap.get(AnalogInput.class, "servo2");
 
         // Wait for the start button
         telemetry.addData(">", "Press Start to scan Servo." );
@@ -79,32 +73,17 @@ public class ConceptScanServo extends LinearOpMode {
         // Scan servo till stop pressed.
         while(opModeIsActive()){
 
-            // slew the servo, according to the rampUp (direction) variable.
-            if (rampUp) {
-                // Keep stepping up until we hit the max value.
-                position += INCREMENT ;
-                if (position >= MAX_POS ) {
-                    position = MAX_POS;
-                    rampUp = !rampUp;   // Switch ramp direction
-                }
-            }
-            else {
-                // Keep stepping down until we hit the min value.
-                position -= INCREMENT ;
-                if (position <= MIN_POS ) {
-                    position = MIN_POS;
-                    rampUp = !rampUp;  // Switch ramp direction
-                }
-            }
-            
+            // get the voltage of our analog line
+            // divide by 3.3 (the max voltage) to get a value between 0 and 1
+            // multiply by 360 to convert it to 0 to 360 degrees
+            position1 = axonServo1.getVoltage() / 3.3 * 360;
+            position2 = axonServo2.getVoltage() / 3.3 * 360;
+
             // Display the current value
-            telemetry.addData("Servo Position", "%5.2f", position);
+            telemetry.addData("Servo Position 1", "%5.2f", position1);
+            telemetry.addData("Servo Position 2", "%5.2f", position2);
             telemetry.addData(">", "Press Stop to end test." );
             telemetry.update();
-
-            // Set the servo to the new position and pause;
-            servo.setPosition(position);
-            sleep(CYCLE_MS);
             idle();
         }
 
