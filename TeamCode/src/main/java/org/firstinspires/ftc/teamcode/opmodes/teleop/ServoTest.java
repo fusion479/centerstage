@@ -78,7 +78,7 @@ public class ServoTest extends LinearOpMode {
 
         // Scan servo till stop pressed.
         while(opModeIsActive()){
-            reading = axonBoard.getVoltage(); / 3.3 * 360;
+            reading = axonBoard.getVoltage() / 3.3 * 360;
             telemetry.addData("Encoder Reading", "%5.2f", reading);
             telemetry.update();
 /*
