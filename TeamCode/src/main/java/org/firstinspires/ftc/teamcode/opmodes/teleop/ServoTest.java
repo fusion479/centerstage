@@ -49,16 +49,12 @@ import com.qualcomm.robotcore.hardware.Servo;
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
-@TeleOp(name = "Servo Test 1", group = "Test")
+@TeleOp
 public class ServoTest extends LinearOpMode {
 
     AnalogInput axonBoard;
-    Servo axon;
     double reading;
-    double position;
-    static final double MAX;
-    static final double MIN;
-    static final boolean rampUp;
+
 
     @Override
     public void runOpMode() {
