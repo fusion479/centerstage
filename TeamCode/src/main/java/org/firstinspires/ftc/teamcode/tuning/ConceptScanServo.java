@@ -27,12 +27,11 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.opmodes.teleop;
+package org.firstinspires.ftc.teamcode.tuning;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.Servo;
 
 /*
@@ -49,26 +48,27 @@ import com.qualcomm.robotcore.hardware.Servo;
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
-@TeleOp(name = "Servo Test 1", group = "Test")
-public class ServoTest extends LinearOpMode {
+@TeleOp(name = "Concept: Scan Servo", group = "Concept")
+@Disabled
+public class ConceptScanServo extends LinearOpMode {
 
-    AnalogInput axonBoard;
-    Servo axon;
-    double reading;
-    double position;
-    static final double MAX;
-    static final double MIN;
-    static final boolean rampUp;
+    static final double INCREMENT   = 0.01;     // amount to slew servo each CYCLE_MS cycle
+    static final int    CYCLE_MS    =   50;     // period of each cycle
+    static final double MAX_POS     =  1.0;     // Maximum rotational position
+    static final double MIN_POS     =  0.0;     // Minimum rotational position
+
+    // Define class members
+    Servo   servo;
+    double  position = (MAX_POS - MIN_POS) / 2; // Start at halfway position
+    boolean rampUp = true;
+
 
     @Override
     public void runOpMode() {
-        // MAX = 1;
-        // MIN = 0;
-        // rampUp = true;
-        // Set Analog
-        axonBoard =  hardwareMap.get(AnalogInput.class, "axonBoard");
-        // axon = hardwareMap.get(Servo.class, "axon");
-        // axon.setPosition(0);
+
+        // Connect to servo (Assume Robot Left Hand)
+        // Change the text in quotes to match any servo name on your robot.
+        servo = hardwareMap.get(Servo.class, "left_hand");
 
         // Wait for the start button
         telemetry.addData(">", "Press Start to scan Servo." );
@@ -78,40 +78,35 @@ public class ServoTest extends LinearOpMode {
 
         // Scan servo till stop pressed.
         while(opModeIsActive()){
-            reading = axonBoard.getVoltage(); / 3.3 * 360;
-            telemetry.addData("Encoder Reading", "%5.2f", reading);
-            telemetry.update();
-/*
+
+            // slew the servo, according to the rampUp (direction) variable.
             if (rampUp) {
-                while(position <= MAX) {
-                    axon.setPosition(position);
-                    reading = getReading();
-                    telemetry.addData("Servo Position", "%5.2f", position);
-                    telemetry.addData("Encoder Reading", "%5.2f", reading);
-                    telemetry.update();
-                    position += 0.01;
-                    sleep(50);
+                // Keep stepping up until we hit the max value.
+                position += INCREMENT ;
+                if (position >= MAX_POS ) {
+                    position = MAX_POS;
+                    rampUp = !rampUp;   // Switch ramp direction
                 }
-                rampUp = !rampUp;
             }
             else {
-                while(position >= MIN) {
-                    axon.setPosition(position);
-                    reading = getReading();
-                    telemetry.addData("Servo Position", "%5.2f", position);
-                    telemetry.addData("Encoder Reading", "%5.2f", reading);
-                    telemetry.update();
-                    position -= 0.01;
-                    sleep(50);
+                // Keep stepping down until we hit the min value.
+                position -= INCREMENT ;
+                if (position <= MIN_POS ) {
+                    position = MIN_POS;
+                    rampUp = !rampUp;  // Switch ramp direction
                 }
-                rampUp = !rampUp;
             }
-*/
 
             // Display the current value
+            telemetry.addData("Servo Position", "%5.2f", position);
+            telemetry.addData(">", "Press Stop to end test." );
+            telemetry.update();
 
+            // Set the servo to the new position and pause;
+            servo.setPosition(position);
+            sleep(CYCLE_MS);
+            idle();
         }
-
 
         // Signal done;
 
