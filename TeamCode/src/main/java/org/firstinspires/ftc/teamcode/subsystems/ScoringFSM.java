@@ -30,7 +30,7 @@ public class ScoringFSM {
         switch (state) {
             case INTAKING:
                 arm.down();
-                deposit.open();
+                deposit.setIntakePos();
             case READY_BOTTOM:
                 arm.up();
             case READY_LOW:

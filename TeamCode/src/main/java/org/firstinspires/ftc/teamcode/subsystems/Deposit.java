@@ -6,8 +6,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 @Config
 public class Deposit {
-    Servo deposit;
-
+    Servo depositLeft;
+    Servo depositRight;
     public static double INTAKE_POS = 0.69;
     public static double SCORE_POS = 0.69;
 
@@ -15,17 +15,20 @@ public class Deposit {
     public static double CLOSED_POS = 0.69;
 
     public Deposit(HardwareMap hwMap) {
-        deposit = hwMap.get(Servo.class, "deposit");
+        depositLeft = hwMap.get(Servo.class, "depositLeft");
+        depositRight = hwMap.get(Servo.class, "depositRight")
 
         close(); // on init, close the deposit
     }
 
-    public void open() {
-        deposit.setPosition(OPEN_POS);
+    public void setIntakePos() {
+        depositLeft.setPosition(INTAKE_POS);
+        depositRight.setPosition(1 - INTAKE_POS);
     }
 
-    public void close() {
-        deposit.setPosition(CLOSED_POS);
+    public void setScorePos() {
+        depositLeft.setPosition(SCORE_POS);
+        depositRight.setPosition(1 - SCORE_POS);
     }
 
 }
