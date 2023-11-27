@@ -16,9 +16,8 @@ public class Deposit {
 
     public Deposit(HardwareMap hwMap) {
         depositLeft = hwMap.get(Servo.class, "depositLeft");
-        depositRight = hwMap.get(Servo.class, "depositRight")
-
-        close(); // on init, close the deposit
+        depositRight = hwMap.get(Servo.class, "depositRight");
+        setIntakePos();
     }
 
     public void setIntakePos() {

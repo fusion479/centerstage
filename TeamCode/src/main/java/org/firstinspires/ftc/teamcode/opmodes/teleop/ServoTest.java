@@ -29,7 +29,6 @@
 
 package org.firstinspires.ftc.teamcode.opmodes.teleop;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.AnalogInput;
@@ -53,7 +52,9 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class ServoTest extends LinearOpMode {
 
     AnalogInput axonBoard;
+    Servo axon;
     double reading;
+    double x = 0;
 
 
     @Override
@@ -75,8 +76,11 @@ public class ServoTest extends LinearOpMode {
         // Scan servo till stop pressed.
         while(opModeIsActive()){
             reading = axonBoard.getVoltage() / 3.3 * 360;
-            telemetry.addData("Encoder Reading", "%5.2f", reading);
-            telemetry.update();
+            telemetry.addData("Encoder Reading 0.4 ", "%5.2f", reading);
+            axon.setPosition(0.2);
+            reading = axonBoard.getVoltage() / 3.3 * 360;
+            telemetry.addData("Encoder Reading 0.2 ", "%5.2f", reading);
+                telemetry.update();
 /*
             if (rampUp) {
                 while(position <= MAX) {

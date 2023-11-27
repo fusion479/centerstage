@@ -6,7 +6,7 @@ public class ScoringFSM {
     Lift lift;
     Arm arm;
     Deposit deposit;
-
+    Intake intake;
     public enum STATES {
         INTAKING,
         READY_BOTTOM,
@@ -14,6 +14,7 @@ public class ScoringFSM {
         READY_MEDIUM,
         READY_HIGH,
         SCORING,
+        LAUNCH,
     };
 
     public STATES state;
@@ -22,7 +23,6 @@ public class ScoringFSM {
         lift = new Lift(hwMap);
         arm = new Arm(hwMap);
         deposit = new Deposit(hwMap);
-
         state = STATES.INTAKING;
     }
 
