@@ -46,11 +46,10 @@ public class TestCamera extends OpMode {
 
     private class MainPipeline extends OpenCvPipeline {
         private final Scalar red = new Scalar(255.0, 0.0, 0.0);
+        Mat output = new Mat();
+        Mat YCbCr = new Mat();
 
         public Mat processFrame(Mat input) {
-            Mat output = new Mat();
-            Mat YCbCr = new Mat();
-
             Imgproc.cvtColor(input, YCbCr, Imgproc.COLOR_RGB2YCrCb);
 
             Rect leftRect = new Rect(1, 1, 229, 359);
