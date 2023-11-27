@@ -12,12 +12,14 @@ public class Deposit {
     public static double SCORE_POS = 0.69;
 
     public static double OPEN_POS = 0.69;
+    
     public static double CLOSED_POS = 0.69;
 
     public Deposit(HardwareMap hwMap) {
         depositLeft = hwMap.get(Servo.class, "depositLeft");
         depositRight = hwMap.get(Servo.class, "depositRight");
-        setIntakePos();
+
+        // close(); // on init, close the deposit
     }
 
     public void setIntakePos() {
