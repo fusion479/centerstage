@@ -2,10 +2,12 @@ package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-public class ScoringFSM {
-    Lift lift;
-    Arm arm;
-    Deposit deposit;
+import org.checkerframework.checker.units.qual.A;
+
+public class ScoringFSM extends Mechanism {
+    Lift lift = new Lift();
+    Arm arm = new Arm();
+    Deposit deposit = new Deposit();
     Intake intake;
     public enum STATES {
         INTAKING,
@@ -19,10 +21,11 @@ public class ScoringFSM {
 
     public STATES state;
 
-    public ScoringFSM(HardwareMap hwMap) {
-        lift = new Lift(hwMap);
-        arm = new Arm(hwMap);
-        deposit = new Deposit(hwMap);
+    @Override
+    public void init(HardwareMap hwMap) {
+        lift.init(hwMap);
+        arm.init(hwMap);
+        deposit.init(hwMap);
         state = STATES.INTAKING;
     }
 

@@ -9,11 +9,12 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
-public class Camera {
+public class Camera extends Mechanism {
     OpenCvCamera openCvCamera;
     Pipeline pipeline = new Pipeline("red");
 
-    public Camera(HardwareMap hwMap) {
+    @Override
+    public void init(HardwareMap hwMap) {
         int cameraMonitorViewId = hwMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hwMap.appContext.getPackageName());
         openCvCamera = OpenCvCameraFactory.getInstance().createWebcam(hwMap.get(WebcamName.class, "camera"), cameraMonitorViewId);
         openCvCamera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {

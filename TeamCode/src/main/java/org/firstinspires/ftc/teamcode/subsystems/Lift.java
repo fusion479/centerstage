@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.util.*;
 
 @Config
-public class Lift {
+public class Lift extends Mechanism {
     // PID Coefficients
     public static double kP = 0;
     public static double kI = 0;
@@ -28,7 +28,8 @@ public class Lift {
     // telemetry
     public MultipleTelemetry multipleTelemetry = new MultipleTelemetry();
 
-    public Lift(HardwareMap hwMap) {
+    @Override
+    public void init(HardwareMap hwMap) {
         motors[0] = hwMap.get(DcMotorEx.class, "leftLift");
         motors[1] = hwMap.get(DcMotorEx.class, "rightLift");
 

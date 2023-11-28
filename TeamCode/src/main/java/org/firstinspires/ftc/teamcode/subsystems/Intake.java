@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.util.PIDController;
 
 @Config
-public class Intake {
+public class Intake extends Mechanism {
     // PID Coefficients
     public static double kP = 0;
     public static double kI = 0;
@@ -20,9 +20,10 @@ public class Intake {
 
     DcMotorEx intake;
 
-    public MultipleTelemetry multipleTelemetry = new MultipleTelemetry();
+    MultipleTelemetry multipleTelemetry = new MultipleTelemetry();
 
-    public Intake(HardwareMap hwMap) {
+    @Override
+    public void init(HardwareMap hwMap) {
         intake = hwMap.get(DcMotorEx.class, "intake");
 
         intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);

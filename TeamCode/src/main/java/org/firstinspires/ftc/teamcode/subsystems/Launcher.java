@@ -5,13 +5,14 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @Config
-public class Launcher {
-    private final Servo servo;
+public class Launcher extends Mechanism {
+    Servo servo;
 
     public static double LAUNCH_POS = 1;
     public static double IDLE_POS = 0;
 
-    public Launcher(HardwareMap hwMap) {
+    @Override
+    public void init(HardwareMap hwMap) {
         this.servo = hwMap.get(Servo.class, "launcher");
 
         idle();

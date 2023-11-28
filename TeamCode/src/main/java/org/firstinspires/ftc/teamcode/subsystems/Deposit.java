@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @Config
-public class Deposit {
+public class Deposit extends Mechanism {
     Servo depositLeft;
     Servo depositRight;
     public static double INTAKE_POS = 0.69;
@@ -15,11 +15,10 @@ public class Deposit {
     
     public static double CLOSED_POS = 0.69;
 
-    public Deposit(HardwareMap hwMap) {
+
+    public void init(HardwareMap hwMap) {
         depositLeft = hwMap.get(Servo.class, "depositLeft");
         depositRight = hwMap.get(Servo.class, "depositRight");
-
-        // close(); // on init, close the deposit
     }
 
     public void setIntakePos() {
@@ -31,5 +30,4 @@ public class Deposit {
         depositLeft.setPosition(SCORE_POS);
         depositRight.setPosition(1 - SCORE_POS);
     }
-
 }
