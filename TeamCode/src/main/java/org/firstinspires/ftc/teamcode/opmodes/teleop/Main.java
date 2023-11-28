@@ -3,17 +3,19 @@ package org.firstinspires.ftc.teamcode.opmodes.teleop;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-@TeleOp(name = "Main", group = "_1")
+import org.firstinspires.ftc.teamcode.subsystems.Robot;
+
+@TeleOp(name = "MAIN", group = "_1")
 public class Main extends LinearOpMode {
+    Robot robot = new Robot();
+
     @Override
     public void runOpMode() throws InterruptedException {
-        // run on init
-        // initialize all your hardware
+        robot.init(hardwareMap);
 
         waitForStart();
         while(opModeIsActive() && !isStopRequested()) {
-
-
+            robot.loop(gamepad1, gamepad2);
         }
     }
 }

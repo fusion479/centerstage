@@ -14,7 +14,6 @@ import org.firstinspires.ftc.teamcode.subsystems.Camera;
 public class CameraTest extends LinearOpMode {
     Camera camera = new Camera();
     FtcDashboard dashboard = FtcDashboard.getInstance();
-    MultipleTelemetry tele = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
 
     @Override
     public void runOpMode() throws InterruptedException {
