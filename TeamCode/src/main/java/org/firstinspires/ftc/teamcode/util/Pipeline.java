@@ -6,7 +6,6 @@ import com.acmerobotics.dashboard.config.Config;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
-import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
@@ -64,6 +63,7 @@ public class Pipeline extends OpenCvPipeline {
         telemetry.addData("region1", region1Percent);
         telemetry.addData("region2", region2Percent);
         telemetry.addData("region3", region3Percent);
+        telemetry.update();
 
         if (region1Percent > region2Percent && region1Percent > region3Percent) {
             Imgproc.rectangle(mat, ROI1, new Scalar(60, 255, 255), 10);
@@ -72,6 +72,10 @@ public class Pipeline extends OpenCvPipeline {
         } else if (region3Percent > region1Percent && region3Percent > region2Percent) {
             Imgproc.rectangle(mat, ROI3, new Scalar(60, 255, 255), 10);
         }
+
+        box1.release();
+        box2.release();
+        box3.release();
 
         return mat;
     }
