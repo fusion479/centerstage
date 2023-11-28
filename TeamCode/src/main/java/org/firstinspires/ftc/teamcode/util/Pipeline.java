@@ -1,7 +1,9 @@
 package org.firstinspires.ftc.teamcode.util;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
@@ -12,42 +14,65 @@ import org.openftc.easyopencv.OpenCvPipeline;
 
 @Config
 public class Pipeline extends OpenCvPipeline {
-    private final Scalar red = new Scalar(255.0, 0.0, 0.0);
-    Mat output = new Mat();
-    Mat YCbCr = new Mat();
+    String color;
 
+    public Pipeline(String colorChoice) {
+        color = colorChoice;
+    }
+
+    FtcDashboard dashboard = FtcDashboard.getInstance();
+    Telemetry telemetry = dashboard.getTelemetry();
+
+    Mat mat = new Mat();
+    Scalar lowHSV;
+    Scalar highHSV;
+    Rect ROI1, ROI2, ROI3;
+    double region1Percent, region2Percent, region3Percent;
+
+    Rect leftRect = new Rect(1, 1, 213, 479);
+    Rect midRect = new Rect(214, 1, 213, 479);
+    Rect rightRect = new Rect(427, 1, 213, 479);
+
+    @Override
     public Mat processFrame(Mat input) {
-        Imgproc.cvtColor(input, YCbCr, Imgproc.COLOR_RGB2YCrCb);
+        Imgproc.cvtColor(input, mat, Imgproc.COLOR_RGB2HSV);
 
-        Rect leftRect = new Rect(1, 1, 229, 359);
-        Rect midRect = new Rect(230, 1, 229, 359);
-        Rect rightRect = new Rect(460, 1, 229, 359);
+        if (color == "red") {
+            lowHSV = new Scalar(160, 50, 50);
+            highHSV = new Scalar(180, 255, 255);
+        } if (color == "blue") {
+            lowHSV = new Scalar(110, 50, 50);
+            highHSV = new Scalar(120, 255, 255);
+        }
 
-        input.copyTo(output);
-        Imgproc.rectangle(output, leftRect, red, 2);
-        Imgproc.rectangle(output, midRect, red, 2);
-        Imgproc.rectangle(output, rightRect, red, 2);
+        ROI1 = new Rect(1, 1, 213, 479);
+        ROI2 = new Rect(214, 1, 213, 479);
+        ROI3 = new Rect(427, 1, 213, 479);
 
-        Mat leftCrop = YCbCr.submat(leftRect);
-        Mat midCrop = YCbCr.submat(midRect);
-        Mat rightCrop = YCbCr.submat(rightRect);
+        Core.inRange(mat, lowHSV, highHSV, mat);
 
-        Core.extractChannel(leftCrop, leftCrop, 2);
-        Core.extractChannel(midCrop, midCrop, 2);
-        Core.extractChannel(rightCrop, rightCrop, 2);
+        // submats for the boxes, these are the regions that'll detect the color
+        Mat box1 = mat.submat(ROI1);
+        Mat box2 = mat.submat(ROI2);
+        Mat box3 = mat.submat(ROI3);
 
-        double leftAvg = Core.mean(leftCrop).val[0];
-        double midAvg = Core.mean(midCrop).val[0];
-        double rightAvg = Core.mean(rightCrop).val[0];
+        // how much in each region is white aka the color we filtered through the mask
+        region1Percent = Core.sumElems(box1).val[0] / ROI1.area() / 255;
+        region2Percent = Core.sumElems(box2).val[0] / ROI2.area() / 255;
+        region3Percent = Core.sumElems(box3).val[0] / ROI3.area() / 255;
 
-//        if (leftAvg > midAvg && leftAvg > rightAvg) {
-//            telemetry.addLine("LEFT");
-//        } else if (midAvg > leftAvg && midAvg > rightAvg) {
-//            telemetry.addLine("MID");
-//        } else {
-//            telemetry.addLine("RIGHT");
-//        }
+        telemetry.addData("region1", region1Percent);
+        telemetry.addData("region2", region2Percent);
+        telemetry.addData("region3", region3Percent);
 
-        return output;
+        if (region1Percent > region2Percent && region1Percent > region3Percent) {
+            Imgproc.rectangle(mat, ROI1, new Scalar(60, 255, 255), 10);
+        } else if (region2Percent > region1Percent && region2Percent > region3Percent) {
+            Imgproc.rectangle(mat, ROI2, new Scalar(60, 255, 255), 10);
+        } else if (region3Percent > region1Percent && region3Percent > region2Percent) {
+            Imgproc.rectangle(mat, ROI3, new Scalar(60, 255, 255), 10);
+        }
+
+        return mat;
     }
 }
