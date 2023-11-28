@@ -15,10 +15,6 @@ import org.openftc.easyopencv.OpenCvPipeline;
 public class Pipeline extends OpenCvPipeline {
     String color;
 
-    public Pipeline(String colorChoice) {
-        color = colorChoice;
-    }
-
     FtcDashboard dashboard = FtcDashboard.getInstance();
     Telemetry telemetry = dashboard.getTelemetry();
 
@@ -27,10 +23,15 @@ public class Pipeline extends OpenCvPipeline {
     Scalar highHSV;
     Rect ROI1, ROI2, ROI3;
     double region1Percent, region2Percent, region3Percent;
+    int region;
 
     Rect leftRect = new Rect(1, 1, 213, 479);
     Rect midRect = new Rect(214, 1, 213, 479);
     Rect rightRect = new Rect(427, 1, 213, 479);
+
+    public Pipeline(String colorChoice) {
+        color = colorChoice;
+    }
 
     @Override
     public Mat processFrame(Mat input) {
@@ -67,10 +68,13 @@ public class Pipeline extends OpenCvPipeline {
 
         if (region1Percent > region2Percent && region1Percent > region3Percent) {
             Imgproc.rectangle(mat, ROI1, new Scalar(60, 255, 255), 10);
+            region = 1;
         } else if (region2Percent > region1Percent && region2Percent > region3Percent) {
             Imgproc.rectangle(mat, ROI2, new Scalar(60, 255, 255), 10);
+            region = 2;
         } else if (region3Percent > region1Percent && region3Percent > region2Percent) {
             Imgproc.rectangle(mat, ROI3, new Scalar(60, 255, 255), 10);
+            region = 3;
         }
 
         box1.release();
@@ -78,5 +82,9 @@ public class Pipeline extends OpenCvPipeline {
         box3.release();
 
         return mat;
+    }
+
+    int whichRegion() {
+        return region;
     }
 }

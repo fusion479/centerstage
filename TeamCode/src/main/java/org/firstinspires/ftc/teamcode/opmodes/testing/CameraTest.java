@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.checkerframework.checker.units.qual.C;
 import org.firstinspires.ftc.teamcode.subsystems.Camera;
 
-@TeleOp
+@TeleOp(name = "Camera Test", group = "testing")
 @Config
 public class CameraTest extends LinearOpMode {
     Camera camera = new Camera();
