@@ -1,35 +1,56 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+
+import org.firstinspires.ftc.teamcode.util.Conversion;
+import org.firstinspires.ftc.teamcode.util.PIDController;
 
 public class Climber extends Mechanism {
-    public static double UP_POS = 1;
-    public static double DOWN_POS = 0;
-    private boolean isUp;
+    public static double kP = 0;
+    public static double kI = 0;
+    public static double kD = 0;
+    public static double kG = 0;
+    private PIDController controller = new PIDController(kP, kI, kD);
 
-    private Servo servo;
+    public static double target = 0;
+    public static double power = 0;
+
+    private DcMotorEx climber;
+    private static final double WHEEL_RADIUS = 0;
+    private static final double GEAR_RATIO = 0;
+    private static final double TICKS_PER_REV = 145.1; // double check if correct ratio
+
+    public MultipleTelemetry multipleTelemetry = new MultipleTelemetry();
 
     @Override
     public void init(HardwareMap hwMap) {
-        servo = hwMap.get(Servo.class, "climb");
+        climber = hwMap.get(DcMotorEx.class, "climber");
+
+        climber.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+        climber.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        climber.setDirection(DcMotorEx.Direction.FORWARD);
     }
 
-    public void up() {
-        servo.setPosition(UP_POS);
-        isUp = true;
+    public void loop() {
+        controller.setTarget(target);
+        power = controller.calculate(climber.getCurrentPosition()) + kG;
+        climber.setPower(power);
+
+        multipleTelemetry.addData("target: ", target);
+        multipleTelemetry.addData("current position: ", climber.getCurrentPosition());
     }
 
     public void down() {
-        servo.setPosition(DOWN_POS);
-        isUp = false;
+        setTarget(0);
     }
 
-    public void toggle() {
-        if (isUp) {
-            down();
-        } else {
-            up();
-        }
+    public void up() {
+        setTarget(20); // or higher
+    }
+
+    public void setTarget(int inches) {
+        Lift.target = Conversion.inchesToTicks(inches, WHEEL_RADIUS, GEAR_RATIO, TICKS_PER_REV);
     }
 }
