@@ -16,6 +16,7 @@ public class Robot extends Mechanism {
     }
 
     public void loop(Gamepad gamepad1, Gamepad gamepad2) {
+        if
 
     }
 }

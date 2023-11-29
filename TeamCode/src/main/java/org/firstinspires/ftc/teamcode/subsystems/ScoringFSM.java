@@ -2,8 +2,6 @@ package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.checkerframework.checker.units.qual.A;
-
 public class ScoringFSM extends Mechanism {
     Lift lift = new Lift();
     Arm arm = new Arm();
@@ -21,6 +19,7 @@ public class ScoringFSM extends Mechanism {
     };
 
     public STATES state;
+    public boolean up;
 
     @Override
     public void init(HardwareMap hwMap) {
@@ -28,20 +27,65 @@ public class ScoringFSM extends Mechanism {
         arm.init(hwMap);
         climber.init(hwMap);
         deposit.init(hwMap);
+        climber.init(hwMap);
+        intake.init(hwMap);
         state = STATES.INTAKING;
+        up = false;
     }
 
     public void loop() {
         switch (state) {
             case INTAKING:
+                if (up == true) {
+                    lift.bottom();
+                }
                 arm.down();
                 deposit.setIntakePos();
+                intake.loop();
+                break;
             case READY_BOTTOM:
+                lift.bottom();
                 arm.up();
+                up = true;
+                break;
             case READY_LOW:
+                lift.low();
+                arm.up();
+                up = true;
+                break;
             case READY_MEDIUM:
+                lift.medium();
+                arm.up();
+                up = true;
+                break;
             case READY_HIGH:
+                lift.high();
+                arm.up();
+                up = true;
+                break;
             case SCORING:
+                deposit.setScorePos();
+                break;
         }
+
+    }
+    public void intake() {
+        state = STATES.INTAKING;
+    }
+    public void readyLow() {
+        state = STATES.READY_LOW;
+    }
+    public void readBottom() {
+        state = STATES.READY_BOTTOM;
+
+    }
+    public void readyHigh() {
+        state = STATES.READY_HIGH;
+    }
+    public void readyMedium() {
+        state = STATES.READY_MEDIUM;
+    }
+    public void score() {
+        state = STATES.SCORING;
     }
 }
