@@ -33,6 +33,10 @@ public class Climber extends Mechanism {
         climber.setDirection(DcMotorEx.Direction.FORWARD);
     }
 
+    public void setTarget(int inches) {
+        Lift.target = Conversion.inchesToTicks(inches, WHEEL_RADIUS, GEAR_RATIO, TICKS_PER_REV);
+    }
+
     public void loop() {
         controller.setTarget(target);
         power = controller.calculate(climber.getCurrentPosition()) + kG;
@@ -48,9 +52,5 @@ public class Climber extends Mechanism {
 
     public void up() {
         setTarget(20); // or higher
-    }
-
-    public void setTarget(int inches) {
-        Lift.target = Conversion.inchesToTicks(inches, WHEEL_RADIUS, GEAR_RATIO, TICKS_PER_REV);
     }
 }
