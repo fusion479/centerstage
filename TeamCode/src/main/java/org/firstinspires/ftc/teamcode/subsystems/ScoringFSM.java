@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class ScoringFSM extends Mechanism {
     Lift lift = new Lift();
     Arm arm = new Arm();
+    Climber climber = new Climber();
     Deposit deposit = new Deposit();
     Intake intake;
     public enum STATES {
@@ -24,6 +25,7 @@ public class ScoringFSM extends Mechanism {
     public void init(HardwareMap hwMap) {
         lift.init(hwMap);
         arm.init(hwMap);
+        climber.init(hwMap);
         deposit.init(hwMap);
         climber.init(hwMap);
         intake.init(hwMap);
