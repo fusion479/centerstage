@@ -38,6 +38,7 @@ public class ScoringFSM extends Mechanism {
             case INTAKING:
                 if (up == true) {
                     lift.bottom();
+                    up =  false;
                 }
                 arm.down();
                 deposit.setIntakePos();
@@ -46,7 +47,6 @@ public class ScoringFSM extends Mechanism {
             case READY_BOTTOM:
                 lift.bottom();
                 arm.up();
-                up = true;
                 break;
             case READY_LOW:
                 lift.low();
