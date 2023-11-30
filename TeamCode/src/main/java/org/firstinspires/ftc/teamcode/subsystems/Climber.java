@@ -46,11 +46,11 @@ public class Climber extends Mechanism {
         multipleTelemetry.addData("current position: ", climber.getCurrentPosition());
     }
 
-    public void down() {
-        setTarget(0);
-    }
-
-    public void up() {
-        setTarget(20); // or higher
+    public void toggle() {
+        if (climber.getCurrentPosition() >= 0) {
+            setTarget(0);
+        } else {
+            setTarget(20);
+        }
     }
 }
