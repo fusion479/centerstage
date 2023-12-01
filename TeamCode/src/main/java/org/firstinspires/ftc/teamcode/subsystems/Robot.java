@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 
 public class Robot extends Mechanism {
-    private ScoringFSM score = new ScoringFSM();
+    private final ScoringFSM score = new ScoringFSM();
     private MecanumDrive drive;
     private Pose2d pos = new Pose2d(0, 0, 0);
 

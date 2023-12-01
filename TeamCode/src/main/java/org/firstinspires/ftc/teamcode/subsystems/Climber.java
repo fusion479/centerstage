@@ -12,7 +12,7 @@ public class Climber extends Mechanism {
     public static double kI = 0;
     public static double kD = 0;
     public static double kG = 0;
-    private PIDController controller = new PIDController(kP, kI, kD);
+    private final PIDController controller = new PIDController(kP, kI, kD);
 
     public static double target = 0;
     public static double power = 0;
