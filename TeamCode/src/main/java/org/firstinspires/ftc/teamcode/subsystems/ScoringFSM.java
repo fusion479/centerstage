@@ -27,7 +27,6 @@ public class ScoringFSM extends Mechanism {
         arm.init(hwMap);
         climber.init(hwMap);
         deposit.init(hwMap);
-        climber.init(hwMap);
         intake.init(hwMap);
         state = STATES.INTAKING;
         up = false;

@@ -1,21 +1,33 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.MecanumDrive;
+
 public class Robot extends Mechanism {
-    ScoringFSM scoringFSM = new ScoringFSM();
-    Launcher launcher = new Launcher();
-    Climber climber = new Climber();
+    private final ScoringFSM score = new ScoringFSM();
+    private MecanumDrive drive;
+    private Pose2d pos = new Pose2d(0, 0, 0);
+
+    private boolean isPressedx = false;
 
     @Override
     public void init(HardwareMap hwMap) {
-        scoringFSM.init(hwMap);
-        launcher.init(hwMap);
-        climber.init(hwMap);
+        drive = new MecanumDrive(hwMap, pos);
     }
 
     public void loop(Gamepad gamepad1, Gamepad gamepad2) {
+<<<<<<< HEAD
 
+=======
+        if (!isPressedx && gamepad1.x) {
+           score.climber.toggle();
+        }
+        isPressedx = gamepad1.x;
+        score.loop();
+>>>>>>> f7ddc29073e0730f0fb6ae48745d0ecddb3aebfd
     }
+
 }
