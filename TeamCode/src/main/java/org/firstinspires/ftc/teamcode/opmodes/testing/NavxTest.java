@@ -11,7 +11,7 @@ public class NavxTest extends OpMode {
 
     @Override
     public void init() {
-        navx_device = `AHRS.getInstance(hardwareMap.get(NavxMicroNavigationSensor.class, "navx"),
+        navx_device = AHRS.getInstance(hardwareMap.get(NavxMicroNavigationSensor.class, "navx"),
                 AHRS.DeviceDataType.kProcessedData,
                 NAVX_DEVICE_UPDATE_RATE_HZ);
     }
