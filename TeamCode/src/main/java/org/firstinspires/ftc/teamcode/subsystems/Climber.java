@@ -10,21 +10,23 @@ public class Climber extends SubsystemBase {
     private final PIDFController controller;
     private double target;
 
-    public Climber(final HardwareMap hwMap, final String name) {
-        this.motor = hwMap.get(DcMotorEx.class, name);
+    public Climber(final HardwareMap hwMap) {
+        this.motor = hwMap.get(DcMotorEx.class, "climber");
 
         this.motor.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
         this.motor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         this.motor.setDirection(DcMotorEx.Direction.FORWARD);
 
         this.controller = new PIDFController(0, 0, 0, 0);
+
+        super.register();
     }
 
 
     @Override
     public void periodic() {
-        double power = this.controller.calculate(this.motor.getCurrentPosition(), target);
-        this.motor.setPower(power); // or set velocity
+        double velocity = this.controller.calculate(this.motor.getCurrentPosition(), target);
+        this.motor.setVelocity(velocity);
     }
 
     public void setTarget(double target) {
