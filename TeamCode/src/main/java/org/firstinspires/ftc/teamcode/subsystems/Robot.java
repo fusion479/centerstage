@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.acmerobotics.roadrunner.Pose2d;
+import com.acmerobotics.roadrunner.PoseVelocity2d;
+import com.acmerobotics.roadrunner.Vector2d;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -19,6 +21,13 @@ public class Robot extends Mechanism {
     }
 
     public void loop(Gamepad gamepad1, Gamepad gamepad2) {
+        drive.setDrivePowers(
+                new PoseVelocity2d(
+                        new Vector2d(-gamepad1.right_stick_x, -gamepad1.left_stick_y),
+                        -gamepad1.left_stick_y
+                )
+        );
+        drive.updatePoseEstimate();
 //        if (!isPressedx && gamepad1.x) {
 //           score.climber.toggle();
 //        }
