@@ -21,7 +21,7 @@ public class Lift extends Mechanism {
 
     // Motor info declarations
     private final DcMotorEx[] motors = new DcMotorEx[2];
-    private static final double WHEEL_RADIUS = 1.37795; // inches, placeholder values right now
+    private static final double WHEEL_RADIUS = 0.6738964567;
     private static final double GEAR_RATIO = 1.0;
     private static final double TICKS_PER_REV = 145.1;
 
@@ -51,6 +51,7 @@ public class Lift extends Mechanism {
 
         multipleTelemetry.addData("target: ", target);
         multipleTelemetry.addData("current position: ", motors[0].getCurrentPosition());
+        multipleTelemetry.update();
     }
 
     public void bottom() {

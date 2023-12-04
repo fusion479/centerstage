@@ -11,10 +11,6 @@ public class Deposit extends Mechanism {
     public static double INTAKE_POS = 0.69;
     public static double SCORE_POS = 0.69;
 
-    public static double OPEN_POS = 0.69;
-    
-    public static double CLOSED_POS = 0.69;
-
 
     public void init(HardwareMap hwMap) {
         depositLeft = hwMap.get(Servo.class, "depositLeft");

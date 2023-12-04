@@ -10,6 +10,7 @@ public class Launcher extends Mechanism {
 
     public static double LAUNCH_POS = 1;
     public static double IDLE_POS = 0;
+    double target;
 
     @Override
     public void init(HardwareMap hwMap) {
@@ -18,12 +19,16 @@ public class Launcher extends Mechanism {
         idle();
     }
 
+    public void loop() {
+        servo.setPosition(target);
+    }
+
     public void launch() {
-        servo.setPosition(LAUNCH_POS);
+        target = LAUNCH_POS;
     }
 
     public void idle() {
-        servo.setPosition(IDLE_POS);
+        target = IDLE_POS;
     }
 
 }
