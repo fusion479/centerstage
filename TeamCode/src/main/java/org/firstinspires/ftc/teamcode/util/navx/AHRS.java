@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.misc.navx;
+package org.firstinspires.ftc.teamcode.util.navx;
 
 import android.os.Process;
 import android.os.SystemClock;

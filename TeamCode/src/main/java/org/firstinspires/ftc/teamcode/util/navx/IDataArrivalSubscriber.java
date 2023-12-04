@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.misc.navx;
+package org.firstinspires.ftc.teamcode.util.navx;
 
 public interface IDataArrivalSubscriber {
     public void untimestampedDataReceived( long system_timestamp, Object kind );

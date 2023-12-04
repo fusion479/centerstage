@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.misc;
+package org.firstinspires.ftc.teamcode.util;
 
 public class Conversion {
     public Conversion() {}

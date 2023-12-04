@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.misc.navx;
+package org.firstinspires.ftc.teamcode.util.navx;
 
 public class IMURegisters {
 

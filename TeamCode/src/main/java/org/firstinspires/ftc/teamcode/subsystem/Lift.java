@@ -5,8 +5,8 @@ import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.misc.Conversion;
-import org.firstinspires.ftc.teamcode.misc.PIDController;
+import org.firstinspires.ftc.teamcode.util.Conversion;
+import org.firstinspires.ftc.teamcode.util.PIDController;
 
 @Config
 public class Lift extends Mechanism {

@@ -69,19 +69,23 @@ public class ScoringFSM extends Mechanism {
     public void intake() {
         state = STATES.INTAKING;
     }
+
     public void readyLow() {
         state = STATES.READY_LOW;
     }
-    public void readBottom() {
-        state = STATES.READY_BOTTOM;
 
+    public void readyBottom() {
+        state = STATES.READY_BOTTOM;
     }
+
     public void readyHigh() {
         state = STATES.READY_HIGH;
     }
+
     public void readyMedium() {
         state = STATES.READY_MEDIUM;
     }
+
     public void score() {
         state = STATES.SCORING;
     }

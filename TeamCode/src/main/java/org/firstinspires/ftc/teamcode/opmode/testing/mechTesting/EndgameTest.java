@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmode.testing;
+package org.firstinspires.ftc.teamcode.opmode.testing.mechTesting;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -20,14 +20,13 @@ public class EndgameTest extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         drive = new SampleMecanumDrive(hardwareMap);
-        drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 //        climber.init(hardwareMap);
         launcher.init(hardwareMap);
 
         waitForStart();
 
         // Scan servo till stop pressed.
-        while(opModeIsActive()){
+        while(opModeIsActive()) {
             if (gamepad1.a) {
                 launcher.idle();
             } else if (gamepad1.b) {
