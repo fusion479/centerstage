@@ -1,7 +1,10 @@
 package org.firstinspires.ftc.teamcode.common.subsystem;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
+@Config
 public class ScoringFSM extends Mechanism {
     Lift lift = new Lift();
     Arm arm = new Arm();
@@ -19,6 +22,10 @@ public class ScoringFSM extends Mechanism {
 
     public STATES state;
     public boolean up;
+
+    ElapsedTime armTimer = new ElapsedTime();
+
+    public static int armRaiseDelay = 500;
 
     @Override
     public void init(HardwareMap hwMap) {
@@ -46,19 +53,28 @@ public class ScoringFSM extends Mechanism {
                 arm.up();
                 break;
             case READY_LOW:
+                armTimer.reset();
                 lift.low();
-                arm.up();
-                up = true;
+                if (armTimer.milliseconds() > armRaiseDelay) {
+                    arm.up();
+                    up = true;
+                }
                 break;
             case READY_MEDIUM:
+                armTimer.reset();
                 lift.medium();
-                arm.up();
-                up = true;
+                if (armTimer.milliseconds() > armRaiseDelay) {
+                    arm.up();
+                    up = true;
+                }
                 break;
             case READY_HIGH:
+                armTimer.reset();
                 lift.high();
-                arm.up();
-                up = true;
+                if (armTimer.milliseconds() > armRaiseDelay) {
+                    arm.up();
+                    up = true;
+                }
                 break;
             case SCORING:
                 deposit.setScorePos();
