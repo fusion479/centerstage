@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.common.subsystem;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -7,6 +8,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.common.util.Conversion;
 import org.firstinspires.ftc.teamcode.common.util.PIDController;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 
 @Config
 public class Lift extends Mechanism {
@@ -15,9 +18,9 @@ public class Lift extends Mechanism {
     public static double kI = 0;
     public static double kD = 0;
     public static double kG = 0;
-    private PIDController controller = new PIDController(kP, kI, kD);
     public static double target = 0; // inches
     public static double power = 0;
+    private final PIDController controller = new PIDController(kP, kI, kD);
 
     // Motor info declarations
     private final DcMotorEx[] motors = new DcMotorEx[2];
@@ -26,7 +29,9 @@ public class Lift extends Mechanism {
     private static final double TICKS_PER_REV = 145.1;
 
     // telemetry
-    public MultipleTelemetry multipleTelemetry = new MultipleTelemetry();
+    Telemetry tele;
+    FtcDashboard dashboard = FtcDashboard.getInstance();
+    MultipleTelemetry telemetry = new MultipleTelemetry(tele, dashboard.getTelemetry());
 
     @Override
     public void init(HardwareMap hwMap) {
@@ -48,10 +53,13 @@ public class Lift extends Mechanism {
         power = controller.calculate(motors[0].getCurrentPosition()) + kG;
         motors[0].setPower(power);
         motors[1].setPower(power);
+    }
 
-        multipleTelemetry.addData("target: ", target);
-        multipleTelemetry.addData("current position: ", motors[0].getCurrentPosition());
-        multipleTelemetry.update();
+    public void telemetry() {
+        telemetry.addData("Current Position: ", motors[0].getCurrentPosition());
+        telemetry.addData("Target: ", target);
+        telemetry.addData("Power: ", power);
+        telemetry.update();
     }
 
     public void bottom() {
