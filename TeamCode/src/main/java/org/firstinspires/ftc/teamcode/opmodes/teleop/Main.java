@@ -1,15 +1,14 @@
 package org.firstinspires.ftc.teamcode.opmodes.teleop;
 
 import com.arcrobotics.ftclib.command.CommandOpMode;
-import com.arcrobotics.ftclib.command.CommandScheduler;
-
-import org.firstinspires.ftc.teamcode.Robot;
+import org.firstinspires.ftc.teamcode.CommandRobot;
 
 public class Main extends CommandOpMode {
-    private Robot robot;
+    private CommandRobot robot;
 
     public void initialize() {
-        this.robot = new Robot(this.hardwareMap);
+        this.robot = new CommandRobot(this.hardwareMap);
+        this.robot.enable();
     }
 
     @Override
@@ -18,9 +17,10 @@ public class Main extends CommandOpMode {
 
         super.waitForStart();
         while (!isStopRequested() && opModeIsActive()) {
-            CommandScheduler.getInstance().run();
+            robot.run();
         }
 
-        CommandScheduler.getInstance().reset();
+        robot.reset();
+        robot.disable();
     }
 }
