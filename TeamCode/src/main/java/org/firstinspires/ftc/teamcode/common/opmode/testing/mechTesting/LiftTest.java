@@ -14,8 +14,8 @@ import org.firstinspires.ftc.teamcode.common.subsystem.Lift;
 @TeleOp(name = "Lift Test", group = "testing")
 @Config
 public class LiftTest extends LinearOpMode {
-    private final DcMotorEx[] motors = new DcMotorEx[2];
-//    Lift lift = new Lift();
+//    private final DcMotorEx[] motors = new DcMotorEx[2];
+    Lift lift = new Lift();
 
     FtcDashboard dashboard = FtcDashboard.getInstance();
     MultipleTelemetry multipleTelemetry = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
@@ -23,26 +23,38 @@ public class LiftTest extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        motors[0] = hardwareMap.get(DcMotorEx.class, "liftLeft");
-        motors[1] = hardwareMap.get(DcMotorEx.class, "liftRight");
+//        motors[0] = hardwareMap.get(DcMotorEx.class, "liftLeft");
+//        motors[1] = hardwareMap.get(DcMotorEx.class, "liftRight");
+//
+//        motors[0].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        motors[1].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        motors[0].setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+//        motors[1].setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+//        motors[0].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//        motors[1].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//        motors[0].setDirection(DcMotorSimple.Direction.FORWARD);
+//        motors[1].setDirection(DcMotorSimple.Direction.REVERSE);
 
-        motors[0].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motors[1].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motors[0].setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motors[1].setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        motors[0].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        motors[1].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        motors[0].setDirection(DcMotorSimple.Direction.FORWARD);
-        motors[1].setDirection(DcMotorSimple.Direction.REVERSE);
+        lift.init(hardwareMap);
+        lift.initTele(telemetry);
 
         waitForStart();
-
-        // Scan servo till stop pressed.
-        while(opModeIsActive()){
-            motors[0].setPower(gamepad1.left_stick_y);
-            motors[1].setPower(gamepad1.right_stick_y);
-
-            multipleTelemetry.addData("current position: ", motors[0].getCurrentPosition());
+        while(opModeIsActive()) {
+//            motors[0].setPower(gamepad1.left_stick_y);
+//            motors[1].setPower(gamepad1.left_stick_y);
+////
+//            multipleTelemetry.addData("current position: ", motors[0].getCurrentPosition());
+            lift.loop();
+            if (gamepad1.a) {
+                lift.bottom();
+            } else if (gamepad1.b) {
+                lift.low();
+            } else if (gamepad1.x) {
+                lift.medium();
+            } else if (gamepad1.y) {
+                lift.high();
+            }
+            multipleTelemetry.addData("current pos: ", lift.getPosition());
             multipleTelemetry.update();
         }
     }
