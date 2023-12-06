@@ -27,7 +27,7 @@ public class Arm extends Mechanism {
 
     public void down() {
         left.setPosition(DOWN_POS);
-        right.setPosition(1- DOWN_POS);
+        right.setPosition(1 - DOWN_POS);
         isUp = false;
     }
 

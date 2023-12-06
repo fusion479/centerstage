@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.common.subsystem;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -29,14 +30,17 @@ public class Lift extends Mechanism {
     private static final double TICKS_PER_REV = 145.1;
 
     // telemetry
-    Telemetry tele;
-    FtcDashboard dashboard = FtcDashboard.getInstance();
-    MultipleTelemetry telemetry = new MultipleTelemetry(tele, dashboard.getTelemetry());
+//    Telemetry tele;
+//    FtcDashboard dashboard = FtcDashboard.getInstance();
+//    MultipleTelemetry telemetry = new MultipleTelemetry(tele, dashboard.getTelemetry());
 
     @Override
     public void init(HardwareMap hwMap) {
-        motors[0] = hwMap.get(DcMotorEx.class, "leftLift");
-        motors[1] = hwMap.get(DcMotorEx.class, "rightLift");
+        motors[0] = hwMap.get(DcMotorEx.class, "liftLeft");
+        motors[1] = hwMap.get(DcMotorEx.class, "liftRight");
+
+        motors[0].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motors[1].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         motors[0].setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER); // might be wrong RunMode
         motors[1].setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
@@ -55,12 +59,12 @@ public class Lift extends Mechanism {
         motors[1].setPower(power);
     }
 
-    public void telemetry() {
-        telemetry.addData("Current Position: ", motors[0].getCurrentPosition());
-        telemetry.addData("Target: ", target);
-        telemetry.addData("Power: ", power);
-        telemetry.update();
-    }
+//    public void telemetry() {
+//        telemetry.addData("Current Position: ", motors[0].getCurrentPosition());
+//        telemetry.addData("Target: ", target);
+//        telemetry.addData("Power: ", power);
+//        telemetry.update();
+//    }
 
     public void bottom() {
         setTarget(0);

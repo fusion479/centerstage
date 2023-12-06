@@ -5,7 +5,9 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.teamcode.common.subsystem.Lift;
 
@@ -21,17 +23,17 @@ public class LiftTest extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        motors[0] = hardwareMap.get(DcMotorEx.class, "leftLift");
-        motors[1] = hardwareMap.get(DcMotorEx.class, "rightLift");
+        motors[0] = hardwareMap.get(DcMotorEx.class, "liftLeft");
+        motors[1] = hardwareMap.get(DcMotorEx.class, "liftRight");
 
-        motors[0].setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER); // might be wrong RunMode
-        motors[1].setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
-
-        motors[0].setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-        motors[1].setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-
-        motors[0].setDirection(DcMotorEx.Direction.FORWARD);
-        motors[1].setDirection(DcMotorEx.Direction.REVERSE);
+        motors[0].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motors[1].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motors[0].setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        motors[1].setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        motors[0].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        motors[1].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        motors[0].setDirection(DcMotorSimple.Direction.FORWARD);
+        motors[1].setDirection(DcMotorSimple.Direction.REVERSE);
 
         waitForStart();
 
