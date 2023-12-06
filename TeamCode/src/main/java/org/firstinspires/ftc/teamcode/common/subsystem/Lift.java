@@ -57,19 +57,17 @@ public class Lift extends Mechanism {
         power = controller.calculate(motors[0].getCurrentPosition()) + kG;
         motors[0].setPower(power);
         motors[1].setPower(power);
-        telemetry();
+
+        telemetry.addData("Current Position: ", motors[0].getCurrentPosition());
+        telemetry.addData("Error: ", controller.getLastError());
+        telemetry.addData("Target: ", target);
+        telemetry.addData("Power: ", power);
+        telemetry.update();
     }
 
     public void initTele(Telemetry tele) {
         this.tele = tele;
         telemetry = new MultipleTelemetry(tele, dashboard.getTelemetry());
-    }
-
-    public void telemetry() {
-        telemetry.addData("Current Position: ", motors[0].getCurrentPosition());
-        telemetry.addData("Target: ", target);
-        telemetry.addData("Power: ", power);
-        telemetry.update();
     }
 
     public void bottom() {

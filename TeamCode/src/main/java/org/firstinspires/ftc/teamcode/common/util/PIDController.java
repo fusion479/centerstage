@@ -34,4 +34,8 @@ public class PIDController {
         return (kP * error) + (kI * integralSum) + (kD * derivative);
     }
 
+    public double getLastError() {
+        return lastError;
+    }
+
 }
