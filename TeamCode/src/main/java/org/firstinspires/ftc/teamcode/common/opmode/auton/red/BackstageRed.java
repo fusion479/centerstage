@@ -1,4 +1,4 @@
 package org.firstinspires.ftc.teamcode.common.opmode.auton.red;
 
-public class LeftRed {
+public class BackstageRed {
 }

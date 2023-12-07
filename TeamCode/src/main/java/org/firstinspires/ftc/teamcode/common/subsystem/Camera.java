@@ -31,4 +31,12 @@ public class Camera extends Mechanism {
             }
         });
     }
+
+    public void stopStreaming() {
+        openCvCamera.stopStreaming();
+    }
+
+    public int whichRegion() {
+        return pipeline.whichRegion();
+    }
 }

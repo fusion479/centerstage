@@ -84,7 +84,7 @@ public class Pipeline extends OpenCvPipeline {
         return mat;
     }
 
-    int whichRegion() {
+    public int whichRegion() {
         return region;
     }
 }
