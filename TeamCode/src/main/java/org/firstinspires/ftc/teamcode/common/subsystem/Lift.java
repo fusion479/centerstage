@@ -5,6 +5,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.common.util.Conversion;
@@ -15,7 +16,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 @Config
 public class Lift extends Mechanism {
     // PID Coefficients
-    public static double kP = 0.03;
+    public static double kP = 0.0025;
     public static double kI = 0;
     public static double kD = 0;
     public static double kG = 0.03;
@@ -23,11 +24,18 @@ public class Lift extends Mechanism {
     public static double power = 0;
     private final PIDController controller = new PIDController(kP, kI, kD);
 
+    // slides heights
+    public static int bottom = 0;
+    public static int low = 600;
+    public static int medium = 1200;
+    public static int high = 1900;
+
+
     // Motor info declarations
     private final DcMotorEx[] motors = new DcMotorEx[2];
     private static final double WHEEL_RADIUS = 0.6738964567;
     private static final double GEAR_RATIO = 1.0;
-    private static final double TICKS_PER_REV = 145.1;
+    private static final double TICKS_PER_REV = 384.5;
 
 //     telemetry
     Telemetry tele;
@@ -49,20 +57,22 @@ public class Lift extends Mechanism {
         motors[1].setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
 
         motors[0].setDirection(DcMotorEx.Direction.FORWARD);
-        motors[1].setDirection(DcMotorEx.Direction.REVERSE);
+        motors[1].setDirection(DcMotorEx.Direction.FORWARD);
+
+        bottom();
     }
 
     public void loop() {
         controller.setTarget(target);
-        power = controller.calculate(motors[0].getCurrentPosition()) + kG;
+        power = controller.calculate(getPosition()) + kG;
         motors[0].setPower(power);
         motors[1].setPower(power);
 
-        telemetry.addData("Current Position: ", motors[0].getCurrentPosition());
-        telemetry.addData("Error: ", controller.getLastError());
-        telemetry.addData("Target: ", target);
-        telemetry.addData("Power: ", power);
-        telemetry.update();
+//        telemetry.addData("Current Position: ", getPosition());
+//        telemetry.addData("Error: ", controller.getLastError());
+//        telemetry.addData("Target: ", target);
+//        telemetry.addData("Power: ", power);
+//        telemetry.update();
     }
 
     public void initTele(Telemetry tele) {
@@ -71,19 +81,19 @@ public class Lift extends Mechanism {
     }
 
     public void bottom() {
-        setTarget(0);
+        setTarget(bottom);
     }
 
     public void low() {
-        setTarget(200);
+        setTarget(low);
     }
 
     public void medium() {
-        setTarget(400);
+        setTarget(medium);
     }
 
     public void high() {
-        setTarget(600);
+        setTarget(high);
     }
 
     public void setTarget(int target) {

@@ -6,24 +6,46 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 @Config
 public class Deposit extends Mechanism {
-    Servo depositLeft;
-    Servo depositRight;
-    public static double INTAKE_POS = 0.69;
-    public static double SCORE_POS = 0.69;
+    Servo left, right, cover;
+    public static double INTAKE_POS = .2;
+    public static double IDLE_POS = .5;
+    public static double SCORE_POS = .4;
+    public static double COVER_BLOCK = .7;
+    public static double COVER_OPEN = .0;
+    public static double target = INTAKE_POS;
+    public static double coverTarget = COVER_OPEN;
+
 
 
     public void init(HardwareMap hwMap) {
-        depositLeft = hwMap.get(Servo.class, "depositLeft");
-        depositRight = hwMap.get(Servo.class, "depositRight");
+        left = hwMap.get(Servo.class, "depositLeft");
+        right = hwMap.get(Servo.class, "depositRight");
+        cover = hwMap.get(Servo.class, "depositCover");
     }
 
-    public void setIntakePos() {
-        depositLeft.setPosition(INTAKE_POS);
-        depositRight.setPosition(1 - INTAKE_POS);
+    public void loop() {
+        cover.setPosition(coverTarget);
+        left.setPosition(target);
+        right.setPosition(1 - target);
     }
 
-    public void setScorePos() {
-        depositLeft.setPosition(SCORE_POS);
-        depositRight.setPosition(1 - SCORE_POS);
+    public void intake() {
+        coverTarget = COVER_OPEN;
+        target = INTAKE_POS;
+    }
+
+    public void idle() {
+        coverTarget = COVER_BLOCK;
+        target = IDLE_POS;
+    }
+
+    public void ready() {
+        coverTarget = COVER_BLOCK;
+        target = SCORE_POS;
+    }
+
+    public void score() {
+        coverTarget = COVER_OPEN;
+        target = SCORE_POS;
     }
 }

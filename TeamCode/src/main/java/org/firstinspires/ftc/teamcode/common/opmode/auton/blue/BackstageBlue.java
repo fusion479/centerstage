@@ -39,7 +39,7 @@ public class BackstageBlue extends LinearOpMode {
             telemetry.addData("Region: ", region);
             telemetry.update();
         }
-
+        waitForStart();
         camera.stopStreaming();
         if (region == 1) {
 

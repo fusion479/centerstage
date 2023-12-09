@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.drive.opmode;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -16,6 +18,9 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
  */
 @TeleOp(group = "drive")
 public class LocalizationTest extends LinearOpMode {
+    FtcDashboard dashboard = FtcDashboard.getInstance();
+    MultipleTelemetry multipleTelemetry = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
+
     @Override
     public void runOpMode() throws InterruptedException {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
@@ -36,10 +41,12 @@ public class LocalizationTest extends LinearOpMode {
             drive.update();
 
             Pose2d poseEstimate = drive.getPoseEstimate();
-            telemetry.addData("x", poseEstimate.getX());
-            telemetry.addData("y", poseEstimate.getY());
-            telemetry.addData("heading", poseEstimate.getHeading());
-            telemetry.update();
+            multipleTelemetry.addData("right stick x: ", gamepad1.right_stick_x);
+            multipleTelemetry.addData("right stick y: ", gamepad1.right_stick_y);
+            multipleTelemetry.addData("x", poseEstimate.getX());
+            multipleTelemetry.addData("y", poseEstimate.getY());
+            multipleTelemetry.addData("heading", poseEstimate.getHeading());
+            multipleTelemetry.update();
         }
     }
 }

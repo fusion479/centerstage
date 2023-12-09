@@ -8,13 +8,22 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
 public class Robot extends Mechanism {
-    private SampleMecanumDrive drive;
-    private ScoringFSM score = new ScoringFSM();
+    SampleMecanumDrive drive;
+    Lift lift = new Lift();
+    Arm arm = new Arm();
+    Deposit deposit = new Deposit();
+
+    public boolean isPressedX = false;
+    public boolean isPressedY = false;
+    public boolean isPressedA = false;
+    public boolean isPressedB = false;
 
     @Override
     public void init(HardwareMap hwMap) {
         drive = new SampleMecanumDrive(hwMap);
-        score.init(hwMap);
+        lift.init(hwMap);
+        arm.init(hwMap);
+        deposit.init(hwMap);
     }
 
     public void loop(Gamepad gamepad1, Gamepad gamepad2) {
@@ -26,7 +35,32 @@ public class Robot extends Mechanism {
                 )
         );
 
-        score.loop();
+        isPressedY = gamepad1.y;
+        isPressedX = gamepad1.x;
+        isPressedA = gamepad1.a;
+        isPressedB = gamepad1.b;
+
+        if (!isPressedA && gamepad1.a) {
+            lift.bottom();
+            arm.up();
+            deposit.idle();
+        } else if (!isPressedB && gamepad1.b) {
+            lift.bottom();
+            arm.down();
+            deposit.intake();
+        } else if (!isPressedX && gamepad1.x) {
+            lift.high();
+            arm.up();
+            deposit.idle();
+        } else if (!isPressedY && gamepad1.y) {
+            lift.high();
+            arm.up();
+            deposit.score();
+        }
+
+        lift.loop();
+        arm.loop();
+        deposit.loop();
         drive.update();
     }
 

@@ -8,28 +8,35 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.teamcode.common.subsystem.Arm;
+import org.firstinspires.ftc.teamcode.common.subsystem.Deposit;
 import org.firstinspires.ftc.teamcode.common.subsystem.Lift;
 
 @TeleOp(name = "Arm Test", group = "testing")
 @Config
 public class ArmTest extends LinearOpMode {
     Arm arm = new Arm();
+    Deposit deposit = new Deposit();
 
     @Override
     public void runOpMode() throws InterruptedException {
         arm.init(hardwareMap);
+        deposit.init(hardwareMap);
 
         waitForStart();
 
         // Scan servo till stop pressed.
-        while(opModeIsActive()){
+        while(opModeIsActive() && !isStopRequested()){
             if (gamepad1.a) {
                arm.up();
             } else if (gamepad1.b) {
                 arm.down();
-            } else if (gamepad1.y) {
-                arm.toggle();
+            } else if (gamepad1.x) {
+                deposit.intake();
+            }else if (gamepad1.y) {
+                deposit.idle();
             }
+            arm.loop();
+            deposit.loop();
          }
     }
 }

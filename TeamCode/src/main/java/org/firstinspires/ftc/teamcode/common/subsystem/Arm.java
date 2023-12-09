@@ -3,12 +3,14 @@ package org.firstinspires.ftc.teamcode.common.subsystem;
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.Range;
 
 @Config
 public class Arm extends Mechanism {
     Servo left, right;
-    public static double UP_POS = 0.44;
-    public static double DOWN_POS = 0;
+    public static double UP_POS = .5;
+    public static double DOWN_POS = .96;
+    public static double target = DOWN_POS;
 
     private boolean isUp;
 
@@ -16,18 +18,22 @@ public class Arm extends Mechanism {
     public void init(HardwareMap hwMap) {
         left = hwMap.get(Servo.class, "armLeft");
         right = hwMap.get(Servo.class, "armRight");
+
         isUp = false;
     }
 
+    public void loop() {
+        left.setPosition(target);
+        right.setPosition(1 - target);
+    }
+
     public void up() {
-        left.setPosition(UP_POS);
-        right.setPosition(1 - UP_POS);
+        target = UP_POS;
         isUp = true;
     }
 
     public void down() {
-        left.setPosition(DOWN_POS);
-        right.setPosition(1 - DOWN_POS);
+        target = DOWN_POS;
         isUp = false;
     }
 

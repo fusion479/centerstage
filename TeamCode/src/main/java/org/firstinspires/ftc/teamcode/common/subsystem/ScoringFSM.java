@@ -9,7 +9,7 @@ public class ScoringFSM extends Mechanism {
     Lift lift = new Lift();
     Arm arm = new Arm();
     Deposit deposit = new Deposit();
-    Intake intake;
+    Intake intake = new Intake();
     public enum STATES {
         INTAKING,
         READY_BOTTOM,
@@ -45,39 +45,44 @@ public class ScoringFSM extends Mechanism {
                     up =  false;
                 }
                 arm.down();
-                deposit.setIntakePos();
+                deposit.intake();
                 intake.loop();
                 break;
             case READY_BOTTOM:
                 lift.bottom();
                 arm.up();
+                deposit.idle();
                 break;
             case READY_LOW:
-                armTimer.reset();
                 lift.low();
+                deposit.idle();
                 if (armTimer.milliseconds() > armRaiseDelay) {
                     arm.up();
                     up = true;
+                    armTimer.reset();
                 }
                 break;
             case READY_MEDIUM:
                 armTimer.reset();
                 lift.medium();
+                deposit.idle();
                 if (armTimer.milliseconds() > armRaiseDelay) {
                     arm.up();
                     up = true;
+                    armTimer.reset();
                 }
                 break;
             case READY_HIGH:
-                armTimer.reset();
                 lift.high();
+                deposit.idle();
                 if (armTimer.milliseconds() > armRaiseDelay) {
                     arm.up();
                     up = true;
                 }
                 break;
             case SCORING:
-                deposit.setScorePos();
+                deposit.score();
+
                 break;
         }
     }
