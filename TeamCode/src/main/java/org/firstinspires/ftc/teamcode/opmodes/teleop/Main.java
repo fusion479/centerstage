@@ -1,8 +1,12 @@
 package org.firstinspires.ftc.teamcode.opmodes.teleop;
 
 import com.arcrobotics.ftclib.command.CommandOpMode;
+import com.arcrobotics.ftclib.command.CommandScheduler;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
 import org.firstinspires.ftc.teamcode.CommandRobot;
 
+@TeleOp(name = "Main", group = "TeleOp")
 public class Main extends CommandOpMode {
     private CommandRobot robot;
 
@@ -17,7 +21,7 @@ public class Main extends CommandOpMode {
 
         super.waitForStart();
         while (!isStopRequested() && opModeIsActive()) {
-            robot.run();
+            robot.run(); // runs the command scheduler
         }
 
         robot.reset();

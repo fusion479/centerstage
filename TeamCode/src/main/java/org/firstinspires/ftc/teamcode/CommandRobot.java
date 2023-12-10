@@ -20,14 +20,13 @@ public class CommandRobot extends Robot {
     private Climber climber;
     private Arm arm;
 
-    public CommandRobot(final HardwareMap hwMap) {
+    public CommandRobot(final HardwareMap hwMap) { // Create different bots for teleop, testing, and auton?
         this.climber = new Climber(hwMap);
         this.arm = new Arm(hwMap);
 
         this.gamepad = new GamepadEx(new Gamepad()); // connect to right gamepad
 
         this.configureCommands();
-        CommandScheduler.getInstance().run();
     }
 
     public void configureCommands() {
