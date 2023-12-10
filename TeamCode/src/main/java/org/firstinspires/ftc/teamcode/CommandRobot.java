@@ -31,11 +31,16 @@ public class CommandRobot extends Robot {
     }
 
     public void configureCommands() {
+        // TODO: Put configure when initializing each subsystem
+
         // CLIMBER COMMANDS
         this.gamepad.getGamepadButton(GamepadKeys.Button.X).toggleWhenPressed(new ExtendClimber(this.climber), new RetractClimber(this.climber));
 
         // ARM COMMANDS
         this.gamepad.getGamepadButton(GamepadKeys.Button.A).whenPressed(new ArmUp(this.arm));
         this.gamepad.getGamepadButton(GamepadKeys.Button.B).whenPressed(new ArmDown(this.arm));
+
+        // LIFT COMMANDS
+        // (...)
     }
 }
