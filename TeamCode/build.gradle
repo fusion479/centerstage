@@ -17,8 +17,14 @@ apply from: '../build.dependencies.gradle'
 
 android {
     namespace = 'org.firstinspires.ftc.teamcode'
+    androidResources {
+        noCompress 'tflite'
+    }
 
     packagingOptions {
+        jniLibs {
+            pickFirsts += ['**/*.so']
+        }
         jniLibs.useLegacyPackaging true
     }
 }
@@ -29,4 +35,8 @@ dependencies {
     implementation 'org.ftclib.ftclib:vision:2.1.0' // vision
     implementation 'org.ftclib.ftclib:core:2.1.1' // core
     // https://docs.ftclib.org/ftclib/installation more for vision
+
+    implementation 'org.apache.commons:commons-math3:3.6.1'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.7'
+    implementation 'com.acmerobotics.roadrunner:core:0.5.6'
 }
