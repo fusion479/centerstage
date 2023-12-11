@@ -1,15 +1,11 @@
 package org.firstinspires.ftc.teamcode.common.opmode.testing.mechTesting;
 
-import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
-import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.teamcode.common.subsystem.Arm;
 import org.firstinspires.ftc.teamcode.common.subsystem.Deposit;
-import org.firstinspires.ftc.teamcode.common.subsystem.Lift;
 
 @TeleOp(name = "Arm Test", group = "testing")
 @Config

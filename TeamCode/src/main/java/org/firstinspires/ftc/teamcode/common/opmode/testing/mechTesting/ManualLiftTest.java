@@ -9,8 +9,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-import org.firstinspires.ftc.teamcode.common.subsystem.Lift;
-
 @TeleOp(name = "Manual Lift Test", group = "testing")
 @Config
 public class ManualLiftTest extends LinearOpMode {

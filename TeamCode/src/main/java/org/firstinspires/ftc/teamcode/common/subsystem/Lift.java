@@ -5,12 +5,10 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.common.util.Conversion;
-import org.firstinspires.ftc.teamcode.common.util.PIDController;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.common.util.PIDController;
 
 
 @Config
@@ -102,5 +100,13 @@ public class Lift extends Mechanism {
 
     public double getPosition() {
         return motors[0].getCurrentPosition();
+    }
+
+    public void upALittle() {
+        target += 150;
+    }
+
+    public void downALittle() {
+        target -= 150;
     }
 }

@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.common.subsystem;
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.Range;
 
 @Config
 public class Arm extends Mechanism {

@@ -21,6 +21,8 @@ public class Deposit extends Mechanism {
         left = hwMap.get(Servo.class, "depositLeft");
         right = hwMap.get(Servo.class, "depositRight");
         cover = hwMap.get(Servo.class, "depositCover");
+
+        idle();
     }
 
     public void loop() {

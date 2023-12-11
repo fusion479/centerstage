@@ -48,6 +48,10 @@ public class RobotTest extends LinearOpMode {
             } else if (gamepad1.y) {
                 arm.up();
                 deposit.score();
+            } else if (gamepad1.right_bumper) {
+                lift.upALittle();
+            } else if (gamepad1.left_bumper) {
+                lift.downALittle();
             }
 
             lift.loop();
