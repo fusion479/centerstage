@@ -9,16 +9,12 @@ public class RetractClimber extends CommandBase {
 
     public RetractClimber(final Climber climber) {
         this.climber = climber;
-        addRequirements(climber);
+
+        super.addRequirements(this.climber);
     }
 
     @Override
     public void initialize() {
         this.climber.setTarget(0);
-    }
-
-    @Override
-    public boolean isFinished() {
-        return true;
     }
 }

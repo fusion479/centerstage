@@ -9,7 +9,10 @@ public class MediumLift extends CommandBase {
 
     public MediumLift(final Lift lift) {
         this.lift = lift;
+
+        super.addRequirements(this.lift);
     }
+
 
     @Override
     public void initialize() {

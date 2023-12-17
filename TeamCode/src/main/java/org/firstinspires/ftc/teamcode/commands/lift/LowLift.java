@@ -9,6 +9,8 @@ public class LowLift extends CommandBase {
 
     public LowLift(final Lift lift) {
         this.lift = lift;
+
+        super.addRequirements(this.lift);
     }
 
     @Override

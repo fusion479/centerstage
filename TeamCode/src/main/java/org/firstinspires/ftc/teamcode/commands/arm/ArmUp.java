@@ -8,6 +8,8 @@ public class ArmUp extends CommandBase {
 
     public ArmUp(Arm arm) {
         this.arm = arm;
+
+        super.addRequirements(this.arm);
     }
 
    @Override

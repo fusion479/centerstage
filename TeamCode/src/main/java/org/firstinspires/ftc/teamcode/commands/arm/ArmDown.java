@@ -8,6 +8,8 @@ public class ArmDown extends CommandBase {
 
     public ArmDown(Arm arm) {
         this.arm = arm;
+
+        super.addRequirements(this.arm);
     }
 
    @Override

@@ -9,16 +9,12 @@ public class ExtendClimber extends CommandBase {
 
     public ExtendClimber(final Climber climber) {
         this.climber = climber;
-        addRequirements(climber);
+
+        super.addRequirements(this.climber);
     }
 
     @Override
     public void initialize() {
         this.climber.setTarget(50); // or other value
-    }
-
-    @Override
-    public boolean isFinished() {
-        return true;
     }
 }
