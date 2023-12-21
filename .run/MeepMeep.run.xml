@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="MeepMeep" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="com.example.meepmeep.MeepMeepTest" />
+    <module name="FtcRobotController.MeepMeep.main" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
