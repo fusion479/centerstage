@@ -19,7 +19,7 @@ public class Launcher extends Mechanism {
         idle();
     }
 
-    public void loop() {
+    public void update() {
         servo.setPosition(target);
     }
 

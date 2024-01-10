@@ -6,48 +6,70 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 @Config
 public class Deposit extends Mechanism {
-    Servo left, right, cover;
-    public static double INTAKE_POS = .2;
+    Servo pivot, inner, outer;
+    public static double ACCEPTING_POS = .2;
     public static double IDLE_POS = .5;
     public static double SCORE_POS = .4;
-    public static double COVER_BLOCK = .7;
-    public static double COVER_OPEN = .0;
-    public static double target = INTAKE_POS;
-    public static double coverTarget = COVER_OPEN;
+
+    public static double LOCK = .7;
+    public static double OPEN = .0;
+    public static double pivotTarget = ACCEPTING_POS;
+    public static double innerTarget = OPEN;
+    public static double outerTarget = OPEN;
 
 
 
     public void init(HardwareMap hwMap) {
-        left = hwMap.get(Servo.class, "depositLeft");
-        right = hwMap.get(Servo.class, "depositRight");
-        cover = hwMap.get(Servo.class, "depositCover");
+        pivot = hwMap.get(Servo.class, "depositPivot");
+        inner = hwMap.get(Servo.class, "depositInner");
+        outer = hwMap.get(Servo.class, "depositOuter");
 
         idle();
     }
 
-    public void loop() {
-        cover.setPosition(coverTarget);
-        left.setPosition(target);
-        right.setPosition(1 - target);
+    public void update() {
+        pivot.setPosition(pivotTarget);
+        inner.setPosition(innerTarget);
+        outer.setPosition(outerTarget);
     }
 
-    public void intake() {
-        coverTarget = COVER_OPEN;
-        target = INTAKE_POS;
+    public void accepting() {
+        pivotTarget = ACCEPTING_POS;
+        openInner();
+        openOuter();
     }
 
     public void idle() {
-        coverTarget = COVER_BLOCK;
-        target = IDLE_POS;
+        pivotTarget = IDLE_POS;
+        lockInner();
+        lockOuter();
     }
 
     public void ready() {
-        coverTarget = COVER_BLOCK;
-        target = SCORE_POS;
+        pivotTarget = SCORE_POS;
+        lockInner();
+        lockOuter();
     }
 
     public void score() {
-        coverTarget = COVER_OPEN;
-        target = SCORE_POS;
+        pivotTarget = SCORE_POS;
+        openInner();
+        openOuter();
+    }
+
+    public void lockInner() {
+        innerTarget = LOCK;
+    }
+
+    public void lockOuter() {
+        outerTarget = LOCK;
+    }
+
+    public void openInner() {
+        innerTarget = OPEN;
+    }
+
+    public void openOuter() {
+        outerTarget = OPEN;
     }
 }

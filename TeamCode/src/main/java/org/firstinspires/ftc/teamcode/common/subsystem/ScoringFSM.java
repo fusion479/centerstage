@@ -37,7 +37,7 @@ public class ScoringFSM extends Mechanism {
         up = false;
     }
 
-    public void loop() {
+    public void update() {
         switch (state) {
             case INTAKING:
                 if (up) {
@@ -45,8 +45,8 @@ public class ScoringFSM extends Mechanism {
                     up =  false;
                 }
                 arm.down();
-                deposit.intake();
-                intake.loop();
+                deposit.accepting();
+                intake.update();
                 break;
             case READY_BOTTOM:
                 lift.bottom();

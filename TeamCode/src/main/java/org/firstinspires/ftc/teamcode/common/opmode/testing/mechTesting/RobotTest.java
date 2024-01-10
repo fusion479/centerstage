@@ -54,9 +54,9 @@ public class RobotTest extends LinearOpMode {
                 lift.downALittle();
             }
 
-            lift.loop();
-            arm.loop();
-            deposit.loop();
+            lift.update();
+            arm.update();
+            deposit.update();
             drive.update();
         }
     }

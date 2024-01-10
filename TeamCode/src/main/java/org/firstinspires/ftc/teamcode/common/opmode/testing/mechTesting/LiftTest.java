@@ -41,7 +41,7 @@ public class LiftTest extends LinearOpMode {
 //            motors[1].setPower(gamepad1.left_stick_y);
 ////
 //            multipleTelemetry.addData("current position: ", motors[0].getCurrentPosition());
-            lift.loop();
+            lift.update();
             if (gamepad1.a) {
                 lift.bottom();
             } else if (gamepad1.b) {

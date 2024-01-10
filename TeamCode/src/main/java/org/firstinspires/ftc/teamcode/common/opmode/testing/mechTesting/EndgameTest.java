@@ -31,7 +31,7 @@ public class EndgameTest extends LinearOpMode {
             }
 
             drive.update();
-            launcher.loop();
+            launcher.update();
         }
     }
 }

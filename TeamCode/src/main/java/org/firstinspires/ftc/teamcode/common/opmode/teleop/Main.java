@@ -15,7 +15,7 @@ public class Main extends LinearOpMode {
 
         waitForStart();
         while(opModeIsActive() && !isStopRequested()) {
-            robot.loop(gamepad1, gamepad2);
+            robot.update(gamepad1, gamepad2);
         }
     }
 }

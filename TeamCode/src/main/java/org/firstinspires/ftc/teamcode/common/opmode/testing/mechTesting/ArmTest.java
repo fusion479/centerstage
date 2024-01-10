@@ -31,8 +31,8 @@ public class ArmTest extends LinearOpMode {
             }else if (gamepad1.y) {
                 deposit.idle();
             }
-            arm.loop();
-            deposit.loop();
+            arm.update();
+            deposit.update();
          }
     }
 }

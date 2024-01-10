@@ -31,7 +31,7 @@ public class ScoreTest extends LinearOpMode {
                     )
             );
             drive.update();
-            scoringFSM.loop();
+            scoringFSM.update();
         }
     }
 }

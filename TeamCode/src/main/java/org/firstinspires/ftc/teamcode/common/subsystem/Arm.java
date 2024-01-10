@@ -21,7 +21,7 @@ public class Arm extends Mechanism {
         isUp = false;
     }
 
-    public void loop() {
+    public void update() {
         left.setPosition(target);
         right.setPosition(1 - target);
     }

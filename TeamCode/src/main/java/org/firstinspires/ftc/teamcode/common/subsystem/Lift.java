@@ -18,7 +18,7 @@ public class Lift extends Mechanism {
     public static double kI = 0;
     public static double kD = 0;
     public static double kG = 0.03;
-    public static double target = 0; // maximum 700 ticks
+    public static double target = 0;
     public static double power = 0;
     private final PIDController controller = new PIDController(kP, kI, kD);
 
@@ -28,14 +28,13 @@ public class Lift extends Mechanism {
     public static int medium = 1200;
     public static int high = 1900;
 
-
     // Motor info declarations
     private final DcMotorEx[] motors = new DcMotorEx[2];
-    private static final double WHEEL_RADIUS = 0.6738964567;
+    private static final double WHEEL_RADIUS = 0.7969769685;
     private static final double GEAR_RATIO = 1.0;
     private static final double TICKS_PER_REV = 384.5;
 
-//     telemetry
+    // telemetry
     Telemetry tele;
     FtcDashboard dashboard = FtcDashboard.getInstance();
     MultipleTelemetry telemetry;
@@ -60,7 +59,7 @@ public class Lift extends Mechanism {
         bottom();
     }
 
-    public void loop() {
+    public void update() {
         controller.setTarget(target);
         power = controller.calculate(getPosition()) + kG;
         motors[0].setPower(power);
