@@ -17,6 +17,8 @@ public class Robot extends Mechanism {
     public boolean isPressedY = false;
     public boolean isPressedA = false;
     public boolean isPressedB = false;
+    public boolean isPressedRB = false;
+    public boolean isPressedLB = false;
 
     @Override
     public void init(HardwareMap hwMap) {
@@ -36,10 +38,12 @@ public class Robot extends Mechanism {
                 )
         );
 
-        isPressedY = gamepad1.y;
-        isPressedX = gamepad1.x;
-        isPressedA = gamepad1.a;
+        isPressedX = gamepad1.x; // high
+        isPressedY = gamepad1.y  // medium
+        isPressedA = gamepad1.a; //
         isPressedB = gamepad1.b;
+        isPressedLB = gamepad1.left_bumper;
+        isPressedRB = gamepad1.right_bumper;
 
         if (!isPressedA && gamepad1.a) {
             lift.bottom();
