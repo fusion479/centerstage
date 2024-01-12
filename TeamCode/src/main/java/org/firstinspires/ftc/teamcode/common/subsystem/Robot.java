@@ -39,28 +39,36 @@ public class Robot extends Mechanism {
         );
 
         isPressedX = gamepad1.x; // high
-        isPressedY = gamepad1.y  // medium
-        isPressedA = gamepad1.a; //
-        isPressedB = gamepad1.b;
-        isPressedLB = gamepad1.left_bumper;
-        isPressedRB = gamepad1.right_bumper;
+        isPressedY = gamepad1.y;  // medium
+        isPressedA = gamepad1.a; // ready bottom
+        isPressedB = gamepad1.b; // low
+        isPressedLB = gamepad1.left_bumper; // toggle inner pixel
+        isPressedRB = gamepad1.right_bumper; // toggle outer pixel
 
         if (!isPressedA && gamepad1.a) {
             lift.bottom();
-            arm.up();
-            deposit.idle();
-        } else if (!isPressedB && gamepad1.b) {
-            lift.bottom();
             arm.down();
             deposit.accepting();
-        } else if (!isPressedX && gamepad1.x) {
-            lift.high();
+        } else if (!isPressedB && gamepad1.b) {
+            lift.low();
             arm.up();
-            deposit.idle();
+            deposit.ready();
+        } else if (!isPressedX && gamepad1.x) {
+            lift.medium();
+            arm.up();
+            deposit.ready();
         } else if (!isPressedY && gamepad1.y) {
             lift.high();
             arm.up();
-            deposit.score();
+            deposit.ready();
+        } else if (!isPressedLB && gamepad1.left_bumper) {
+            deposit.toggleOuter();
+        } else if (!isPressedRB && gamepad1.right_bumper) {
+            deposit.toggleInner();
+        } else if (gamepad1.right_trigger > .1) {
+            lift.bottom();
+            arm.down();
+            deposit.accepting();
         }
 
         intake.setPower(gamepad1.right_trigger);

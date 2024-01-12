@@ -17,6 +17,8 @@ public class Deposit extends Mechanism {
     public static double innerTarget = OPEN;
     public static double outerTarget = OPEN;
 
+    public static boolean innerLocked = false;
+    public static boolean outerLocked = false;
 
 
     public void init(HardwareMap hwMap) {
@@ -57,19 +59,39 @@ public class Deposit extends Mechanism {
         openOuter();
     }
 
+    public void toggleInner() {
+        if (innerLocked) {
+            openInner();
+        } else {
+            lockInner();
+        }
+    }
+
+    public void toggleOuter() {
+        if (innerLocked) {
+            openOuter();
+        } else {
+            lockOuter();
+        }
+    }
+
     public void lockInner() {
         innerTarget = LOCK;
+        innerLocked = true;
     }
 
     public void lockOuter() {
         outerTarget = LOCK;
+        outerLocked = true;
     }
 
     public void openInner() {
         innerTarget = OPEN;
+        innerLocked = false;
     }
 
     public void openOuter() {
         outerTarget = OPEN;
+        outerLocked = false;
     }
 }

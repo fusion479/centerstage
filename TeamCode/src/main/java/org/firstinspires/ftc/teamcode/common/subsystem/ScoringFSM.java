@@ -11,13 +11,11 @@ public class ScoringFSM extends Mechanism {
     Deposit deposit = new Deposit();
     Intake intake = new Intake();
     public enum STATES {
-        INTAKING,
+        INTAKE,
         READY_BOTTOM,
-        READY_LOW,
-        READY_MEDIUM,
-        READY_HIGH,
-        SCORING,
-        LAUNCH,
+        LOW,
+        MEDIUM,
+        HIGH,
     };
 
     public STATES state;
@@ -33,66 +31,46 @@ public class ScoringFSM extends Mechanism {
         arm.init(hwMap);
         deposit.init(hwMap);
         intake.init(hwMap);
-        state = STATES.INTAKING;
+        state = STATES.INTAKE;
         up = false;
     }
 
     public void update() {
         switch (state) {
-            case INTAKING:
-                if (up) {
-                    lift.bottom();
-                    up =  false;
-                }
+            case INTAKE:
+                lift.bottom();
                 arm.down();
                 deposit.accepting();
-                intake.update();
                 break;
             case READY_BOTTOM:
                 lift.bottom();
                 arm.up();
-                deposit.idle();
+                deposit.ready();
                 break;
-            case READY_LOW:
+            case LOW:
                 lift.low();
-                deposit.idle();
-                if (armTimer.milliseconds() > armRaiseDelay) {
-                    arm.up();
-                    up = true;
-                    armTimer.reset();
-                }
+                arm.up();
+                deposit.ready();
                 break;
-            case READY_MEDIUM:
-                armTimer.reset();
+            case MEDIUM:
                 lift.medium();
-                deposit.idle();
-                if (armTimer.milliseconds() > armRaiseDelay) {
-                    arm.up();
-                    up = true;
-                    armTimer.reset();
-                }
+                arm.up();
+                deposit.ready();
                 break;
-            case READY_HIGH:
+            case HIGH:
                 lift.high();
-                deposit.idle();
-                if (armTimer.milliseconds() > armRaiseDelay) {
-                    arm.up();
-                    up = true;
-                }
-                break;
-            case SCORING:
-                deposit.score();
-
+                arm.up();
+                deposit.ready();
                 break;
         }
     }
 
     public void intake() {
-        state = STATES.INTAKING;
+        state = STATES.INTAKE;
     }
 
     public void readyLow() {
-        state = STATES.READY_LOW;
+        state = STATES.LOW;
     }
 
     public void readyBottom() {
@@ -100,14 +78,10 @@ public class ScoringFSM extends Mechanism {
     }
 
     public void readyHigh() {
-        state = STATES.READY_HIGH;
+        state = STATES.HIGH;
     }
 
     public void readyMedium() {
-        state = STATES.READY_MEDIUM;
-    }
-
-    public void score() {
-        state = STATES.SCORING;
+        state = STATES.MEDIUM;
     }
 }
