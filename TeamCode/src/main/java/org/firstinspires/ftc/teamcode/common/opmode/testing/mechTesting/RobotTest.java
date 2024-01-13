@@ -38,7 +38,7 @@ public class RobotTest extends LinearOpMode {
 
             if (gamepad1.a) {
                 arm.down();
-                deposit.intake();
+//                deposit.intake();
             } else if (gamepad1.b) {
                 arm.down();
                 deposit.idle();

@@ -23,8 +23,8 @@ public class Deposit extends Mechanism {
 
     public void init(HardwareMap hwMap) {
         pivot = hwMap.get(Servo.class, "depositPivot");
-        inner = hwMap.get(Servo.class, "depositInner");
-        outer = hwMap.get(Servo.class, "depositOuter");
+        inner = hwMap.get(Servo.class, "innerPixel");
+        outer = hwMap.get(Servo.class, "outerPixel");
 
         idle();
     }

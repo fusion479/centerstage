@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.common.subsystem;
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -12,9 +13,10 @@ public class Intake extends Mechanism {
     DcMotorEx intake;
     Servo intakeLeft;
     Servo intakeRight;
-    public static double UP_POS;
-    public static double DOWN_POS;
-    public static double IDLE_POS;
+    public static double UP_POS = .5;
+    public static double DOWN_POS = 0;
+    public static double IDLE_POS = .25;
+    public static double CUSTOM_POS = .5;
     double power;
     double intakePos;
 
@@ -30,28 +32,27 @@ public class Intake extends Mechanism {
         intake = hwMap.get(DcMotorEx.class, "intake");
         intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        intake.setDirection(DcMotorEx.Direction.FORWARD);
+        intake.setDirection(DcMotorEx.Direction.REVERSE);
 
         intakeLeft = hwMap.get(Servo.class, "intakeLeft");
         intakeRight = hwMap.get(Servo.class, "intakeRight");
 
-        intakeLeft.setPosition(UP_POS);
-        intakeRight.setPosition(1 - UP_POS);
+        up();
     }
 
     public void update() {
-        switch (intakeState) {
-            case UP:
-                intakePos = UP_POS;
-            case IDLE:
-                intakePos = IDLE_POS;
-            case INTAKING:
-                intakePos = DOWN_POS;
-        }
-
-        intake.setPower(power);
-        intakeLeft.setPosition(intakePos);
-        intakeRight.setPosition(1 - intakePos);
+//        switch (intakeState) {
+//            case UP:
+//                intakePos = UP_POS;
+//            case IDLE:
+//                intakePos = IDLE_POS;
+//            case INTAKING:
+//                intakePos = DOWN_POS;
+//        }
+//
+            intake.setPower(power);
+//        intakeLeft.setPosition(intakePos);
+//        intakeRight.setPosition(1 - intakePos);
     }
 
     public void setPower(double power) {
@@ -59,14 +60,29 @@ public class Intake extends Mechanism {
     }
 
     public void up() {
-        intakeState = STATES.UP;
+        intakeLeft.setPosition(UP_POS);
+        intakeRight.setPosition(1 - UP_POS);
     }
 
     public void idle() {
-        intakeState = STATES.IDLE;
+        intakeLeft.setPosition(IDLE_POS);
+        intakeRight.setPosition(1 - IDLE_POS);
     }
 
     public void intaking() {
-        intakeState = STATES.INTAKING;
+        intakeLeft.setPosition(DOWN_POS);
+        intakeRight.setPosition(1 - DOWN_POS);
+    }
+
+    public void downALittle() {
+        CUSTOM_POS = CUSTOM_POS - .05;
+        intakeLeft.setPosition(CUSTOM_POS);
+        intakeRight.setPosition(1 - CUSTOM_POS);
+    }
+
+    public void upALittle() {
+        CUSTOM_POS = CUSTOM_POS - .05;
+        intakeLeft.setPosition(CUSTOM_POS);
+        intakeRight.setPosition(1 - CUSTOM_POS);
     }
 }

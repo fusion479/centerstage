@@ -63,7 +63,7 @@ public class Lift extends Mechanism {
         controller.setTarget(target);
         power = controller.calculate(getPosition()) + kG;
         motors[0].setPower(power);
-        motors[1].setPower(power);
+        motors[1].setPower(-power);
 
 //        telemetry.addData("Current Position: ", getPosition());
 //        telemetry.addData("Error: ", controller.getLastError());

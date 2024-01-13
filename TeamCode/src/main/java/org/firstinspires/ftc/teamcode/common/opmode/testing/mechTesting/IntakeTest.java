@@ -5,22 +5,33 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
+import org.firstinspires.ftc.teamcode.common.subsystem.Intake;
+
 @TeleOp(name = "Intake Test", group = "testing")
 @Config
 public class IntakeTest extends LinearOpMode {
-    DcMotorEx motor;
+    Intake intake = new Intake();
 
     @Override
     public void runOpMode() throws InterruptedException {
-        motor = hardwareMap.get(DcMotorEx.class, "intake");
-
-        motor.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER); // might be wrong RunMode
+        intake.init(hardwareMap);
 
         waitForStart();
-
-        // Scan servo till stop pressed.
         while(opModeIsActive()){
-            motor.setPower(gamepad1.left_stick_y);
+            if (gamepad1.a) {
+                intake.up();
+            } else if (gamepad1.b) {
+                intake.idle();
+            } else if (gamepad1.x) {
+                intake.intaking();
+            } else if (gamepad1.right_bumper) {
+                intake.upALittle();
+            } else if (gamepad1.left_bumper) {
+                intake.downALittle();
+            }
+
+            intake.update();
+            intake.setPower(gamepad1.right_trigger);
         }
     }
 }

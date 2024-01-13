@@ -77,7 +77,6 @@ public class Robot extends Mechanism {
         lift.update();
         arm.update();
         deposit.update();
-        intake.update();
         drive.update();
     }
 

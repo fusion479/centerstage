@@ -27,7 +27,7 @@ public class ArmTest extends LinearOpMode {
             } else if (gamepad1.b) {
                 arm.down();
             } else if (gamepad1.x) {
-                deposit.intake();
+                deposit.accepting();
             }else if (gamepad1.y) {
                 deposit.idle();
             }
