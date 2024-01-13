@@ -8,10 +8,11 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
 public class Robot extends Mechanism {
     SampleMecanumDrive drive;
-    Lift lift = new Lift();
+//    Lift lift = new Lift();
     Arm arm = new Arm();
     Deposit deposit = new Deposit();
     Intake intake = new Intake();
+    Launcher launcher = new Launcher();
 
     public boolean isPressedX = false;
     public boolean isPressedY = false;
@@ -19,11 +20,13 @@ public class Robot extends Mechanism {
     public boolean isPressedB = false;
     public boolean isPressedRB = false;
     public boolean isPressedLB = false;
+    public boolean isPressedDPadDown = false;
+    public boolean isPressedDPadUp = false;
 
     @Override
     public void init(HardwareMap hwMap) {
         drive = new SampleMecanumDrive(hwMap);
-        lift.init(hwMap);
+//        lift.init(hwMap);
         arm.init(hwMap);
         deposit.init(hwMap);
         intake.init(hwMap);
@@ -44,40 +47,43 @@ public class Robot extends Mechanism {
         isPressedB = gamepad1.b; // low
         isPressedLB = gamepad1.left_bumper; // toggle inner pixel
         isPressedRB = gamepad1.right_bumper; // toggle outer pixel
+        isPressedDPadUp = gamepad1.dpad_up;
+        isPressedDPadDown = gamepad1.dpad_down;
 
         if (!isPressedA && gamepad1.a) {
-            lift.bottom();
             arm.down();
             deposit.accepting();
-        } else if (!isPressedB && gamepad1.b) {
-            lift.low();
+        } else if (!isPressedDPadDown && gamepad1.dpad_down) {
+            launcher.launch();
+        } else if (!isPressedDPadUp && gamepad1.dpad_up) {
+            launcher.idle();
+        }else if (!isPressedB && gamepad1.b) {
+//            lift.low();
             arm.up();
             deposit.ready();
         } else if (!isPressedX && gamepad1.x) {
-            lift.medium();
+//            lift.medium();
             arm.up();
             deposit.ready();
         } else if (!isPressedY && gamepad1.y) {
-            lift.high();
+//            lift.high();
             arm.up();
             deposit.ready();
         } else if (!isPressedLB && gamepad1.left_bumper) {
             deposit.toggleOuter();
         } else if (!isPressedRB && gamepad1.right_bumper) {
             deposit.toggleInner();
-        } else if (gamepad1.right_trigger > .1) {
-            lift.bottom();
-            arm.down();
-            deposit.accepting();
         }
 
         intake.setPower(gamepad1.right_trigger);
         intake.setPower(-gamepad1.left_trigger);
 
-        lift.update();
+//        lift.update();
+        intake.update();
         arm.update();
         deposit.update();
         drive.update();
+        launcher.update();
     }
 
 }

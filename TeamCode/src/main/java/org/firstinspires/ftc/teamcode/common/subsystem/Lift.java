@@ -32,7 +32,7 @@ public class Lift extends Mechanism {
     private final DcMotorEx[] motors = new DcMotorEx[2];
     private static final double WHEEL_RADIUS = 0.7969769685;
     private static final double GEAR_RATIO = 1.0;
-    private static final double TICKS_PER_REV = 384.5;
+    private static final double TICKS_PER_REV = 537.7;
 
     // telemetry
     Telemetry tele;
@@ -53,7 +53,7 @@ public class Lift extends Mechanism {
         motors[0].setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         motors[1].setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
 
-        motors[0].setDirection(DcMotorEx.Direction.FORWARD);
+        motors[0].setDirection(DcMotorEx.Direction.REVERSE);
         motors[1].setDirection(DcMotorEx.Direction.FORWARD);
 
         bottom();
