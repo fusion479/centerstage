@@ -13,7 +13,7 @@ public class Intake extends Mechanism {
     DcMotorEx intake;
     Servo intakeLeft;
     Servo intakeRight;
-    public static double UP_POS = .5;
+    public static double UP_POS = 1;
     public static double DOWN_POS = 0;
     public static double IDLE_POS = .25;
     public static double CUSTOM_POS = .5;

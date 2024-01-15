@@ -57,28 +57,20 @@ public class Robot extends Mechanism {
             launcher.launch();
         } else if (!isPressedDPadUp && gamepad1.dpad_up) {
             launcher.idle();
-        }else if (!isPressedB && gamepad1.b) {
-//            lift.low();
-            arm.up();
-            deposit.ready();
         } else if (!isPressedX && gamepad1.x) {
-//            lift.medium();
             arm.up();
             deposit.ready();
         } else if (!isPressedY && gamepad1.y) {
-//            lift.high();
             arm.up();
-            deposit.ready();
-        } else if (!isPressedLB && gamepad1.left_bumper) {
+            deposit.score();
+        }else if (!isPressedLB && gamepad1.left_bumper) {
             deposit.toggleOuter();
         } else if (!isPressedRB && gamepad1.right_bumper) {
             deposit.toggleInner();
         }
 
-        intake.setPower(gamepad1.right_trigger);
-        intake.setPower(-gamepad1.left_trigger);
 
-//        lift.update();
+
         intake.update();
         arm.update();
         deposit.update();

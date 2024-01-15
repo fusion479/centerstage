@@ -9,7 +9,7 @@ public class Arm extends Mechanism {
     Servo left, right;
     public static double UP_POS = .5;
     public static double READY_POS = .75;
-    public static double DOWN_POS = .96;
+    public static double DOWN_POS = .93;
     public static double target = DOWN_POS;
 
     private boolean isUp;
