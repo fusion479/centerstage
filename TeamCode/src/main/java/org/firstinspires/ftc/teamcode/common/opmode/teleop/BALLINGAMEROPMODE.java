@@ -31,7 +31,7 @@ public class BALLINGAMEROPMODE extends LinearOpMode {
 
 
         waitForStart();
-        while(opModeIsActive() && !isStopRequested()) {
+        while (opModeIsActive() && !isStopRequested()) {
             drive.setWeightedDrivePower(
                     new Pose2d(
                             -gamepad1.left_stick_y,
@@ -59,17 +59,14 @@ public class BALLINGAMEROPMODE extends LinearOpMode {
 
             if (gamepad1.right_trigger > 0.1) {
                 intake.setPower(gamepad1.right_trigger * .8);
-
             } else if (gamepad1.left_trigger > 0.1) {
                 intake.setPower(-gamepad1.left_trigger * .8);
-
-            } else{
+            } else {
                 intake.setPower(0);
+                // CODE!!!
             }
 
             intake.update();
-
-
             arm.update();
             deposit.update();
             drive.update();

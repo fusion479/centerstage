@@ -19,7 +19,7 @@ public class IntakeTest extends LinearOpMode {
         waitForStart();
         while(opModeIsActive()){
             if (gamepad1.a) {
-                intake.up();
+                intake.up(); // zero in up position
             } else if (gamepad1.b) {
                 intake.idle();
             } else if (gamepad1.x) {

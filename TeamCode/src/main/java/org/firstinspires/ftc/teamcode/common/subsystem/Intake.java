@@ -20,13 +20,6 @@ public class Intake extends Mechanism {
     double power;
     double intakePos;
 
-    public enum STATES {
-        UP,
-        IDLE,
-        INTAKING
-    };
-    public STATES intakeState = STATES.UP;
-
     @Override
     public void init(HardwareMap hwMap) {
         intake = hwMap.get(DcMotorEx.class, "intake");
@@ -41,18 +34,7 @@ public class Intake extends Mechanism {
     }
 
     public void update() {
-//        switch (intakeState) {
-//            case UP:
-//                intakePos = UP_POS;
-//            case IDLE:
-//                intakePos = IDLE_POS;
-//            case INTAKING:
-//                intakePos = DOWN_POS;
-//        }
-//
-            intake.setPower(power);
-//        intakeLeft.setPosition(intakePos);
-//        intakeRight.setPosition(1 - intakePos);
+        intake.setPower(power);
     }
 
     public void setPower(double power) {

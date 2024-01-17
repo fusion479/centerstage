@@ -38,8 +38,6 @@ public class Deposit extends Mechanism {
 
     public void accepting() {
         pivotTarget = ACCEPTING_POS;
-        openInner();
-        openOuter();
     }
 
     public void idle() {
