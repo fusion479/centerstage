@@ -30,7 +30,7 @@ public class ManualLiftTest extends LinearOpMode {
         motors[0].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motors[1].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motors[0].setDirection(DcMotorSimple.Direction.FORWARD);
-        motors[1].setDirection(DcMotorSimple.Direction.FORWARD);
+        motors[1].setDirection(DcMotorSimple.Direction.REVERSE);
 
         waitForStart();
         while(opModeIsActive()) {

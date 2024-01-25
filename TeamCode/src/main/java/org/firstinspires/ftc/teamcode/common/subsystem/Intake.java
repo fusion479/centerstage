@@ -13,12 +13,12 @@ public class Intake extends Mechanism {
     DcMotorEx intake;
     Servo intakeLeft;
     Servo intakeRight;
-    public static double UP_POS = 1;
-    public static double DOWN_POS = 0;
-    public static double IDLE_POS = .25;
+    public static double UP_POS = .75;
+    public static double DOWN_POS = .11;
+    public static double IDLE_POS = .5;
     public static double CUSTOM_POS = .5;
-    double power;
-    double intakePos;
+    public static double target = UP_POS;
+    public static double power;
 
     @Override
     public void init(HardwareMap hwMap) {
@@ -34,6 +34,8 @@ public class Intake extends Mechanism {
     }
 
     public void update() {
+        intakeLeft.setPosition(target);
+        intakeRight.setPosition(1 - target);
         intake.setPower(power);
     }
 
@@ -42,18 +44,15 @@ public class Intake extends Mechanism {
     }
 
     public void up() {
-        intakeLeft.setPosition(UP_POS);
-        intakeRight.setPosition(1 - UP_POS);
+        target = UP_POS;
     }
 
     public void idle() {
-        intakeLeft.setPosition(IDLE_POS);
-        intakeRight.setPosition(1 - IDLE_POS);
+        target = IDLE_POS;
     }
 
     public void intaking() {
-        intakeLeft.setPosition(DOWN_POS);
-        intakeRight.setPosition(1 - DOWN_POS);
+        target = DOWN_POS;
     }
 
     public void downALittle() {
