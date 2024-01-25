@@ -10,7 +10,7 @@ public class Deposit extends Mechanism {
     public static double ACCEPTING_POS = .15;
     public static double IDLE_POS = .5;
     public static double READY_POS = .4;
-    public static double SCORE_POS = .6;
+    public static double SCORE_POS = 1;
 
     public static double LOCKINNER = .7;
     public static double OPENINNER = .0;

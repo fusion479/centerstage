@@ -7,9 +7,9 @@ import com.qualcomm.robotcore.hardware.Servo;
 @Config
 public class Arm extends Mechanism {
     Servo left, right;
-    public static double UP_POS = .48;
+    public static double UP_POS = .22;
     public static double READY_POS = .75;
-    public static double DOWN_POS = .93;
+    public static double DOWN_POS = .6;
     public static double target = DOWN_POS;
 
     private boolean isUp;
