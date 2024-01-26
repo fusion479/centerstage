@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.common.util.PIDController;
@@ -62,7 +63,7 @@ public class Lift extends Mechanism {
 
     public void update() {
         controller.setTarget(target);
-        power = controller.calculate(getPosition()) + kG;
+        power = Range.clip(controller.calculate(getPosition()), -1, 1) + kG;
         motors[0].setPower(power);
         motors[1].setPower(power);
 

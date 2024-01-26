@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.common.subsystem.Arm;
 import org.firstinspires.ftc.teamcode.common.subsystem.Deposit;
+import org.firstinspires.ftc.teamcode.common.subsystem.Intake;
 import org.firstinspires.ftc.teamcode.common.subsystem.Lift;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
@@ -15,16 +16,16 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 public class RobotTest extends LinearOpMode {
 
     SampleMecanumDrive drive;
-    Lift lift = new Lift();
-    Arm arm = new Arm();
     Deposit deposit = new Deposit();
+    Arm arm = new Arm();
+    Intake intake = new Intake();
 
     @Override
     public void runOpMode() throws InterruptedException {
         drive = new SampleMecanumDrive(hardwareMap);
-        lift.init(hardwareMap);
-        arm.init(hardwareMap);
         deposit.init(hardwareMap);
+        arm.init(hardwareMap);
+        intake.init(hardwareMap);
 
         waitForStart();
         while (opModeIsActive() && !isStopRequested()) {
@@ -37,24 +38,28 @@ public class RobotTest extends LinearOpMode {
             );
 
             if (gamepad1.a) {
-                arm.down();
-//                deposit.intake();
+                arm.up();
             } else if (gamepad1.b) {
                 arm.down();
-                deposit.idle();
             } else if (gamepad1.x) {
-                arm.up();
-                deposit.ready();
-            } else if (gamepad1.y) {
-                arm.up();
+                intake.intaking();
+            }else if (gamepad1.y) {
+                intake.idle();
+            } else if (gamepad1.dpad_up) {
                 deposit.score();
-            } else if (gamepad1.right_bumper) {
-                lift.upALittle();
-            } else if (gamepad1.left_bumper) {
-                lift.downALittle();
+            } else if(gamepad1.dpad_down) {
+                deposit.accepting();
             }
 
-            lift.update();
+            if (gamepad1.right_trigger > 0.1) {
+                intake.setPower(gamepad1.right_trigger);
+            } else if (gamepad1.left_trigger > 0.1) {
+                intake.setPower(-gamepad1.left_trigger);
+            } else {
+                intake.setPower(0);
+            }
+
+            intake.update();
             arm.update();
             deposit.update();
             drive.update();

@@ -6,10 +6,11 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.common.subsystem.Arm;
 import org.firstinspires.ftc.teamcode.common.subsystem.Deposit;
 import org.firstinspires.ftc.teamcode.common.subsystem.Intake;
+import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
-@TeleOp(name = "Bing Bong Test", group = "testing")
+@TeleOp(name = "Combined Mech Test", group = "testing")
 
-public class ChingChong extends LinearOpMode {
+public class CombinedMechTest extends LinearOpMode {
 
     Arm arm = new Arm();
     Deposit deposit = new Deposit();
