@@ -30,6 +30,10 @@ public class DepositTest extends LinearOpMode {
                 deposit.idle();
             }else if (gamepad1.y) {
                 deposit.score();
+            } else if (gamepad1.dpad_down) {
+                deposit.toggleInner();
+            } else if (gamepad1.dpad_up) {
+                deposit.toggleOuter();
             }
 
             deposit.update();

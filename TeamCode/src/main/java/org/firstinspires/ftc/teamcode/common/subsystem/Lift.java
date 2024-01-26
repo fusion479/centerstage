@@ -5,6 +5,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -53,8 +54,8 @@ public class Lift extends Mechanism {
         motors[0].setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         motors[1].setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
 
-        motors[0].setDirection(DcMotorEx.Direction.REVERSE);
-        motors[1].setDirection(DcMotorEx.Direction.FORWARD);
+        motors[0].setDirection(DcMotorEx.Direction.FORWARD);
+        motors[1].setDirection(DcMotorEx.Direction.REVERSE);
 
         bottom();
     }
@@ -63,7 +64,7 @@ public class Lift extends Mechanism {
         controller.setTarget(target);
         power = controller.calculate(getPosition()) + kG;
         motors[0].setPower(power);
-        motors[1].setPower(-power);
+        motors[1].setPower(power);
 
 //        telemetry.addData("Current Position: ", getPosition());
 //        telemetry.addData("Error: ", controller.getLastError());
