@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 @Config
 public class Deposit extends Mechanism {
     Servo pivot, inner, outer;
-    public static double ACCEPTING_POS = .5;
+    public static double ACCEPTING_POS = .28;
     public static double IDLE_POS = .7;
     public static double READY_POS = .9;
     public static double SCORE_POS = 1;
