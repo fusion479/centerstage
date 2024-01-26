@@ -5,7 +5,6 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.Range;
 
@@ -15,6 +14,10 @@ import org.firstinspires.ftc.teamcode.common.util.PIDController;
 
 @Config
 public class Lift extends Mechanism {
+    private static final double WHEEL_RADIUS = 0.7969769685;
+    private static final double GEAR_RATIO = 1.0;
+    private static final double TICKS_PER_REV = 537.7;
+
     // PID Coefficients
     public static double kP = 0.0025;
     public static double kI = 0;
@@ -22,20 +25,17 @@ public class Lift extends Mechanism {
     public static double kG = 0.03;
     public static double target = 0;
     public static double power = 0;
-    private final PIDController controller = new PIDController(kP, kI, kD);
-
+    public static double error = 0;
+    public static double bound = 50;
     // slides heights
     public static int bottom = 0;
     public static int low = 600;
     public static int medium = 1200;
     public static int high = 1900;
-
+    private final PIDController controller = new PIDController(kP, kI, kD);
     // Motor info declarations
     private final DcMotorEx[] motors = new DcMotorEx[2];
-    private static final double WHEEL_RADIUS = 0.7969769685;
-    private static final double GEAR_RATIO = 1.0;
-    private static final double TICKS_PER_REV = 537.7;
-
+    public boolean isReached = false;
     // telemetry
     Telemetry tele;
     FtcDashboard dashboard = FtcDashboard.getInstance();
@@ -63,14 +63,24 @@ public class Lift extends Mechanism {
 
     public void update() {
         controller.setTarget(target);
+        error = getPosition() - target;
         power = Range.clip(controller.calculate(getPosition()), -1, 1) + kG;
+
+        if (Math.abs(error) < bound) {
+            power = kG;
+            if (target == 0) {
+                power = 0;
+            }
+            isReached = true;
+        }
+
         motors[0].setPower(power);
         motors[1].setPower(power);
 
-//        telemetry.addData("Current Position: ", getPosition());
-//        telemetry.addData("Error: ", controller.getLastError());
-//        telemetry.addData("Target: ", target);
-//        telemetry.addData("Power: ", power);
+//        telemetry.addData("Current Position", getPosition());
+//        telemetry.addData("Error", error);
+//        telemetry.addData("Target", target);
+//        telemetry.addData("Power", power);
 //        telemetry.update();
     }
 
@@ -96,7 +106,7 @@ public class Lift extends Mechanism {
     }
 
     public void setTarget(int target) {
-        this.target = target;
+        Lift.target = target;
     }
 
     public double getPosition() {
