@@ -13,18 +13,15 @@ import org.openftc.easyopencv.OpenCvPipeline;
 
 @Config
 public class Pipeline extends OpenCvPipeline {
+    public double r3threshold = .05;
     String color;
-
     FtcDashboard dashboard = FtcDashboard.getInstance();
     Telemetry telemetry = dashboard.getTelemetry();
-
-
     Mat mat = new Mat();
     Scalar lowHSV;
     Scalar highHSV;
     Rect ROI1, ROI2;
     double region1Percent, region2Percent;
-    public double r3threshold = .01;
     int region;
 
     public Pipeline(String colorChoice) {
@@ -38,7 +35,8 @@ public class Pipeline extends OpenCvPipeline {
         if (color == "red") {
             lowHSV = new Scalar(160, 50, 50);
             highHSV = new Scalar(180, 255, 255);
-        } if (color == "blue") {
+        }
+        if (color == "blue") {
             lowHSV = new Scalar(110, 50, 50);
             highHSV = new Scalar(120, 255, 255);
         }

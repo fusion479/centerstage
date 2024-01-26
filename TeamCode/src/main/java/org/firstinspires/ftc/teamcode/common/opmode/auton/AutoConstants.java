@@ -5,12 +5,11 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 
 public class AutoConstants {
-    // Starting positions
-    public static double START_X = 0;
-    public static double START_Y = 0;
-    public static double START_HEADING = Math.toRadians(0);
 
-    public static Pose2d BACKSTAGE_BLUE_START = new Pose2d(START_X, START_Y, START_HEADING);
+    public static Pose2d BLUE_BACKSTAGE_START = new Pose2d(15.5, 63.25, Math.toRadians(270));
+    public static Pose2d RED_BACKSTAGE_START = new Pose2d(15.5, -63.25, Math.toRadians(90));
+    public static Pose2d BLUE_FRONT_START = new Pose2d(-34.5, 63.25, Math.toRadians(270));
+    public static Pose2d RED_FRONT_START = new Pose2d(-34.5, -63.25, Math.toRadians(90));
 
     public static double CENTER_SPIKE_MARK_X = 20;
     public static double CENTER_SPIKE_MARK_Y = 20;

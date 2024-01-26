@@ -1,4 +1,6 @@
-package org.firstinspires.ftc.teamcode.common.opmode.auton.red;
+package org.firstinspires.ftc.teamcode.common.opmode.auton.blue;
+
+import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
@@ -7,8 +9,8 @@ import org.firstinspires.ftc.teamcode.common.subsystem.Deposit;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
-@Autonomous(name = "Red Far", group = "_Auto")
-public class RedFar extends LinearOpMode {
+@Autonomous(name = "Blue Backstage Right", group = "_Auto")
+public class BlueBackstageRight extends LinearOpMode {
     SampleMecanumDrive drive;
     Deposit deposit = new Deposit();
 
@@ -17,11 +19,12 @@ public class RedFar extends LinearOpMode {
         drive = new SampleMecanumDrive(hardwareMap);
         deposit.init(hardwareMap);
 
-        TrajectorySequence lets_go = drive.trajectorySequenceBuilder(AutoConstants.BACKSTAGE_BLUE_START)
-                .forward(28)
-                .back(2)
-                .strafeRight(84)
+        TrajectorySequence lets_go = drive.trajectorySequenceBuilder(AutoConstants.BLUE_BACKSTAGE_START)
+                .setTangent(Math.toRadians(270))
+                .splineToLinearHeading(new Pose2d(10, 40, Math.toRadians(210)), Math.toRadians(180))
                 .build();
+
+        drive.setPoseEstimate(AutoConstants.BLUE_BACKSTAGE_START);
 
         waitForStart();
 
