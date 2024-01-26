@@ -12,7 +12,7 @@ public class Robot extends Mechanism {
     Arm arm = new Arm();
     Deposit deposit = new Deposit();
     Intake intake = new Intake();
-    Launcher launcher = new Launcher();
+//    Launcher launcher = new Launcher();
 
     public boolean isPressedX = false;
     public boolean isPressedY = false;
@@ -54,9 +54,9 @@ public class Robot extends Mechanism {
             arm.down();
             deposit.accepting();
         } else if (!isPressedDPadDown && gamepad1.dpad_down) {
-            launcher.launch();
+//            launcher.launch();
         } else if (!isPressedDPadUp && gamepad1.dpad_up) {
-            launcher.idle();
+//            launcher.idle();
         } else if (!isPressedX && gamepad1.x) {
             arm.up();
             deposit.ready();
@@ -75,7 +75,7 @@ public class Robot extends Mechanism {
         arm.update();
         deposit.update();
         drive.update();
-        launcher.update();
+//        launcher.update();
     }
 
 }

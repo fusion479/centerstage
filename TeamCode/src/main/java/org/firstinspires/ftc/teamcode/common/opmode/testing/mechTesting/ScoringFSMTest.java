@@ -8,9 +8,9 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.common.subsystem.ScoringFSM;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
-@TeleOp(name = "ScoreFSM Test", group = "testing")
+@TeleOp(name = "ScoringFSM Test", group = "testing")
 @Config
-public class ScoreTest extends LinearOpMode {
+public class ScoringFSMTest extends LinearOpMode {
     SampleMecanumDrive drive;
     ScoringFSM scoringFSM = new ScoringFSM();
 
@@ -20,9 +20,7 @@ public class ScoreTest extends LinearOpMode {
         scoringFSM.init(hardwareMap);
 
         waitForStart();
-
-        // Scan servo till stop pressed.
-        while(opModeIsActive()){
+        while(opModeIsActive() && !isStopRequested()){
             drive.setWeightedDrivePower(
                     new Pose2d(
                             -gamepad1.left_stick_y,
@@ -30,8 +28,21 @@ public class ScoreTest extends LinearOpMode {
                             -gamepad1.right_stick_x
                     )
             );
+
+            if (gamepad1.a) {
+                scoringFSM.intake();
+            } else if (gamepad1.b) {
+                scoringFSM.readyLow();
+            } else if (gamepad1.x) {
+                scoringFSM.readyHigh();
+            } else if (gamepad1.y) {
+                scoringFSM.readyMedium();
+            } else if (gamepad1.right_bumper) {
+                scoringFSM.score();
+            }
+
             drive.update();
-            scoringFSM.update();
+            scoringFSM.update(gamepad1);
         }
     }
 }

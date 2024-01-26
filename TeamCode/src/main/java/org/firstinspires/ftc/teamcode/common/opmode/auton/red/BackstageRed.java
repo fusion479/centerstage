@@ -61,7 +61,6 @@ public class BackstageRed extends LinearOpMode {
 
         while (opModeIsActive() && !isStopRequested()) {
             drive.update();
-            score.update();
 
             telemetry.addData("Region: ", region);
             telemetry.update();
