@@ -32,6 +32,8 @@ public class IntakeTest extends LinearOpMode {
                intake.setPower(gamepad1.right_trigger);
             } else if (gamepad1.left_trigger > 0) {
                 intake.setPower(-gamepad1.left_trigger);
+            } else {
+                intake.setPower(0);
             }
 
             intake.update();
