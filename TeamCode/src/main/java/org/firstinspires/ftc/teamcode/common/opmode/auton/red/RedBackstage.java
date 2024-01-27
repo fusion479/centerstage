@@ -1,11 +1,10 @@
-package org.firstinspires.ftc.teamcode.common.opmode.auton.blue;
+package org.firstinspires.ftc.teamcode.common.opmode.auton.red;
 
-import com.acmerobotics.dashboard.FtcDashboard;
-import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.common.opmode.auton.AutoConstants;
 import org.firstinspires.ftc.teamcode.common.subsystem.Arm;
 import org.firstinspires.ftc.teamcode.common.subsystem.Camera;
@@ -14,10 +13,9 @@ import org.firstinspires.ftc.teamcode.common.subsystem.Intake;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
-@Autonomous(name = "Blue Backstage BALLIN", group = "_Auto")
-public class BlueBackstageBallin extends LinearOpMode {
-    FtcDashboard dashboard = FtcDashboard.getInstance();
-    Telemetry telemetry = dashboard.getTelemetry();
+@Autonomous(name = "Red Backstage", group = "_Auto")
+public class RedBackstage extends LinearOpMode {
+    MultipleTelemetry tele = new MultipleTelemetry();
     private int region;
 
     SampleMecanumDrive drive;
@@ -42,31 +40,28 @@ public class BlueBackstageBallin extends LinearOpMode {
         deposit.update();
         intake.update();
 
-        drive.setPoseEstimate(AutoConstants.BLUE_BACKSTAGE_START);
+        drive.setPoseEstimate(AutoConstants.RED_BACKSTAGE_START);
 
-        TrajectorySequence leftSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.BLUE_BACKSTAGE_START)
-                .strafeLeft(3)
+        TrajectorySequence leftSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.RED_BACKSTAGE_START)
                 .setTangent(Math.toRadians(270))
-                .splineToLinearHeading(new Pose2d(16, 32, Math.toRadians(330)), Math.toRadians(300))
-                .back(5)
+                .splineToConstantHeading(new Vector2d(0, -36), Math.toRadians(180))
                 .build();
 
-        TrajectorySequence rightSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.BLUE_BACKSTAGE_START)
-                .setTangent(Math.toRadians(270))
-                .splineToLinearHeading(new Pose2d(10, 40, Math.toRadians(210)), Math.toRadians(180))
-                .back(10)
+        TrajectorySequence rightSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.RED_BACKSTAGE_START)
+                .setTangent(Math.toRadians(0))
+                .splineToConstantHeading(new Vector2d(20, -38), Math.toRadians(180))
                 .build();
 
-        TrajectorySequence middleSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.BLUE_BACKSTAGE_START)
-                .forward(25)
+        TrajectorySequence middleSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.RED_BACKSTAGE_START)
+                .forward(AutoConstants.MIDDLE_SPIKE_DISTANCE)
                 .back(10)
                 .build();
 
 
         while (!isStarted() && !isStopRequested()) {
             region = camera.whichRegion();
-            telemetry.addData("Region", camera.whichRegion());
-            telemetry.update();
+            tele.addData("DETECTED REGION", camera.whichRegion());
+            tele.update();
         }
 
         camera.stopStreaming();

@@ -11,11 +11,6 @@ public class AutoConstants {
     public static Pose2d BLUE_FRONT_START = new Pose2d(-34.5, 63.25, Math.toRadians(270));
     public static Pose2d RED_FRONT_START = new Pose2d(-34.5, -63.25, Math.toRadians(90));
 
-    public static double CENTER_SPIKE_MARK_X = 20;
-    public static double CENTER_SPIKE_MARK_Y = 20;
-
-    public static Vector2d LEFT_SPIKE_MARK = new Vector2d(CENTER_SPIKE_MARK_X + 6, CENTER_SPIKE_MARK_Y - 6);
-    public static Pose2d CENTER_SPIKE_MARK = new Pose2d(CENTER_SPIKE_MARK_X, CENTER_SPIKE_MARK_Y);
-    public static Vector2d RIGHT_SPIKE_MARK = new Vector2d(CENTER_SPIKE_MARK_X + 6, CENTER_SPIKE_MARK_Y + 6);
+    public static double MIDDLE_SPIKE_DISTANCE = 25;
 
 }
