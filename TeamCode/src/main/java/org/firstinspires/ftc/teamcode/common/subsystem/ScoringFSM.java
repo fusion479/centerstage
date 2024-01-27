@@ -59,13 +59,13 @@ public class ScoringFSM extends Mechanism {
                 deposit.lockInner();
                 deposit.lockOuter();
 
-                if (armTimer.milliseconds() >= armDelay) {
+                if (armTimer.milliseconds() >= 100) {
                     lift.bottom();
                     arm.ready();
-                    deposit.ready();
                 }
 
-                if (armTimer.milliseconds() >= armDelay + 200) {
+                if (armTimer.milliseconds() >= 500) {
+                    deposit.ready();
                     intake.idle();
                 }
 
