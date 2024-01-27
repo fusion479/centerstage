@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.common.opmode.testing.mechTesting;
+package org.firstinspires.ftc.teamcode.common.opmode.test.mechanisms;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
@@ -8,7 +8,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.common.subsystem.Arm;
 import org.firstinspires.ftc.teamcode.common.subsystem.Deposit;
 import org.firstinspires.ftc.teamcode.common.subsystem.Intake;
-import org.firstinspires.ftc.teamcode.common.subsystem.Lift;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
 @TeleOp (name = "Robot Test")

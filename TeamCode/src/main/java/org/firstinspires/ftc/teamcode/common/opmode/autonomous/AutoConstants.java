@@ -1,8 +1,7 @@
-package org.firstinspires.ftc.teamcode.common.opmode.auton;
+package org.firstinspires.ftc.teamcode.common.opmode.autonomous;
 
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.geometry.Vector2d;
 
 public class AutoConstants {
 

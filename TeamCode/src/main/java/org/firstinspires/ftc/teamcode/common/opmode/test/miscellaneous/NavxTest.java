@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.common.opmode.testing.miscTesting;
+package org.firstinspires.ftc.teamcode.common.opmode.test.miscellaneous;
 
 import com.qualcomm.hardware.kauailabs.NavxMicroNavigationSensor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;

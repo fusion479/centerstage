@@ -1,11 +1,11 @@
-package org.firstinspires.ftc.teamcode.common.opmode.auton.red;
+package org.firstinspires.ftc.teamcode.common.opmode.autonomous.red;
 
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.common.opmode.auton.AutoConstants;
+import org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants;
 import org.firstinspires.ftc.teamcode.common.subsystem.Arm;
 import org.firstinspires.ftc.teamcode.common.subsystem.Camera;
 import org.firstinspires.ftc.teamcode.common.subsystem.Deposit;

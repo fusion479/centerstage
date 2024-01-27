@@ -1,11 +1,11 @@
-package org.firstinspires.ftc.teamcode.common.opmode.auton.red;
+package org.firstinspires.ftc.teamcode.common.opmode.autonomous.blue;
 
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
-import com.acmerobotics.roadrunner.geometry.Vector2d;
+import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.common.opmode.auton.AutoConstants;
+import org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants;
 import org.firstinspires.ftc.teamcode.common.subsystem.Arm;
 import org.firstinspires.ftc.teamcode.common.subsystem.Camera;
 import org.firstinspires.ftc.teamcode.common.subsystem.Deposit;
@@ -13,8 +13,8 @@ import org.firstinspires.ftc.teamcode.common.subsystem.Intake;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
-@Autonomous(name = "Red Front", group = "_Auto")
-public class RedFront extends LinearOpMode {
+@Autonomous(name = "Blue Backstage", group = "_Auto")
+public class BlueBackstage extends LinearOpMode {
     MultipleTelemetry tele = new MultipleTelemetry();
     private int region;
 
@@ -40,20 +40,22 @@ public class RedFront extends LinearOpMode {
         deposit.update();
         intake.update();
 
-        drive.setPoseEstimate(AutoConstants.RED_FRONT_START);
+        drive.setPoseEstimate(AutoConstants.BLUE_BACKSTAGE_START);
 
-        // TODO: LEFT AND RIGHT SPIKE MARK ARE NOT THE CORRECT PATH
-        TrajectorySequence leftSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.RED_FRONT_START)
+        TrajectorySequence leftSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.BLUE_BACKSTAGE_START)
+                .strafeLeft(3)
                 .setTangent(Math.toRadians(270))
-                .splineToConstantHeading(new Vector2d(-45, 42), Math.toRadians(180))
+                .splineToLinearHeading(new Pose2d(16, 32, Math.toRadians(330)), Math.toRadians(300))
+                .back(5)
                 .build();
 
-        TrajectorySequence rightSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.RED_FRONT_START)
-                .setTangent(Math.toRadians(0))
-                .splineToConstantHeading(new Vector2d(-27, 42), Math.toRadians(90))
+        TrajectorySequence rightSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.BLUE_BACKSTAGE_START)
+                .setTangent(Math.toRadians(270))
+                .splineToLinearHeading(new Pose2d(10, 40, Math.toRadians(210)), Math.toRadians(180))
+                .back(10)
                 .build();
 
-        TrajectorySequence middleSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.RED_FRONT_START)
+        TrajectorySequence middleSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.BLUE_BACKSTAGE_START)
                 .forward(AutoConstants.MIDDLE_SPIKE_DISTANCE)
                 .back(10)
                 .build();
