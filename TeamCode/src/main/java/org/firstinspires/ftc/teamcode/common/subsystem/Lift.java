@@ -31,7 +31,7 @@ public class Lift extends Mechanism {
     public static int bottom = 0;
     public static int low = 600;
     public static int medium = 1200;
-    public static int high = 1900;
+    public static int high = 2050;
     private final PIDController controller = new PIDController(kP, kI, kD);
     // Motor info declarations
     private final DcMotorEx[] motors = new DcMotorEx[2];

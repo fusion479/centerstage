@@ -5,6 +5,7 @@ import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
@@ -18,6 +19,8 @@ public class Robot extends Mechanism {
     Arm arm = new Arm();
     Deposit deposit = new Deposit();
     Intake intake = new Intake();
+
+    private VoltageSensor voltageSensor;
 
     public boolean isPressedX = false;
     public boolean isPressedY = false;
@@ -35,6 +38,8 @@ public class Robot extends Mechanism {
         arm.init(hwMap);
         deposit.init(hwMap);
         intake.init(hwMap);
+
+        voltageSensor = hwMap.get(VoltageSensor.class, "Control Hub");
 
         arm.up();
         deposit.accepting();
@@ -105,6 +110,7 @@ public class Robot extends Mechanism {
 
         telemetry.addData("Outer Locked?", Deposit.outerLocked);
         telemetry.addData("Inner Locked?", Deposit.innerLocked);
+        telemetry.addData("Battery Voltage", voltageSensor.getVoltage());
         telemetry.update();
     }
 

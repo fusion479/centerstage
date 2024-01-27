@@ -18,7 +18,9 @@ public class BlueForward extends LinearOpMode {
         drive = new SampleMecanumDrive(hardwareMap);
         deposit.init(hardwareMap);
 
-        TrajectorySequence lets_go = drive.trajectorySequenceBuilder(new Pose2d(0, 0, Math.toRadians(270)))
+        drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+
+        TrajectorySequence lets_go = drive.trajectorySequenceBuilder(new Pose2d(0, 0, Math.toRadians(0)))
                 .forward(25)
                 .build();
 
