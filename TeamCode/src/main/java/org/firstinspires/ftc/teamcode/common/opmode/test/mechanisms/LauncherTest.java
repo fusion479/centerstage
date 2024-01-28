@@ -7,22 +7,19 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.common.subsystem.Launcher;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
-@TeleOp(name = "Endgame Test", group = "testing")
+@TeleOp(name = "Launcher Test", group = "testing")
 @Config
-public class EndgameTest extends LinearOpMode {
+public class LauncherTest extends LinearOpMode {
     SampleMecanumDrive drive;
-//    Climber climber = new Climber();
     Launcher launcher = new Launcher();
 
     @Override
     public void runOpMode() throws InterruptedException {
         drive = new SampleMecanumDrive(hardwareMap);
-//        climber.init(hardwareMap);
         launcher.init(hardwareMap);
 
         waitForStart();
 
-        // Scan servo till stop pressed.
         while(opModeIsActive()) {
             if (gamepad1.a) {
                 launcher.idle();

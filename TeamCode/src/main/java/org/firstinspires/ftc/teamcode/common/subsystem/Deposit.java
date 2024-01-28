@@ -17,8 +17,8 @@ public class Deposit extends Mechanism {
     public static double pivotTarget = ACCEPTING_POS;
     public static double innerTarget = OPENINNER;
     public static double outerTarget = OPENINNER;
-    public static boolean innerLocked = false;
-    public static boolean outerLocked = false;
+    public boolean innerLocked = false;
+    public boolean outerLocked = false;
     Servo pivot, inner, outer;
 
     public void init(HardwareMap hwMap) {

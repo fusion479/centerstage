@@ -16,113 +16,44 @@ public class Robot extends Mechanism {
     Telemetry telemetry = dashboard.getTelemetry();
 
     SampleMecanumDrive drive;
-    Lift lift = new Lift();
-    Arm arm = new Arm();
-    Deposit deposit = new Deposit();
-    Intake intake = new Intake();
+    ScoringFSM scoringFSM = new ScoringFSM();
 
-    private VoltageSensor voltageSensor;
-
-    public boolean isPressedX = false;
-    public boolean isPressedY = false;
-    public boolean isPressedA = false;
-    public boolean isPressedB = false;
-    public boolean isPressedRB = false;
-    public boolean isPressedLB = false;
-    public boolean isPressedDPadDown = false;
-    public boolean isPressedDPadUp = false;
-
-    ElapsedTime armTimer = new ElapsedTime();
-    public double armDelay = 300;
+    public static double speedCoefficient = 0.7;
 
     @Override
     public void init(HardwareMap hwMap) {
         drive = new SampleMecanumDrive(hwMap);
-        lift.init(hwMap);
-        arm.init(hwMap);
-        deposit.init(hwMap);
-        intake.init(hwMap);
-
-        voltageSensor = hwMap.get(VoltageSensor.class, "Control Hub");
-
-        arm.up();
-        deposit.accepting();
-        intake.idle();
-        deposit.openOuter();
-        deposit.openInner();
-        lift.bottom();
+        scoringFSM.init(hwMap);
     }
 
-    public void update(Gamepad gamepad, Gamepad gamepad2) {
-        drive.setWeightedDrivePower(
-                new Pose2d(
-                        -gamepad.left_stick_y,
-                        -gamepad.left_stick_x,
-                        -gamepad.right_stick_x
-                )
-        );
-
-        if (gamepad.a) {
-            armTimer.reset();
-            lift.bottom();
-            deposit.accepting();
-            arm.down();
-        } else if (gamepad.dpad_down) {
-            intake.intaking();
-        } else if (gamepad.dpad_up) {
-            intake.idle();
-        } else if (gamepad.b) {
-            arm.up();
-            deposit.ready();
-        } else if (gamepad.x) {
-            lift.medium();
-            arm.up();
-            deposit.score();
-        } else if (gamepad.y) {
-            lift.high();
-            arm.up();
-            deposit.score();
-        }
-
-        if (!isPressedRB && gamepad.right_bumper) {
-            deposit.toggleOuter();
-        }
-
-        if (!isPressedLB && gamepad.left_bumper) {
-            deposit.toggleInner();
-        }
-
-        if (gamepad.right_trigger > 0) {
-            intake.setPower(gamepad.right_trigger);
-        } else if (gamepad.left_trigger > 0) {
-            intake.setPower(-gamepad.left_trigger);
+    public void update(Gamepad gamepad1, Gamepad gamepad2) {
+        if (scoringFSM.up) {
+            drive.setWeightedDrivePower(
+                    new Pose2d(
+                            -gamepad1.left_stick_y * speedCoefficient,
+                            -gamepad1.left_stick_x * speedCoefficient,
+                            gamepad1.right_stick_x * speedCoefficient
+                    )
+            );
         } else {
-            intake.setPower(0);
+            drive.setWeightedDrivePower(
+                    new Pose2d(
+                            -gamepad1.left_stick_y,
+                            -gamepad1.left_stick_x,
+                            gamepad1.right_stick_x
+                    )
+            );
         }
 
-        isPressedX = gamepad.x; // high
-        isPressedY = gamepad.y;  // medium
-        isPressedA = gamepad.a; // ready bottom
-        isPressedB = gamepad.b; // low
-        isPressedLB = gamepad.left_bumper; // toggle inner pixel
-        isPressedRB = gamepad.right_bumper; // toggle outer pixel
-        isPressedDPadUp = gamepad.dpad_up;
-        isPressedDPadDown = gamepad.dpad_down;
-
-        lift.update();
-        intake.update();
-        arm.update();
-        deposit.update();
         drive.update();
+        scoringFSM.update(gamepad1);
 
-        telemetry.addData("Outer Locked?", Deposit.outerLocked);
-        telemetry.addData("Inner Locked?", Deposit.innerLocked);
-        telemetry.addData("Battery Voltage", voltageSensor.getVoltage());
-        telemetry.addData("isPressedLB", isPressedLB);
-        telemetry.addData("isPressedRB", isPressedRB);
-        telemetry.addData("LB", gamepad.left_bumper);
-        telemetry.addData("RB", gamepad.right_bumper);
-
+        telemetry.addData("State", scoringFSM.state);
+        telemetry.addData("Arm timer", scoringFSM.timer.milliseconds());
+        telemetry.addData("isPressedA", scoringFSM.isPressedA);
+        telemetry.addData("A", gamepad1.a);
+        telemetry.addData("Inner locked", scoringFSM.deposit.innerLocked);
+        telemetry.addData("Outer locked", scoringFSM.deposit.outerLocked);
         telemetry.update();
     }
 

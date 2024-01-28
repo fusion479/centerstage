@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.common.subsystem.Robot;
 
-@TeleOp(name = "MAIN", group = "!!!")
+@TeleOp(name = "ABCDEFGHIJKLMNOPQRSTUVWXYZ", group = "!!!")
 public class Main extends LinearOpMode {
     Robot robot = new Robot();
 

@@ -35,14 +35,14 @@ public class RedFront extends LinearOpMode {
         TrajectorySequence leftSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.RED_FRONT_START)
                 .forward(14)
                 .setTangent(Math.toRadians(90))
-                .splineToLinearHeading(new Pose2d(-32, -39, Math.toRadians(140)), Math.toRadians(140))
+                .splineToLinearHeading(new Pose2d(-40, -39, Math.toRadians(140)), Math.toRadians(140))
                 .back(5)
                 .build();
 
         TrajectorySequence rightSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.RED_FRONT_START)
                 .forward(14)
                 .setTangent(Math.toRadians(90))
-                .splineToLinearHeading(new Pose2d(-40, -39, Math.toRadians(50)), Math.toRadians(50))
+                .splineToLinearHeading(new Pose2d(-32, -39, Math.toRadians(50)), Math.toRadians(50))
                 .back(5)
                 .build();
 

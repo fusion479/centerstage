@@ -47,18 +47,6 @@ public class ScoringFSMTest extends LinearOpMode {
                 );
             }
 
-            if (gamepad1.a) {
-                scoringFSM.intake();
-            } else if (gamepad1.b) {
-                scoringFSM.readyBottom();
-            } else if (gamepad1.x) {
-                scoringFSM.readyHigh();
-            } else if (gamepad1.y) {
-                scoringFSM.readyMedium();
-            } else if (gamepad1.left_bumper || gamepad1.right_bumper) {
-                scoringFSM.score();
-            }
-
             drive.update();
             scoringFSM.update(gamepad1);
 

@@ -26,8 +26,10 @@ public class ScoringFSM extends Mechanism {
 
     public ElapsedTime timer = new ElapsedTime();
     public static int armDelay = 300;
+    public static int resetDelay = 400;
     public static int autoIntakeDelay = 2750;
 
+    public boolean isPressedA = false;
     public boolean isPressedRB = false;
     public boolean isPressedLB = false;
 
@@ -43,9 +45,30 @@ public class ScoringFSM extends Mechanism {
     }
 
     public void update(Gamepad gamepad) {
+
+        if (!isPressedA && gamepad.a) {
+            toggleReady();
+        }else if (gamepad.b) {
+            readyLow();
+        } else if (gamepad.x) {
+            readyHigh();
+        } else if (gamepad.y) {
+            readyMedium();
+        } else if (gamepad.left_bumper || gamepad.right_bumper) {
+            score();
+        }
+
+        if (gamepad.right_trigger > 0.1) {
+            intake.setPower(gamepad.right_trigger);
+        } else if (gamepad.left_trigger > 0.1) {
+            intake.setPower(-gamepad.left_trigger);
+        } else {
+            intake.setPower(0);
+        }
+
         switch (state) {
             case INTAKE:
-                // A
+                // A toggle
                 up = false;
                 deposit.openOuter();
                 deposit.openInner();
@@ -58,7 +81,7 @@ public class ScoringFSM extends Mechanism {
                 }
                 break;
             case READY_BOTTOM:
-                // B
+                // A toggle
                 up = false;
                 deposit.lockInner();
                 deposit.lockOuter();
@@ -109,6 +132,10 @@ public class ScoringFSM extends Mechanism {
                 arm.up();
                 deposit.score();
                 intake.idle();
+
+                if (timer.milliseconds() > resetDelay && !deposit.innerLocked && !deposit.outerLocked) {
+                    readyBottom();
+                }
                 break;
             case AUTO_INIT:
                 intake.intaking();
@@ -120,14 +147,6 @@ public class ScoringFSM extends Mechanism {
                 }
         }
 
-        if (gamepad.right_trigger > 0.1) {
-            intake.setPower(gamepad.right_trigger);
-        } else if (gamepad.left_trigger > 0.1) {
-            intake.setPower(-gamepad.left_trigger);
-        } else {
-            intake.setPower(0);
-        }
-
         if (!isPressedRB && gamepad.right_bumper) {
             deposit.toggleOuter();
         }
@@ -136,6 +155,7 @@ public class ScoringFSM extends Mechanism {
             deposit.toggleInner();
         }
 
+        isPressedA = gamepad.a;
         isPressedLB = gamepad.left_bumper; // toggle inner pixel
         isPressedRB = gamepad.right_bumper; // toggle outer pixel
 
@@ -169,10 +189,19 @@ public class ScoringFSM extends Mechanism {
 
     public void score() {
         state = STATES.SCORE;
+        timer.reset();
     }
 
     public void autoInit() {
         state = STATES.AUTO_INIT;
         timer.reset();
+    }
+
+    public void toggleReady() {
+        if (state != STATES.READY_BOTTOM) {
+            readyBottom();
+        } else {
+            intake();
+        }
     }
 }
