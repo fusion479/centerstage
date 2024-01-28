@@ -20,8 +20,8 @@ public class Pipeline extends OpenCvPipeline {
     Mat mat = new Mat();
     Scalar lowHSV;
     Scalar highHSV;
-    Rect ROI1, ROI2;
-    double region1Percent, region2Percent;
+    Rect RIGHT_RECT, CENTER_RECT;
+    double rightRegionPercent, centerRegionPercent;
     int region;
 
     public Pipeline(String colorChoice) {
@@ -41,30 +41,30 @@ public class Pipeline extends OpenCvPipeline {
             highHSV = new Scalar(120, 255, 255);
         }
 
-        ROI1 = new Rect(213, 1, 213, 239);
-        ROI2 = new Rect(213, 240, 213, 239);
+        RIGHT_RECT = new Rect(213, 1, 213, 239);
+        CENTER_RECT = new Rect(213, 240, 213, 239);
 
         Core.inRange(mat, lowHSV, highHSV, mat);
 
         // submats for the boxes, these are the regions that'll detect the color
-        Mat box1 = mat.submat(ROI1);
-        Mat box2 = mat.submat(ROI2);
+        Mat box1 = mat.submat(RIGHT_RECT);
+        Mat box2 = mat.submat(CENTER_RECT);
 
         // how much in each region is white aka the color we filtered through the mask
-        region1Percent = Core.sumElems(box1).val[0] / ROI1.area() / 255;
-        region2Percent = Core.sumElems(box2).val[0] / ROI2.area() / 255;
+        rightRegionPercent = Core.sumElems(box1).val[0] / RIGHT_RECT.area() / 255;
+        centerRegionPercent = Core.sumElems(box2).val[0] / CENTER_RECT.area() / 255;
 
-        telemetry.addData("region1", region1Percent);
-        telemetry.addData("region2", region2Percent);
+        telemetry.addData("region1", rightRegionPercent);
+        telemetry.addData("region2", centerRegionPercent);
         telemetry.update();
 
-        if (region1Percent < r3threshold && region2Percent < r3threshold) {
-            region = 3;
-        } else if (region1Percent > region2Percent) {
-            Imgproc.rectangle(mat, ROI1, new Scalar(60, 255, 255), 10);
+        if (rightRegionPercent < r3threshold && centerRegionPercent < r3threshold) {
             region = 1;
-        } else if (region2Percent > region1Percent) {
-            Imgproc.rectangle(mat, ROI2, new Scalar(60, 255, 255), 10);
+        } else if (rightRegionPercent > centerRegionPercent) {
+            Imgproc.rectangle(mat, RIGHT_RECT, new Scalar(60, 255, 255), 10);
+            region = 3;
+        } else if (centerRegionPercent > rightRegionPercent) {
+            Imgproc.rectangle(mat, CENTER_RECT, new Scalar(60, 255, 255), 10);
             region = 2;
         }
 

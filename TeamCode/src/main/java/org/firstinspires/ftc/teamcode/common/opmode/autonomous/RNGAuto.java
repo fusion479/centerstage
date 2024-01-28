@@ -17,6 +17,8 @@ public class RNGAuto extends LinearOpMode {
         drive = new SampleMecanumDrive(hardwareMap);
         deposit.init(hardwareMap);
 
+        drive.setPoseEstimate(AutoConstants.BLUE_BACKSTAGE_START);
+
         TrajectorySequence lets_go = drive.trajectorySequenceBuilder(AutoConstants.BLUE_BACKSTAGE_START)
                 .forward(28)
                 .build();

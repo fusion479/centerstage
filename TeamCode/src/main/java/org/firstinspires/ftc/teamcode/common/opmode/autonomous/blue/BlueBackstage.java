@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.common.opmode.autonomous.blue;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -7,6 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants;
 import org.firstinspires.ftc.teamcode.common.subsystem.Arm;
+import org.firstinspires.ftc.teamcode.common.subsystem.BlueCamera;
 import org.firstinspires.ftc.teamcode.common.subsystem.Camera;
 import org.firstinspires.ftc.teamcode.common.subsystem.Deposit;
 import org.firstinspires.ftc.teamcode.common.subsystem.Intake;
@@ -15,14 +17,15 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
 @Autonomous(name = "Blue Backstage", group = "_Auto")
 public class BlueBackstage extends LinearOpMode {
-    MultipleTelemetry tele = new MultipleTelemetry();
+    FtcDashboard dashboard = FtcDashboard.getInstance();
+    MultipleTelemetry tele = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
     private int region;
 
     SampleMecanumDrive drive;
     Deposit deposit = new Deposit();
     Intake intake = new Intake();
     Arm arm = new Arm();
-    Camera camera = new Camera();
+    BlueCamera camera = new BlueCamera();
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -40,24 +43,23 @@ public class BlueBackstage extends LinearOpMode {
         deposit.update();
         intake.update();
 
-        drive.setPoseEstimate(AutoConstants.BLUE_BACKSTAGE_START);
-
         TrajectorySequence leftSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.BLUE_BACKSTAGE_START)
-                .strafeLeft(3)
+                .forward(14)
                 .setTangent(Math.toRadians(270))
-                .splineToLinearHeading(new Pose2d(16, 32, Math.toRadians(330)), Math.toRadians(300))
+                .splineToLinearHeading(new Pose2d(16, 39, Math.toRadians(310)), Math.toRadians(310))
                 .back(5)
                 .build();
 
         TrajectorySequence rightSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.BLUE_BACKSTAGE_START)
+                .forward(14)
                 .setTangent(Math.toRadians(270))
-                .splineToLinearHeading(new Pose2d(10, 40, Math.toRadians(210)), Math.toRadians(180))
-                .back(10)
+                .splineToLinearHeading(new Pose2d(8, 39, Math.toRadians(230)), Math.toRadians(230))
+                .back(5)
                 .build();
 
         TrajectorySequence middleSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.BLUE_BACKSTAGE_START)
                 .forward(AutoConstants.MIDDLE_SPIKE_DISTANCE)
-                .back(10)
+                .back(5)
                 .build();
 
 
@@ -69,12 +71,15 @@ public class BlueBackstage extends LinearOpMode {
 
         camera.stopStreaming();
 
+        drive.setPoseEstimate(AutoConstants.BLUE_BACKSTAGE_START);
+
+
         if (region == 1) {
-            drive.followTrajectorySequenceAsync(rightSpikeMark);
+            drive.followTrajectorySequenceAsync(leftSpikeMark);
         } else if (region == 2) {
             drive.followTrajectorySequenceAsync(middleSpikeMark);
         } else {
-            drive.followTrajectorySequenceAsync(leftSpikeMark);
+            drive.followTrajectorySequenceAsync(rightSpikeMark);
         }
 
         while (opModeIsActive() && !isStopRequested()) {

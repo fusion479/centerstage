@@ -19,6 +19,8 @@ public class ScoringFSMTest extends LinearOpMode {
     SampleMecanumDrive drive;
     ScoringFSM scoringFSM = new ScoringFSM();
 
+    public static double speedCoefficient = 0.7;
+
     @Override
     public void runOpMode() throws InterruptedException {
         drive = new SampleMecanumDrive(hardwareMap);
@@ -26,13 +28,24 @@ public class ScoringFSMTest extends LinearOpMode {
 
         waitForStart();
         while(opModeIsActive() && !isStopRequested()){
-            drive.setWeightedDrivePower(
-                    new Pose2d(
-                            -gamepad1.left_stick_y,
-                            -gamepad1.left_stick_x,
-                            -gamepad1.right_stick_x
-                    )
-            );
+
+            if (scoringFSM.up) {
+                drive.setWeightedDrivePower(
+                        new Pose2d(
+                                -gamepad1.left_stick_y * speedCoefficient,
+                                -gamepad1.left_stick_x * speedCoefficient,
+                                -gamepad1.right_stick_x * speedCoefficient
+                        )
+                );
+            } else {
+                drive.setWeightedDrivePower(
+                        new Pose2d(
+                                -gamepad1.left_stick_y,
+                                -gamepad1.left_stick_x,
+                                -gamepad1.right_stick_x
+                        )
+                );
+            }
 
             if (gamepad1.a) {
                 scoringFSM.intake();

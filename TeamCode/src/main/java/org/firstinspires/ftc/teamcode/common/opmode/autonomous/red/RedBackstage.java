@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.common.opmode.autonomous.red;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -15,7 +16,8 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
 @Autonomous(name = "Red Backstage", group = "_Auto")
 public class RedBackstage extends LinearOpMode {
-    MultipleTelemetry tele = new MultipleTelemetry();
+    FtcDashboard dashboard = FtcDashboard.getInstance();
+    MultipleTelemetry tele = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
     private int region;
 
     SampleMecanumDrive drive;
@@ -40,7 +42,6 @@ public class RedBackstage extends LinearOpMode {
         deposit.update();
         intake.update();
 
-        drive.setPoseEstimate(AutoConstants.RED_BACKSTAGE_START);
 
         TrajectorySequence leftSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.RED_BACKSTAGE_START)
                 .setTangent(Math.toRadians(270))
@@ -66,12 +67,15 @@ public class RedBackstage extends LinearOpMode {
 
         camera.stopStreaming();
 
+        drive.setPoseEstimate(AutoConstants.RED_BACKSTAGE_START);
+
+
         if (region == 1) {
-            drive.followTrajectorySequenceAsync(rightSpikeMark);
+            drive.followTrajectorySequenceAsync(leftSpikeMark);
         } else if (region == 2) {
             drive.followTrajectorySequenceAsync(middleSpikeMark);
         } else {
-            drive.followTrajectorySequenceAsync(leftSpikeMark);
+            drive.followTrajectorySequenceAsync(rightSpikeMark);
         }
 
         while (opModeIsActive() && !isStopRequested()) {

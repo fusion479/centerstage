@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.common.opmode.autonomous.blue;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -7,6 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants;
 import org.firstinspires.ftc.teamcode.common.subsystem.Arm;
+import org.firstinspires.ftc.teamcode.common.subsystem.BlueCamera;
 import org.firstinspires.ftc.teamcode.common.subsystem.Camera;
 import org.firstinspires.ftc.teamcode.common.subsystem.Deposit;
 import org.firstinspires.ftc.teamcode.common.subsystem.Intake;
@@ -15,14 +17,15 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
 @Autonomous(name = "Blue Front", group = "_Auto")
 public class BlueFront extends LinearOpMode {
-    MultipleTelemetry tele = new MultipleTelemetry();
+    FtcDashboard dashboard = FtcDashboard.getInstance();
+    MultipleTelemetry tele = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
     private int region;
 
     SampleMecanumDrive drive;
     Deposit deposit = new Deposit();
     Intake intake = new Intake();
     Arm arm = new Arm();
-    Camera camera = new Camera();
+    BlueCamera camera = new BlueCamera();
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -39,8 +42,6 @@ public class BlueFront extends LinearOpMode {
         arm.update();
         deposit.update();
         intake.update();
-
-        drive.setPoseEstimate(AutoConstants.BLUE_FRONT_START);
 
         TrajectorySequence leftSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.BLUE_FRONT_START)
                 .setTangent(Math.toRadians(270))
@@ -66,12 +67,14 @@ public class BlueFront extends LinearOpMode {
 
         camera.stopStreaming();
 
+        drive.setPoseEstimate(AutoConstants.BLUE_FRONT_START);
+
         if (region == 1) {
-            drive.followTrajectorySequenceAsync(rightSpikeMark);
+            drive.followTrajectorySequenceAsync(leftSpikeMark);
         } else if (region == 2) {
             drive.followTrajectorySequenceAsync(middleSpikeMark);
         } else {
-            drive.followTrajectorySequenceAsync(leftSpikeMark);
+            drive.followTrajectorySequenceAsync(rightSpikeMark);
         }
 
         while (opModeIsActive() && !isStopRequested()) {

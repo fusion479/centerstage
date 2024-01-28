@@ -44,6 +44,7 @@ public class ScoringFSM extends Mechanism {
         switch (state) {
             case INTAKE:
                 // A
+                up = false;
                 deposit.openOuter();
                 deposit.openInner();
                 lift.bottom();
@@ -56,6 +57,7 @@ public class ScoringFSM extends Mechanism {
                 break;
             case READY_BOTTOM:
                 // B
+                up = false;
                 deposit.lockInner();
                 deposit.lockOuter();
 
@@ -71,6 +73,7 @@ public class ScoringFSM extends Mechanism {
 
                 break;
             case LOW:
+                up = true;
                 deposit.lockInner();
                 deposit.lockOuter();
                 lift.low();
@@ -80,6 +83,7 @@ public class ScoringFSM extends Mechanism {
                 break;
             case MEDIUM:
                 // Y
+                up = true;
                 deposit.lockInner();
                 deposit.lockOuter();
                 lift.medium();
@@ -89,6 +93,7 @@ public class ScoringFSM extends Mechanism {
                 break;
             case HIGH:
                 // X
+                up = true;
                 deposit.lockInner();
                 deposit.lockOuter();
                 lift.high();
@@ -98,6 +103,7 @@ public class ScoringFSM extends Mechanism {
                 break;
             case SCORE:
                 // Left or Right
+                up = true;
                 arm.up();
                 deposit.score();
                 intake.idle();
