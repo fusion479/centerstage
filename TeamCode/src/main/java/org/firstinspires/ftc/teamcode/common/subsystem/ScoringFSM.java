@@ -172,9 +172,12 @@ public class ScoringFSM extends Mechanism {
         intake.update();
 
         telemetry.addData("lift 0 current", lift.motors[0].getCurrent(CurrentUnit.AMPS));
-        telemetry.addData("lift 1 current", lift.motors[0].getCurrent(CurrentUnit.AMPS));
+        telemetry.addData("lift 1 current", lift.motors[1].getCurrent(CurrentUnit.AMPS));
         telemetry.addData("intake current", intake.intake.getCurrent(CurrentUnit.AMPS));
-        telemetry.addData("liftcurrent", lift.motors[0].getCurrent(CurrentUnit.AMPS));
+        telemetry.addData("LIFT POSITION", lift.getPosition());
+        telemetry.addData("LIFT POWER", Lift.power);
+        telemetry.addData("LIFT ERROR", Lift.error);
+        telemetry.addData("LIFT TARGET", Lift.target);
 
     }
 
