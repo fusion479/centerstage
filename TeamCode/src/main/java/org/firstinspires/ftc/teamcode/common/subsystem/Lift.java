@@ -34,7 +34,7 @@ public class Lift extends Mechanism {
     public static int high = 2050;
     private final PIDController controller = new PIDController(kP, kI, kD);
     // Motor info declarations
-    private final DcMotorEx[] motors = new DcMotorEx[2];
+    public final DcMotorEx[] motors = new DcMotorEx[2];
     public boolean isReached = false;
     // telemetry
     Telemetry tele;

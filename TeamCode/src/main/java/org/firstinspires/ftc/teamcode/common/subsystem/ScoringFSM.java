@@ -1,12 +1,19 @@
 package org.firstinspires.ftc.teamcode.common.subsystem;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
+
 @Config
 public class ScoringFSM extends Mechanism {
+    FtcDashboard dashboard = FtcDashboard.getInstance();
+    Telemetry telemetry = dashboard.getTelemetry();
+
     Lift lift = new Lift();
     Arm arm = new Arm();
     Deposit deposit = new Deposit();
@@ -163,6 +170,12 @@ public class ScoringFSM extends Mechanism {
         arm.update();
         deposit.update();
         intake.update();
+
+        telemetry.addData("lift 0 current", lift.motors[0].getCurrent(CurrentUnit.AMPS));
+        telemetry.addData("lift 1 current", lift.motors[0].getCurrent(CurrentUnit.AMPS));
+        telemetry.addData("intake current", intake.intake.getCurrent(CurrentUnit.AMPS));
+        telemetry.addData("liftcurrent", lift.motors[0].getCurrent(CurrentUnit.AMPS));
+
     }
 
     public void intake() {

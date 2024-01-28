@@ -14,7 +14,7 @@ public class Intake extends Mechanism {
     Servo intakeLeft;
     Servo intakeRight;
     public static double UP_POS = .75;
-    public static double DOWN_POS = .18;
+    public static double DOWN_POS = .2;
     public static double IDLE_POS = .5;
     public static double CUSTOM_POS = .5;
     public static double target = UP_POS;
