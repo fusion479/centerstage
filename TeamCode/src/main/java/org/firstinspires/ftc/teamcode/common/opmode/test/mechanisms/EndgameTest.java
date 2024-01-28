@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.common.opmode.testing.mechTesting;
+package org.firstinspires.ftc.teamcode.common.opmode.test.mechanisms;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;

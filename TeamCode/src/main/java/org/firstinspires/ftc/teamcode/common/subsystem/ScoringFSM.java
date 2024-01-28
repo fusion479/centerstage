@@ -23,9 +23,11 @@ public class ScoringFSM extends Mechanism {
     public STATES state;
     public boolean up;
 
-    ElapsedTime armTimer = new ElapsedTime();
+    public ElapsedTime armTimer = new ElapsedTime();
+    public static int armDelay = 300;
 
-    public static int armRaiseDelay = 500;
+    public boolean isPressedRB = false;
+    public boolean isPressedLB = false;
 
     @Override
     public void init(HardwareMap hwMap) {
@@ -38,58 +40,97 @@ public class ScoringFSM extends Mechanism {
         up = false;
     }
 
-    public void update(Gamepad gamepad1) {
+    public void update(Gamepad gamepad) {
         switch (state) {
             case INTAKE:
+                // A
+                deposit.openOuter();
+                deposit.openInner();
                 lift.bottom();
-                arm.down();
                 deposit.accepting();
                 intake.intaking();
+
+                if (armTimer.milliseconds() >= armDelay) {
+                    arm.down();
+                }
                 break;
             case READY_BOTTOM:
-                lift.bottom();
-                arm.up();
-                deposit.ready();
-                intake.idle();
+                // B
+                deposit.lockInner();
+                deposit.lockOuter();
+
+                if (armTimer.milliseconds() >= 100) {
+                    lift.bottom();
+                    arm.ready();
+                }
+
+                if (armTimer.milliseconds() >= 500) {
+                    deposit.ready();
+                    intake.idle();
+                }
+
                 break;
             case LOW:
+                deposit.lockInner();
+                deposit.lockOuter();
                 lift.low();
                 arm.up();
-                deposit.ready();
+                deposit.score();
                 intake.idle();
                 break;
             case MEDIUM:
+                // Y
+                deposit.lockInner();
+                deposit.lockOuter();
                 lift.medium();
                 arm.up();
-                deposit.ready();
+                deposit.score();
                 intake.idle();
                 break;
             case HIGH:
+                // X
+                deposit.lockInner();
+                deposit.lockOuter();
                 lift.high();
                 arm.up();
-                deposit.ready();
+                deposit.score();
                 intake.idle();
                 break;
             case SCORE:
+                // Left or Right
                 arm.up();
                 deposit.score();
-                deposit.openInner();
-                deposit.openOuter();
                 intake.idle();
                 break;
         }
 
-        if (gamepad1.right_trigger > 0.1) {
-            intake.setPower(gamepad1.right_trigger);
-        } else if (gamepad1.left_trigger > 0.1) {
-            intake.setPower(-gamepad1.left_trigger);
+        if (gamepad.right_trigger > 0.1) {
+            intake.setPower(gamepad.right_trigger);
+        } else if (gamepad.left_trigger > 0.1) {
+            intake.setPower(-gamepad.left_trigger);
         } else {
             intake.setPower(0);
         }
 
+        if (!isPressedRB && gamepad.right_bumper) {
+            deposit.toggleOuter();
+        }
+
+        if (!isPressedLB && gamepad.left_bumper) {
+            deposit.toggleInner();
+        }
+
+        isPressedLB = gamepad.left_bumper; // toggle inner pixel
+        isPressedRB = gamepad.right_bumper; // toggle outer pixel
+
+        lift.update();
+        arm.update();
+        deposit.update();
+        intake.update();
     }
 
     public void intake() {
+        armTimer.reset();
         state = STATES.INTAKE;
     }
 
@@ -98,6 +139,7 @@ public class ScoringFSM extends Mechanism {
     }
 
     public void readyBottom() {
+        armTimer.reset();
         state = STATES.READY_BOTTOM;
     }
 

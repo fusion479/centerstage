@@ -8,12 +8,12 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class Deposit extends Mechanism {
     public static double ACCEPTING_POS = .28;
     public static double IDLE_POS = .7;
-    public static double READY_POS = .9;
-    public static double SCORE_POS = .83;
-    public static double LOCKINNER = .7;
-    public static double OPENINNER = .0;
-    public static double LOCKOUTER = 0;
-    public static double OPENOUTER = .7;
+    public static double READY_POS = 1;
+    public static double SCORE_POS = .73;
+    public static double LOCKINNER = 0.85;
+    public static double OPENINNER = 0.4;
+    public static double LOCKOUTER = 0.45;
+    public static double OPENOUTER = 0.15;
     public static double pivotTarget = ACCEPTING_POS;
     public static double innerTarget = OPENINNER;
     public static double outerTarget = OPENINNER;

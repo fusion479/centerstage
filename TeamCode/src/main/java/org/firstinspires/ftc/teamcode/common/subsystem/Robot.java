@@ -5,6 +5,8 @@ import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
@@ -19,6 +21,8 @@ public class Robot extends Mechanism {
     Deposit deposit = new Deposit();
     Intake intake = new Intake();
 
+    private VoltageSensor voltageSensor;
+
     public boolean isPressedX = false;
     public boolean isPressedY = false;
     public boolean isPressedA = false;
@@ -28,6 +32,9 @@ public class Robot extends Mechanism {
     public boolean isPressedDPadDown = false;
     public boolean isPressedDPadUp = false;
 
+    ElapsedTime armTimer = new ElapsedTime();
+    public double armDelay = 300;
+
     @Override
     public void init(HardwareMap hwMap) {
         drive = new SampleMecanumDrive(hwMap);
@@ -35,6 +42,8 @@ public class Robot extends Mechanism {
         arm.init(hwMap);
         deposit.init(hwMap);
         intake.init(hwMap);
+
+        voltageSensor = hwMap.get(VoltageSensor.class, "Control Hub");
 
         arm.up();
         deposit.accepting();
@@ -54,9 +63,10 @@ public class Robot extends Mechanism {
         );
 
         if (gamepad.a) {
+            armTimer.reset();
             lift.bottom();
-            arm.down();
             deposit.accepting();
+            arm.down();
         } else if (gamepad.dpad_down) {
             intake.intaking();
         } else if (gamepad.dpad_up) {
@@ -72,12 +82,14 @@ public class Robot extends Mechanism {
             lift.high();
             arm.up();
             deposit.score();
-        } else if (gamepad.dpad_left) {
-            deposit.openOuter();
-            deposit.openInner();
-        } else if (gamepad.dpad_right) {
-            deposit.lockOuter();
-            deposit.lockInner();
+        }
+
+        if (!isPressedRB && gamepad.right_bumper) {
+            deposit.toggleOuter();
+        }
+
+        if (!isPressedLB && gamepad.left_bumper) {
+            deposit.toggleInner();
         }
 
         if (gamepad.right_trigger > 0) {
@@ -105,6 +117,12 @@ public class Robot extends Mechanism {
 
         telemetry.addData("Outer Locked?", Deposit.outerLocked);
         telemetry.addData("Inner Locked?", Deposit.innerLocked);
+        telemetry.addData("Battery Voltage", voltageSensor.getVoltage());
+        telemetry.addData("isPressedLB", isPressedLB);
+        telemetry.addData("isPressedRB", isPressedRB);
+        telemetry.addData("LB", gamepad.left_bumper);
+        telemetry.addData("RB", gamepad.right_bumper);
+
         telemetry.update();
     }
 
