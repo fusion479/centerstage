@@ -63,7 +63,7 @@ public class ScoringFSMTest extends LinearOpMode {
             scoringFSM.update(gamepad1);
 
             telemetry.addData("State", scoringFSM.state);
-            telemetry.addData("Arm timer", scoringFSM.armTimer.milliseconds());
+            telemetry.addData("Arm timer", scoringFSM.timer.milliseconds());
             telemetry.update();
         }
     }

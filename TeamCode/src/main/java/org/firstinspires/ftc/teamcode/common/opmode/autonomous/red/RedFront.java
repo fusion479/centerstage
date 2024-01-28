@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.common.opmode.autonomous.red;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -11,6 +12,7 @@ import org.firstinspires.ftc.teamcode.common.subsystem.Arm;
 import org.firstinspires.ftc.teamcode.common.subsystem.Camera;
 import org.firstinspires.ftc.teamcode.common.subsystem.Deposit;
 import org.firstinspires.ftc.teamcode.common.subsystem.Intake;
+import org.firstinspires.ftc.teamcode.common.subsystem.ScoringFSM;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
@@ -21,36 +23,27 @@ public class RedFront extends LinearOpMode {
     private int region;
 
     SampleMecanumDrive drive;
-    Deposit deposit = new Deposit();
-    Intake intake = new Intake();
-    Arm arm = new Arm();
     Camera camera = new Camera();
+    ScoringFSM scoringFSM = new ScoringFSM();
 
     @Override
     public void runOpMode() throws InterruptedException {
         drive = new SampleMecanumDrive(hardwareMap);
-        deposit.init(hardwareMap);
-        intake.init(hardwareMap);
-        arm.init(hardwareMap);
         camera.init(hardwareMap);
-
-        arm.autoInit();
-        deposit.idle();
-        intake.up();
-
-        arm.update();
-        deposit.update();
-        intake.update();
 
         // TODO: LEFT AND RIGHT SPIKE MARK ARE NOT THE CORRECT PATH
         TrajectorySequence leftSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.RED_FRONT_START)
-                .setTangent(Math.toRadians(270))
-                .splineToConstantHeading(new Vector2d(-45, 42), Math.toRadians(180))
+                .forward(14)
+                .setTangent(Math.toRadians(90))
+                .splineToLinearHeading(new Pose2d(-32, -39, Math.toRadians(140)), Math.toRadians(140))
+                .back(5)
                 .build();
 
         TrajectorySequence rightSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.RED_FRONT_START)
-                .setTangent(Math.toRadians(0))
-                .splineToConstantHeading(new Vector2d(-27, 42), Math.toRadians(90))
+                .forward(14)
+                .setTangent(Math.toRadians(90))
+                .splineToLinearHeading(new Pose2d(-40, -39, Math.toRadians(50)), Math.toRadians(50))
+                .back(5)
                 .build();
 
         TrajectorySequence middleSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.RED_FRONT_START)
@@ -58,8 +51,11 @@ public class RedFront extends LinearOpMode {
                 .back(10)
                 .build();
 
+        scoringFSM.init(hardwareMap);
+        scoringFSM.autoInit();
 
         while (!isStarted() && !isStopRequested()) {
+            scoringFSM.update(gamepad1);
             region = camera.whichRegion();
             tele.addData("DETECTED REGION", camera.whichRegion());
             tele.update();
@@ -78,6 +74,7 @@ public class RedFront extends LinearOpMode {
         }
 
         while (opModeIsActive() && !isStopRequested()) {
+            scoringFSM.update(gamepad1);
             drive.update();
         }
     }

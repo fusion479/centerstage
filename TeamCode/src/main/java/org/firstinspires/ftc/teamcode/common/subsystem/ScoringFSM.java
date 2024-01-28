@@ -17,14 +17,16 @@ public class ScoringFSM extends Mechanism {
         LOW,
         MEDIUM,
         HIGH,
-        SCORE
+        SCORE,
+        AUTO_INIT
     };
 
     public STATES state;
     public boolean up;
 
-    public ElapsedTime armTimer = new ElapsedTime();
+    public ElapsedTime timer = new ElapsedTime();
     public static int armDelay = 300;
+    public static int autoIntakeDelay = 2750;
 
     public boolean isPressedRB = false;
     public boolean isPressedLB = false;
@@ -51,7 +53,7 @@ public class ScoringFSM extends Mechanism {
                 deposit.accepting();
                 intake.intaking();
 
-                if (armTimer.milliseconds() >= armDelay) {
+                if (timer.milliseconds() >= armDelay) {
                     arm.down();
                 }
                 break;
@@ -61,12 +63,12 @@ public class ScoringFSM extends Mechanism {
                 deposit.lockInner();
                 deposit.lockOuter();
 
-                if (armTimer.milliseconds() >= 100) {
+                if (timer.milliseconds() >= 100) {
                     lift.bottom();
                     arm.ready();
                 }
 
-                if (armTimer.milliseconds() >= 500) {
+                if (timer.milliseconds() >= 500) {
                     deposit.ready();
                     intake.idle();
                 }
@@ -108,6 +110,14 @@ public class ScoringFSM extends Mechanism {
                 deposit.score();
                 intake.idle();
                 break;
+            case AUTO_INIT:
+                intake.intaking();
+                arm.autoInit();
+                deposit.idle();
+
+                if (timer.milliseconds() > autoIntakeDelay) {
+                    intake.up();
+                }
         }
 
         if (gamepad.right_trigger > 0.1) {
@@ -136,7 +146,7 @@ public class ScoringFSM extends Mechanism {
     }
 
     public void intake() {
-        armTimer.reset();
+        timer.reset();
         state = STATES.INTAKE;
     }
 
@@ -145,7 +155,7 @@ public class ScoringFSM extends Mechanism {
     }
 
     public void readyBottom() {
-        armTimer.reset();
+        timer.reset();
         state = STATES.READY_BOTTOM;
     }
 
@@ -159,5 +169,10 @@ public class ScoringFSM extends Mechanism {
 
     public void score() {
         state = STATES.SCORE;
+    }
+
+    public void autoInit() {
+        state = STATES.AUTO_INIT;
+        timer.reset();
     }
 }

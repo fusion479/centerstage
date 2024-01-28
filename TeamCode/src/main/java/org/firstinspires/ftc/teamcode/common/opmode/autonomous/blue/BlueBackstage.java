@@ -12,6 +12,7 @@ import org.firstinspires.ftc.teamcode.common.subsystem.BlueCamera;
 import org.firstinspires.ftc.teamcode.common.subsystem.Camera;
 import org.firstinspires.ftc.teamcode.common.subsystem.Deposit;
 import org.firstinspires.ftc.teamcode.common.subsystem.Intake;
+import org.firstinspires.ftc.teamcode.common.subsystem.ScoringFSM;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
@@ -22,26 +23,13 @@ public class BlueBackstage extends LinearOpMode {
     private int region;
 
     SampleMecanumDrive drive;
-    Deposit deposit = new Deposit();
-    Intake intake = new Intake();
-    Arm arm = new Arm();
     BlueCamera camera = new BlueCamera();
+    ScoringFSM scoringFSM = new ScoringFSM();
 
     @Override
     public void runOpMode() throws InterruptedException {
         drive = new SampleMecanumDrive(hardwareMap);
-        deposit.init(hardwareMap);
-        intake.init(hardwareMap);
-        arm.init(hardwareMap);
         camera.init(hardwareMap);
-
-        arm.autoInit();
-        deposit.idle();
-        intake.up();
-
-        arm.update();
-        deposit.update();
-        intake.update();
 
         TrajectorySequence leftSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.BLUE_BACKSTAGE_START)
                 .forward(14)
@@ -62,8 +50,11 @@ public class BlueBackstage extends LinearOpMode {
                 .back(5)
                 .build();
 
+        scoringFSM.init(hardwareMap);
+        scoringFSM.autoInit();
 
         while (!isStarted() && !isStopRequested()) {
+            scoringFSM.update(gamepad1);
             region = camera.whichRegion();
             tele.addData("DETECTED REGION", camera.whichRegion());
             tele.update();
@@ -83,6 +74,7 @@ public class BlueBackstage extends LinearOpMode {
         }
 
         while (opModeIsActive() && !isStopRequested()) {
+            scoringFSM.update(gamepad1);
             drive.update();
         }
     }
