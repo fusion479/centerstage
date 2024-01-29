@@ -123,12 +123,4 @@ public class Lift extends Mechanism {
     public double getPosition() {
         return motors[0].getCurrentPosition();
     }
-
-    public void upALittle() {
-        target += 150;
-    }
-
-    public void downALittle() {
-        target -= 150;
-    }
 }

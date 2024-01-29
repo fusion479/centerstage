@@ -22,11 +22,7 @@ public class IntakeTest extends LinearOpMode {
             } else if (gamepad1.b) {
                 intake.idle();
             } else if (gamepad1.x) {
-                intake.intaking();
-            } else if (gamepad1.right_bumper) {
-                intake.upALittle();
-            } else if (gamepad1.left_bumper) {
-                intake.downALittle();
+                intake.down();
             } else if (gamepad1.right_trigger > 0) {
                intake.setPower(gamepad1.right_trigger);
             } else if (gamepad1.left_trigger > 0) {

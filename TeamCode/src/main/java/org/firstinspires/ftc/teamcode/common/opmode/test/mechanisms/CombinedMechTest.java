@@ -30,7 +30,7 @@ public class CombinedMechTest extends LinearOpMode {
             } else if (gamepad1.b) {
                 arm.down();
             } else if (gamepad1.x) {
-                intake.intaking();
+                intake.down();
             }else if (gamepad1.y) {
                 intake.idle();
             } else if (gamepad1.dpad_up) {

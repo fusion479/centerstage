@@ -26,6 +26,7 @@ public class Robot extends Mechanism {
     public void init(HardwareMap hwMap) {
         drive = new SampleMecanumDrive(hwMap);
         scoringFSM.init(hwMap);
+        scoringFSM.readyBottom();
     }
 
     public void update(Gamepad gamepad1, Gamepad gamepad2) {

@@ -7,7 +7,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 
 @Config
 public class ScoringFSM extends Mechanism {
@@ -81,7 +80,7 @@ public class ScoringFSM extends Mechanism {
                 deposit.openInner();
                 lift.bottom();
                 deposit.accepting();
-                intake.intaking();
+                intake.down();
 
                 if (timer.milliseconds() >= armDelay) {
                     arm.down();
@@ -145,7 +144,7 @@ public class ScoringFSM extends Mechanism {
                 }
                 break;
             case AUTO_INIT:
-                intake.intaking();
+                intake.down();
                 arm.autoInit();
                 deposit.idle();
 

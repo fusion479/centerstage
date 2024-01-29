@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.common.subsystem;
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -30,7 +29,7 @@ public class Intake extends Mechanism {
         intakeLeft = hwMap.get(Servo.class, "intakeLeft");
         intakeRight = hwMap.get(Servo.class, "intakeRight");
 
-        up();
+        idle();
     }
 
     public void update() {
@@ -51,19 +50,7 @@ public class Intake extends Mechanism {
         target = IDLE_POS;
     }
 
-    public void intaking() {
+    public void down() {
         target = DOWN_POS;
-    }
-
-    public void downALittle() {
-        CUSTOM_POS = CUSTOM_POS - .05;
-        intakeLeft.setPosition(CUSTOM_POS);
-        intakeRight.setPosition(1 - CUSTOM_POS);
-    }
-
-    public void upALittle() {
-        CUSTOM_POS = CUSTOM_POS - .05;
-        intakeLeft.setPosition(CUSTOM_POS);
-        intakeRight.setPosition(1 - CUSTOM_POS);
     }
 }
