@@ -29,10 +29,11 @@ public class Lift extends Mechanism {
     public static double error = 0;
     public static double bound = 50;
     // slides heights
-    public static int bottom = 0;
-    public static int low = 800;
-    public static int medium = 1600;
-    public static int high = 2300;
+    public static int BOTTOM_POS = 0;
+    public static int CLIMB_POS = 1;
+    public static int LOW_POS = 800;
+    public static int MEDIUM_POS = 1600;
+    public static int HIGH_POS = 2300;
     private final PIDController controller = new PIDController(kP, kI, kD);
     // Motor info declarations
     public final DcMotorEx[] motors = new DcMotorEx[2];
@@ -100,20 +101,24 @@ public class Lift extends Mechanism {
     }
 
     public void bottom() {
-        setTarget(bottom);
+        setTarget(BOTTOM_POS);
         timer.reset();
     }
 
     public void low() {
-        setTarget(low);
+        setTarget(LOW_POS);
     }
 
     public void medium() {
-        setTarget(medium);
+        setTarget(MEDIUM_POS);
     }
 
     public void high() {
-        setTarget(high);
+        setTarget(HIGH_POS);
+    }
+
+    public void climb() {
+        setTarget(CLIMB_POS);
     }
 
     public void setTarget(int target) {
