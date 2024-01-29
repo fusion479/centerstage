@@ -6,6 +6,7 @@ import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -29,13 +30,17 @@ public class Lift extends Mechanism {
     public static double bound = 50;
     // slides heights
     public static int bottom = 0;
-    public static int low = 600;
-    public static int medium = 1200;
-    public static int high = 2050;
+    public static int low = 800;
+    public static int medium = 1600;
+    public static int high = 2300;
     private final PIDController controller = new PIDController(kP, kI, kD);
     // Motor info declarations
     public final DcMotorEx[] motors = new DcMotorEx[2];
     public boolean isReached = false;
+
+    ElapsedTime timer = new ElapsedTime();
+    public static double bottomMotorOffDelay = 2000;
+
     // telemetry
     Telemetry tele;
     FtcDashboard dashboard = FtcDashboard.getInstance();
@@ -74,6 +79,11 @@ public class Lift extends Mechanism {
             isReached = true;
         }
 
+        if (timer.milliseconds() > bottomMotorOffDelay && target == 0) {
+            power = 0;
+        }
+
+
         motors[0].setPower(power);
         motors[1].setPower(power);
 
@@ -91,6 +101,7 @@ public class Lift extends Mechanism {
 
     public void bottom() {
         setTarget(bottom);
+        timer.reset();
     }
 
     public void low() {

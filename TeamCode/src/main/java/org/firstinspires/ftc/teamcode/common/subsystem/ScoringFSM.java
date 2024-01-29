@@ -14,10 +14,10 @@ public class ScoringFSM extends Mechanism {
     FtcDashboard dashboard = FtcDashboard.getInstance();
     Telemetry telemetry = dashboard.getTelemetry();
 
-    Lift lift = new Lift();
-    Arm arm = new Arm();
-    Deposit deposit = new Deposit();
-    Intake intake = new Intake();
+    public Lift lift = new Lift();
+    public Arm arm = new Arm();
+    public Deposit deposit = new Deposit();
+    public Intake intake = new Intake();
     public enum STATES {
         INTAKE,
         READY_BOTTOM,
@@ -171,13 +171,13 @@ public class ScoringFSM extends Mechanism {
         deposit.update();
         intake.update();
 
-        telemetry.addData("lift 0 current", lift.motors[0].getCurrent(CurrentUnit.AMPS));
-        telemetry.addData("lift 1 current", lift.motors[1].getCurrent(CurrentUnit.AMPS));
-        telemetry.addData("intake current", intake.intake.getCurrent(CurrentUnit.AMPS));
-        telemetry.addData("LIFT POSITION", lift.getPosition());
-        telemetry.addData("LIFT POWER", Lift.power);
-        telemetry.addData("LIFT ERROR", Lift.error);
-        telemetry.addData("LIFT TARGET", Lift.target);
+//        telemetry.addData("lift 0 current", lift.motors[0].getCurrent(CurrentUnit.AMPS));
+//        telemetry.addData("lift 1 current", lift.motors[1].getCurrent(CurrentUnit.AMPS));
+//        telemetry.addData("intake current", intake.intake.getCurrent(CurrentUnit.AMPS));
+//        telemetry.addData("LIFT POSITION", lift.getPosition());
+//        telemetry.addData("LIFT POWER", Lift.power);
+//        telemetry.addData("LIFT ERROR", Lift.error);
+//        telemetry.addData("LIFT TARGET", Lift.target);
 
     }
 

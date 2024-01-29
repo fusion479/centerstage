@@ -20,7 +20,8 @@ public class MeepMeepTesting {
                                 .forward(14)
                                 .setTangent(Math.toRadians(90))
                                 .splineToLinearHeading(new Pose2d(16, -39, Math.toRadians(50)), Math.toRadians(50))
-                                .back(5)
+                                .lineToLinearHeading(new Pose2d(12, -48, Math.toRadians(0)))
+                                .forward(32)
                                 .build()
                 );
 
