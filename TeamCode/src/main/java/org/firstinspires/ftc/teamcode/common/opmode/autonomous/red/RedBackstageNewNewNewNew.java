@@ -46,15 +46,16 @@ public class RedBackstageNewNewNewNew extends LinearOpMode {
                     scoringFSM.bottom();
                 })
                 .UNSTABLE_addTemporalMarkerOffset(AutoConstants.preloadScoreDelay, () -> {
+                    scoringFSM.score();
                     scoringFSM.deposit.openInner();
                     scoringFSM.deposit.openOuter();
                 })
 
                 .waitSeconds(AutoConstants.postPreloadWait)
-                .back(10)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     scoringFSM.ready();
                 })
+                .back(10)
                 .build();
 
         TrajectorySequence rightSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.RED_BACKSTAGE_START)
@@ -67,15 +68,16 @@ public class RedBackstageNewNewNewNew extends LinearOpMode {
                     scoringFSM.bottom();
                 })
                 .UNSTABLE_addTemporalMarkerOffset(AutoConstants.preloadScoreDelay, () -> {
+                    scoringFSM.score();
                     scoringFSM.deposit.openInner();
                     scoringFSM.deposit.openOuter();
                 })
 
                 .waitSeconds(AutoConstants.postPreloadWait)
-                .back(10)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     scoringFSM.ready();
                 })
+                .back(10)
                 .build();
 
         TrajectorySequence middleSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.RED_BACKSTAGE_START)
@@ -87,23 +89,25 @@ public class RedBackstageNewNewNewNew extends LinearOpMode {
                     scoringFSM.bottom();
                 })
                 .UNSTABLE_addTemporalMarkerOffset(AutoConstants.preloadScoreDelay, () -> {
+                    scoringFSM.score();
                     scoringFSM.deposit.openInner();
                     scoringFSM.deposit.openOuter();
                 })
 
                 .waitSeconds(AutoConstants.postPreloadWait)
-                .back(10)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     scoringFSM.ready();
                 })
+                .back(10)
                 .build();
 
         timer.reset();
+        scoringFSM.autoInit();
 
         while (!isStarted() && !isStopRequested()) {
-            scoringFSM.autoInit();
             scoringFSM.update(gamepad1);
             region = camera.whichRegion();
+            tele.addData("score timer", scoringFSM.timer.milliseconds());
             tele.addData("DETECTED REGION", camera.whichRegion());
             tele.update();
         }
