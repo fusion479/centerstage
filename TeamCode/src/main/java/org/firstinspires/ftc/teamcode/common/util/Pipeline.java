@@ -33,7 +33,7 @@ public class Pipeline extends OpenCvPipeline {
         Imgproc.cvtColor(input, mat, Imgproc.COLOR_RGB2HSV);
 
         if (color == "red") {
-            lowHSV = new Scalar(160, 50, 50);
+            lowHSV = new Scalar(140, 50, 50);
             highHSV = new Scalar(180, 255, 255);
         }
         if (color == "blue") {
