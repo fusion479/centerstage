@@ -11,7 +11,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 public class Camera extends Mechanism {
     OpenCvCamera openCvCamera;
-    Pipeline pipeline = new Pipeline("red");
+    Pipeline pipeline = new Pipeline("blue");
 
     @Override
     public void init(HardwareMap hwMap) {

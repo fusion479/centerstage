@@ -13,13 +13,11 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 @TeleOp(name = "ScoringFSM Test", group = "testing")
 @Config
 public class ScoringFSMTest extends LinearOpMode {
+    public static double speedCoefficient = 0.7;
     FtcDashboard dashboard = FtcDashboard.getInstance();
     Telemetry telemetry = dashboard.getTelemetry();
-
     SampleMecanumDrive drive;
     ScoringFSM scoringFSM = new ScoringFSM();
-
-    public static double speedCoefficient = 0.7;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -27,14 +25,14 @@ public class ScoringFSMTest extends LinearOpMode {
         scoringFSM.init(hardwareMap);
 
         waitForStart();
-        while(opModeIsActive() && !isStopRequested()){
+        while (opModeIsActive() && !isStopRequested()) {
 
             if (scoringFSM.up) {
                 drive.setWeightedDrivePower(
                         new Pose2d(
                                 -gamepad1.left_stick_y * speedCoefficient,
                                 -gamepad1.left_stick_x * speedCoefficient,
-                                -gamepad1.right_stick_x * speedCoefficient
+                                -gamepad1.right_stick_y * speedCoefficient
                         )
                 );
             } else {
