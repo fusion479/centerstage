@@ -12,6 +12,8 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
 import java.sql.PreparedStatement;
 
+import kotlin.reflect.KClassesImplKt;
+
 @Config
 public class Robot extends Mechanism {
     FtcDashboard dashboard = FtcDashboard.getInstance();
@@ -19,6 +21,7 @@ public class Robot extends Mechanism {
 
     SampleMecanumDrive drive;
     ScoringFSM scoringFSM = new ScoringFSM();
+    Launcher launcher = new Launcher();
 
     public static double speedCoefficient = 0.9;
 
@@ -29,7 +32,10 @@ public class Robot extends Mechanism {
     public void init(HardwareMap hwMap) {
         drive = new SampleMecanumDrive(hwMap);
         scoringFSM.init(hwMap);
+        launcher.init(hwMap);
+
         scoringFSM.ready();
+        launcher.idle();
     }
 
     public void update(Gamepad gamepad1, Gamepad gamepad2) {
@@ -52,16 +58,19 @@ public class Robot extends Mechanism {
                 )
         );
 
-        if (endgameTimer.seconds() > 90) {
+//        if (endgameTimer.seconds() > 90) {
             // Operator endgame controls
-            if (gamepad2.b) {
+            if (gamepad2.a) {
                 scoringFSM.climb();
+            } else if (gamepad2.x) {
+                launcher.launch();
             }
-        }
+//        }
 
 
         drive.update();
         scoringFSM.update(gamepad1);
+        launcher.update();
 
         telemetry.addData("State", scoringFSM.state);
         telemetry.addData("Arm timer", scoringFSM.timer.milliseconds());
