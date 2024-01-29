@@ -19,7 +19,8 @@ public class ScoringFSM extends Mechanism {
     public Intake intake = new Intake();
     public enum STATES {
         INTAKE,
-        READY_BOTTOM,
+        READY,
+        BOTTOM,
         LOW,
         MEDIUM,
         HIGH,
@@ -55,11 +56,11 @@ public class ScoringFSM extends Mechanism {
         if (!isPressedA && gamepad.a) {
             toggleReady();
         }else if (gamepad.b) {
-            readyLow();
+            low();
         } else if (gamepad.x) {
-            readyHigh();
+            high();
         } else if (gamepad.y) {
-            readyMedium();
+            medium();
         } else if (gamepad.left_bumper || gamepad.right_bumper) {
             score();
         }
@@ -86,7 +87,7 @@ public class ScoringFSM extends Mechanism {
                     arm.down();
                 }
                 break;
-            case READY_BOTTOM:
+            case READY:
                 // A toggle
                 up = false;
                 deposit.lockInner();
@@ -102,6 +103,15 @@ public class ScoringFSM extends Mechanism {
                     intake.idle();
                 }
 
+                break;
+            case BOTTOM:
+                up = true;
+                deposit.lockInner();
+                deposit.lockOuter();
+                lift.bottom();
+                arm.up();
+                deposit.score();
+                intake.idle();
                 break;
             case LOW:
                 up = true;
@@ -140,7 +150,7 @@ public class ScoringFSM extends Mechanism {
                 intake.idle();
 
                 if (timer.milliseconds() > resetDelay && !deposit.innerLocked && !deposit.outerLocked) {
-                    readyBottom();
+                    ready();
                 }
                 break;
             case AUTO_INIT:
@@ -185,21 +195,25 @@ public class ScoringFSM extends Mechanism {
         state = STATES.INTAKE;
     }
 
-    public void readyLow() {
+    public void ready() {
+        timer.reset();
+        state = STATES.READY;
+    }
+
+    public void bottom() {
+        state = STATES.BOTTOM;
+    }
+
+    public void low() {
         state = STATES.LOW;
     }
 
-    public void readyBottom() {
-        timer.reset();
-        state = STATES.READY_BOTTOM;
-    }
-
-    public void readyHigh() {
-        state = STATES.HIGH;
-    }
-
-    public void readyMedium() {
+    public void medium() {
         state = STATES.MEDIUM;
+    }
+
+    public void high() {
+        state = STATES.HIGH;
     }
 
     public void score() {
@@ -213,8 +227,8 @@ public class ScoringFSM extends Mechanism {
     }
 
     public void toggleReady() {
-        if (state != STATES.READY_BOTTOM) {
-            readyBottom();
+        if (state != STATES.READY) {
+            ready();
         } else {
             intake();
         }
