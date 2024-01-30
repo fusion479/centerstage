@@ -10,11 +10,23 @@ public class AutoConstants {
     public static Pose2d BLUE_FRONT_START = new Pose2d(-36, 63.25, Math.toRadians(270));
     public static Pose2d RED_FRONT_START = new Pose2d(-36, -63.25, Math.toRadians(90));
 
+    public static double INITIAL_FORWARD_DIST = 14;
     public static double MIDDLE_SPIKE_DISTANCE = 26.5;
-    public static double RED_BACKSTAGE_PRELOAD_FORWARD_DIST = 38;
+    public static double RB_PRELOAD_FORWARD_DIST = 38;
 
     public static double armLiftDelay = -1;
     public static double preloadScoreDelay = .5;
     public static double postPreloadWait = 2;
 
+    public static Pose2d RB_L_SPIKE = new Pose2d(8, -39, Math.toRadians(140));
+    public static Pose2d RB_R_SPIKE = new Pose2d(16, -39, Math.toRadians(50));
+    public static Pose2d RB_L_BACKDROP = new Pose2d(12, -32, Math.toRadians(0));
+    public static Pose2d RB_M_BACKDROP = new Pose2d(12, -36, Math.toRadians(0));
+    public static Pose2d RB_R_BACKDROP = new Pose2d(12, -44, Math.toRadians(0));
+
+    public static Pose2d BB_L_SPIKE = new Pose2d(8, 39, Math.toRadians(220));
+    public static Pose2d BB_R_SPIKE = new Pose2d(16, 39, Math.toRadians(320));
+    public static Pose2d BB_L_BACKDROP = new Pose2d(12, 32, Math.toRadians(0));
+    public static Pose2d BB_M_BACKDROP = new Pose2d(12, 36, Math.toRadians(0));
+    public static Pose2d BB_R_BACKDROP = new Pose2d(12, 44, Math.toRadians(0));
 }
