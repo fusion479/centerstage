@@ -32,16 +32,14 @@ public class Lift extends Mechanism {
     public static int BOTTOM_POS = 0;
     public static int CLIMB_POS = 1;
     public static int LOW_POS = 800;
-    public static int MEDIUM_POS = 1600;
-    public static int HIGH_POS = 2300;
-    private final PIDController controller = new PIDController(kP, kI, kD);
+    public static int MEDIUM_POS = 1400;
+    public static int HIGH_POS = 2000;
+    public static double bottomMotorOffDelay = 2000;
     // Motor info declarations
     public final DcMotorEx[] motors = new DcMotorEx[2];
+    private final PIDController controller = new PIDController(kP, kI, kD);
     public boolean isReached = false;
-
     ElapsedTime timer = new ElapsedTime();
-    public static double bottomMotorOffDelay = 2000;
-
     // telemetry
     Telemetry tele;
     FtcDashboard dashboard = FtcDashboard.getInstance();

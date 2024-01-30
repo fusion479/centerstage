@@ -10,21 +10,14 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
-import java.sql.PreparedStatement;
-
-import kotlin.reflect.KClassesImplKt;
-
 @Config
 public class Robot extends Mechanism {
+    public static double speedCoefficient = 0.9;
     FtcDashboard dashboard = FtcDashboard.getInstance();
     Telemetry telemetry = dashboard.getTelemetry();
-
     SampleMecanumDrive drive;
     ScoringFSM scoringFSM = new ScoringFSM();
     Launcher launcher = new Launcher();
-
-    public static double speedCoefficient = 0.9;
-
     ElapsedTime endgameTimer = new ElapsedTime();
     int poopy = 0;
 
@@ -54,17 +47,17 @@ public class Robot extends Mechanism {
                 new Pose2d(
                         -gamepad1.left_stick_y * speedCoefficient,
                         -gamepad1.left_stick_x * speedCoefficient,
-                        -gamepad1.right_stick_y * speedCoefficient
+                        -gamepad1.right_stick_x * speedCoefficient
                 )
         );
 
 //        if (endgameTimer.seconds() > 90) {
-            // Operator endgame controls
-            if (gamepad2.a) {
-                scoringFSM.climb();
-            } else if (gamepad2.x) {
-                launcher.launch();
-            }
+        // Operator endgame controls
+        if (gamepad2.a) {
+            scoringFSM.climb();
+        } else if (gamepad2.x) {
+            launcher.launch();
+        }
 //        }
 
 
