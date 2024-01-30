@@ -35,6 +35,7 @@ public class ScoringFSM extends Mechanism {
     public boolean up;
 
     public ElapsedTime timer = new ElapsedTime();
+    public ElapsedTime loopTimeTimer = new ElapsedTime();
     public static int armDelay = 300;
     public static int resetDelay = 400;
     public static int autoIntakeDelay = 1000;
@@ -189,6 +190,10 @@ public class ScoringFSM extends Mechanism {
         arm.update();
         deposit.update();
         intake.update();
+
+        telemetry.addData("looptime", loopTimeTimer.milliseconds());
+        loopTimeTimer.reset();
+        telemetry.update();
 
 //        telemetry.addData("lift 0 current", lift.motors[0].getCurrent(CurrentUnit.AMPS));
 //        telemetry.addData("lift 1 current", lift.motors[1].getCurrent(CurrentUnit.AMPS));

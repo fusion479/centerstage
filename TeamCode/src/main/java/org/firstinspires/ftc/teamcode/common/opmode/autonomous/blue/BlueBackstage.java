@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.common.opmode.autonomous.blue;
 
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.*;
+
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
@@ -9,12 +11,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants;
-import org.firstinspires.ftc.teamcode.common.subsystem.Arm;
-import org.firstinspires.ftc.teamcode.common.subsystem.BlueCamera;
 import org.firstinspires.ftc.teamcode.common.subsystem.Camera;
-import org.firstinspires.ftc.teamcode.common.subsystem.Deposit;
-import org.firstinspires.ftc.teamcode.common.subsystem.Intake;
-import org.firstinspires.ftc.teamcode.common.subsystem.Lift;
 import org.firstinspires.ftc.teamcode.common.subsystem.ScoringFSM;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
@@ -28,62 +25,48 @@ public class BlueBackstage extends LinearOpMode {
     ElapsedTime timer = new ElapsedTime();
 
     SampleMecanumDrive drive;
-    Lift lift = new Lift();
-    Arm arm = new Arm();
-    Deposit deposit = new Deposit();
-    Intake intake = new Intake();
+    ScoringFSM scoringFSM = new ScoringFSM();
     Camera camera = new Camera();
 
     @Override
     public void runOpMode() throws InterruptedException {
         drive = new SampleMecanumDrive(hardwareMap);
         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        lift.init(hardwareMap);
-        arm.init(hardwareMap);
-        deposit.init(hardwareMap);
-        intake.init(hardwareMap);
+        scoringFSM.init(hardwareMap);
         camera.init(hardwareMap);
 
-        drive.setPoseEstimate(AutoConstants.RED_BACKSTAGE_START);
+        drive.setPoseEstimate(BLUE_BACKSTAGE_START);
 
         TrajectorySequence leftSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.BLUE_BACKSTAGE_START)
-                .forward(14)
+                .forward(INITIAL_FORWARD_DIST)
                 .setTangent(Math.toRadians(270))
-                .splineToLinearHeading(new Pose2d(16, 39, Math.toRadians(310)), Math.toRadians(310))
-                .lineToLinearHeading(new Pose2d(12, 44, Math.toRadians(0)))
-                .forward(32)
+                .splineToLinearHeading(BB_L_SPIKE, BB_L_SPIKE.getHeading())
+                .lineToLinearHeading(BB_L_BACKDROP)
+                .forward(RB_PRELOAD_FORWARD_DIST)
                 .build();
 
         TrajectorySequence rightSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.BLUE_BACKSTAGE_START)
-                .forward(14)
+                .forward(INITIAL_FORWARD_DIST)
                 .setTangent(Math.toRadians(270))
-                .splineToLinearHeading(new Pose2d(8, 39, Math.toRadians(230)), Math.toRadians(230))
-                .back(5)
+                .splineToLinearHeading(BB_R_SPIKE, BB_R_SPIKE.getHeading())
+                .lineToLinearHeading(BB_R_BACKDROP)
+                .forward(RB_PRELOAD_FORWARD_DIST)
                 .build();
 
         TrajectorySequence middleSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.BLUE_BACKSTAGE_START)
-                .forward(AutoConstants.MIDDLE_SPIKE_DISTANCE)
-                .back(5)
+                .forward(MIDDLE_SPIKE_DISTANCE)
+                .back(10)
+                .lineToLinearHeading(BB_M_BACKDROP)
+                .forward(RB_PRELOAD_FORWARD_DIST)
                 .build();
 
         timer.reset();
+        scoringFSM.autoInit();
 
         while (!isStarted() && !isStopRequested()) {
-            lift.bottom();
-            arm.autoInit();
-            deposit.idle();
-            deposit.lockOuter();
-            deposit.lockInner();
-
-            if (timer.milliseconds() > 2750) {
-                intake.up();
-            }
-
-            lift.update();
-            arm.update();
-            deposit.update();
-            intake.update();
+            scoringFSM.update(gamepad1);
             region = camera.whichRegion();
+            tele.addData("score timer", scoringFSM.timer.milliseconds());
             tele.addData("DETECTED REGION", camera.whichRegion());
             tele.update();
         }
@@ -99,10 +82,7 @@ public class BlueBackstage extends LinearOpMode {
         }
 
         while (opModeIsActive() && !isStopRequested()) {
-            lift.update();
-            arm.update();
-            deposit.update();
-            intake.update();
+            scoringFSM.update(gamepad1);
             drive.update();
         }
     }

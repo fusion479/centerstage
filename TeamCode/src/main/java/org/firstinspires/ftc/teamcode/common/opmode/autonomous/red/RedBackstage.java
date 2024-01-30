@@ -1,23 +1,18 @@
 package org.firstinspires.ftc.teamcode.common.opmode.autonomous.red;
 
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.*;
+
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.geometry.Vector2d;
-import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants;
-import org.firstinspires.ftc.teamcode.common.subsystem.Arm;
 import org.firstinspires.ftc.teamcode.common.subsystem.Camera;
-import org.firstinspires.ftc.teamcode.common.subsystem.Deposit;
-import org.firstinspires.ftc.teamcode.common.subsystem.Intake;
-import org.firstinspires.ftc.teamcode.common.subsystem.Lift;
 import org.firstinspires.ftc.teamcode.common.subsystem.ScoringFSM;
-import org.firstinspires.ftc.teamcode.common.util.navx.AHRSProtocol;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
@@ -30,108 +25,93 @@ public class RedBackstage extends LinearOpMode {
     ElapsedTime timer = new ElapsedTime();
 
     SampleMecanumDrive drive;
-    Lift lift = new Lift();
-    Arm arm = new Arm();
-    Deposit deposit = new Deposit();
-    Intake intake = new Intake();
+    ScoringFSM scoringFSM = new ScoringFSM();
     Camera camera = new Camera();
 
     @Override
     public void runOpMode() throws InterruptedException {
         drive = new SampleMecanumDrive(hardwareMap);
         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        lift.init(hardwareMap);
-        arm.init(hardwareMap);
-        deposit.init(hardwareMap);
-        intake.init(hardwareMap);
+        scoringFSM.init(hardwareMap);
         camera.init(hardwareMap);
 
-        drive.setPoseEstimate(AutoConstants.RED_BACKSTAGE_START);
+        drive.setPoseEstimate(RED_BACKSTAGE_START);
 
+        TrajectorySequence leftSpikeMark = drive.trajectorySequenceBuilder(RED_BACKSTAGE_START)
+                .forward(INITIAL_FORWARD_DIST)
+                .setTangent(Math.toRadians(90))
+                .splineToLinearHeading(RB_L_SPIKE, RB_L_SPIKE.getHeading())
+                .lineToLinearHeading(RB_L_BACKDROP)
+                .forward(RB_PRELOAD_FORWARD_DIST)
+                .UNSTABLE_addTemporalMarkerOffset(armLiftDelay, () -> {
+                    scoringFSM.bottom();
+                })
+                .UNSTABLE_addTemporalMarkerOffset(preloadScoreDelay, () -> {
+                    scoringFSM.score();
+                    scoringFSM.deposit.openInner();
+                    scoringFSM.deposit.openOuter();
+                })
+                .back(10)
+                .waitSeconds(postPreloadWait)
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    scoringFSM.ready();
+                })
+                .forward(5)
+                .build();
 
-        TrajectorySequence leftSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.RED_BACKSTAGE_START)
+        TrajectorySequence middleSpikeMark = drive.trajectorySequenceBuilder(RED_BACKSTAGE_START)
+                .forward(MIDDLE_SPIKE_DISTANCE)
+                .back(10)
+                .lineToLinearHeading(RB_L_BACKDROP)
+                .forward(RB_PRELOAD_FORWARD_DIST)
+                .UNSTABLE_addTemporalMarkerOffset(armLiftDelay, () -> {
+                    scoringFSM.bottom();
+                })
+                .UNSTABLE_addTemporalMarkerOffset(preloadScoreDelay, () -> {
+                    scoringFSM.score();
+                    scoringFSM.deposit.openInner();
+                    scoringFSM.deposit.openOuter();
+                })
+                .waitSeconds(postPreloadWait)
+                .back(10)
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    scoringFSM.ready();
+                })
+                .forward(5)
+                .build();
+
+        TrajectorySequence rightSpikeMark = drive.trajectorySequenceBuilder(RED_BACKSTAGE_START)
                 .forward(14)
                 .setTangent(Math.toRadians(90))
-                .splineToLinearHeading(new Pose2d(8, -39, Math.toRadians(140)), Math.toRadians(140))
-                .lineToLinearHeading(new Pose2d(12, -32, Math.toRadians(0)))
-                .forward(AutoConstants.RED_BACKSTAGE_PRELOAD_FORWARD_DIST)
-                .UNSTABLE_addTemporalMarkerOffset(AutoConstants.armLiftDelay, () -> {
-                    arm.up();
-                    deposit.score();
+                .splineToLinearHeading(RB_R_SPIKE, RB_R_SPIKE.getHeading())
+                .lineToLinearHeading(RB_R_BACKDROP)
+                .forward(RB_PRELOAD_FORWARD_DIST)
+                .UNSTABLE_addTemporalMarkerOffset(armLiftDelay, () -> {
+                    scoringFSM.bottom();
                 })
-                .UNSTABLE_addTemporalMarkerOffset(AutoConstants.preloadScoreDelay, () -> {
-                    deposit.openInner();
-                    deposit.openOuter();
+                .UNSTABLE_addTemporalMarkerOffset(preloadScoreDelay, () -> {
+                    scoringFSM.score();
+                    scoringFSM.deposit.openInner();
+                    scoringFSM.deposit.openOuter();
                 })
 
-                .waitSeconds(AutoConstants.postPreloadWait)
+                .waitSeconds(postPreloadWait)
                 .back(10)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    lift.bottom();
+                    scoringFSM.ready();
                 })
+                .forward(5)
                 .build();
 
-        TrajectorySequence rightSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.RED_BACKSTAGE_START)
-                .forward(14)
-                .setTangent(Math.toRadians(90))
-                .splineToLinearHeading(new Pose2d(16, -39, Math.toRadians(50)), Math.toRadians(50))
-                .lineToLinearHeading(new Pose2d(12, -44, Math.toRadians(0)))
-                .forward(AutoConstants.RED_BACKSTAGE_PRELOAD_FORWARD_DIST)
-                .UNSTABLE_addTemporalMarkerOffset(AutoConstants.armLiftDelay, () -> {
-                    arm.up();
-                    deposit.score();
-                })
-                .UNSTABLE_addTemporalMarkerOffset(AutoConstants.preloadScoreDelay, () -> {
-                    deposit.openInner();
-                    deposit.openOuter();
-                })
 
-                .waitSeconds(AutoConstants.postPreloadWait)
-                .back(10)
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    lift.bottom();
-                })
-                .build();
-
-        TrajectorySequence middleSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.RED_BACKSTAGE_START)
-                .forward(AutoConstants.MIDDLE_SPIKE_DISTANCE)
-                .back(10)
-                .lineToLinearHeading(new Pose2d(12, -38, Math.toRadians(0)))
-                .forward(AutoConstants.RED_BACKSTAGE_PRELOAD_FORWARD_DIST)
-                .UNSTABLE_addTemporalMarkerOffset(AutoConstants.armLiftDelay, () -> {
-                    arm.up();
-                    deposit.score();
-                })
-                .UNSTABLE_addTemporalMarkerOffset(AutoConstants.preloadScoreDelay, () -> {
-                    deposit.openInner();
-                    deposit.openOuter();
-                })
-
-                .waitSeconds(AutoConstants.postPreloadWait)
-                .back(10)
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    lift.bottom();
-                })
-                .build();
 
         timer.reset();
+        scoringFSM.autoInit();
 
         while (!isStarted() && !isStopRequested()) {
-            lift.bottom();
-            arm.autoInit();
-            deposit.idle();
-            deposit.lockOuter();
-            deposit.lockInner();
-
-            if (timer.milliseconds() > 2750) {
-                intake.up();
-            }
-
-            lift.update();
-            arm.update();
-            deposit.update();
-            intake.update();
+            scoringFSM.update(gamepad1);
             region = camera.whichRegion();
+            tele.addData("score timer", scoringFSM.timer.milliseconds());
             tele.addData("DETECTED REGION", camera.whichRegion());
             tele.update();
         }
@@ -147,10 +127,7 @@ public class RedBackstage extends LinearOpMode {
         }
 
         while (opModeIsActive() && !isStopRequested()) {
-            lift.update();
-            arm.update();
-            deposit.update();
-            intake.update();
+            scoringFSM.update(gamepad1);
             drive.update();
         }
     }
