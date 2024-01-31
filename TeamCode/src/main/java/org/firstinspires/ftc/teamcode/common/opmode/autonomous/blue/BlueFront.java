@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.common.opmode.autonomous.blue;
 
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.*;
+
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
@@ -35,20 +37,38 @@ public class BlueFront extends LinearOpMode {
         TrajectorySequence leftSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.BLUE_FRONT_START)
                 .forward(14)
                 .setTangent(Math.toRadians(270))
-                .splineToLinearHeading(new Pose2d(-32, 39, Math.toRadians(310)), Math.toRadians(310))
-                .back(5)
+                .splineToLinearHeading(BF_L_SPIKE, BF_L_SPIKE.getHeading())
+                // END OF SPIKE MARK
+                .setTangent(Math.toRadians(130))
+                .splineToLinearHeading(new Pose2d(-40, 38, Math.toRadians(0)), Math.toRadians(270))
+                .lineToLinearHeading(new Pose2d(-40, 12, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(40, 12, Math.toRadians(0)))
+                .lineToLinearHeading(BF_L_BACKDROP)
                 .build();
 
         TrajectorySequence rightSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.BLUE_FRONT_START)
                 .forward(14)
                 .setTangent(Math.toRadians(270))
-                .splineToLinearHeading(new Pose2d(-40, 39, Math.toRadians(230)), Math.toRadians(230))
-                .back(5)
+                .splineToLinearHeading(BF_R_SPIKE, BF_R_SPIKE.getHeading())
+                // END OF SPIKE MARK
+                .setTangent(Math.toRadians(50))
+                .splineToLinearHeading(new Pose2d(-34, 38, Math.toRadians(270)), Math.toRadians(270))
+                .lineToLinearHeading(new Pose2d(-34, 12, Math.toRadians(270)))
+                .turn(Math.toRadians(90))
+                .lineToLinearHeading(new Pose2d(40, 12, Math.toRadians(0)))
+                .lineToLinearHeading(BF_R_BACKDROP)
                 .build();
 
         TrajectorySequence middleSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.BLUE_FRONT_START)
-                .forward(AutoConstants.MIDDLE_SPIKE_DISTANCE)
-                .back(10)
+                .forward(MIDDLE_SPIKE_DISTANCE)
+                .back(5)
+                // END OF SPIKEMARK
+                .setTangent(Math.toRadians(180))
+                .splineToLinearHeading(new Pose2d(-48, 24, Math.toRadians(270)), Math.toRadians(270))
+                .setTangent(Math.toRadians(270))
+                .splineToLinearHeading(new Pose2d(-36, 12, Math.toRadians(0)), Math.toRadians(0))
+                .lineToLinearHeading(new Pose2d(40, 12, Math.toRadians(0)))
+                .lineToLinearHeading(BF_M_BACKDROP)
                 .build();
 
         scoringFSM.init(hardwareMap);

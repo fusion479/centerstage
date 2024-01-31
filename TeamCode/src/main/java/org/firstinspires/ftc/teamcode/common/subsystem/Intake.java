@@ -13,9 +13,8 @@ public class Intake extends Mechanism {
     Servo intakeLeft;
     Servo intakeRight;
     public static double UP_POS = .75;
-    public static double DOWN_POS = .21;
-    public static double IDLE_POS = .5;
-    public static double CUSTOM_POS = .5;
+    public static double DOWN_POS = .4;
+    public static double IDLE_POS = .6;
     public static double target = UP_POS;
     public static double power;
 
@@ -39,7 +38,7 @@ public class Intake extends Mechanism {
     }
 
     public void setPower(double power) {
-        this.power = power;
+        Intake.power = power;
     }
 
     public void up() {

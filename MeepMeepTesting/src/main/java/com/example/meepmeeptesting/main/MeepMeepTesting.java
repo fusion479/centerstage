@@ -16,11 +16,17 @@ public class MeepMeepTesting {
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(30, 30, 5, toRadians(60), 15.5)
                 .followTrajectorySequence(drive ->
-                        drive.trajectorySequenceBuilder(new Pose2d(12, 63.25, Math.toRadians(270)))
+                        drive.trajectorySequenceBuilder(new Pose2d(-36, 63.25, Math.toRadians(270)))
+
                                 .forward(26.5)
-                                .back(10)
-                                .lineToLinearHeading(new Pose2d(12, 36, Math.toRadians(0)))
-                                .forward(38)
+                                .back(5)
+                                // END OF SPIKEMARK
+                                .setTangent(Math.toRadians(180))
+                                .splineToLinearHeading(new Pose2d(-48, 24, Math.toRadians(270)), Math.toRadians(270))
+                                .setTangent(Math.toRadians(270))
+                                .splineToLinearHeading(new Pose2d(-36, 12, Math.toRadians(0)), Math.toRadians(0))
+                                .lineToLinearHeading(new Pose2d(40, 12, Math.toRadians(0)))
+                                .lineToLinearHeading(new Pose2d(48, 36, Math.toRadians(0)))
                                 .build()
                 );
 

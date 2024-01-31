@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.common.subsystem;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
-import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -27,7 +26,8 @@ public class ScoringFSM extends Mechanism {
         MEDIUM,
         HIGH,
         SCORE,
-        CLIMB,
+        CLIMB_UP,
+        CLIMB_DOWN,
         AUTO_INIT
     };
 
@@ -157,7 +157,13 @@ public class ScoringFSM extends Mechanism {
                     ready();
                 }
                 break;
-            case CLIMB:
+            case CLIMB_UP:
+                up = true;
+                arm.climb();
+                deposit.idle();
+                lift.high();
+                intake.up();
+            case CLIMB_DOWN:
                 up = false;
                 arm.climb();
                 deposit.idle();
@@ -236,8 +242,12 @@ public class ScoringFSM extends Mechanism {
         timer.reset();
     }
 
-    public void climb() {
-        state = STATES.CLIMB;
+    public void climbUp() {
+        state = STATES.CLIMB_UP;
+    }
+
+    public void climbDown() {
+        state = STATES.CLIMB_DOWN;
     }
 
     public void autoInit() {

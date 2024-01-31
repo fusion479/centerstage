@@ -53,8 +53,11 @@ public class Robot extends Mechanism {
 
 //        if (endgameTimer.seconds() > 90) {
         // Operator endgame controls
-        if (gamepad2.a) {
-            scoringFSM.climb();
+        if (gamepad2.b) {
+            scoringFSM.climbUp();
+        }
+        else if (gamepad2.a) {
+            scoringFSM.climbDown();
         } else if (gamepad2.x) {
             launcher.launch();
         }
