@@ -62,9 +62,9 @@ public class BlueFront extends LinearOpMode {
         TrajectorySequence middleSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.BLUE_FRONT_START)
                 .forward(MIDDLE_SPIKE_DISTANCE)
                 .back(5)
-                // END OF SPIKEMARK
+                // END OF SPIKE MARK
                 .setTangent(Math.toRadians(180))
-                .splineToLinearHeading(new Pose2d(-48, 24, Math.toRadians(270)), Math.toRadians(270))
+                .splineToLinearHeading(new Pose2d(-52, 24, Math.toRadians(270)), Math.toRadians(270))
                 .setTangent(Math.toRadians(270))
                 .splineToLinearHeading(new Pose2d(-36, 12, Math.toRadians(0)), Math.toRadians(0))
                 .lineToLinearHeading(new Pose2d(40, 12, Math.toRadians(0)))
