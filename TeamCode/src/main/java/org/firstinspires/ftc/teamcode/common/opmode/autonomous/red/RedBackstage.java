@@ -43,6 +43,7 @@ public class RedBackstage extends LinearOpMode {
                 .splineToLinearHeading(RB_L_SPIKE, RB_L_SPIKE.getHeading())
                 .lineToLinearHeading(RB_L_BACKDROP)
                 .forward(RB_PRELOAD_FORWARD_DIST)
+
                 .UNSTABLE_addTemporalMarkerOffset(armLiftDelay, () -> {
                     scoringFSM.bottom();
                 })
@@ -51,6 +52,7 @@ public class RedBackstage extends LinearOpMode {
                     scoringFSM.deposit.openInner();
                     scoringFSM.deposit.openOuter();
                 })
+
                 .back(10)
                 .waitSeconds(postPreloadWait)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {

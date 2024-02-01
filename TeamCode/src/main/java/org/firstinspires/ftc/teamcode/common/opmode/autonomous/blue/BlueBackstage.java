@@ -43,6 +43,15 @@ public class BlueBackstage extends LinearOpMode {
                 .splineToLinearHeading(BB_L_SPIKE, BB_L_SPIKE.getHeading())
                 .lineToLinearHeading(BB_L_BACKDROP)
                 .forward(RB_PRELOAD_FORWARD_DIST)
+
+                .UNSTABLE_addTemporalMarkerOffset(armLiftDelay, () -> {
+                    scoringFSM.low();
+                })
+                .UNSTABLE_addTemporalMarkerOffset(preloadScoreDelay, () -> {
+                    scoringFSM.score();
+                    scoringFSM.deposit.openInner();
+                    scoringFSM.deposit.openOuter();
+                })
                 .build();
 
         TrajectorySequence rightSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.BLUE_BACKSTAGE_START)
@@ -51,6 +60,15 @@ public class BlueBackstage extends LinearOpMode {
                 .splineToLinearHeading(BB_R_SPIKE, BB_R_SPIKE.getHeading())
                 .lineToLinearHeading(BB_R_BACKDROP)
                 .forward(RB_PRELOAD_FORWARD_DIST)
+
+                .UNSTABLE_addTemporalMarkerOffset(armLiftDelay, () -> {
+                    scoringFSM.low();
+                })
+                .UNSTABLE_addTemporalMarkerOffset(preloadScoreDelay, () -> {
+                    scoringFSM.score();
+                    scoringFSM.deposit.openInner();
+                    scoringFSM.deposit.openOuter();
+                })
                 .build();
 
         TrajectorySequence middleSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.BLUE_BACKSTAGE_START)
@@ -58,6 +76,15 @@ public class BlueBackstage extends LinearOpMode {
                 .back(10)
                 .lineToLinearHeading(BB_M_BACKDROP)
                 .forward(RB_PRELOAD_FORWARD_DIST)
+
+                .UNSTABLE_addTemporalMarkerOffset(armLiftDelay, () -> {
+                    scoringFSM.low();
+                })
+                .UNSTABLE_addTemporalMarkerOffset(preloadScoreDelay, () -> {
+                    scoringFSM.score();
+                    scoringFSM.deposit.openInner();
+                    scoringFSM.deposit.openOuter();
+                })
                 .build();
 
         timer.reset();
