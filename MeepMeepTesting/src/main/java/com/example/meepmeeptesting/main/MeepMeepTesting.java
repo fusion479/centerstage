@@ -54,14 +54,14 @@ public class MeepMeepTesting {
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(30, 30, 5, toRadians(60), 15.5)
                 .followTrajectorySequence(drive ->
-                        drive.trajectorySequenceBuilder(BLUE_BACKSTAGE_START)
-                                .forward(INITIAL_FORWARD_DIST)
-                                .setTangent(Math.toRadians(270))
-                                .splineToLinearHeading(BB_R_SPIKE, BB_R_SPIKE.getHeading())
-                                .setTangent(Math.toRadians(45))
-                                .splineToLinearHeading(new Pose2d(14, 38, Math.toRadians(270)), Math.toRadians(0))
-                                .lineToLinearHeading(BB_R_BACKDROP)
-                                .build()
+                                drive.trajectorySequenceBuilder(BLUE_BACKSTAGE_START)
+                                        .forward(INITIAL_FORWARD_DIST)
+                                        .setTangent(Math.toRadians(270))
+                                        .splineToLinearHeading(BB_L_SPIKE, BB_L_SPIKE.getHeading())
+                                        .setTangent(Math.toRadians(180))
+                                        .splineToLinearHeading(new Pose2d(12, 42, Math.toRadians(0)), Math.toRadians(90))
+                                        .lineToLinearHeading(BB_L_BACKDROP)
+                                        .build()
                 );
 
         meepMeep.setBackground(MeepMeep.Background.FIELD_CENTERSTAGE_JUICE_DARK)

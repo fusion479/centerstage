@@ -38,71 +38,70 @@ public class BlueBackstage extends LinearOpMode {
         drive.setPoseEstimate(BLUE_BACKSTAGE_START);
 
         TrajectorySequence leftSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.BLUE_BACKSTAGE_START)
-//                .forward(INITIAL_FORWARD_DIST)
-//                .setTangent(Math.toRadians(270))
-//                .splineToLinearHeading(BB_L_SPIKE, BB_L_SPIKE.getHeading())
-//                .lineToLinearHeading(BB_L_BACKDROP)
-//                .forward(RB_PRELOAD_FORWARD_DIST)
-
                 .forward(INITIAL_FORWARD_DIST)
                 .setTangent(Math.toRadians(270))
                 .splineToLinearHeading(BB_L_SPIKE, BB_L_SPIKE.getHeading())
-                .setTangent(Math.toRadians(180))
-                .splineToLinearHeading(new Pose2d(12, 42, Math.toRadians(0)), Math.toRadians(90))
                 .lineToLinearHeading(BB_L_BACKDROP)
+                .forward(RB_PRELOAD_FORWARD_DIST)
 
-                .UNSTABLE_addTemporalMarkerOffset(armLiftDelay, () -> {
-                    scoringFSM.low();
-                })
-                .UNSTABLE_addTemporalMarkerOffset(preloadScoreDelay, () -> {
-                    scoringFSM.score();
-                    scoringFSM.deposit.openInner();
-                    scoringFSM.deposit.openOuter();
-                })
+//                .forward(INITIAL_FORWARD_DIST)
+//                .setTangent(Math.toRadians(270))
+//                .splineToLinearHeading(BB_L_SPIKE, BB_L_SPIKE.getHeading())
+//                .setTangent(Math.toRadians(180))
+//                .splineToLinearHeading(new Pose2d(12, 42, Math.toRadians(0)), Math.toRadians(90))
+//                .lineToLinearHeading(BB_L_BACKDROP)
+//
+//                .UNSTABLE_addTemporalMarkerOffset(armLiftDelay, () -> {
+//                    scoringFSM.low();
+//                })
+//                .UNSTABLE_addTemporalMarkerOffset(preloadScoreDelay, () -> {
+//                    scoringFSM.score();
+//                    scoringFSM.deposit.openInner();
+//                    scoringFSM.deposit.openOuter();
+//                })
                 .build();
 
         TrajectorySequence middleSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.BLUE_BACKSTAGE_START)
-//                .forward(MIDDLE_SPIKE_DISTANCE)
-//                .back(10)
-//                .lineToLinearHeading(BB_M_BACKDROP)
-//                .forward(RB_PRELOAD_FORWARD_DIST)
-
                 .forward(MIDDLE_SPIKE_DISTANCE)
                 .back(10)
                 .lineToLinearHeading(BB_M_BACKDROP)
-
-                .UNSTABLE_addTemporalMarkerOffset(armLiftDelay, () -> {
-                    scoringFSM.low();
-                })
-                .UNSTABLE_addTemporalMarkerOffset(preloadScoreDelay, () -> {
-                    scoringFSM.score();
-                    scoringFSM.deposit.openInner();
-                    scoringFSM.deposit.openOuter();
-                })
+                .forward(RB_PRELOAD_FORWARD_DIST)
+//
+//                .forward(MIDDLE_SPIKE_DISTANCE)
+//                .back(10)
+//                .lineToLinearHeading(BB_M_BACKDROP)
+//
+//                .UNSTABLE_addTemporalMarkerOffset(armLiftDelay, () -> {
+//                    scoringFSM.low();
+//                })
+//                .UNSTABLE_addTemporalMarkerOffset(preloadScoreDelay, () -> {
+//                    scoringFSM.score();
+//                    scoringFSM.deposit.openInner();
+//                    scoringFSM.deposit.openOuter();
+//                })
                 .build();
 
         TrajectorySequence rightSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.BLUE_BACKSTAGE_START)
-//                .forward(INITIAL_FORWARD_DIST)
-//                .setTangent(Math.toRadians(270))
-//                .splineToLinearHeading(BB_R_SPIKE, BB_R_SPIKE.getHeading())
-//                .lineToLinearHeading(BB_R_BACKDROP)
-//                .forward(RB_PRELOAD_FORWARD_DIST)
-
                 .forward(INITIAL_FORWARD_DIST)
                 .setTangent(Math.toRadians(270))
                 .splineToLinearHeading(BB_R_SPIKE, BB_R_SPIKE.getHeading())
-                .setTangent(Math.toRadians(45))
-                .splineToLinearHeading(new Pose2d(14, 38, Math.toRadians(270)), Math.toRadians(0))
                 .lineToLinearHeading(BB_R_BACKDROP)
-
-                .UNSTABLE_addTemporalMarkerOffset(armLiftDelay, () -> {
-                    scoringFSM.low();
-                })
-                .UNSTABLE_addTemporalMarkerOffset(preloadScoreDelay, () -> {
-                    scoringFSM.score();
-                    scoringFSM.deposit.openInner();
-                    scoringFSM.deposit.openOuter();
-                })
+                .forward(RB_PRELOAD_FORWARD_DIST)
+//                .forward(INITIAL_FORWARD_DIST)
+//                .setTangent(Math.toRadians(270))
+//                .splineToLinearHeading(BB_R_SPIKE, BB_R_SPIKE.getHeading())
+//                .setTangent(Math.toRadians(45))
+//                .splineToLinearHeading(new Pose2d(14, 38, Math.toRadians(270)), Math.toRadians(0))
+//                .lineToLinearHeading(BB_R_BACKDROP)
+//
+//                .UNSTABLE_addTemporalMarkerOffset(armLiftDelay, () -> {
+//                    scoringFSM.low();
+//                })
+//                .UNSTABLE_addTemporalMarkerOffset(preloadScoreDelay, () -> {
+//                    scoringFSM.score();
+//                    scoringFSM.deposit.openInner();
+//                    scoringFSM.deposit.openOuter();
+//                })
                 .build();
 
         timer.reset();

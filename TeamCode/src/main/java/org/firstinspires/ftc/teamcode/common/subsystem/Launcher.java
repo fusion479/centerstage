@@ -8,8 +8,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class Launcher extends Mechanism {
     Servo servo;
 
-    public static double LAUNCH_POS = 1;
-    public static double IDLE_POS = .8;
+    public static double LAUNCH_POS = 0.17;
+    public static double IDLE_POS = 0;
     double target;
 
     @Override
