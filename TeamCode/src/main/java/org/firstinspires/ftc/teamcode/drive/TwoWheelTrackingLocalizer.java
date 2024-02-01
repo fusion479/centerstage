@@ -39,7 +39,8 @@ public class TwoWheelTrackingLocalizer extends TwoTrackingWheelLocalizer {
     public static double GEAR_RATIO = 1; // output (wheel) speed / input (encoder) speed
 
     public static double PARALLEL_X = 4.92647362205; // X is the up and down direction
-    public static double PARALLEL_Y = 3.4006807087 ; // Y is the strafe direction
+    public static double PARALLEL_Y = -3.4006807087; // Y is the strafe direction
+//    3.03838583
 
     public static double PERPENDICULAR_X = 5.7859019685;
     public static double PERPENDICULAR_Y = 0.0282507874;
