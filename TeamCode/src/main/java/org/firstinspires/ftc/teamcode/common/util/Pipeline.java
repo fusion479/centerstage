@@ -22,6 +22,7 @@ public class Pipeline extends OpenCvPipeline {
     Scalar highHSV;
     Rect RIGHT_RECT, CENTER_RECT;
     double rightRegionPercent, centerRegionPercent;
+
     int region;
 
     public Pipeline(String colorChoice) {
@@ -33,8 +34,8 @@ public class Pipeline extends OpenCvPipeline {
         Imgproc.cvtColor(input, mat, Imgproc.COLOR_RGB2HSV);
 
         if (color == "red") {
-            lowHSV = new Scalar(0, 161, 134);
-            highHSV = new Scalar(86, 209, 189);
+            lowHSV = new Scalar(0, 150, 160);
+            highHSV = new Scalar(10, 255, 190);
         }
         if (color == "blue") {
             lowHSV = new Scalar(110, 50, 50);

@@ -5,16 +5,11 @@ import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConsta
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants;
-import org.firstinspires.ftc.teamcode.common.subsystem.Arm;
-import org.firstinspires.ftc.teamcode.common.subsystem.BlueCamera;
 import org.firstinspires.ftc.teamcode.common.subsystem.Camera;
-import org.firstinspires.ftc.teamcode.common.subsystem.Deposit;
-import org.firstinspires.ftc.teamcode.common.subsystem.Intake;
 import org.firstinspires.ftc.teamcode.common.subsystem.ScoringFSM;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
@@ -26,8 +21,8 @@ public class BlueFront extends LinearOpMode {
     private int region;
 
     SampleMecanumDrive drive;
-    BlueCamera camera = new BlueCamera();
     ScoringFSM scoringFSM = new ScoringFSM();
+    Camera camera = new Camera("blue");
 
     @Override
     public void runOpMode() throws InterruptedException {

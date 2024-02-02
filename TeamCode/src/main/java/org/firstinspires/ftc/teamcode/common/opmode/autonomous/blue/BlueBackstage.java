@@ -26,7 +26,7 @@ public class BlueBackstage extends LinearOpMode {
 
     SampleMecanumDrive drive;
     ScoringFSM scoringFSM = new ScoringFSM();
-    Camera camera = new Camera();
+    Camera camera = new Camera("blue");
 
     @Override
     public void runOpMode() throws InterruptedException {

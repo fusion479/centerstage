@@ -8,10 +8,10 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.common.subsystem.Camera;
 
-@TeleOp(name = "Camera Test", group = "testing")
+@TeleOp(name = "Red Camera Test", group = "testing")
 @Config
-public class CameraTest extends LinearOpMode {
-    Camera camera = new Camera();
+public class RedCameraTest extends LinearOpMode {
+    Camera camera = new Camera("red");
     FtcDashboard dashboard = FtcDashboard.getInstance();
     Telemetry telemetry = dashboard.getTelemetry();
 

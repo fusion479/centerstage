@@ -25,7 +25,7 @@ public class RedFront extends LinearOpMode {
     private int region;
 
     SampleMecanumDrive drive;
-    Camera camera = new Camera();
+    Camera camera = new Camera("red");
     ScoringFSM scoringFSM = new ScoringFSM();
 
     @Override
