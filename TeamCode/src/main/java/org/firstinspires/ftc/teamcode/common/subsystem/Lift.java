@@ -78,9 +78,9 @@ public class Lift extends Mechanism {
             isReached = true;
         }
 
-        if (timer.milliseconds() > bottomMotorOffDelay && target == 0) {
-            power = 0;
-        }
+//        if (timer.milliseconds() > bottomMotorOffDelay && target == 0) {
+//            power = 0;
+//        }
 
 
         motors[0].setPower(power);
