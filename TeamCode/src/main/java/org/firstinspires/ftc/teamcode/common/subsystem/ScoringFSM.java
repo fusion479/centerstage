@@ -104,6 +104,9 @@ public class ScoringFSM extends Mechanism {
 
                 if (timer.milliseconds() >= 500) {
                     deposit.ready();
+                }
+
+                if (timer.milliseconds() >= 700) {
                     intake.idle();
                 }
 
