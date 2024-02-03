@@ -98,16 +98,16 @@ public class ScoringFSM extends Mechanism {
                 deposit.lockInner();
                 deposit.lockOuter();
 
-                if (timer.milliseconds() >= 100) {
+                if (timer.milliseconds() >= 25) {
                     lift.bottom();
                     arm.ready();
                 }
 
-                if (timer.milliseconds() >= 500) {
+                if (timer.milliseconds() >= 125) {
                     deposit.ready();
                 }
 
-                if (timer.milliseconds() >= 700) {
+                if (timer.milliseconds() >= 600) {
                     intake.idle();
                 }
 
@@ -191,21 +191,22 @@ public class ScoringFSM extends Mechanism {
 
         if (!isPressedRB && gamepad.right_bumper) {
             deposit.toggleOuter();
-        }
-
-        if (!isPressedLB && gamepad.left_bumper) {
+        } else if (!isPressedLB && gamepad.left_bumper) {
             deposit.toggleInner();
         }
 
-        isPressedA = gamepad.a;
         isPressedLB = gamepad.left_bumper; // toggle inner pixel
         isPressedRB = gamepad.right_bumper; // toggle outer pixel
+        isPressedA = gamepad.a;
+
 
         lift.update();
         arm.update();
         deposit.update();
         intake.update();
 
+        telemetry.addData("is pressed LB", isPressedLB);
+        telemetry.addData("is pressed RB", isPressedRB);
         telemetry.addData("looptime", loopTimeTimer.milliseconds());
         loopTimeTimer.reset();
         telemetry.update();

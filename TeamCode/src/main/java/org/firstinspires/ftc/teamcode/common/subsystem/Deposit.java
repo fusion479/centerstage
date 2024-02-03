@@ -31,6 +31,8 @@ public class Deposit extends Mechanism {
 
     public void update() {
         pivot.setPosition(pivotTarget);
+        inner.setPosition(innerTarget);
+        outer.setPosition(outerTarget);
     }
 
     public void accepting() {
@@ -58,7 +60,7 @@ public class Deposit extends Mechanism {
     }
 
     public void toggleOuter() {
-        if (innerLocked) {
+        if (outerLocked) {
             openOuter();
         } else {
             lockOuter();
@@ -66,22 +68,22 @@ public class Deposit extends Mechanism {
     }
 
     public void lockInner() {
-        inner.setPosition(LOCKINNER);
+        innerTarget = LOCKINNER;
         innerLocked = true;
     }
 
     public void lockOuter() {
-        outer.setPosition(LOCKOUTER);
+        outerTarget = LOCKOUTER;
         outerLocked = true;
     }
 
     public void openInner() {
-        inner.setPosition(OPENINNER);
+        innerTarget = OPENINNER;
         innerLocked = false;
     }
 
     public void openOuter() {
-        outer.setPosition(OPENOUTER);
+        outerTarget = OPENOUTER;
         outerLocked = false;
     }
 }
