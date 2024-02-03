@@ -33,6 +33,7 @@ public class ScoringFSM extends Mechanism {
 
     public STATES state;
     public boolean up;
+    public boolean isAuto;
 
     public ElapsedTime timer = new ElapsedTime();
     public ElapsedTime loopTimeTimer = new ElapsedTime();
@@ -157,7 +158,12 @@ public class ScoringFSM extends Mechanism {
                 intake.idle();
 
                 if (timer.milliseconds() > resetDelay && !deposit.innerLocked && !deposit.outerLocked) {
-                    ready();
+                    if (!isAuto) {
+                        ready();
+                    } else {
+                        deposit.openOuter();
+                        deposit.openInner();
+                    }
                 }
                 break;
             case CLIMB_UP:
@@ -175,7 +181,7 @@ public class ScoringFSM extends Mechanism {
             case AUTO_INIT:
                 intake.down();
                 arm.autoInit();
-                deposit.idle();
+                deposit.ready();
 
                 if (timer.milliseconds() > autoIntakeDelay) {
                     intake.up();

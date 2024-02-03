@@ -60,12 +60,11 @@ public class RedBackstage extends LinearOpMode {
                     scoringFSM.deposit.openOuter();
                 })
 
-                .back(10)
                 .waitSeconds(postPreloadWait)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     scoringFSM.ready();
                 })
-                .forward(5)
+                .strafeRight(30)
                 .build();
 
         TrajectorySequence middleSpikeMark = drive.trajectorySequenceBuilder(RED_BACKSTAGE_START)
@@ -87,11 +86,10 @@ public class RedBackstage extends LinearOpMode {
                     scoringFSM.deposit.openOuter();
                 })
                 .waitSeconds(postPreloadWait)
-                .back(10)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     scoringFSM.ready();
                 })
-                .forward(5)
+                .strafeRight(27)
                 .build();
 
         TrajectorySequence rightSpikeMark = drive.trajectorySequenceBuilder(RED_BACKSTAGE_START)
@@ -118,11 +116,10 @@ public class RedBackstage extends LinearOpMode {
                 })
 
                 .waitSeconds(postPreloadWait)
-                .back(10)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     scoringFSM.ready();
                 })
-                .forward(5)
+                .strafeRight(25)
                 .build();
 
 

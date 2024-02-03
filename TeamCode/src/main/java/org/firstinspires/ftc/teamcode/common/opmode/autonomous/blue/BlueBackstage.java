@@ -56,9 +56,11 @@ public class BlueBackstage extends LinearOpMode {
                 })
                 .UNSTABLE_addTemporalMarkerOffset(preloadScoreDelay, () -> {
                     scoringFSM.score();
-                    scoringFSM.deposit.openInner();
                     scoringFSM.deposit.openOuter();
+                    scoringFSM.deposit.openInner();
                 })
+                .waitSeconds(3)
+                .strafeLeft(12)
                 .build();
 
         TrajectorySequence middleSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.BLUE_BACKSTAGE_START)
@@ -76,9 +78,11 @@ public class BlueBackstage extends LinearOpMode {
                 })
                 .UNSTABLE_addTemporalMarkerOffset(preloadScoreDelay, () -> {
                     scoringFSM.score();
-                    scoringFSM.deposit.openInner();
                     scoringFSM.deposit.openOuter();
+                    scoringFSM.deposit.openInner();
                 })
+                .waitSeconds(3)
+                .strafeLeft(12)
                 .build();
 
         TrajectorySequence rightSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.BLUE_BACKSTAGE_START)
@@ -86,7 +90,7 @@ public class BlueBackstage extends LinearOpMode {
 //                .setTangent(Math.toRadians(270))
 //                .splineToLinearHeading(BB_R_SPIKE, BB_R_SPIKE.getHeading())
 //                .lineToLinearHeading(BB_R_BACKDROP)
-//                .forward(RB_PRELOAD_FORWARD_DIST)
+//                .forward(RB_PRELOAD_FORWARDoDIST)
 
                 .forward(INITIAL_FORWARD_DIST)
                 .setTangent(Math.toRadians(270))
@@ -100,9 +104,11 @@ public class BlueBackstage extends LinearOpMode {
                 })
                 .UNSTABLE_addTemporalMarkerOffset(preloadScoreDelay, () -> {
                     scoringFSM.score();
-                    scoringFSM.deposit.openInner();
                     scoringFSM.deposit.openOuter();
+                    scoringFSM.deposit.openInner();
                 })
+                .waitSeconds(3)
+                .strafeLeft(12)
                 .build();
 
         timer.reset();
