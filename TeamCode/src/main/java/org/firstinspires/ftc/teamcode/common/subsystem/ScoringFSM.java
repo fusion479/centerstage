@@ -17,7 +17,6 @@ public class ScoringFSM extends Mechanism {
     public Arm arm = new Arm();
     public Deposit deposit = new Deposit();
     public Intake intake = new Intake();
-//    public RevBlinkinLedDriver lights = new RevBlinkinLedDriver();
     public enum STATES {
         INTAKE,
         READY,
@@ -25,9 +24,9 @@ public class ScoringFSM extends Mechanism {
         LOW,
         MEDIUM,
         HIGH,
+        CUSTOM,
         SCORE,
-        CLIMB_UP,
-        CLIMB_DOWN,
+        CLIMB,
         AUTO_INIT
     };
 
@@ -44,6 +43,9 @@ public class ScoringFSM extends Mechanism {
     public boolean isPressedA = false;
     public boolean isPressedRB = false;
     public boolean isPressedLB = false;
+    public boolean isPressedRB2 = false;
+    public boolean isPressedLB2 = false;
+
 
     @Override
     public void init(HardwareMap hwMap) {
@@ -56,7 +58,7 @@ public class ScoringFSM extends Mechanism {
         up = false;
     }
 
-    public void update(Gamepad gamepad) {
+    public void update(Gamepad gamepad, Gamepad gamepad2) {
 
         if (!isPressedA && gamepad.a) {
             toggleReady();
@@ -78,10 +80,19 @@ public class ScoringFSM extends Mechanism {
             intake.setPower(0);
         }
 
+        if (!isPressedRB2 && gamepad2.right_bumper) {
+            custom();
+            lift.upALittle();
+        } else if (!isPressedLB2 && gamepad2.left_bumper) {
+            custom();
+            lift.downALittle();
+        }
+
         switch (state) {
             case INTAKE:
                 // A toggle
                 up = false;
+                lift.isClimb = false;
                 deposit.openOuter();
                 deposit.openInner();
                 lift.bottom();
@@ -95,6 +106,7 @@ public class ScoringFSM extends Mechanism {
             case READY:
                 // A toggle
                 up = false;
+                lift.isClimb = false;
                 deposit.lockInner();
                 deposit.lockOuter();
 
@@ -114,6 +126,7 @@ public class ScoringFSM extends Mechanism {
                 break;
             case BOTTOM:
                 up = true;
+                lift.isClimb = false;
                 deposit.lockInner();
                 deposit.lockOuter();
                 lift.bottom();
@@ -123,6 +136,7 @@ public class ScoringFSM extends Mechanism {
                 break;
             case LOW:
                 up = true;
+                lift.isClimb = false;
                 deposit.lockInner();
                 deposit.lockOuter();
                 lift.low();
@@ -133,6 +147,7 @@ public class ScoringFSM extends Mechanism {
             case MEDIUM:
                 // Y
                 up = true;
+                lift.isClimb = false;
                 deposit.lockInner();
                 deposit.lockOuter();
                 lift.medium();
@@ -143,6 +158,7 @@ public class ScoringFSM extends Mechanism {
             case HIGH:
                 // X
                 up = true;
+                lift.isClimb = false;
                 deposit.lockInner();
                 deposit.lockOuter();
                 lift.high();
@@ -150,9 +166,18 @@ public class ScoringFSM extends Mechanism {
                 deposit.score();
                 intake.idle();
                 break;
+            case CUSTOM:
+                up = true;
+                lift.isClimb = false;
+                deposit.lockInner();
+                deposit.lockOuter();
+                arm.up();
+                deposit.score();
+                intake.idle();
             case SCORE:
                 // Left or Right
                 up = true;
+                lift.isClimb = false;
                 arm.up();
                 deposit.score();
                 intake.idle();
@@ -166,19 +191,21 @@ public class ScoringFSM extends Mechanism {
                     }
                 }
                 break;
-            case CLIMB_UP:
+            case CLIMB:
                 up = true;
+                lift.isClimb = true;
                 arm.climb();
                 deposit.idle();
-                lift.high();
                 intake.up();
-            case CLIMB_DOWN:
-                up = false;
-                arm.climb();
-                deposit.idle();
-                lift.climb();
-                intake.up();
+                if (gamepad2.right_trigger > .1) {
+                    lift.setPower(gamepad2.right_trigger);
+                } else if (gamepad2.left_trigger > .1) {
+                    lift.setPower(-gamepad2.left_trigger);
+                } else {
+                    lift.setPower(0);
+                };
             case AUTO_INIT:
+                lift.isClimb = false;
                 intake.down();
                 arm.autoInit();
                 deposit.ready();
@@ -188,7 +215,6 @@ public class ScoringFSM extends Mechanism {
                     deposit.lockInner();
                     deposit.lockOuter();
                 }
-
         }
 
         if (!isPressedRB && gamepad.right_bumper) {
@@ -249,19 +275,19 @@ public class ScoringFSM extends Mechanism {
         state = STATES.HIGH;
     }
 
+    public void custom() {
+        state = STATES.CUSTOM;
+    }
+
     public void score() {
         state = STATES.SCORE;
         timer.reset();
     }
 
-    public void climbUp() {
-        state = STATES.CLIMB_UP;
+    public void climb() {
+        state = STATES.CLIMB;
     }
-
-    public void climbDown() {
-        state = STATES.CLIMB_DOWN;
-    }
-
+    
     public void autoInit() {
         state = STATES.AUTO_INIT;
         timer.reset();

@@ -51,21 +51,14 @@ public class Robot extends Mechanism {
                 )
         );
 
-//        if (endgameTimer.seconds() > 90) {
-        // Operator endgame controls
-        if (gamepad2.b) {
-            scoringFSM.climbUp();
-        }
-        else if (gamepad2.a) {
-            scoringFSM.climbDown();
-        } else if (gamepad2.x) {
+        if (gamepad2.x) {
             launcher.launch();
+        } else if (gamepad2.b) {
+            scoringFSM.climb();
         }
-//        }
-
 
         drive.update();
-        scoringFSM.update(gamepad1);
+        scoringFSM.update(gamepad1, gamepad2);
         launcher.update();
 
         telemetry.addData("State", scoringFSM.state);
