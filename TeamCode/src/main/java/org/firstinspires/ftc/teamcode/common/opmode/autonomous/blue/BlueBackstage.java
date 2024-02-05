@@ -60,7 +60,8 @@ public class BlueBackstage extends LinearOpMode {
                     scoringFSM.deposit.openInner();
                 })
                 .waitSeconds(3)
-                .strafeLeft(25)
+                .back(3)
+                .lineToLinearHeading(new Pose2d(45, 60, Math.toRadians(0)))
                 .build();
 
         TrajectorySequence middleSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.BLUE_BACKSTAGE_START)
@@ -82,7 +83,8 @@ public class BlueBackstage extends LinearOpMode {
                     scoringFSM.deposit.openInner();
                 })
                 .waitSeconds(3)
-                .strafeLeft(27)
+                .back(3)
+                .lineToLinearHeading(new Pose2d(45, 60, Math.toRadians(0)))
                 .build();
 
         TrajectorySequence rightSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.BLUE_BACKSTAGE_START)
@@ -108,7 +110,8 @@ public class BlueBackstage extends LinearOpMode {
                     scoringFSM.deposit.openInner();
                 })
                 .waitSeconds(3)
-                .strafeLeft(30)
+                .back(3)
+                .lineToLinearHeading(new Pose2d(45, 60, Math.toRadians(0)))
                 .build();
 
         timer.reset();

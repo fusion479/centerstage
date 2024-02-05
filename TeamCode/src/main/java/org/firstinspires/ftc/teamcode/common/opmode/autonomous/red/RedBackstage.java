@@ -64,7 +64,8 @@ public class RedBackstage extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     scoringFSM.ready();
                 })
-                .strafeRight(30)
+                .back(3)
+                .lineToLinearHeading(new Pose2d(49, -60, Math.toRadians(0)))
                 .build();
 
         TrajectorySequence middleSpikeMark = drive.trajectorySequenceBuilder(RED_BACKSTAGE_START)
@@ -89,7 +90,8 @@ public class RedBackstage extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     scoringFSM.ready();
                 })
-                .strafeRight(27)
+                .back(3)
+                .lineToLinearHeading(new Pose2d(49, -60, Math.toRadians(0)))
                 .build();
 
         TrajectorySequence rightSpikeMark = drive.trajectorySequenceBuilder(RED_BACKSTAGE_START)
@@ -119,7 +121,8 @@ public class RedBackstage extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     scoringFSM.ready();
                 })
-                .strafeRight(25)
+                .back(3)
+                .lineToLinearHeading(new Pose2d(49, -60, Math.toRadians(0)))
                 .build();
 
 

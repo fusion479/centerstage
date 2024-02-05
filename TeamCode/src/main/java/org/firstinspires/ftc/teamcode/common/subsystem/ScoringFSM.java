@@ -185,6 +185,8 @@ public class ScoringFSM extends Mechanism {
 
                 if (timer.milliseconds() > autoIntakeDelay) {
                     intake.up();
+                    deposit.lockInner();
+                    deposit.lockOuter();
                 }
 
         }
