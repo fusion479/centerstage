@@ -34,6 +34,10 @@ public class LiftTest extends LinearOpMode {
                 lift.medium();
             } else if (gamepad1.y) {
                 lift.high();
+            } else if (gamepad1.right_bumper) {
+                lift.upALittle();
+            } else if (gamepad1.left_bumper) {
+                lift.downALittle();
             }
             multipleTelemetry.update();
         }
