@@ -20,6 +20,7 @@ public class Lift extends Mechanism {
     private static final double TICKS_PER_REV = 537.7;
 
     public boolean isClimb = false;
+    public static int increment = 100;
 
     // PID Coefficients
     public static double kP = 0.0025;
@@ -130,11 +131,11 @@ public class Lift extends Mechanism {
     }
 
     public void upALittle() {
-        setTarget(target + 100);
+        setTarget(target + increment);
     }
 
     public void downALittle() {
-        setTarget(target - 100);
+        setTarget(target - increment);
     }
 
     public void setTarget(int target) {

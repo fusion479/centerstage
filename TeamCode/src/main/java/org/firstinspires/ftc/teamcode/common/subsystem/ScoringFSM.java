@@ -45,7 +45,8 @@ public class ScoringFSM extends Mechanism {
     public boolean isPressedLB = false;
     public boolean isPressedRB2 = false;
     public boolean isPressedLB2 = false;
-
+    public boolean isPressedDPadUp = false;
+    public boolean isPressedDPadDown = false;
 
     @Override
     public void init(HardwareMap hwMap) {
@@ -80,10 +81,10 @@ public class ScoringFSM extends Mechanism {
             intake.setPower(0);
         }
 
-        if (!isPressedRB2 && gamepad2.right_bumper) {
+        if (!isPressedDPadUp && gamepad.dpad_up) {
             custom();
             lift.upALittle();
-        } else if (!isPressedLB2 && gamepad2.left_bumper) {
+        } else if (!isPressedDPadDown && gamepad.dpad_down) {
             custom();
             lift.downALittle();
         }
@@ -225,19 +226,21 @@ public class ScoringFSM extends Mechanism {
 
         isPressedLB = gamepad.left_bumper; // toggle inner pixel
         isPressedRB = gamepad.right_bumper; // toggle outer pixel
+        isPressedLB2 = gamepad.left_bumper;
+        isPressedRB2 = gamepad.right_bumper;
+        isPressedDPadUp = gamepad.dpad_up;
+        isPressedDPadDown = gamepad.dpad_down;
         isPressedA = gamepad.a;
-
 
         lift.update();
         arm.update();
         deposit.update();
         intake.update();
 
-        telemetry.addData("is pressed LB", isPressedLB);
-        telemetry.addData("is pressed RB", isPressedRB);
-        telemetry.addData("looptime", loopTimeTimer.milliseconds());
-        loopTimeTimer.reset();
-        telemetry.update();
+//        telemetry.addData("is pressed LB", isPressedLB);
+//        telemetry.addData("is pressed RB", isPressedRB);
+//        telemetry.addData("looptime", loopTimeTimer.milliseconds());
+//        loopTimeTimer.reset();
 
 //        telemetry.addData("lift 0 current", lift.motors[0].getCurrent(CurrentUnit.AMPS));
 //        telemetry.addData("lift 1 current", lift.motors[1].getCurrent(CurrentUnit.AMPS));
@@ -246,7 +249,6 @@ public class ScoringFSM extends Mechanism {
 //        telemetry.addData("LIFT POWER", Lift.power);
 //        telemetry.addData("LIFT ERROR", Lift.error);
 //        telemetry.addData("LIFT TARGET", Lift.target);
-
     }
 
     public void intake() {

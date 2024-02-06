@@ -61,13 +61,13 @@ public class Robot extends Mechanism {
         scoringFSM.update(gamepad1, gamepad2);
         launcher.update();
 
-        telemetry.addData("State", scoringFSM.state);
-        telemetry.addData("Arm timer", scoringFSM.timer.milliseconds());
-        telemetry.addData("isPressedA", scoringFSM.isPressedA);
-        telemetry.addData("A", gamepad1.a);
-        telemetry.addData("Inner locked", scoringFSM.deposit.innerLocked);
-        telemetry.addData("Outer locked", scoringFSM.deposit.outerLocked);
-        telemetry.update();
+//        telemetry.addData("State", scoringFSM.state);
+//        telemetry.addData("Arm timer", scoringFSM.timer.milliseconds());
+//        telemetry.addData("isPressedA", scoringFSM.isPressedA);
+//        telemetry.addData("A", gamepad1.a);
+//        telemetry.addData("Inner locked", scoringFSM.deposit.innerLocked);
+//        telemetry.addData("Outer locked", scoringFSM.deposit.outerLocked);
+//        telemetry.update();
     }
 
 }

@@ -44,7 +44,7 @@ public class RedFront extends LinearOpMode {
 //                .setTangent(Math.toRadians(320))
 //                .splineToLinearHeading(new Pose2d(-34, -38, Math.toRadians(90)), Math.toRadians(270))
 //                .lineToLinearHeading(new Pose2d(-34, -12, Math.toRadians(90)))
-//                .turn(Math.toRadians(-90))
+//                .turn(Math, gamepad2.toRadians(-90))
 //                .lineToLinearHeading(new Pose2d(40, -12, Math.toRadians(0)))
 //                .lineToLinearHeading(RF_L_BACKDROP)
 //                .UNSTABLE_addTemporalMarkerOffset(armLiftDelay, () -> {
@@ -123,7 +123,7 @@ public class RedFront extends LinearOpMode {
         scoringFSM.autoInit();
 
         while (!isStarted() && !isStopRequested()) {
-            scoringFSM.update(gamepad1);
+            scoringFSM.update(gamepad1, gamepad2);
             region = camera.whichRegion();
             tele.addData("DETECTED REGION", camera.whichRegion());
             tele.update();
@@ -142,7 +142,7 @@ public class RedFront extends LinearOpMode {
         }
 
         while (opModeIsActive() && !isStopRequested()) {
-            scoringFSM.update(gamepad1);
+            scoringFSM.update(gamepad1, gamepad2);
             drive.update();
         }
     }

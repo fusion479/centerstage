@@ -105,7 +105,7 @@ public class BlueFront extends LinearOpMode {
         scoringFSM.autoInit();
 
         while (!isStarted() && !isStopRequested()) {
-            scoringFSM.update(gamepad1);
+            scoringFSM.update(gamepad1, gamepad2);
             region = camera.whichRegion();
             tele.addData("DETECTED REGION", camera.whichRegion());
             tele.update();
@@ -124,7 +124,7 @@ public class BlueFront extends LinearOpMode {
         }
 
         while (opModeIsActive() && !isStopRequested()) {
-            scoringFSM.update(gamepad1);
+            scoringFSM.update(gamepad1, gamepad2);
             drive.update();
         }
     }
