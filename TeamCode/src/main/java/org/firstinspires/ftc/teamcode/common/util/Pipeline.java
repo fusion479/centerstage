@@ -13,7 +13,7 @@ import org.openftc.easyopencv.OpenCvPipeline;
 
 @Config
 public class Pipeline extends OpenCvPipeline {
-    public double r3threshold = .05;
+    public double tolerance = 0.3;
     String color;
     FtcDashboard dashboard = FtcDashboard.getInstance();
     Telemetry telemetry = dashboard.getTelemetry();
@@ -25,11 +25,11 @@ public class Pipeline extends OpenCvPipeline {
 
     int region;
 
-    public static int lowHSVR = 0;
-    public static int lowHSVG = 160;
-    public static int lowHSVB = 10;
-    public static int highHSVR = 255;
-    public static int highHSVG = 255;
+    public static int lowHSVR = 50;
+    public static int lowHSVG = 50;
+    public static int lowHSVB = 150;
+    public static int highHSVR = 150;
+    public static int highHSVG = 175;
     public static int highHSVB = 255;
 
 
@@ -42,12 +42,12 @@ public class Pipeline extends OpenCvPipeline {
         Imgproc.cvtColor(input, mat, Imgproc.COLOR_RGB2HSV);
 
         if (color == "red") {
-            lowHSV = new Scalar(0, 160, 150);
-            highHSV = new Scalar(10, 255, 255);
+            lowHSV = new Scalar(0, 120, 150);
+            highHSV = new Scalar(200, 200, 255);
         }
         if (color == "blue") {
-            lowHSV = new Scalar(lowHSVR, lowHSVG, lowHSVB);
-            highHSV = new Scalar(highHSVR, highHSVG, highHSVB);
+            lowHSV = new Scalar(50, 50, 150);
+            highHSV = new Scalar(150, 175, 255);
         }
 
         RIGHT_RECT = new Rect(300, 1, 200, 100);
@@ -67,12 +67,12 @@ public class Pipeline extends OpenCvPipeline {
         telemetry.addData("region2", centerRegionPercent);
         telemetry.update();
 
-        if (rightRegionPercent < r3threshold && centerRegionPercent < r3threshold) {
+        if (rightRegionPercent < tolerance && centerRegionPercent < tolerance) {
             region = 1;
-        } else if (rightRegionPercent > centerRegionPercent) {
+        } else if (rightRegionPercent > tolerance && rightRegionPercent > centerRegionPercent) {
             Imgproc.rectangle(mat, RIGHT_RECT, new Scalar(60, 255, 255), 10);
             region = 3;
-        } else if (centerRegionPercent > rightRegionPercent) {
+        } else if (centerRegionPercent > tolerance && centerRegionPercent > rightRegionPercent) {
             Imgproc.rectangle(mat, CENTER_RECT, new Scalar(60, 255, 255), 10);
             region = 2;
         }

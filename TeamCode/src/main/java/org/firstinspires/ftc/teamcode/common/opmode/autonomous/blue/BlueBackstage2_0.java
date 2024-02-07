@@ -16,8 +16,8 @@ import org.firstinspires.ftc.teamcode.common.subsystem.ScoringFSM;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
-@Autonomous(name = "Blue Backstage", group = "_Auto")
-public class BlueBackstage extends LinearOpMode {
+@Autonomous(name = "Blue Backstage 2+0", group = "_Auto")
+public class BlueBackstage2_0 extends LinearOpMode {
     FtcDashboard dashboard = FtcDashboard.getInstance();
     MultipleTelemetry tele = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
     private int region;
@@ -60,7 +60,7 @@ public class BlueBackstage extends LinearOpMode {
                     scoringFSM.deposit.openInner();
                 })
                 .waitSeconds(3)
-                .back(3)
+                .back(5)
                 .lineToLinearHeading(new Pose2d(45, 60, Math.toRadians(0)))
                 .build();
 
@@ -83,7 +83,7 @@ public class BlueBackstage extends LinearOpMode {
                     scoringFSM.deposit.openInner();
                 })
                 .waitSeconds(3)
-                .back(3)
+                .back(5)
                 .lineToLinearHeading(new Pose2d(45, 60, Math.toRadians(0)))
                 .build();
 
@@ -110,7 +110,7 @@ public class BlueBackstage extends LinearOpMode {
                     scoringFSM.deposit.openInner();
                 })
                 .waitSeconds(3)
-                .back(3)
+                .back(5)
                 .lineToLinearHeading(new Pose2d(45, 60, Math.toRadians(0)))
                 .build();
 
