@@ -47,6 +47,8 @@ public class ScoringFSM extends Mechanism {
     public boolean isPressedLB2 = false;
     public boolean isPressedDPadUp = false;
     public boolean isPressedDPadDown = false;
+//    public double prevRTrigVal = 0;
+//    public boolean isRTrigReleased = false;
 
     @Override
     public void init(HardwareMap hwMap) {
@@ -73,10 +75,15 @@ public class ScoringFSM extends Mechanism {
         }
 
         if (gamepad.right_trigger > 0.1) {
+//            intake();
             intake.setPower(gamepad.right_trigger);
         } else if (gamepad.left_trigger > 0.1) {
             intake.setPower(-gamepad.left_trigger);
-        } else {
+        }
+//        else if (isRTrigReleased) {
+//          ready();
+//        }
+        else {
             intake.setPower(0);
         }
 
@@ -230,6 +237,13 @@ public class ScoringFSM extends Mechanism {
         isPressedDPadUp = gamepad.dpad_up;
         isPressedDPadDown = gamepad.dpad_down;
         isPressedA = gamepad.a;
+
+//        if (prevRTrigVal > 0 && gamepad.right_trigger == 0) {
+//            isRTrigReleased = true;
+//        } else {
+//            isRTrigReleased = false;
+//        }
+//        prevRTrigVal = gamepad.right_trigger;
 
         lift.update();
         arm.update();
