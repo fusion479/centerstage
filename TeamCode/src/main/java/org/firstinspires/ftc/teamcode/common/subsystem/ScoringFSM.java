@@ -60,7 +60,6 @@ public class ScoringFSM extends Mechanism {
     }
 
     public void update(Gamepad gamepad, Gamepad gamepad2) {
-
         if (!isPressedA && gamepad.a) {
             toggleReady();
         }else if (gamepad.b) {

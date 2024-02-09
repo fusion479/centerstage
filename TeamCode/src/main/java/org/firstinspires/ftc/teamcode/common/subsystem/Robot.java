@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
 @Config
 public class Robot extends Mechanism {
-    public static double speedCoefficient = 0.9;
+    public static double speedCoefficient = 1;
     FtcDashboard dashboard = FtcDashboard.getInstance();
     Telemetry telemetry = dashboard.getTelemetry();
     SampleMecanumDrive drive;
@@ -45,8 +45,8 @@ public class Robot extends Mechanism {
 
         drive.setWeightedDrivePower(
                 new Pose2d(
-                        -gamepad1.left_stick_y * speedCoefficient,
-                        -gamepad1.left_stick_x * speedCoefficient,
+                        gamepad1.left_stick_y * speedCoefficient,
+                        gamepad1.left_stick_x * speedCoefficient,
                         -gamepad1.right_stick_x * speedCoefficient
                 )
         );
