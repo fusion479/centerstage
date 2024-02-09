@@ -45,7 +45,7 @@ public class RedFront2_0 extends LinearOpMode {
                 .lineToLinearHeading(new Pose2d(40, -12, Math.toRadians(0)))
                 .lineToLinearHeading(RF_L_BACKDROP)
                 .UNSTABLE_addTemporalMarkerOffset(armLiftDelay, () -> {
-                    scoringFSM.low();
+                    scoringFSM.bottom();
                 })
                 .UNSTABLE_addTemporalMarkerOffset(preloadScoreDelay, () -> {
                     scoringFSM.score();
@@ -70,9 +70,9 @@ public class RedFront2_0 extends LinearOpMode {
                 })
                 .splineToLinearHeading(new Pose2d(-40, -38, Math.toRadians(0)), Math.toRadians(90))
                 .lineToLinearHeading(new Pose2d(-40, -14, Math.toRadians(0)))
-                .lineToLinearHeading(RB_R_BACKDROP)
+                .lineToLinearHeading(RF_R_BACKDROP)
                 .UNSTABLE_addTemporalMarkerOffset(armLiftDelay, () -> {
-                    scoringFSM.low();
+                    scoringFSM.bottom();
                 })
                 .UNSTABLE_addTemporalMarkerOffset(preloadScoreDelay, () -> {
                     scoringFSM.score();
@@ -100,7 +100,7 @@ public class RedFront2_0 extends LinearOpMode {
                 .lineToLinearHeading(new Pose2d(40, -12, Math.toRadians(0)))
                 .lineToLinearHeading(RF_M_BACKDROP)
                 .UNSTABLE_addTemporalMarkerOffset(armLiftDelay, () -> {
-                    scoringFSM.low();
+                    scoringFSM.bottom();
                 })
                 .UNSTABLE_addTemporalMarkerOffset(preloadScoreDelay, () -> {
                     scoringFSM.score();

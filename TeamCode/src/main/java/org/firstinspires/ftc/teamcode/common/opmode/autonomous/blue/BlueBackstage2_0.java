@@ -52,7 +52,7 @@ public class BlueBackstage2_0 extends LinearOpMode {
                 .lineToLinearHeading(BB_L_BACKDROP)
 
                 .UNSTABLE_addTemporalMarkerOffset(armLiftDelay, () -> {
-                    scoringFSM.low();
+                    scoringFSM.bottom();
                 })
                 .UNSTABLE_addTemporalMarkerOffset(preloadScoreDelay, () -> {
                     scoringFSM.score();
@@ -75,7 +75,7 @@ public class BlueBackstage2_0 extends LinearOpMode {
                 .lineToLinearHeading(BB_M_BACKDROP)
 
                 .UNSTABLE_addTemporalMarkerOffset(armLiftDelay, () -> {
-                    scoringFSM.low();
+                    scoringFSM.bottom();
                 })
                 .UNSTABLE_addTemporalMarkerOffset(preloadScoreDelay, () -> {
                     scoringFSM.score();
@@ -102,7 +102,7 @@ public class BlueBackstage2_0 extends LinearOpMode {
                 .lineToLinearHeading(BB_R_BACKDROP)
 
                 .UNSTABLE_addTemporalMarkerOffset(armLiftDelay, () -> {
-                    scoringFSM.low();
+                    scoringFSM.bottom();
                 })
                 .UNSTABLE_addTemporalMarkerOffset(preloadScoreDelay, () -> {
                     scoringFSM.score();
