@@ -34,11 +34,26 @@ public class BlueFront2_0 extends LinearOpMode {
                 .setTangent(Math.toRadians(270))
                 .splineToLinearHeading(BF_L_SPIKE, BF_L_SPIKE.getHeading())
                 // END OF SPIKE MARK
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    scoringFSM.ready();
+                })
                 .setTangent(Math.toRadians(130))
                 .splineToLinearHeading(new Pose2d(-40, 38, Math.toRadians(0)), Math.toRadians(270))
                 .lineToLinearHeading(new Pose2d(-40, 12, Math.toRadians(0)))
                 .lineToLinearHeading(new Pose2d(40, 12, Math.toRadians(0)))
-                .lineToLinearHeading(BF_L_BACKDROP)
+                .splineToLinearHeading(BF_L_BACKDROP, Math.toRadians(0))
+                .UNSTABLE_addTemporalMarkerOffset(armLiftDelay, () -> {
+                    scoringFSM.bottom();
+                })
+                .UNSTABLE_addTemporalMarkerOffset(preloadScoreDelay, () -> {
+                    scoringFSM.score();
+                    scoringFSM.deposit.openInner();
+                    scoringFSM.deposit.openOuter();
+                })
+                .waitSeconds(postPreloadWait)
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    scoringFSM.ready();
+                })
                 .build();
 
         TrajectorySequence rightSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.BLUE_FRONT_START)
@@ -46,24 +61,54 @@ public class BlueFront2_0 extends LinearOpMode {
                 .setTangent(Math.toRadians(270))
                 .splineToLinearHeading(BF_R_SPIKE, BF_R_SPIKE.getHeading())
                 // END OF SPIKE MARK
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    scoringFSM.ready();
+                })
                 .setTangent(Math.toRadians(50))
                 .splineToLinearHeading(new Pose2d(-34, 38, Math.toRadians(270)), Math.toRadians(270))
                 .lineToLinearHeading(new Pose2d(-34, 12, Math.toRadians(270)))
                 .turn(Math.toRadians(90))
                 .lineToLinearHeading(new Pose2d(40, 12, Math.toRadians(0)))
-                .lineToLinearHeading(BF_R_BACKDROP)
+                .splineToLinearHeading(BF_R_BACKDROP, Math.toRadians(0))
+                .UNSTABLE_addTemporalMarkerOffset(armLiftDelay, () -> {
+                    scoringFSM.bottom();
+                })
+                .UNSTABLE_addTemporalMarkerOffset(preloadScoreDelay, () -> {
+                    scoringFSM.score();
+                    scoringFSM.deposit.openInner();
+                    scoringFSM.deposit.openOuter();
+                })
+                .waitSeconds(postPreloadWait)
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    scoringFSM.ready();
+                })
                 .build();
 
         TrajectorySequence middleSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.BLUE_FRONT_START)
                 .forward(MIDDLE_SPIKE_DISTANCE)
                 .back(5)
                 // END OF SPIKE MARK
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    scoringFSM.ready();
+                })
                 .setTangent(Math.toRadians(180))
                 .splineToLinearHeading(new Pose2d(-52, 24, Math.toRadians(270)), Math.toRadians(270))
                 .setTangent(Math.toRadians(270))
                 .splineToLinearHeading(new Pose2d(-36, 12, Math.toRadians(0)), Math.toRadians(0))
                 .lineToLinearHeading(new Pose2d(40, 12, Math.toRadians(0)))
-                .lineToLinearHeading(BF_M_BACKDROP)
+                .splineToLinearHeading(BF_M_BACKDROP, Math.toRadians(0))
+                .UNSTABLE_addTemporalMarkerOffset(armLiftDelay, () -> {
+                    scoringFSM.bottom();
+                })
+                .UNSTABLE_addTemporalMarkerOffset(preloadScoreDelay, () -> {
+                    scoringFSM.score();
+                    scoringFSM.deposit.openInner();
+                    scoringFSM.deposit.openOuter();
+                })
+                .waitSeconds(postPreloadWait)
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    scoringFSM.ready();
+                })
                 .build();
 
         scoringFSM.init(hardwareMap);

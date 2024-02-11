@@ -35,27 +35,6 @@ public class RedFront1_0 extends LinearOpMode {
                 .splineToLinearHeading(RF_L_SPIKE, RF_L_SPIKE.getHeading())
                 .back(5)
                 .lineToLinearHeading(RED_FRONT_START)
-//                // END OF SPIKE MARK
-//                .setTangent(Math.toRadians(320))
-//                .splineToLinearHeading(new Pose2d(-34, -38, Math.toRadians(90)), Math.toRadians(270))
-//                .lineToLinearHeading(new Pose2d(-34, -12, Math.toRadians(90)))
-//                .turn(Math, gamepad2.toRadians(-90))
-//                .lineToLinearHeading(new Pose2d(40, -12, Math.toRadians(0)))
-//                .lineToLinearHeading(RF_L_BACKDROP)
-//                .UNSTABLE_addTemporalMarkerOffset(armLiftDelay, () -> {
-//                    scoringFSM.low();
-//                })
-//                .UNSTABLE_addTemporalMarkerOffset(preloadScoreDelay, () -> {
-//                    scoringFSM.score();
-//                    scoringFSM.deposit.openInner();
-//                    scoringFSM.deposit.openOuter();
-//                })
-//
-//                .waitSeconds(postPreloadWait)
-//                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-//                    scoringFSM.ready();
-//                })
-//                .strafeRight(30)
                 .build();
 
         TrajectorySequence rightSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.RED_FRONT_START)
@@ -64,53 +43,10 @@ public class RedFront1_0 extends LinearOpMode {
                 .splineToLinearHeading(RF_R_SPIKE, Math.toRadians(50))
                 .back(5)
                 .lineToLinearHeading(RED_FRONT_START)
-                // END OF SPIKE MARK
-//                .setTangent(Math.toRadians(230))
-//                .splineToLinearHeading(new Pose2d(-40, -38, Math.toRadians(0)), Math.toRadians(90))
-//                .lineToLinearHeading(new Pose2d(-40, -12, Math.toRadians(0)))
-//                .lineToLinearHeading(new Pose2d(40, -12, Math.toRadians(0)))
-//                .lineToLinearHeading(RF_R_BACKDROP)
-//                .UNSTABLE_addTemporalMarkerOffset(armLiftDelay, () -> {
-//                    scoringFSM.low();
-//                })
-//                .UNSTABLE_addTemporalMarkerOffset(preloadScoreDelay, () -> {
-//                    scoringFSM.score();
-//                    scoringFSM.deposit.openInner();
-//                    scoringFSM.deposit.openOuter();
-//                })
-//
-//                .waitSeconds(postPreloadWait)
-//                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-//                    scoringFSM.ready();
-//                })
-//                .strafeRight(25)
-//                .back(5)
                 .build();
 
         TrajectorySequence middleSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.RED_FRONT_START)
                 .forward(AutoConstants.MIDDLE_SPIKE_DISTANCE)
-//                .back(5)
-                // END OF SPIKE MARK
-//                .setTangent(Math.toRadians(180))
-//                .splineToLinearHeading(new Pose2d(-52, -24, Math.toRadians(90)), Math.toRadians(90))
-//                .setTangent(Math.toRadians(90))
-//                .splineToLinearHeading(new Pose2d(-36, -12, Math.toRadians(0)), Math.toRadians(0))
-//                .lineToLinearHeading(new Pose2d(40, -12, Math.toRadians(0)))
-//                .lineToLinearHeading(RF_M_BACKDROP)
-//                .UNSTABLE_addTemporalMarkerOffset(armLiftDelay, () -> {
-//                    scoringFSM.low();
-//                })
-//                .UNSTABLE_addTemporalMarkerOffset(preloadScoreDelay, () -> {
-//                    scoringFSM.score();
-//                    scoringFSM.deposit.openInner();
-//                    scoringFSM.deposit.openOuter();
-//                })
-//
-//                .waitSeconds(postPreloadWait)
-//                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-//                    scoringFSM.ready();
-//                })
-//                .strafeRight(27)
                 .back(5)
                 .build();
 

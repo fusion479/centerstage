@@ -29,7 +29,6 @@ public class RedFront2_0 extends LinearOpMode {
         drive = new SampleMecanumDrive(hardwareMap);
         camera.init(hardwareMap);
 
-        // TODO: LEFT AND RIGHT SPIKE MARK ARE NOT THE CORRECT PATH
         TrajectorySequence leftSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.RED_FRONT_START)
                 .forward(14)
                 .setTangent(Math.toRadians(90))
@@ -43,7 +42,7 @@ public class RedFront2_0 extends LinearOpMode {
                 .lineToLinearHeading(new Pose2d(-34, -12, Math.toRadians(90)))
                 .turn(Math.toRadians(-90))
                 .lineToLinearHeading(new Pose2d(40, -12, Math.toRadians(0)))
-                .lineToLinearHeading(RF_L_BACKDROP)
+                .splineToLinearHeading(RF_L_BACKDROP, Math.toRadians(0))
                 .UNSTABLE_addTemporalMarkerOffset(armLiftDelay, () -> {
                     scoringFSM.bottom();
                 })
@@ -52,7 +51,6 @@ public class RedFront2_0 extends LinearOpMode {
                     scoringFSM.deposit.openInner();
                     scoringFSM.deposit.openOuter();
                 })
-
                 .waitSeconds(postPreloadWait)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     scoringFSM.ready();
@@ -64,10 +62,10 @@ public class RedFront2_0 extends LinearOpMode {
                 .setTangent(Math.toRadians(90))
                 .splineToLinearHeading(RF_R_SPIKE, Math.toRadians(50))
                 // END OF SPIKE MARK
-                .setTangent(Math.toRadians(230))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     scoringFSM.ready();
                 })
+                .setTangent(Math.toRadians(230))
                 .splineToLinearHeading(new Pose2d(-40, -38, Math.toRadians(0)), Math.toRadians(90))
                 .lineToLinearHeading(new Pose2d(-40, -14, Math.toRadians(0)))
                 .lineToLinearHeading(RF_R_BACKDROP)
@@ -79,7 +77,6 @@ public class RedFront2_0 extends LinearOpMode {
                     scoringFSM.deposit.openInner();
                     scoringFSM.deposit.openOuter();
                 })
-
                 .waitSeconds(postPreloadWait)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     scoringFSM.ready();
@@ -90,15 +87,15 @@ public class RedFront2_0 extends LinearOpMode {
                 .forward(AutoConstants.MIDDLE_SPIKE_DISTANCE)
                 .back(5)
                 // END OF SPIKE MARK
-                .setTangent(Math.toRadians(180))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     scoringFSM.ready();
                 })
+                .setTangent(Math.toRadians(180))
                 .splineToLinearHeading(new Pose2d(-52, -24, Math.toRadians(90)), Math.toRadians(90))
                 .setTangent(Math.toRadians(90))
                 .splineToLinearHeading(new Pose2d(-36, -12, Math.toRadians(0)), Math.toRadians(0))
                 .lineToLinearHeading(new Pose2d(40, -12, Math.toRadians(0)))
-                .lineToLinearHeading(RF_M_BACKDROP)
+                .splineToLinearHeading(RF_M_BACKDROP, Math.toRadians(0))
                 .UNSTABLE_addTemporalMarkerOffset(armLiftDelay, () -> {
                     scoringFSM.bottom();
                 })
@@ -107,7 +104,6 @@ public class RedFront2_0 extends LinearOpMode {
                     scoringFSM.deposit.openInner();
                     scoringFSM.deposit.openOuter();
                 })
-
                 .waitSeconds(postPreloadWait)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     scoringFSM.ready();

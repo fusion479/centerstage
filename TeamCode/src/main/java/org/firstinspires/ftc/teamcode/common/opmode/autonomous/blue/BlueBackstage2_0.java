@@ -38,19 +38,12 @@ public class BlueBackstage2_0 extends LinearOpMode {
         drive.setPoseEstimate(BLUE_BACKSTAGE_START);
 
         TrajectorySequence leftSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.BLUE_BACKSTAGE_START)
-//                .forward(INITIAL_FORWARD_DIST)
-//                .setTangent(Math.toRadians(270))
-//                .splineToLinearHeading(BB_L_SPIKE, BB_L_SPIKE.getHeading())
-//                .lineToLinearHeading(BB_L_BACKDROP)
-//                .forward(RB_PRELOAD_FORWARD_DIST)
-
                 .forward(INITIAL_FORWARD_DIST)
                 .setTangent(Math.toRadians(270))
                 .splineToLinearHeading(BB_L_SPIKE, BB_L_SPIKE.getHeading())
                 .setTangent(Math.toRadians(180))
                 .splineToLinearHeading(new Pose2d(12, 42, Math.toRadians(0)), Math.toRadians(90))
                 .lineToLinearHeading(BB_L_BACKDROP)
-
                 .UNSTABLE_addTemporalMarkerOffset(armLiftDelay, () -> {
                     scoringFSM.bottom();
                 })
@@ -59,17 +52,12 @@ public class BlueBackstage2_0 extends LinearOpMode {
                     scoringFSM.deposit.openOuter();
                     scoringFSM.deposit.openInner();
                 })
-                .waitSeconds(3)
+                .waitSeconds(postPreloadWait)
                 .back(5)
-                .lineToLinearHeading(new Pose2d(45, 60, Math.toRadians(0)))
+                .lineToLinearHeading(B_PARK)
                 .build();
 
         TrajectorySequence middleSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.BLUE_BACKSTAGE_START)
-//                .forward(MIDDLE_SPIKE_DISTANCE)
-//                .back(10)
-//                .lineToLinearHeading(BB_M_BACKDROP)
-//                .forward(RB_PRELOAD_FORWARD_DIST)
-//
                 .forward(MIDDLE_SPIKE_DISTANCE)
                 .back(10)
                 .lineToLinearHeading(BB_M_BACKDROP)
@@ -82,18 +70,12 @@ public class BlueBackstage2_0 extends LinearOpMode {
                     scoringFSM.deposit.openOuter();
                     scoringFSM.deposit.openInner();
                 })
-                .waitSeconds(3)
+                .waitSeconds(postPreloadWait)
                 .back(5)
-                .lineToLinearHeading(new Pose2d(45, 60, Math.toRadians(0)))
+                .lineToLinearHeading(B_PARK)
                 .build();
 
         TrajectorySequence rightSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.BLUE_BACKSTAGE_START)
-//                .forward(INITIAL_FORWARD_DIST)
-//                .setTangent(Math.toRadians(270))
-//                .splineToLinearHeading(BB_R_SPIKE, BB_R_SPIKE.getHeading())
-//                .lineToLinearHeading(BB_R_BACKDROP)
-//                .forward(RB_PRELOAD_FORWARDoDIST)
-
                 .forward(INITIAL_FORWARD_DIST)
                 .setTangent(Math.toRadians(270))
                 .splineToLinearHeading(BB_R_SPIKE, BB_R_SPIKE.getHeading())
@@ -109,9 +91,9 @@ public class BlueBackstage2_0 extends LinearOpMode {
                     scoringFSM.deposit.openOuter();
                     scoringFSM.deposit.openInner();
                 })
-                .waitSeconds(3)
+                .waitSeconds(postPreloadWait)
                 .back(5)
-                .lineToLinearHeading(new Pose2d(45, 60, Math.toRadians(0)))
+                .lineToLinearHeading(B_PARK)
                 .build();
 
         timer.reset();
