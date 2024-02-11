@@ -30,6 +30,7 @@ public class RedFront2_0 extends LinearOpMode {
         camera.init(hardwareMap);
 
         TrajectorySequence leftSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.RED_FRONT_START)
+                .waitSeconds(10)
                 .forward(14)
                 .setTangent(Math.toRadians(90))
                 .splineToLinearHeading(RF_L_SPIKE, RF_L_SPIKE.getHeading())
@@ -58,6 +59,7 @@ public class RedFront2_0 extends LinearOpMode {
                 .build();
 
         TrajectorySequence rightSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.RED_FRONT_START)
+                .waitSeconds(10)
                 .forward(14)
                 .setTangent(Math.toRadians(90))
                 .splineToLinearHeading(RF_R_SPIKE, Math.toRadians(50))
@@ -84,6 +86,7 @@ public class RedFront2_0 extends LinearOpMode {
                 .build();
 
         TrajectorySequence middleSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.RED_FRONT_START)
+                .waitSeconds(10)
                 .forward(AutoConstants.MIDDLE_SPIKE_DISTANCE)
                 .back(5)
                 // END OF SPIKE MARK
