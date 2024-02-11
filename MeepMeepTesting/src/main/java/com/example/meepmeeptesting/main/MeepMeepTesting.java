@@ -45,9 +45,9 @@ public class MeepMeepTesting {
 
     public static Pose2d BF_L_SPIKE = new Pose2d(-32, 34, Math.toRadians(320));
     public static Pose2d BF_R_SPIKE = new Pose2d(-40, 34, Math.toRadians(220));
-    public static Pose2d BF_L_BACKDROP = new Pose2d(52, 42, Math.toRadians(0));
-    public static Pose2d BF_M_BACKDROP = new Pose2d(52, 36, Math.toRadians(0));
-    public static Pose2d BF_R_BACKDROP = new Pose2d(52, 30, Math.toRadians(0));
+    public static Pose2d BF_L_BACKDROP = new Pose2d(54, 42, Math.toRadians(0));
+    public static Pose2d BF_M_BACKDROP = new Pose2d(54, 36, Math.toRadians(0));
+    public static Pose2d BF_R_BACKDROP = new Pose2d(54, 30, Math.toRadians(0));
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(800);
 
