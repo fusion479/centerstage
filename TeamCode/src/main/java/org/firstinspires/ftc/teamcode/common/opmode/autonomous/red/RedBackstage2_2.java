@@ -64,7 +64,6 @@ public class RedBackstage2_2 extends LinearOpMode {
                 .forward(MIDDLE_SPIKE_DISTANCE)
                 .back(10)
                 .lineToLinearHeading(RB_M_BACKDROP)
-
                 .UNSTABLE_addTemporalMarkerOffset(armLiftDelay, () -> {
                     scoringFSM.bottom();
                 })

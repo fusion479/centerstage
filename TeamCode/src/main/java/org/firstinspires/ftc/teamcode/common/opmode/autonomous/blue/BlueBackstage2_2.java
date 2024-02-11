@@ -2,9 +2,12 @@ package org.firstinspires.ftc.teamcode.common.opmode.autonomous.blue;
 
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.*;
 
+import static java.lang.Math.toRadians;
+
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -44,15 +47,13 @@ public class BlueBackstage2_2 extends LinearOpMode {
                 .setTangent(Math.toRadians(180))
                 .splineToLinearHeading(new Pose2d(12, 42, Math.toRadians(0)), Math.toRadians(90))
                 .lineToLinearHeading(BB_L_BACKDROP)
-                .UNSTABLE_addTemporalMarkerOffset(armLiftDelay, () -> {
-                    scoringFSM.bottom();
-                })
-                .UNSTABLE_addTemporalMarkerOffset(preloadScoreDelay, () -> {
-                    scoringFSM.score();
-                    scoringFSM.deposit.openOuter();
-                    scoringFSM.deposit.openInner();
-                })
-                .waitSeconds(postPreloadWait)
+                .waitSeconds(3)
+                .back(5)
+                .setTangent(toRadians(270))
+                .splineToConstantHeading(new Vector2d(-10,10), toRadians(180))
+                .splineToConstantHeading(new Vector2d(-50, 10), toRadians(0))
+                .splineToConstantHeading(new Vector2d(-10, 10), toRadians(0))
+                .splineToConstantHeading(BB_L_BACKDROP.vec(), toRadians(90))
                 .back(5)
                 .lineToLinearHeading(B_PARK)
                 .build();
@@ -61,16 +62,13 @@ public class BlueBackstage2_2 extends LinearOpMode {
                 .forward(MIDDLE_SPIKE_DISTANCE)
                 .back(10)
                 .lineToLinearHeading(BB_M_BACKDROP)
-
-                .UNSTABLE_addTemporalMarkerOffset(armLiftDelay, () -> {
-                    scoringFSM.bottom();
-                })
-                .UNSTABLE_addTemporalMarkerOffset(preloadScoreDelay, () -> {
-                    scoringFSM.score();
-                    scoringFSM.deposit.openOuter();
-                    scoringFSM.deposit.openInner();
-                })
                 .waitSeconds(postPreloadWait)
+                .back(5)
+                .setTangent(toRadians(270))
+                .splineToConstantHeading(new Vector2d(-10,10), toRadians(180))
+                .splineToConstantHeading(new Vector2d(-50, 10), toRadians(0))
+                .splineToConstantHeading(new Vector2d(-10, 10), toRadians(0))
+                .splineToConstantHeading(BB_M_BACKDROP.vec(), toRadians(90))
                 .back(5)
                 .lineToLinearHeading(B_PARK)
                 .build();
@@ -82,16 +80,13 @@ public class BlueBackstage2_2 extends LinearOpMode {
                 .setTangent(Math.toRadians(45))
                 .splineToLinearHeading(new Pose2d(14, 38, Math.toRadians(270)), Math.toRadians(0))
                 .lineToLinearHeading(BB_R_BACKDROP)
-
-                .UNSTABLE_addTemporalMarkerOffset(armLiftDelay, () -> {
-                    scoringFSM.bottom();
-                })
-                .UNSTABLE_addTemporalMarkerOffset(preloadScoreDelay, () -> {
-                    scoringFSM.score();
-                    scoringFSM.deposit.openOuter();
-                    scoringFSM.deposit.openInner();
-                })
                 .waitSeconds(postPreloadWait)
+                .back(5)
+                .setTangent(toRadians(270))
+                .splineToConstantHeading(new Vector2d(-10,10), toRadians(180))
+                .splineToConstantHeading(new Vector2d(-50, 10), toRadians(0))
+                .splineToConstantHeading(new Vector2d(-10, 10), toRadians(0))
+                .splineToConstantHeading(BB_R_BACKDROP.vec(), toRadians(90))
                 .back(5)
                 .lineToLinearHeading(B_PARK)
                 .build();
