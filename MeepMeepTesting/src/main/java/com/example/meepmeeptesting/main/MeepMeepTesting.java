@@ -56,34 +56,7 @@ public class MeepMeepTesting {
                 .setConstraints(30, 30, 5, toRadians(60), 15.5)
                 .followTrajectorySequence(drive ->
                         drive.trajectorySequenceBuilder(RED_FRONT_START)
-//                                .forward(14)
-//                                .setTangent(Math.toRadians(90))
-//                                .splineToLinearHeading(RF_L_SPIKE, RF_L_SPIKE.getHeading())
-//                                .setTangent(Math.toRadians(320))
-//                                .splineToLinearHeading(new Pose2d(-34, -38, Math.toRadians(90)), Math.toRadians(270))
-//                                .lineToLinearHeading(new Pose2d(-34, -12, Math.toRadians(90)))
-//                                .turn(Math.toRadians(-90))
-//                                .lineToLinearHeading(new Pose2d(40, -12, Math.toRadians(0)))
-//                                .splineToLinearHeading(RF_L_BACKDROP, Math.toRadians(0))
-
-                                .forward(MIDDLE_SPIKE_DISTANCE)
-                                .back(5)
-                                // END OF SPIKE MARK
-                                .setTangent(Math.toRadians(180))
-                                .splineToLinearHeading(new Pose2d(-52, -24, Math.toRadians(90)), Math.toRadians(90))
-                                .setTangent(Math.toRadians(90))
-                                .splineToLinearHeading(new Pose2d(-36, -12, Math.toRadians(0)), Math.toRadians(0))
-                                .lineToLinearHeading(new Pose2d(40, -12, Math.toRadians(0)))
-                                .splineToLinearHeading(RF_M_BACKDROP, Math.toRadians(0))
-
-//                                .forward(14)
-//                                .setTangent(Math.toRadians(90))
-//                                .splineToLinearHeading(RF_R_SPIKE, Math.toRadians(50))
-//                                .setTangent(Math.toRadians(230))
-//                                .splineToLinearHeading(new Pose2d(-40, -38, Math.toRadians(0)), Math.toRadians(90))
-//                                .lineToLinearHeading(new Pose2d(-40, -12, Math.toRadians(0)))
-//                                .lineToLinearHeading(new Pose2d(40, -12, Math.toRadians(0)))
-//                                .splineToLinearHeading(RF_R_BACKDROP, Math.toRadians(0))
+                                .forward(10)
                                 .build()
                 );
 
