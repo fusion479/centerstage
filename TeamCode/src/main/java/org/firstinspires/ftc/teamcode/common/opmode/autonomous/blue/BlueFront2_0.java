@@ -48,7 +48,7 @@ public class BlueFront2_0 extends LinearOpMode {
                 .setTangent(Math.toRadians(130))
                 .splineToLinearHeading(new Pose2d(-40, 38, Math.toRadians(0)), Math.toRadians(270))
                 .lineToLinearHeading(new Pose2d(-40, 12, Math.toRadians(0)))
-                .lineToLinearHeading(new Pose2d(30, 12, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(27.5, 12, Math.toRadians(0)))
                 .splineToLinearHeading(BF_L_BACKDROP, Math.toRadians(0))
                 .UNSTABLE_addTemporalMarkerOffset(armLiftDelay, () -> {
                     scoringFSM.bottom();
@@ -77,7 +77,7 @@ public class BlueFront2_0 extends LinearOpMode {
                 .splineToLinearHeading(new Pose2d(-34, 38, Math.toRadians(270)), Math.toRadians(270))
                 .lineToLinearHeading(new Pose2d(-34, 12, Math.toRadians(270)))
                 .turn(Math.toRadians(90))
-                .lineToLinearHeading(new Pose2d(30, 12, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(27.5, 12, Math.toRadians(0)))
                 .splineToLinearHeading(BF_R_BACKDROP, Math.toRadians(0))
                 .UNSTABLE_addTemporalMarkerOffset(armLiftDelay, () -> {
                     scoringFSM.bottom();
@@ -105,7 +105,7 @@ public class BlueFront2_0 extends LinearOpMode {
                 .splineToLinearHeading(new Pose2d(-52, 24, Math.toRadians(270)), Math.toRadians(270))
                 .setTangent(Math.toRadians(270))
                 .splineToLinearHeading(new Pose2d(-36, 12, Math.toRadians(0)), Math.toRadians(0))
-                .lineToLinearHeading(new Pose2d(30, 12, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(27.5, 12, Math.toRadians(0)))
                 .splineToLinearHeading(BF_M_BACKDROP, Math.toRadians(0))
                 .UNSTABLE_addTemporalMarkerOffset(armLiftDelay, () -> {
                     scoringFSM.bottom();
