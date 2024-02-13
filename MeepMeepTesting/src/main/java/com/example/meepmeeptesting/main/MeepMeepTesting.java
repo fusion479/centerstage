@@ -55,21 +55,18 @@ public class MeepMeepTesting {
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(30, 30, 5, toRadians(60), 15.5)
                 .followTrajectorySequence(drive ->
-                        drive.trajectorySequenceBuilder(BLUE_BACKSTAGE_START)
-                                .forward(INITIAL_FORWARD_DIST)
-                                .setTangent(Math.toRadians(270))
-                                .splineToLinearHeading(BB_L_SPIKE, BB_L_SPIKE.getHeading())
-                                .setTangent(Math.toRadians(180))
-                                .splineToLinearHeading(new Pose2d(12, 42, Math.toRadians(0)), Math.toRadians(90))
-                                .lineToLinearHeading(BB_L_BACKDROP)
-                                .back(7)
-                                .setTangent(toRadians(270))
-                                .splineToConstantHeading(new Vector2d(-10,10), toRadians(180))
-                                .splineToConstantHeading(new Vector2d(-50, 10), toRadians(0))
-                                .splineToConstantHeading(new Vector2d(28, 10), toRadians(0))
-                                .splineToConstantHeading(BB_L_BACKDROP.vec(), toRadians(0))
-                                .back(7)
-                                .lineToLinearHeading(B_PARK)
+                        drive.trajectorySequenceBuilder(RED_FRONT_START)
+//                .waitSeconds(10)
+                                .forward(14)
+                                .setTangent(Math.toRadians(90))
+                                .splineToLinearHeading(RF_R_SPIKE, Math.toRadians(50))
+                                // END OF SPIKE MARK
+                                .setTangent(Math.toRadians(230))
+                                .splineToLinearHeading(new Pose2d(-40, -38, Math.toRadians(0)), Math.toRadians(90))
+                                .lineToLinearHeading(new Pose2d(-40, -14, Math.toRadians(0)))
+                                .lineToLinearHeading(new Pose2d(30, -14, Math.toRadians(0)))
+                                .splineToLinearHeading(RF_R_BACKDROP, Math.toRadians(0))
+                                .waitSeconds(postPreloadWait)
                                 .build()
                 );
 

@@ -1,6 +1,13 @@
 package org.firstinspires.ftc.teamcode.common.opmode.autonomous.red;
 
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.*;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.RF_L_BACKDROP;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.RF_L_SPIKE;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.RF_M_BACKDROP;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.RF_R_BACKDROP;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.RF_R_SPIKE;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.armLiftDelay;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.postPreloadWait;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.preloadScoreDelay;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
@@ -18,11 +25,10 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 public class RedFront2_0 extends LinearOpMode {
     FtcDashboard dashboard = FtcDashboard.getInstance();
     MultipleTelemetry tele = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
-    private int region;
-
     SampleMecanumDrive drive;
     Camera camera = new Camera("red");
     ScoringFSM scoringFSM = new ScoringFSM();
+    private int region;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -42,7 +48,7 @@ public class RedFront2_0 extends LinearOpMode {
                 .splineToLinearHeading(new Pose2d(-34, -38, Math.toRadians(90)), Math.toRadians(270))
                 .lineToLinearHeading(new Pose2d(-34, -12, Math.toRadians(90)))
                 .turn(Math.toRadians(-90))
-                .lineToLinearHeading(new Pose2d(40, -12, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(30, -12, Math.toRadians(0)))
                 .splineToLinearHeading(RF_L_BACKDROP, Math.toRadians(0))
                 .UNSTABLE_addTemporalMarkerOffset(armLiftDelay, () -> {
                     scoringFSM.bottom();
@@ -70,7 +76,8 @@ public class RedFront2_0 extends LinearOpMode {
                 .setTangent(Math.toRadians(230))
                 .splineToLinearHeading(new Pose2d(-40, -38, Math.toRadians(0)), Math.toRadians(90))
                 .lineToLinearHeading(new Pose2d(-40, -14, Math.toRadians(0)))
-                .lineToLinearHeading(RF_R_BACKDROP)
+                .lineToLinearHeading(new Pose2d(30, -14, Math.toRadians(0)))
+                .splineToLinearHeading(RF_R_BACKDROP, Math.toRadians(0))
                 .UNSTABLE_addTemporalMarkerOffset(armLiftDelay, () -> {
                     scoringFSM.bottom();
                 })
@@ -97,7 +104,7 @@ public class RedFront2_0 extends LinearOpMode {
                 .splineToLinearHeading(new Pose2d(-52, -24, Math.toRadians(90)), Math.toRadians(90))
                 .setTangent(Math.toRadians(90))
                 .splineToLinearHeading(new Pose2d(-36, -12, Math.toRadians(0)), Math.toRadians(0))
-                .lineToLinearHeading(new Pose2d(40, -12, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(30, -12, Math.toRadians(0)))
                 .splineToLinearHeading(RF_M_BACKDROP, Math.toRadians(0))
                 .UNSTABLE_addTemporalMarkerOffset(armLiftDelay, () -> {
                     scoringFSM.bottom();
