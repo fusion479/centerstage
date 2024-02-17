@@ -22,15 +22,7 @@ public class Pipeline extends OpenCvPipeline {
     Scalar highHSV;
     Rect RIGHT_RECT, CENTER_RECT;
     double rightRegionPercent, centerRegionPercent;
-
     int region;
-
-    public static int lowHSVR = 50;
-    public static int lowHSVG = 50;
-    public static int lowHSVB = 150;
-    public static int highHSVR = 150;
-    public static int highHSVG = 175;
-    public static int highHSVB = 255;
 
 
     public Pipeline(String colorChoice) {
@@ -46,8 +38,8 @@ public class Pipeline extends OpenCvPipeline {
             highHSV = new Scalar(200, 200, 255);
         }
         if (color == "blue") {
-            lowHSV = new Scalar(50, 50, 150);
-            highHSV = new Scalar(150, 175, 255);
+            lowHSV = new Scalar(40, 40, 140);
+            highHSV = new Scalar(160, 185, 255);
         }
 
         RIGHT_RECT = new Rect(300, 1, 200, 100);
