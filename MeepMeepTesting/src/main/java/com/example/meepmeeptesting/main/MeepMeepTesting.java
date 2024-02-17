@@ -50,7 +50,17 @@ public class MeepMeepTesting {
                 .setConstraints(30, 30, 5, toRadians(60), 15.5)
                 .followTrajectorySequence(drive ->
                         drive.trajectorySequenceBuilder(BLUE_FRONT_START)
-                                .splineToLinearHeading(RB_L_BACKDROP, Math.toRadians(0))
+                                .waitSeconds(10)
+                                .forward(14)
+                                .setTangent(Math.toRadians(90))
+                                .splineToLinearHeading(RF_R_SPIKE, Math.toRadians(50))
+                                // END OF SPIKE MARK
+                                .setTangent(Math.toRadians(230))
+                                .splineToLinearHeading(new Pose2d(-40, -38, Math.toRadians(0)), Math.toRadians(90))
+                                .lineToLinearHeading(new Pose2d(-40, -14, Math.toRadians(0)))
+                                .lineToLinearHeading(new Pose2d(27.5, -14, Math.toRadians(0)))
+                                .splineToLinearHeading(RB_R_BACKDROP, Math.toRadians(0))
+                                .waitSeconds(postPreloadWait)
                                 .build()
                 );
 

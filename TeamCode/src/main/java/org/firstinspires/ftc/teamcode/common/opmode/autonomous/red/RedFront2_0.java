@@ -1,9 +1,9 @@
 package org.firstinspires.ftc.teamcode.common.opmode.autonomous.red;
 
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.RF_L_BACKDROP;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.RB_L_BACKDROP;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.RB_M_BACKDROP;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.RB_R_BACKDROP;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.RF_L_SPIKE;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.RF_M_BACKDROP;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.RF_R_BACKDROP;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.RF_R_SPIKE;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.armLiftDelay;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.postPreloadWait;
@@ -49,7 +49,7 @@ public class RedFront2_0 extends LinearOpMode {
                 .lineToLinearHeading(new Pose2d(-34, -12, Math.toRadians(90)))
                 .turn(Math.toRadians(-90))
                 .lineToLinearHeading(new Pose2d(27.5, -12, Math.toRadians(0)))
-                .splineToLinearHeading(RF_L_BACKDROP, Math.toRadians(0))
+                .splineToLinearHeading(RB_L_BACKDROP, Math.toRadians(0))
                 .UNSTABLE_addTemporalMarkerOffset(armLiftDelay, () -> {
                     scoringFSM.bottom();
                 })
@@ -77,7 +77,7 @@ public class RedFront2_0 extends LinearOpMode {
                 .splineToLinearHeading(new Pose2d(-40, -38, Math.toRadians(0)), Math.toRadians(90))
                 .lineToLinearHeading(new Pose2d(-40, -14, Math.toRadians(0)))
                 .lineToLinearHeading(new Pose2d(27.5, -14, Math.toRadians(0)))
-                .splineToLinearHeading(RF_R_BACKDROP, Math.toRadians(0))
+                .splineToLinearHeading(RB_R_BACKDROP, Math.toRadians(0))
                 .UNSTABLE_addTemporalMarkerOffset(armLiftDelay, () -> {
                     scoringFSM.bottom();
                 })
@@ -105,7 +105,7 @@ public class RedFront2_0 extends LinearOpMode {
                 .setTangent(Math.toRadians(90))
                 .splineToLinearHeading(new Pose2d(-36, -12, Math.toRadians(0)), Math.toRadians(0))
                 .lineToLinearHeading(new Pose2d(27.5, -12, Math.toRadians(0)))
-                .splineToLinearHeading(RF_M_BACKDROP, Math.toRadians(0))
+                .splineToLinearHeading(RB_M_BACKDROP, Math.toRadians(0))
                 .UNSTABLE_addTemporalMarkerOffset(armLiftDelay, () -> {
                     scoringFSM.bottom();
                 })
