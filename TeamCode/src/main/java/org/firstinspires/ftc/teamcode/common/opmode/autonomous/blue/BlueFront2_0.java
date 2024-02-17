@@ -65,6 +65,8 @@ public class BlueFront2_0 extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     scoringFSM.ready();
                 })
+                .back(5)
+                .lineToLinearHeading(FRONT_PARK)
                 .build();
 
         TrajectorySequence rightSpikeMark = drive.trajectorySequenceBuilder(FRONT_START)
@@ -94,6 +96,8 @@ public class BlueFront2_0 extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     scoringFSM.ready();
                 })
+                .back(5)
+                .lineToLinearHeading(FRONT_PARK)
                 .build();
 
         TrajectorySequence middleSpikeMark = drive.trajectorySequenceBuilder(FRONT_START)

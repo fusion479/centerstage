@@ -48,10 +48,9 @@ public class MeepMeepTesting extends AutoConstants {
         RoadRunnerBotEntity myBot = new DefaultBotBuilder(meepMeep)
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(30, 30, 5, toRadians(60), 15.5)
-                .followTrajectorySequence(drive ->
-                        drive.trajectorySequenceBuilder(FRONT_START)
-                                .waitSeconds(10)
-                                .build()
+                .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(reflectY(FRONT_START))
+                        .waitSeconds(10)
+                        .build()
                 );
 
         meepMeep.setBackground(MeepMeep.Background.FIELD_CENTERSTAGE_JUICE_DARK)
