@@ -1,6 +1,17 @@
 package org.firstinspires.ftc.teamcode.common.opmode.autonomous.blue;
 
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.*;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.ARM_LIFT_DELAY;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.BB_L_SPIKE;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.BB_R_SPIKE;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.BLUE_BACKSTAGE_START;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.BLUE_L_BACKDROP;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.BLUE_M_BACKDROP;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.BLUE_R_BACKDROP;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.B_PARK;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.INITIAL_FORWARD_DIST;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.MIDDLE_SPIKE_DISTANCE;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.POST_PRELOAD_WAIT;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.PRELOAD_SCORE_DELAY;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
@@ -20,13 +31,11 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 public class BlueBackstage2_0 extends LinearOpMode {
     FtcDashboard dashboard = FtcDashboard.getInstance();
     MultipleTelemetry tele = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
-    private int region;
-
     ElapsedTime timer = new ElapsedTime();
-
     SampleMecanumDrive drive;
     ScoringFSM scoringFSM = new ScoringFSM();
     Camera camera = new Camera("blue");
+    private int region;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -43,16 +52,16 @@ public class BlueBackstage2_0 extends LinearOpMode {
                 .splineToLinearHeading(BB_L_SPIKE, BB_L_SPIKE.getHeading())
                 .setTangent(Math.toRadians(180))
                 .splineToLinearHeading(new Pose2d(12, 42, Math.toRadians(0)), Math.toRadians(90))
-                .lineToLinearHeading(BB_L_BACKDROP)
-                .UNSTABLE_addTemporalMarkerOffset(armLiftDelay, () -> {
+                .lineToLinearHeading(BLUE_L_BACKDROP)
+                .UNSTABLE_addTemporalMarkerOffset(ARM_LIFT_DELAY, () -> {
                     scoringFSM.bottom();
                 })
-                .UNSTABLE_addTemporalMarkerOffset(preloadScoreDelay, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(PRELOAD_SCORE_DELAY, () -> {
                     scoringFSM.score();
                     scoringFSM.deposit.openOuter();
                     scoringFSM.deposit.openInner();
                 })
-                .waitSeconds(postPreloadWait)
+                .waitSeconds(POST_PRELOAD_WAIT)
                 .back(5)
                 .lineToLinearHeading(B_PARK)
                 .build();
@@ -60,17 +69,17 @@ public class BlueBackstage2_0 extends LinearOpMode {
         TrajectorySequence middleSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.BLUE_BACKSTAGE_START)
                 .forward(MIDDLE_SPIKE_DISTANCE)
                 .back(10)
-                .lineToLinearHeading(BB_M_BACKDROP)
+                .lineToLinearHeading(BLUE_M_BACKDROP)
 
-                .UNSTABLE_addTemporalMarkerOffset(armLiftDelay, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(ARM_LIFT_DELAY, () -> {
                     scoringFSM.bottom();
                 })
-                .UNSTABLE_addTemporalMarkerOffset(preloadScoreDelay, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(PRELOAD_SCORE_DELAY, () -> {
                     scoringFSM.score();
                     scoringFSM.deposit.openOuter();
                     scoringFSM.deposit.openInner();
                 })
-                .waitSeconds(postPreloadWait)
+                .waitSeconds(POST_PRELOAD_WAIT)
                 .back(5)
                 .lineToLinearHeading(B_PARK)
                 .build();
@@ -81,17 +90,17 @@ public class BlueBackstage2_0 extends LinearOpMode {
                 .splineToLinearHeading(BB_R_SPIKE, BB_R_SPIKE.getHeading())
                 .setTangent(Math.toRadians(45))
                 .splineToLinearHeading(new Pose2d(14, 38, Math.toRadians(270)), Math.toRadians(0))
-                .lineToLinearHeading(BB_R_BACKDROP)
+                .lineToLinearHeading(BLUE_R_BACKDROP)
 
-                .UNSTABLE_addTemporalMarkerOffset(armLiftDelay, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(ARM_LIFT_DELAY, () -> {
                     scoringFSM.bottom();
                 })
-                .UNSTABLE_addTemporalMarkerOffset(preloadScoreDelay, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(PRELOAD_SCORE_DELAY, () -> {
                     scoringFSM.score();
                     scoringFSM.deposit.openOuter();
                     scoringFSM.deposit.openInner();
                 })
-                .waitSeconds(postPreloadWait)
+                .waitSeconds(POST_PRELOAD_WAIT)
                 .back(5)
                 .lineToLinearHeading(B_PARK)
                 .build();

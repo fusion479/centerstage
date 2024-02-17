@@ -1,7 +1,15 @@
 package org.firstinspires.ftc.teamcode.common.opmode.autonomous.blue;
 
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.*;
-
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.BB_L_SPIKE;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.BB_R_SPIKE;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.BLUE_BACKSTAGE_START;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.BLUE_L_BACKDROP;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.BLUE_M_BACKDROP;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.BLUE_R_BACKDROP;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.B_PARK;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.INITIAL_FORWARD_DIST;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.MIDDLE_SPIKE_DISTANCE;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.POST_PRELOAD_WAIT;
 import static java.lang.Math.toRadians;
 
 import com.acmerobotics.dashboard.FtcDashboard;
@@ -23,13 +31,11 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 public class BlueBackstage2_2 extends LinearOpMode {
     FtcDashboard dashboard = FtcDashboard.getInstance();
     MultipleTelemetry tele = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
-    private int region;
-
     ElapsedTime timer = new ElapsedTime();
-
     SampleMecanumDrive drive;
     ScoringFSM scoringFSM = new ScoringFSM();
     Camera camera = new Camera("blue");
+    private int region;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -46,13 +52,13 @@ public class BlueBackstage2_2 extends LinearOpMode {
                 .splineToLinearHeading(BB_L_SPIKE, BB_L_SPIKE.getHeading())
                 .setTangent(Math.toRadians(180))
                 .splineToLinearHeading(new Pose2d(12, 42, Math.toRadians(0)), Math.toRadians(90))
-                .lineToLinearHeading(BB_L_BACKDROP)
+                .lineToLinearHeading(BLUE_L_BACKDROP)
                 .back(7)
                 .setTangent(toRadians(270))
-                .splineToConstantHeading(new Vector2d(-10,10), toRadians(180))
+                .splineToConstantHeading(new Vector2d(-10, 10), toRadians(180))
                 .splineToConstantHeading(new Vector2d(-50, 10), toRadians(0))
                 .splineToConstantHeading(new Vector2d(28, 10), toRadians(0))
-                .splineToConstantHeading(BB_L_BACKDROP.vec(), toRadians(0))
+                .splineToConstantHeading(BLUE_L_BACKDROP.vec(), toRadians(0))
                 .back(7)
                 .lineToLinearHeading(B_PARK)
                 .build();
@@ -60,14 +66,14 @@ public class BlueBackstage2_2 extends LinearOpMode {
         TrajectorySequence middleSpikeMark = drive.trajectorySequenceBuilder(AutoConstants.BLUE_BACKSTAGE_START)
                 .forward(MIDDLE_SPIKE_DISTANCE)
                 .back(10)
-                .lineToLinearHeading(BB_M_BACKDROP)
-                .waitSeconds(postPreloadWait)
+                .lineToLinearHeading(BLUE_M_BACKDROP)
+                .waitSeconds(POST_PRELOAD_WAIT)
                 .back(7)
                 .setTangent(toRadians(270))
-                .splineToConstantHeading(new Vector2d(-10,10), toRadians(180))
+                .splineToConstantHeading(new Vector2d(-10, 10), toRadians(180))
                 .splineToConstantHeading(new Vector2d(-50, 10), toRadians(0))
                 .splineToConstantHeading(new Vector2d(28, 10), toRadians(0))
-                .splineToConstantHeading(BB_M_BACKDROP.vec(), toRadians(0))
+                .splineToConstantHeading(BLUE_M_BACKDROP.vec(), toRadians(0))
                 .back(7)
                 .lineToLinearHeading(B_PARK)
                 .build();
@@ -78,14 +84,14 @@ public class BlueBackstage2_2 extends LinearOpMode {
                 .splineToLinearHeading(BB_R_SPIKE, BB_R_SPIKE.getHeading())
                 .setTangent(Math.toRadians(45))
                 .splineToLinearHeading(new Pose2d(14, 38, Math.toRadians(270)), Math.toRadians(0))
-                .lineToLinearHeading(BB_R_BACKDROP)
-                .waitSeconds(postPreloadWait)
+                .lineToLinearHeading(BLUE_R_BACKDROP)
+                .waitSeconds(POST_PRELOAD_WAIT)
                 .back(7)
                 .setTangent(toRadians(270))
-                .splineToConstantHeading(new Vector2d(-10,10), toRadians(180))
+                .splineToConstantHeading(new Vector2d(-10, 10), toRadians(180))
                 .splineToConstantHeading(new Vector2d(-50, 10), toRadians(0))
                 .splineToConstantHeading(new Vector2d(28, 10), toRadians(0))
-                .splineToConstantHeading(BB_R_BACKDROP.vec(), toRadians(0))
+                .splineToConstantHeading(BLUE_R_BACKDROP.vec(), toRadians(0))
                 .back(7)
                 .lineToLinearHeading(B_PARK)
                 .build();

@@ -1,13 +1,13 @@
 package org.firstinspires.ftc.teamcode.common.opmode.autonomous.red;
 
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.RB_L_BACKDROP;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.RB_M_BACKDROP;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.RB_R_BACKDROP;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.ARM_LIFT_DELAY;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.POST_PRELOAD_WAIT;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.PRELOAD_SCORE_DELAY;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.RED_L_BACKDROP;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.RED_M_BACKDROP;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.RED_R_BACKDROP;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.RF_L_SPIKE;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.RF_R_SPIKE;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.armLiftDelay;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.postPreloadWait;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.preloadScoreDelay;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
@@ -49,16 +49,16 @@ public class RedFront2_0 extends LinearOpMode {
                 .lineToLinearHeading(new Pose2d(-34, -12, Math.toRadians(90)))
                 .turn(Math.toRadians(-90))
                 .lineToLinearHeading(new Pose2d(27.5, -12, Math.toRadians(0)))
-                .splineToLinearHeading(RB_L_BACKDROP, Math.toRadians(0))
-                .UNSTABLE_addTemporalMarkerOffset(armLiftDelay, () -> {
+                .splineToLinearHeading(RED_L_BACKDROP, Math.toRadians(0))
+                .UNSTABLE_addTemporalMarkerOffset(ARM_LIFT_DELAY, () -> {
                     scoringFSM.bottom();
                 })
-                .UNSTABLE_addTemporalMarkerOffset(preloadScoreDelay, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(PRELOAD_SCORE_DELAY, () -> {
                     scoringFSM.score();
                     scoringFSM.deposit.openInner();
                     scoringFSM.deposit.openOuter();
                 })
-                .waitSeconds(postPreloadWait)
+                .waitSeconds(POST_PRELOAD_WAIT)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     scoringFSM.ready();
                 })
@@ -77,16 +77,16 @@ public class RedFront2_0 extends LinearOpMode {
                 .splineToLinearHeading(new Pose2d(-40, -38, Math.toRadians(0)), Math.toRadians(90))
                 .lineToLinearHeading(new Pose2d(-40, -14, Math.toRadians(0)))
                 .lineToLinearHeading(new Pose2d(27.5, -14, Math.toRadians(0)))
-                .splineToLinearHeading(RB_R_BACKDROP, Math.toRadians(0))
-                .UNSTABLE_addTemporalMarkerOffset(armLiftDelay, () -> {
+                .splineToLinearHeading(RED_R_BACKDROP, Math.toRadians(0))
+                .UNSTABLE_addTemporalMarkerOffset(ARM_LIFT_DELAY, () -> {
                     scoringFSM.bottom();
                 })
-                .UNSTABLE_addTemporalMarkerOffset(preloadScoreDelay, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(PRELOAD_SCORE_DELAY, () -> {
                     scoringFSM.score();
                     scoringFSM.deposit.openInner();
                     scoringFSM.deposit.openOuter();
                 })
-                .waitSeconds(postPreloadWait)
+                .waitSeconds(POST_PRELOAD_WAIT)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     scoringFSM.ready();
                 })
@@ -105,16 +105,16 @@ public class RedFront2_0 extends LinearOpMode {
                 .setTangent(Math.toRadians(90))
                 .splineToLinearHeading(new Pose2d(-36, -12, Math.toRadians(0)), Math.toRadians(0))
                 .lineToLinearHeading(new Pose2d(27.5, -12, Math.toRadians(0)))
-                .splineToLinearHeading(RB_M_BACKDROP, Math.toRadians(0))
-                .UNSTABLE_addTemporalMarkerOffset(armLiftDelay, () -> {
+                .splineToLinearHeading(RED_M_BACKDROP, Math.toRadians(0))
+                .UNSTABLE_addTemporalMarkerOffset(ARM_LIFT_DELAY, () -> {
                     scoringFSM.bottom();
                 })
-                .UNSTABLE_addTemporalMarkerOffset(preloadScoreDelay, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(PRELOAD_SCORE_DELAY, () -> {
                     scoringFSM.score();
                     scoringFSM.deposit.openInner();
                     scoringFSM.deposit.openOuter();
                 })
-                .waitSeconds(postPreloadWait)
+                .waitSeconds(POST_PRELOAD_WAIT)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     scoringFSM.ready();
                 })
