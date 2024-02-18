@@ -137,19 +137,40 @@ public class ScoringFSM extends Mechanism {
                 deposit.lockInner();
                 deposit.lockOuter();
                 lift.bottom();
-                arm.up();
-                deposit.score();
-                intake.idle();
+
+
+                if (timer.milliseconds() >= 25) {
+                    lift.bottom();
+                    arm.ready();
+                }
+
+                if (timer.milliseconds() >= 125) {
+                    arm.up();
+                    deposit.score();
+                }
+
+                if (timer.milliseconds() >= 150) {
+                    intake.idle();
+                }
                 break;
             case LOW:
                 up = true;
                 lift.isClimb = false;
                 deposit.lockInner();
                 deposit.lockOuter();
-                lift.low();
-                arm.up();
-                deposit.score();
-                intake.idle();
+                if (timer.milliseconds() >= 25) {
+                    lift.low();
+                    arm.ready();
+                }
+
+                if (timer.milliseconds() >= 125) {
+                    arm.up();
+                    deposit.score();
+                }
+
+                if (timer.milliseconds() >= 150) {
+                    intake.idle();
+                }
                 break;
             case MEDIUM:
                 // Y
@@ -157,10 +178,19 @@ public class ScoringFSM extends Mechanism {
                 lift.isClimb = false;
                 deposit.lockInner();
                 deposit.lockOuter();
-                lift.medium();
-                arm.up();
-                deposit.score();
-                intake.idle();
+                if (timer.milliseconds() >= 25) {
+                    lift.medium();
+                    arm.ready();
+                }
+
+                if (timer.milliseconds() >= 125) {
+                    arm.up();
+                    deposit.score();
+                }
+
+                if (timer.milliseconds() >= 150) {
+                    intake.idle();
+                }
                 break;
             case HIGH:
                 // X
@@ -168,19 +198,37 @@ public class ScoringFSM extends Mechanism {
                 lift.isClimb = false;
                 deposit.lockInner();
                 deposit.lockOuter();
-                lift.high();
-                arm.up();
-                deposit.score();
-                intake.idle();
+                if (timer.milliseconds() >= 25) {
+                    lift.high();
+                    arm.ready();
+                }
+
+                if (timer.milliseconds() >= 125) {
+                    arm.up();
+                    deposit.score();
+                }
+
+                if (timer.milliseconds() >= 150) {
+                    intake.idle();
+                }
                 break;
             case CUSTOM:
                 up = true;
                 lift.isClimb = false;
                 deposit.lockInner();
                 deposit.lockOuter();
-                arm.up();
-                deposit.score();
-                intake.idle();
+                if (timer.milliseconds() >= 25) {
+                    arm.ready();
+                }
+
+                if (timer.milliseconds() >= 125) {
+                    arm.up();
+                    deposit.score();
+                }
+
+                if (timer.milliseconds() >= 150) {
+                    intake.idle();
+                }
             case SCORE:
                 // Left or Right
                 up = true;
@@ -275,28 +323,33 @@ public class ScoringFSM extends Mechanism {
     }
 
     public void bottom() {
+        timer.reset();
         state = STATES.BOTTOM;
     }
 
     public void low() {
+        timer.reset();
         state = STATES.LOW;
     }
 
     public void medium() {
+        timer.reset();
         state = STATES.MEDIUM;
     }
 
     public void high() {
+        timer.reset();
         state = STATES.HIGH;
     }
 
     public void custom() {
+        timer.reset();
         state = STATES.CUSTOM;
     }
 
     public void score() {
-        state = STATES.SCORE;
         timer.reset();
+        state = STATES.SCORE;
     }
 
     public void climb() {
@@ -304,8 +357,8 @@ public class ScoringFSM extends Mechanism {
     }
     
     public void autoInit() {
-        state = STATES.AUTO_INIT;
         timer.reset();
+        state = STATES.AUTO_INIT;
     }
 
     public void toggleReady() {
