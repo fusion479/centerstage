@@ -2,17 +2,17 @@ package org.firstinspires.ftc.teamcode.common.opmode.autonomous.blue;
 
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.ARM_LIFT_DELAY;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_INITIAL;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_LEFT_BACKDROP;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_LEFT_SPIKE;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_MIDDLE_BACKDROP;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_PARK;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_RIGHT_BACKDROP;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_RIGHT_SPIKE;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_START;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.INITIAL_FORWARD_DIST;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.LEFT_BACKDROP;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.MIDDLE_BACKDROP;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.MIDDLE_SPIKE_DISTANCE;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.POST_PRELOAD_WAIT;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.PRELOAD_SCORE_DELAY;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.RIGHT_BACKDROP;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
@@ -26,7 +26,7 @@ import org.firstinspires.ftc.teamcode.common.subsystem.ScoringFSM;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
-@Autonomous(name = "Blue Backstage 2+0", group = "_Auto")
+@Autonomous(name = "Blue Close 2+0", group = "_Auto")
 public class BlueBackstage2_0 extends LinearOpMode {
     FtcDashboard dashboard = FtcDashboard.getInstance();
     MultipleTelemetry tele = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
@@ -52,7 +52,7 @@ public class BlueBackstage2_0 extends LinearOpMode {
                 .setTangent(Math.toRadians(180))
                 .splineToLinearHeading(CLOSE_INITIAL, Math.toRadians(90))
                 .back(7)
-                .lineToLinearHeading(LEFT_BACKDROP)
+                .lineToLinearHeading(CLOSE_LEFT_BACKDROP)
                 .UNSTABLE_addTemporalMarkerOffset(ARM_LIFT_DELAY, () -> {
                     scoringFSM.bottom();
                 })
@@ -62,14 +62,14 @@ public class BlueBackstage2_0 extends LinearOpMode {
                     scoringFSM.deposit.openInner();
                 })
                 .waitSeconds(POST_PRELOAD_WAIT)
-                .back(5)
+                .back(7)
                 .lineToLinearHeading(CLOSE_PARK)
                 .build();
 
         TrajectorySequence middleSpikeMark = drive.trajectorySequenceBuilder(CLOSE_START)
                 .forward(MIDDLE_SPIKE_DISTANCE)
                 .back(10)
-                .lineToLinearHeading(MIDDLE_BACKDROP)
+                .lineToLinearHeading(CLOSE_MIDDLE_BACKDROP)
                 .UNSTABLE_addTemporalMarkerOffset(ARM_LIFT_DELAY, () -> {
                     scoringFSM.bottom();
                 })
@@ -79,7 +79,7 @@ public class BlueBackstage2_0 extends LinearOpMode {
                     scoringFSM.deposit.openInner();
                 })
                 .waitSeconds(POST_PRELOAD_WAIT)
-                .back(5)
+                .back(7)
                 .lineToLinearHeading(CLOSE_PARK)
                 .build();
 
@@ -89,7 +89,7 @@ public class BlueBackstage2_0 extends LinearOpMode {
                 .splineToLinearHeading(CLOSE_RIGHT_SPIKE, CLOSE_RIGHT_SPIKE.getHeading())
                 .setTangent(Math.toRadians(30))
                 .splineToLinearHeading(CLOSE_INITIAL, Math.toRadians(90))
-                .lineToLinearHeading(RIGHT_BACKDROP)
+                .lineToLinearHeading(CLOSE_RIGHT_BACKDROP)
                 .UNSTABLE_addTemporalMarkerOffset(ARM_LIFT_DELAY, () -> {
                     scoringFSM.bottom();
                 })
@@ -99,10 +99,10 @@ public class BlueBackstage2_0 extends LinearOpMode {
                     scoringFSM.deposit.openInner();
                 })
                 .waitSeconds(POST_PRELOAD_WAIT)
-                .back(5)
+                .back(7)
                 .lineToLinearHeading(CLOSE_PARK)
                 .build();
-        
+
         timer.reset();
         scoringFSM.autoInit();
 
