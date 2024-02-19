@@ -15,10 +15,10 @@ import org.openftc.easyopencv.OpenCvPipeline;
 public class Pipeline extends OpenCvPipeline {
     public static int blueLowHSVR = 40;
     public static int blueLowHSVG = 40;
-    public static int blueLowHSVB = 0;
-    public static int blueHighHSVR = 255;
+    public static int blueLowHSVB = 100;
+    public static int blueHighHSVR = 180;
     public static int blueHighHSVG = 255;
-    public static int blueHighHSVB = 255;
+    public static int blueHighHSVB = 180;
     public static int redLowHSVR = 0;
     public static int redLowHSVG = 120;
     public static int redLowHSVB = 0;

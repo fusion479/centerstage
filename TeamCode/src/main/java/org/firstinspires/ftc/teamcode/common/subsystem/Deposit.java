@@ -26,6 +26,7 @@ public class Deposit extends Mechanism {
         inner = hwMap.get(Servo.class, "innerPixel");
         outer = hwMap.get(Servo.class, "outerPixel");
 
+
         idle();
     }
 

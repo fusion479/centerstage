@@ -53,10 +53,13 @@ public class RedFront2_0 extends LinearOpMode {
                 .splineToLinearHeading(reflectY(FRONT_INITIAL), Math.toRadians(90))
                 .strafeLeft(4.75)
                 .lineToLinearHeading(reflectY(new Pose2d(-40, 12, Math.toRadians(0))))
-                .lineToLinearHeading(reflectY(CLOSE_MID))
+                .lineToLinearHeading(
+                        reflectY(CLOSE_MID),
+                        SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - 15, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - 15))
                 .splineToLinearHeading(reflectY(FRONT_LEFT_BACKDROP), Math.toRadians(0),
-                        SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - 10, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - 10))
+                        SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - 15, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - 15))
                 .UNSTABLE_addTemporalMarkerOffset(ARM_LIFT_DELAY, () -> {
                     scoringFSM.bottom();
                 })
@@ -86,10 +89,13 @@ public class RedFront2_0 extends LinearOpMode {
                 .strafeRight(1.25)
                 .lineToLinearHeading(reflectY(new Pose2d(-34, 12, Math.toRadians(270))))
                 .turn(Math.toRadians(-90))
-                .lineToLinearHeading(reflectY(CLOSE_MID))
+                .lineToLinearHeading(
+                        reflectY(CLOSE_MID),
+                        SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - 15, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - 15))
                 .splineToLinearHeading(reflectY(FRONT_RIGHT_BACKDROP), Math.toRadians(0),
-                        SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - 10, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - 10))
+                        SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - 15, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - 15))
                 .UNSTABLE_addTemporalMarkerOffset(ARM_LIFT_DELAY, () -> {
                     scoringFSM.bottom();
                 })
@@ -117,10 +123,13 @@ public class RedFront2_0 extends LinearOpMode {
                 .splineToLinearHeading(reflectY(new Pose2d(-52, 24, Math.toRadians(270))), Math.toRadians(90))
                 .setTangent(Math.toRadians(90))
                 .splineToLinearHeading(reflectY(new Pose2d(-36, 12, Math.toRadians(0))), Math.toRadians(0))
-                .lineToLinearHeading(reflectY(CLOSE_MID))
+                .lineToLinearHeading(
+                        reflectY(CLOSE_MID),
+                        SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - 15, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - 15))
                 .splineToLinearHeading(reflectY(FRONT_MIDDLE_BACKDROP), Math.toRadians(0),
-                        SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - 10, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - 10))
+                        SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - 15, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - 15))
                 .UNSTABLE_addTemporalMarkerOffset(ARM_LIFT_DELAY, () -> {
                     scoringFSM.bottom();
                 })
