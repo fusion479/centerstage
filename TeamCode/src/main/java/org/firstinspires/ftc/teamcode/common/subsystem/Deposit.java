@@ -8,8 +8,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class Deposit extends Mechanism {
     public static double ACCEPTING_POS = .1;
     public static double IDLE_POS = .6;
-    public static double READY_POS = .4;
-    public static double SCORE_POS = .77;
+    public static double READY_POS = 1;
+    public static double SCORE_POS = .78;
     public static double LOCKINNER = 0.85;
     public static double OPENINNER = 0.4;
     public static double LOCKOUTER = 0.45;
@@ -25,6 +25,7 @@ public class Deposit extends Mechanism {
         pivot = hwMap.get(Servo.class, "depositPivot");
         inner = hwMap.get(Servo.class, "innerPixel");
         outer = hwMap.get(Servo.class, "outerPixel");
+
 
         idle();
     }
