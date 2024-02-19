@@ -15,6 +15,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.common.subsystem.Camera;
 import org.firstinspires.ftc.teamcode.common.subsystem.ScoringFSM;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
@@ -26,7 +27,7 @@ public class BlueClose2_0_v2 extends LinearOpMode {
     ElapsedTime timer = new ElapsedTime();
     SampleMecanumDrive drive;
     ScoringFSM scoringFSM = new ScoringFSM();
-    //    Camera camera = new Camera("blue");
+    Camera camera = new Camera("blue");
     private int region;
     private STATES autoState;
 
@@ -35,7 +36,7 @@ public class BlueClose2_0_v2 extends LinearOpMode {
         drive = new SampleMecanumDrive(hardwareMap);
         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         scoringFSM.init(hardwareMap);
-//        camera.init(hardwareMap);
+        camera.init(hardwareMap);
 //        camera.setManualExposure(6, 250, isStopRequested(), telemetry, this);
         drive.setPoseEstimate(CLOSE_START);
 
