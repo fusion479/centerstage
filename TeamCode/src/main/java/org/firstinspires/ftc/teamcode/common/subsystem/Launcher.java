@@ -6,12 +6,11 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 @Config
 public class Launcher extends Mechanism {
-    Servo servo;
-
-    public static double LAUNCH_POS = 0.17;
+    public static double LAUNCH_POS = 1;
     public static double IDLE_POS = 0;
+    Servo servo;
     double target;
-
+    
     @Override
     public void init(HardwareMap hwMap) {
         this.servo = hwMap.get(Servo.class, "drone");
