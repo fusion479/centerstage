@@ -129,6 +129,7 @@ public class BlueClose2_0_v2 extends LinearOpMode {
                                 .splineToLinearHeading(CLOSE_PARK, Math.toRadians(0))
                                 .build();
                         drive.followTrajectorySequenceAsync(backdropScore);
+                        timer.reset();
                     }
                     break;
                 case BACKDROP_SCORE:
@@ -141,10 +142,17 @@ public class BlueClose2_0_v2 extends LinearOpMode {
                                 .lineToLinearHeading(STACK_1)
                                 .build();
                         drive.followTrajectorySequenceAsync(intake);
+                        timer.reset();
                     }
                     break;
                 case INTAKE:
                     drive.update();
+
+                    if (timer.milliseconds() >= 1000 && timer.milliseconds() <= 6000) {
+                        scoringFSM.intake();
+                        scoringFSM.intake.setPower(1);
+                    }
+
                     if (!drive.isBusy()) {
                         autoState = STATES.IDLE;
                     }

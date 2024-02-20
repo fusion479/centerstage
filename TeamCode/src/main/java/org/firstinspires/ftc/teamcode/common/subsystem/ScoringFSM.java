@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.common.subsystem;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -13,10 +14,15 @@ public class ScoringFSM extends Mechanism {
     FtcDashboard dashboard = FtcDashboard.getInstance();
     Telemetry telemetry = dashboard.getTelemetry();
 
+
+
     public Lift lift = new Lift();
     public Arm arm = new Arm();
     public Deposit deposit = new Deposit();
     public Intake intake = new Intake();
+    public ColorSensor innerSensor, outerSensor;
+
+
     public int resetCounter = 0;
     public enum STATES {
         INTAKE,
@@ -57,6 +63,7 @@ public class ScoringFSM extends Mechanism {
         arm.init(hwMap);
         deposit.init(hwMap);
         intake.init(hwMap);
+
 
         state = STATES.INTAKE;
         up = false;
@@ -110,6 +117,7 @@ public class ScoringFSM extends Mechanism {
                 if (timer.milliseconds() >= armDelay) {
                     arm.down();
                 }
+
                 break;
             case READY:
                 // A toggle
