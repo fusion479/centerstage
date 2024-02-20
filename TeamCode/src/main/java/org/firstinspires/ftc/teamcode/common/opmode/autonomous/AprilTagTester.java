@@ -34,6 +34,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -90,6 +91,7 @@ import java.util.concurrent.TimeUnit;
 @TeleOp(name="April Tag Tester", group = "_Auto")
 public class AprilTagTester extends LinearOpMode
 {
+    ElapsedTime timer = new ElapsedTime();
     // Adjust these numbers to suit your robot.
     final double DESIRED_DISTANCE = 3; //  this is how close the camera should get to the target (inches)
 
@@ -208,13 +210,17 @@ public class AprilTagTester extends LinearOpMode
                 strafe = -gamepad1.left_stick_x  / 2.0;  // Reduce strafe rate to 50%.
                 turn   = -gamepad1.right_stick_x / 3.0;  // Reduce turn rate to 33%.
                 telemetry.addData("Manual","Drive %5.2f, Strafe %5.2f, Turn %5.2f ", drive, strafe, turn);
+                telemetry.addData("loop time", timer.milliseconds());
             }
+            telemetry.addData("loop time", timer.milliseconds());
+            timer.reset();
             telemetry.update();
 
             // Apply desired axes motions to the drivetrain.
             moveRobot(drive, strafe, turn);
             sleep(10);
         }
+
     }
 
     /**

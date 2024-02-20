@@ -38,7 +38,7 @@ public class ScoringFSM extends Mechanism {
     public ElapsedTime loopTimeTimer = new ElapsedTime();
     public static int armDelay = 300;
     public static int resetDelay = 400;
-    public static int autoIntakeDelay = 1000;
+    public static int autoIntakeDelay = 100;
 
     public boolean isPressedA = false;
     public boolean isPressedRB = false;

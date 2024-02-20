@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Camera extends Mechanism {
     public static int DESIRED_TAG_ID = 2;
-    final double DESIRED_DISTANCE = 3;
+    final double DESIRED_DISTANCE = 5;
     final double SPEED_GAIN = 0.03;
     final double STRAFE_GAIN = 0.025;
     final double TURN_GAIN = 0.03;
@@ -35,8 +35,10 @@ public class Camera extends Mechanism {
     private VisionPortal visionPortal;
     private AprilTagProcessor aprilTag;
     private AprilTagDetection desiredTag = null;
+    private String color;
 
     public Camera(String color) {
+        this.color = color;
         pipeline = new Pipeline(color);
     }
 
@@ -57,6 +59,14 @@ public class Camera extends Mechanism {
                 // when the camera cannot be opened
             }
         });
+    }
+
+    public void aprilTagInit(HardwareMap hwMap, int region) {
+        if (color.equals("blue")) {
+            DESIRED_TAG_ID = region;
+        } else if (color.equals("red")) {
+            DESIRED_TAG_ID = region + 3;
+        }
 
         aprilTag = new AprilTagProcessor.Builder().build();
         aprilTag.setDecimation(2);
@@ -68,6 +78,7 @@ public class Camera extends Mechanism {
 
     public void stopStreaming() {
         openCvCamera.stopStreaming();
+        openCvCamera.closeCameraDevice();
     }
 
     public int whichRegion() {
@@ -75,7 +86,7 @@ public class Camera extends Mechanism {
     }
 
 
-    public void moveRobot(SampleMecanumDrive drivetrain) {
+    public void moveRobot(SampleMecanumDrive drivetrain, Telemetry telemetry) {
         double rangeError = (desiredTag.ftcPose.range - DESIRED_DISTANCE);
         double headingError = desiredTag.ftcPose.bearing;
         double yawError = desiredTag.ftcPose.yaw;
@@ -83,6 +94,8 @@ public class Camera extends Mechanism {
         double drive = Range.clip(rangeError * SPEED_GAIN, -MAX_AUTO_SPEED, MAX_AUTO_SPEED);
         double turn = Range.clip(headingError * TURN_GAIN, -MAX_AUTO_TURN, MAX_AUTO_TURN);
         double strafe = Range.clip(-yawError * STRAFE_GAIN, -MAX_AUTO_STRAFE, MAX_AUTO_STRAFE);
+        telemetry.addData("Auto","Drive %5.2f, Strafe %5.2f, Turn %5.2f ", drive, strafe, turn);
+
 
         double leftFrontPower = drive - strafe - turn;
         double rightFrontPower = drive + strafe + turn;
@@ -121,6 +134,7 @@ public class Camera extends Mechanism {
             }
         }
 
+        telemetry.addData("DESIRED TAG ID", DESIRED_TAG_ID);
         return targetFound;
     }
 

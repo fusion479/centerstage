@@ -23,9 +23,9 @@ public final class AutoConstants {
     public static Pose2d CLOSE_RIGHT_SPIKE = new Pose2d(8, 37, Math.toRadians(220));
     public static Pose2d FRONT_LEFT_SPIKE = new Pose2d(-32, 37, Math.toRadians(320));
     public static Pose2d FRONT_RIGHT_SPIKE = new Pose2d(-40, 37, Math.toRadians(220));
-    public static Pose2d CLOSE_LEFT_BACKDROP = new Pose2d(52.5, 41 - 2, Math.toRadians(0));
-    public static Pose2d CLOSE_MIDDLE_BACKDROP = new Pose2d(52.5, 35, Math.toRadians(0));
-    public static Pose2d CLOSE_RIGHT_BACKDROP = new Pose2d(52.5, 29 - 2, Math.toRadians(0));
+    public static Pose2d CLOSE_LEFT_BACKDROP = new Pose2d(50, 41 - 2, Math.toRadians(0));
+    public static Pose2d CLOSE_MIDDLE_BACKDROP = new Pose2d(50, 35, Math.toRadians(0));
+    public static Pose2d CLOSE_RIGHT_BACKDROP = new Pose2d(50, 29 - 2, Math.toRadians(0));
     public static Pose2d FRONT_LEFT_BACKDROP = new Pose2d(56, 41 - 2, Math.toRadians(0));
     public static Pose2d FRONT_MIDDLE_BACKDROP = new Pose2d(56, 35 + 1, Math.toRadians(0));
     public static Pose2d FRONT_RIGHT_BACKDROP = new Pose2d(56, 29 - 2, Math.toRadians(0));

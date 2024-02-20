@@ -1,15 +1,22 @@
 package org.firstinspires.ftc.teamcode.common.opmode.autonomous.blue;
 
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.ARM_LIFT_DELAY;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_INITIAL;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_LEFT_BACKDROP;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_LEFT_SPIKE;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_MIDDLE_BACKDROP;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_PARK;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_RIGHT_BACKDROP;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_RIGHT_SPIKE;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_START;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.INITIAL_FORWARD_DIST;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.MIDDLE_SPIKE_DISTANCE;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.POST_PRELOAD_WAIT;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.PRELOAD_SCORE_DELAY;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -25,6 +32,7 @@ public class BlueClose2_0_v2 extends LinearOpMode {
     FtcDashboard dashboard = FtcDashboard.getInstance();
     MultipleTelemetry tele = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
     ElapsedTime timer = new ElapsedTime();
+    ElapsedTime loopTime = new ElapsedTime();
     SampleMecanumDrive drive;
     ScoringFSM scoringFSM = new ScoringFSM();
     Camera camera = new Camera("blue");
@@ -37,28 +45,34 @@ public class BlueClose2_0_v2 extends LinearOpMode {
         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         scoringFSM.init(hardwareMap);
         camera.init(hardwareMap);
-//        camera.setManualExposure(6, 250, isStopRequested(), telemetry, this);
         drive.setPoseEstimate(CLOSE_START);
 
         TrajectorySequence middleSpikeMark = drive.trajectorySequenceBuilder(CLOSE_START)
                 .forward(MIDDLE_SPIKE_DISTANCE)
                 .back(10)
                 .lineToLinearHeading(CLOSE_MIDDLE_BACKDROP)
-                .back(10)
+                .back(16)
                 .build();
 
-        TrajectorySequence middleSpikeMarkAfter = drive.trajectorySequenceBuilder(middleSpikeMark.end())
-                .UNSTABLE_addTemporalMarkerOffset(ARM_LIFT_DELAY, () -> {
-                    scoringFSM.bottom();
-                })
-                .UNSTABLE_addTemporalMarkerOffset(PRELOAD_SCORE_DELAY, () -> {
-                    scoringFSM.score();
-                    scoringFSM.deposit.openOuter();
-                    scoringFSM.deposit.openInner();
-                })
-                .waitSeconds(POST_PRELOAD_WAIT)
+        TrajectorySequence leftSpikeMark = drive.trajectorySequenceBuilder(CLOSE_START)
+                .forward(INITIAL_FORWARD_DIST)
+                .setTangent(Math.toRadians(270))
+                .splineToLinearHeading(CLOSE_LEFT_SPIKE, CLOSE_LEFT_SPIKE.getHeading())
+                .setTangent(Math.toRadians(180))
+                .splineToLinearHeading(CLOSE_INITIAL, Math.toRadians(90))
                 .back(7)
-                .lineToLinearHeading(CLOSE_PARK)
+                .lineToLinearHeading(CLOSE_LEFT_BACKDROP)
+                .back(16)
+                .build();
+
+        TrajectorySequence rightSpikeMark = drive.trajectorySequenceBuilder(CLOSE_START)
+                .forward(INITIAL_FORWARD_DIST)
+                .setTangent(Math.toRadians(270))
+                .splineToLinearHeading(CLOSE_RIGHT_SPIKE, CLOSE_RIGHT_SPIKE.getHeading())
+                .setTangent(Math.toRadians(30))
+                .splineToLinearHeading(CLOSE_INITIAL, Math.toRadians(90))
+                .lineToLinearHeading(CLOSE_RIGHT_BACKDROP)
+                .back(16)
                 .build();
 
         timer.reset();
@@ -66,32 +80,60 @@ public class BlueClose2_0_v2 extends LinearOpMode {
 
         while (!isStarted() && !isStopRequested()) {
             scoringFSM.update(gamepad1, gamepad2);
-//            region = camera.whichRegion();
+            region = camera.whichRegion();
             tele.addData("score timer", scoringFSM.timer.milliseconds());
-//            tele.addData("DETECTED REGION", camera.whichRegion());
+            tele.addData("DETECTED REGION", region);
             tele.update();
         }
 
         autoState = STATES.SPIKE_MARK;
-        drive.followTrajectorySequenceAsync(middleSpikeMark);
+        if (region == 1) {
+            drive.followTrajectorySequenceAsync(leftSpikeMark);
+        } else if (region == 3) {
+            drive.followTrajectorySequenceAsync(rightSpikeMark);
+        } else {
+            drive.followTrajectorySequenceAsync(middleSpikeMark);
+        }
+        camera.stopStreaming();
+        camera.aprilTagInit(hardwareMap, region);
+        camera.setManualExposure(6, 250, isStopRequested(), telemetry, this);
 
-        while (opModeIsActive()) {
+        while (opModeIsActive() && !isStopRequested()) {
             switch (autoState) {
                 case SPIKE_MARK:
+                    drive.update();
                     if (!drive.isBusy()) {
-                        autoState = STATES.BACKDROP_SCORE;
-                        drive.followTrajectorySequenceAsync(middleSpikeMarkAfter);
+                        autoState = STATES.APRIL_TAG;
+                        timer.reset();
                     }
                     break;
                 case APRIL_TAG:
-//                    if (camera.detectAprilTag(telemetry)) {
-//                        camera.moveRobot(drive);
-//                    }
-//                    if (timer.milliseconds() >= 5000) {
-//                        autoState = STATES.BACKDROP_SCORE;
-//                    }
+                    if (camera.detectAprilTag(telemetry)) {
+                        camera.moveRobot(drive, telemetry);
+                    }
+
+                    if (timer.milliseconds() >= 3500) {
+                        autoState = STATES.BACKDROP_SCORE;
+                        drive.setPoseEstimate(drive.getPoseEstimate());
+                        TrajectorySequence middleSpikeMarkAfter = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
+                                .forward(5)
+                                .UNSTABLE_addTemporalMarkerOffset(1, () -> {
+                                    scoringFSM.bottom();
+                                })
+                                .UNSTABLE_addTemporalMarkerOffset(3, () -> {
+                                    scoringFSM.score();
+                                    scoringFSM.deposit.openOuter();
+                                    scoringFSM.deposit.openInner();
+                                })
+                                .waitSeconds(3)
+                                .back(10)
+                                .lineToLinearHeading(CLOSE_PARK)
+                                .build();
+                        drive.followTrajectorySequenceAsync(middleSpikeMarkAfter);
+                    }
                     break;
                 case BACKDROP_SCORE:
+                    drive.update();
                     if (!drive.isBusy()) {
                         autoState = STATES.IDLE;
                     }
@@ -100,9 +142,12 @@ public class BlueClose2_0_v2 extends LinearOpMode {
                     break;
             }
 
-            tele.addData("current state:", autoState);
+            tele.addData("current state", autoState);
+            tele.addData("detected region", region);
+            tele.addData("loop time", loopTime.milliseconds());
+            loopTime.reset();
+            tele.update();
 
-            drive.update();
             scoringFSM.update(gamepad1, gamepad2);
         }
     }
