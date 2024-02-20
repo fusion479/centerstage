@@ -17,6 +17,7 @@ public class ScoringFSM extends Mechanism {
     public Arm arm = new Arm();
     public Deposit deposit = new Deposit();
     public Intake intake = new Intake();
+    public int resetCounter = 0;
     public enum STATES {
         INTAKE,
         READY,
@@ -239,7 +240,14 @@ public class ScoringFSM extends Mechanism {
 
                 if (timer.milliseconds() > resetDelay && !deposit.innerLocked && !deposit.outerLocked) {
                     if (!isAuto) {
-                        ready();
+                        if (resetCounter < 3) {
+                            lift.upALittle();
+                        }
+                        resetCounter++;
+
+                        if (timer.milliseconds() > resetDelay + 250) {
+                            ready();
+                        }
                     } else {
                         deposit.openOuter();
                         deposit.openInner();
@@ -350,6 +358,7 @@ public class ScoringFSM extends Mechanism {
     public void score() {
         timer.reset();
         state = STATES.SCORE;
+        resetCounter = 0;
     }
 
     public void climb() {

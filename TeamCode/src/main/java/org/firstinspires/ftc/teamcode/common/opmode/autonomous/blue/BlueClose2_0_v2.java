@@ -115,7 +115,7 @@ public class BlueClose2_0_v2 extends LinearOpMode {
                     if (timer.milliseconds() >= 3500) {
                         autoState = STATES.BACKDROP_SCORE;
                         drive.setPoseEstimate(drive.getPoseEstimate());
-                        TrajectorySequence middleSpikeMarkAfter = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
+                        TrajectorySequence backdropScore = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
                                 .forward(5)
                                 .UNSTABLE_addTemporalMarkerOffset(1, () -> {
                                     scoringFSM.bottom();
@@ -129,7 +129,7 @@ public class BlueClose2_0_v2 extends LinearOpMode {
                                 .back(10)
                                 .lineToLinearHeading(CLOSE_PARK)
                                 .build();
-                        drive.followTrajectorySequenceAsync(middleSpikeMarkAfter);
+                        drive.followTrajectorySequenceAsync(backdropScore);
                     }
                     break;
                 case BACKDROP_SCORE:
