@@ -38,6 +38,7 @@ public final class AutoConstants {
     public static Pose2d CLOSE_POST_PRELOAD = new Pose2d(16, 36, Math.toRadians(0));
 
     public static Pose2d STACK_1 = new Pose2d(-50, 36, Math.toRadians(0));
+
     // FOR RED AUTONS
     public static Pose2d reflectY(Pose2d pose) {
         return new Pose2d(pose.getX(), -pose.getY(), Math.toRadians(360) - pose.getHeading());

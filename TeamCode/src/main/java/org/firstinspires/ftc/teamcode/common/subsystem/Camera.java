@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.common.subsystem;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.Range;
@@ -23,19 +24,19 @@ import java.util.concurrent.TimeUnit;
 
 public class Camera extends Mechanism {
     public static int DESIRED_TAG_ID = 2;
-    final double DESIRED_DISTANCE = 5;
+    final double DESIRED_DISTANCE = 2;
     final double SPEED_GAIN = 0.03;
     final double STRAFE_GAIN = 0.025;
     final double TURN_GAIN = 0.03;
-    final double MAX_AUTO_SPEED = 0.5;
-    final double MAX_AUTO_STRAFE = 0.5;
-    final double MAX_AUTO_TURN = 0.3;
+    final double MAX_AUTO_SPEED = 0.3;
+    final double MAX_AUTO_STRAFE = 0.3;
+    private final String color;
+    double MAX_AUTO_TURN = 0.2;
     OpenCvCamera openCvCamera;
     Pipeline pipeline;
     private VisionPortal visionPortal;
     private AprilTagProcessor aprilTag;
     private AprilTagDetection desiredTag = null;
-    private String color;
 
     public Camera(String color) {
         this.color = color;
@@ -69,7 +70,7 @@ public class Camera extends Mechanism {
         }
 
         aprilTag = new AprilTagProcessor.Builder().build();
-        aprilTag.setDecimation(2);
+        aprilTag.setDecimation(3);
         visionPortal = new VisionPortal.Builder()
                 .setCamera(hwMap.get(WebcamName.class, "camera"))
                 .addProcessor(aprilTag)
@@ -94,8 +95,8 @@ public class Camera extends Mechanism {
         double drive = Range.clip(rangeError * SPEED_GAIN, -MAX_AUTO_SPEED, MAX_AUTO_SPEED);
         double turn = Range.clip(headingError * TURN_GAIN, -MAX_AUTO_TURN, MAX_AUTO_TURN);
         double strafe = Range.clip(-yawError * STRAFE_GAIN, -MAX_AUTO_STRAFE, MAX_AUTO_STRAFE);
-        telemetry.addData("Auto","Drive %5.2f, Strafe %5.2f, Turn %5.2f ", drive, strafe, turn);
-
+        telemetry.addData("Auto", "Drive %5.2f, Strafe %5.2f, Turn %5.2f ", drive, strafe, turn);
+        telemetry.addData("Errors", "Range %5.2f, YAW %5.2f, Heading %5.2f", rangeError, headingError, yawError);
 
         double leftFrontPower = drive - strafe - turn;
         double rightFrontPower = drive + strafe + turn;
@@ -113,7 +114,18 @@ public class Camera extends Mechanism {
             rightBackPower /= max;
         }
 
-        drivetrain.setMotorPowers(leftFrontPower, leftBackPower, rightBackPower, rightFrontPower);
+        if (Math.abs(headingError) < 5) {
+            MAX_AUTO_TURN = 0.1;
+        } else if (Math.abs(headingError) < 2.5) {
+            MAX_AUTO_TURN = 0.05;
+        }
+
+
+        if (((Math.abs(rangeError) + Math.abs(yawError)) / 2) > 0.2 && Math.abs(headingError) > 0.05) {
+            drivetrain.setMotorPowers(leftFrontPower, leftBackPower, rightBackPower, rightFrontPower);
+        } else {
+            drivetrain.setPoseEstimate(new Pose2d(desiredTag.rawPose.x - desiredTag.ftcPose.range, desiredTag.rawPose.y, Math.toRadians(desiredTag.ftcPose.yaw)));
+        }
     }
 
     public boolean detectAprilTag(Telemetry telemetry) {

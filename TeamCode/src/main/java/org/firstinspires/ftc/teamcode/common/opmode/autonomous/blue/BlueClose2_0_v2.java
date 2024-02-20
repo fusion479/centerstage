@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.common.opmode.autonomous.blue;
 
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.ARM_LIFT_DELAY;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_INITIAL;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_LEFT_BACKDROP;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_LEFT_SPIKE;
@@ -12,13 +11,10 @@ import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConsta
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_START;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.INITIAL_FORWARD_DIST;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.MIDDLE_SPIKE_DISTANCE;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.POST_PRELOAD_WAIT;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.PRELOAD_SCORE_DELAY;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.STACK_1;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
-import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -146,16 +142,16 @@ public class BlueClose2_0_v2 extends LinearOpMode {
                     }
                     break;
                 case INTAKE:
-                    drive.update();
-
-                    if (timer.milliseconds() >= 1000 && timer.milliseconds() <= 6000) {
-                        scoringFSM.intake();
-                        scoringFSM.intake.setPower(1);
-                    }
-
-                    if (!drive.isBusy()) {
-                        autoState = STATES.IDLE;
-                    }
+//                    drive.update();
+//
+//                    if (timer.milliseconds() >= 1000 && timer.milliseconds() <= 6000) {
+//                        scoringFSM.intake();
+//                        scoringFSM.intake.setPower(1);
+//                    }
+//
+//                    if (!drive.isBusy()) {
+//                        autoState = STATES.IDLE;
+//                    }
                     break;
                 case IDLE:
                     break;
