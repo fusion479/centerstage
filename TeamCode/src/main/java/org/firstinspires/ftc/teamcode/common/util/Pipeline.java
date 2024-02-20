@@ -86,7 +86,7 @@ public class Pipeline extends OpenCvPipeline {
         } else if (rightRegionPercent > tolerance && rightRegionPercent > centerRegionPercent && rightRegionPercent > leftRegionPercent) {
             Imgproc.rectangle(mat, RIGHT_RECT, new Scalar(60, 255, 255), 10);
             region = 3;
-        } else if (centerRegionPercent > tolerance && centerRegionPercent > rightRegionPercent && centerRegionPercent > leftRegionPercent) {
+        } else { // (centerRegionPercent > tolerance && centerRegionPercent > rightRegionPercent && centerRegionPercent > leftRegionPercent) {
             Imgproc.rectangle(mat, CENTER_RECT, new Scalar(60, 255, 255), 10);
             region = 2;
         }

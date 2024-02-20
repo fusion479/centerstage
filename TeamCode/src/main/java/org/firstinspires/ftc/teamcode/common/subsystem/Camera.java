@@ -122,6 +122,7 @@ public class Camera extends Mechanism {
         List<AprilTagDetection> currentDetections = aprilTag.getDetections();
         for (AprilTagDetection detection : currentDetections) {
             if (detection.metadata != null) {
+                telemetry.addData("detected ID", detection.id);
                 if ((DESIRED_TAG_ID < 0) || (detection.id == DESIRED_TAG_ID)) {
                     targetFound = true;
                     desiredTag = detection;
@@ -134,7 +135,7 @@ public class Camera extends Mechanism {
             }
         }
 
-        telemetry.addData("DESIRED TAG ID", DESIRED_TAG_ID);
+        telemetry.addData("DESIRED TAG", DESIRED_TAG_ID);
         return targetFound;
     }
 
