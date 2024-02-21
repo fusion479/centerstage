@@ -9,14 +9,14 @@ import com.qualcomm.robotcore.hardware.Servo;
 @Config
 public class Intake extends Mechanism {
 
+    public static double UP_POS = .9;
+    public static double DOWN_POS = .27;
+    public static double IDLE_POS = .6;
+    public static double target = UP_POS;
+    public static double power;
     DcMotorEx intake;
     Servo intakeLeft;
     Servo intakeRight;
-    public static double UP_POS = .9;
-    public static double DOWN_POS = .27;
-    public static double IDLE_POS = .7;
-    public static double target = UP_POS;
-    public static double power;
 
     @Override
     public void init(HardwareMap hwMap) {

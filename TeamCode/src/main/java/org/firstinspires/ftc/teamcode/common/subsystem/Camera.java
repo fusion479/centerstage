@@ -24,16 +24,17 @@ import java.util.concurrent.TimeUnit;
 
 public class Camera extends Mechanism {
     public static int DESIRED_TAG_ID = 2;
-    final double DESIRED_DISTANCE = 2;
+    final double DESIRED_DISTANCE = 5;
     final double SPEED_GAIN = 0.03;
     final double STRAFE_GAIN = 0.025;
     final double TURN_GAIN = 0.03;
     final double MAX_AUTO_SPEED = 0.3;
     final double MAX_AUTO_STRAFE = 0.3;
     private final String color;
-    double MAX_AUTO_TURN = 0.2;
+    double MAX_AUTO_TURN = 0.15;
     OpenCvCamera openCvCamera;
     Pipeline pipeline;
+    private boolean isFinished = false;
     private VisionPortal visionPortal;
     private AprilTagProcessor aprilTag;
     private AprilTagDetection desiredTag = null;
@@ -41,6 +42,10 @@ public class Camera extends Mechanism {
     public Camera(String color) {
         this.color = color;
         pipeline = new Pipeline(color);
+    }
+
+    public boolean getFinished() {
+        return isFinished;
     }
 
     @Override
@@ -86,7 +91,6 @@ public class Camera extends Mechanism {
         return pipeline.whichRegion();
     }
 
-
     public void moveRobot(SampleMecanumDrive drivetrain, Telemetry telemetry) {
         double rangeError = (desiredTag.ftcPose.range - DESIRED_DISTANCE);
         double headingError = desiredTag.ftcPose.bearing;
@@ -121,10 +125,19 @@ public class Camera extends Mechanism {
         }
 
 
-        if (((Math.abs(rangeError) + Math.abs(yawError)) / 2) > 0.2 && Math.abs(headingError) > 0.05) {
+        if (((Math.abs(rangeError) + Math.abs(yawError)) / 2) > 0.15 && Math.abs(headingError) > 0.05) {
             drivetrain.setMotorPowers(leftFrontPower, leftBackPower, rightBackPower, rightFrontPower);
+            isFinished = false;
         } else {
-            drivetrain.setPoseEstimate(new Pose2d(desiredTag.rawPose.x - desiredTag.ftcPose.range, desiredTag.rawPose.y, Math.toRadians(desiredTag.ftcPose.yaw)));
+            // EXPERIMENTAL, REMOVE IF EVERYTHING BREAKS
+            // EXPERIMENTAL, REMOVE IF EVERYTHING BREAKS
+            // EXPERIMENTAL, REMOVE IF EVERYTHING BREAKS
+            drivetrain.setPoseEstimate(new Pose2d(
+                    desiredTag.metadata.fieldPosition.get(0) - desiredTag.ftcPose.range - 6,
+                    desiredTag.metadata.fieldPosition.get(1),
+                    Math.toRadians(desiredTag.ftcPose.yaw)));
+            
+            isFinished = true;
         }
     }
 

@@ -1,24 +1,23 @@
 package org.firstinspires.ftc.teamcode.common.opmode.autonomous.blue;
 
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.ARM_LIFT_DELAY;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_MID;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.FRONT_INITIAL;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.FRONT_LEFT_BACKDROP;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.FRONT_LEFT_SPIKE;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.FRONT_MIDDLE_BACKDROP;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.FRONT_PARK;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.FRONT_RIGHT_BACKDROP;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.FRONT_RIGHT_SPIKE;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.FRONT_START;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.LEFT_BACKDROP;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.MIDDLE_BACKDROP;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.MIDDLE_SPIKE_DISTANCE;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.POST_PRELOAD_WAIT;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.PRELOAD_SCORE_DELAY;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.RIGHT_BACKDROP;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.common.subsystem.Camera;
 import org.firstinspires.ftc.teamcode.common.subsystem.ScoringFSM;
@@ -26,17 +25,20 @@ import org.firstinspires.ftc.teamcode.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
-@Autonomous(name = "Blue Front 2+0", group = "_Auto")
-public class BlueFront2_0 extends LinearOpMode {
+@Autonomous(name = "Blue Far 2+0", group = "_Auto")
+public class BlueFar2_0 extends LinearOpMode {
+    private final ElapsedTime timer = new ElapsedTime();
     FtcDashboard dashboard = FtcDashboard.getInstance();
     MultipleTelemetry tele = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
     SampleMecanumDrive drive;
     Camera camera = new Camera("blue");
     ScoringFSM scoringFSM = new ScoringFSM();
     private int region;
+    private STATES autoState;
 
     @Override
     public void runOpMode() throws InterruptedException {
+        autoState = STATES.SPIKE_MARK;
         drive = new SampleMecanumDrive(hardwareMap);
         camera.init(hardwareMap);
 
@@ -57,24 +59,10 @@ public class BlueFront2_0 extends LinearOpMode {
                         SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - 15, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - 15))
                 .splineToLinearHeading(
-                        FRONT_LEFT_BACKDROP,
+                        LEFT_BACKDROP,
                         Math.toRadians(0),
                         SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - 15, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - 15))
-                .UNSTABLE_addTemporalMarkerOffset(ARM_LIFT_DELAY, () -> {
-                    scoringFSM.bottom();
-                })
-                .UNSTABLE_addTemporalMarkerOffset(PRELOAD_SCORE_DELAY, () -> {
-                    scoringFSM.score();
-                    scoringFSM.deposit.openInner();
-                    scoringFSM.deposit.openOuter();
-                })
-                .waitSeconds(POST_PRELOAD_WAIT)
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    scoringFSM.ready();
-                })
-                .back(7)
-                .lineToLinearHeading(FRONT_PARK)
                 .build();
 
         TrajectorySequence rightSpikeMark = drive.trajectorySequenceBuilder(FRONT_START)
@@ -95,24 +83,10 @@ public class BlueFront2_0 extends LinearOpMode {
                         SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - 15, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - 15))
                 .splineToLinearHeading(
-                        FRONT_RIGHT_BACKDROP,
+                        RIGHT_BACKDROP,
                         Math.toRadians(0),
                         SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - 15, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - 15))
-                .UNSTABLE_addTemporalMarkerOffset(ARM_LIFT_DELAY, () -> {
-                    scoringFSM.bottom();
-                })
-                .UNSTABLE_addTemporalMarkerOffset(PRELOAD_SCORE_DELAY, () -> {
-                    scoringFSM.score();
-                    scoringFSM.deposit.openInner();
-                    scoringFSM.deposit.openOuter();
-                })
-                .waitSeconds(POST_PRELOAD_WAIT)
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    scoringFSM.ready();
-                })
-                .back(7)
-                .lineToLinearHeading(FRONT_PARK)
                 .build();
 
         TrajectorySequence middleSpikeMark = drive.trajectorySequenceBuilder(FRONT_START)
@@ -131,24 +105,10 @@ public class BlueFront2_0 extends LinearOpMode {
                         SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - 15, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - 15))
                 .splineToLinearHeading(
-                        FRONT_MIDDLE_BACKDROP,
+                        MIDDLE_BACKDROP,
                         Math.toRadians(0),
                         SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - 15, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - 15))
-                .UNSTABLE_addTemporalMarkerOffset(ARM_LIFT_DELAY, () -> {
-                    scoringFSM.bottom();
-                })
-                .UNSTABLE_addTemporalMarkerOffset(PRELOAD_SCORE_DELAY, () -> {
-                    scoringFSM.score();
-                    scoringFSM.deposit.openInner();
-                    scoringFSM.deposit.openOuter();
-                })
-                .waitSeconds(POST_PRELOAD_WAIT)
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    scoringFSM.ready();
-                })
-                .back(7)
-                .lineToLinearHeading(FRONT_PARK)
                 .build();
 
         scoringFSM.init(hardwareMap);
@@ -161,8 +121,6 @@ public class BlueFront2_0 extends LinearOpMode {
             tele.update();
         }
 
-        camera.stopStreaming();
-
         drive.setPoseEstimate(FRONT_START);
 
         if (region == 1) {
@@ -172,10 +130,75 @@ public class BlueFront2_0 extends LinearOpMode {
         } else {
             drive.followTrajectorySequenceAsync(rightSpikeMark);
         }
+        camera.stopStreaming();
+        camera.aprilTagInit(hardwareMap, region);
+        camera.setManualExposure(6, 250, isStopRequested(), tele, this);
 
         while (opModeIsActive() && !isStopRequested()) {
+            switch (autoState) {
+                case SPIKE_MARK:
+                    if (!drive.isBusy()) {
+                        autoState = STATES.APRILTAG;
+                        timer.reset();
+                    }
+                    break;
+                case PARK:
+                    if (!drive.isBusy()) {
+                        autoState = STATES.IDLE;
+                        timer.reset();
+                    }
+                    break;
+                case APRILTAG:
+                    if (camera.detectAprilTag(tele)) {
+                        camera.moveRobot(drive, tele);
+                    } else {
+                        drive.setMotorPowers(0, 0, 0, 0);
+                    }
+
+                    if (timer.milliseconds() >= 2000) {
+                        autoState = STATES.BACKDROP_SCORE;
+                        drive.setPoseEstimate(drive.getPoseEstimate());
+                        TrajectorySequence backdropScore = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
+                                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                                    scoringFSM.bottom();
+                                })
+                                .forward(6)
+                                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                                    scoringFSM.score();
+                                    scoringFSM.deposit.openOuter();
+                                    scoringFSM.deposit.openInner();
+                                })
+                                .build();
+                        drive.followTrajectorySequenceAsync(backdropScore);
+                        timer.reset();
+                    }
+                    break;
+                case BACKDROP_SCORE:
+                    if (!drive.isBusy()) {
+                        autoState = STATES.PARK;
+                        drive.setPoseEstimate(drive.getPoseEstimate());
+                        TrajectorySequence park = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
+                                .waitSeconds(POST_PRELOAD_WAIT)
+                                .back(7)
+                                .lineToLinearHeading(FRONT_PARK)
+                                .build();
+                        drive.followTrajectorySequenceAsync(park);
+                        timer.reset();
+                    }
+                case IDLE:
+                    break;
+            }
+
             scoringFSM.update(gamepad1, gamepad2);
             drive.update();
         }
+    }
+
+    private enum STATES {
+        SPIKE_MARK,
+        BACKDROP_SCORE,
+        APRILTAG,
+        PARK,
+        IDLE,
     }
 }
