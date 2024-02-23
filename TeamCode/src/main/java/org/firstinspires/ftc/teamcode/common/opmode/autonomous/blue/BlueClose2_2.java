@@ -11,7 +11,6 @@ import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConsta
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.MIDDLE_SPIKE_DISTANCE;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.POST_PRELOAD_WAIT;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.RIGHT_BACKDROP;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.reflectY;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
@@ -25,15 +24,15 @@ import org.firstinspires.ftc.teamcode.common.subsystem.ScoringFSM;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
-@Autonomous(name = "Red Close 2+0", group = "_Auto")
-public class RedClose2_0 extends LinearOpMode {
+@Autonomous(name = "Blue Close 2+2", group = "_Auto")
+public class BlueClose2_2 extends LinearOpMode {
     FtcDashboard dashboard = FtcDashboard.getInstance();
     MultipleTelemetry tele = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
     ElapsedTime timer = new ElapsedTime();
     ElapsedTime loopTime = new ElapsedTime();
     SampleMecanumDrive drive;
     ScoringFSM scoringFSM = new ScoringFSM();
-    Camera camera = new Camera("red");
+    Camera camera = new Camera("blue");
     private int region;
     private STATES autoState;
 
@@ -43,31 +42,31 @@ public class RedClose2_0 extends LinearOpMode {
         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         scoringFSM.init(hardwareMap);
         camera.init(hardwareMap);
-        drive.setPoseEstimate(reflectY(CLOSE_START));
+        drive.setPoseEstimate(CLOSE_START);
 
-        TrajectorySequence middleSpikeMark = drive.trajectorySequenceBuilder(reflectY(CLOSE_START))
+        TrajectorySequence middleSpikeMark = drive.trajectorySequenceBuilder(CLOSE_START)
                 .forward(MIDDLE_SPIKE_DISTANCE)
                 .back(10)
-                .lineToLinearHeading(reflectY(MIDDLE_BACKDROP))
+                .lineToLinearHeading(MIDDLE_BACKDROP)
                 .build();
 
-        TrajectorySequence leftSpikeMark = drive.trajectorySequenceBuilder(reflectY(CLOSE_START))
+        TrajectorySequence leftSpikeMark = drive.trajectorySequenceBuilder(CLOSE_START)
                 .forward(INITIAL_FORWARD_DIST)
-                .setTangent(Math.toRadians(90))
-                .splineToLinearHeading(reflectY(CLOSE_RIGHT_SPIKE), reflectY(CLOSE_RIGHT_SPIKE).getHeading())
-                .setTangent(Math.toRadians(330))
-                .splineToLinearHeading(reflectY(CLOSE_INITIAL), Math.toRadians(90))
-                .lineToLinearHeading(reflectY(RIGHT_BACKDROP))
-                .build();
-
-        TrajectorySequence rightSpikeMark = drive.trajectorySequenceBuilder(reflectY(CLOSE_START))
-                .forward(INITIAL_FORWARD_DIST)
-                .setTangent(Math.toRadians(90))
-                .splineToLinearHeading(reflectY(CLOSE_LEFT_SPIKE), reflectY(CLOSE_LEFT_SPIKE).getHeading())
+                .setTangent(Math.toRadians(270))
+                .splineToLinearHeading(CLOSE_LEFT_SPIKE, CLOSE_LEFT_SPIKE.getHeading())
                 .setTangent(Math.toRadians(180))
-                .splineToLinearHeading(reflectY(CLOSE_INITIAL), Math.toRadians(90))
+                .splineToLinearHeading(CLOSE_INITIAL, Math.toRadians(90))
                 .back(7)
-                .lineToLinearHeading(reflectY(LEFT_BACKDROP))
+                .lineToLinearHeading(LEFT_BACKDROP)
+                .build();
+
+        TrajectorySequence rightSpikeMark = drive.trajectorySequenceBuilder(CLOSE_START)
+                .forward(INITIAL_FORWARD_DIST)
+                .setTangent(Math.toRadians(270))
+                .splineToLinearHeading(CLOSE_RIGHT_SPIKE, CLOSE_RIGHT_SPIKE.getHeading())
+                .setTangent(Math.toRadians(30))
+                .splineToLinearHeading(CLOSE_INITIAL, Math.toRadians(90))
+                .lineToLinearHeading(RIGHT_BACKDROP)
                 .build();
 
         timer.reset();
@@ -89,7 +88,6 @@ public class RedClose2_0 extends LinearOpMode {
         } else {
             drive.followTrajectorySequenceAsync(middleSpikeMark);
         }
-
         camera.stopStreaming();
         camera.aprilTagInit(hardwareMap, region);
         camera.setManualExposure(6, 250, isStopRequested(), tele, this);
@@ -109,7 +107,7 @@ public class RedClose2_0 extends LinearOpMode {
                         drive.setMotorPowers(0, 0, 0, 0);
                     }
 
-                    if (timer.milliseconds() >= 3000) {
+                    if (timer.milliseconds() >= 2000) {
                         autoState = STATES.BACKDROP_SCORE;
                         drive.setPoseEstimate(drive.getPoseEstimate());
                         TrajectorySequence backdropScore = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
@@ -133,15 +131,17 @@ public class RedClose2_0 extends LinearOpMode {
                         drive.setPoseEstimate(drive.getPoseEstimate());
                         TrajectorySequence park = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
                                 .waitSeconds(POST_PRELOAD_WAIT)
-                                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                                    scoringFSM.ready();
-                                })
                                 .back(7)
-                                .lineToLinearHeading(reflectY(CLOSE_PARK))
+                                .setTangent(Math.toRadians(180))
+                                .lineToLinearHeading(CLOSE_PARK)
                                 .build();
                         drive.followTrajectorySequenceAsync(park);
                         timer.reset();
                     }
+                    break;
+                case BACKDROP_TO_STACK:
+                    break;
+                case STACK_TO_BACKDROP:
                     break;
                 case PARK:
                     if (!drive.isBusy()) {
@@ -169,6 +169,8 @@ public class RedClose2_0 extends LinearOpMode {
         SPIKE_MARK,
         APRIL_TAG,
         BACKDROP_SCORE,
+        BACKDROP_TO_STACK,
+        STACK_TO_BACKDROP,
         PARK,
         IDLE
     }

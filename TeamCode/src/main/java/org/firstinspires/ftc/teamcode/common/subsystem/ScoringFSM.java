@@ -11,31 +11,15 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 @Config
 public class ScoringFSM extends Mechanism {
-    FtcDashboard dashboard = FtcDashboard.getInstance();
-    Telemetry telemetry = dashboard.getTelemetry();
-
-
-
+    public static int armDelay = 300;
+    public static int resetDelay = 400;
+    public static int autoIntakeDelay = 100;
     public Lift lift = new Lift();
     public Arm arm = new Arm();
     public Deposit deposit = new Deposit();
     public Intake intake = new Intake();
     public ColorSensor innerSensor, outerSensor;
-
-
     public int resetCounter = 0;
-    public enum STATES {
-        INTAKE,
-        READY,
-        BOTTOM,
-        LOW,
-        MEDIUM,
-        HIGH,
-        CUSTOM,
-        SCORE,
-        CLIMB,
-        AUTO_INIT
-    };
 
     public STATES state;
     public boolean up;
@@ -43,10 +27,6 @@ public class ScoringFSM extends Mechanism {
 
     public ElapsedTime timer = new ElapsedTime();
     public ElapsedTime loopTimeTimer = new ElapsedTime();
-    public static int armDelay = 300;
-    public static int resetDelay = 400;
-    public static int autoIntakeDelay = 100;
-
     public boolean isPressedA = false;
     public boolean isPressedRB = false;
     public boolean isPressedLB = false;
@@ -54,8 +34,8 @@ public class ScoringFSM extends Mechanism {
     public boolean isPressedLB2 = false;
     public boolean isPressedDPadUp = false;
     public boolean isPressedDPadDown = false;
-//    public double prevRTrigVal = 0;
-//    public boolean isRTrigReleased = false;
+    FtcDashboard dashboard = FtcDashboard.getInstance();
+    Telemetry telemetry = dashboard.getTelemetry();
 
     @Override
     public void init(HardwareMap hwMap) {
@@ -68,11 +48,13 @@ public class ScoringFSM extends Mechanism {
         state = STATES.INTAKE;
         up = false;
     }
+//    public double prevRTrigVal = 0;
+//    public boolean isRTrigReleased = false;
 
     public void update(Gamepad gamepad, Gamepad gamepad2) {
         if (!isPressedA && gamepad.a) {
             toggleReady();
-        }else if (gamepad.b) {
+        } else if (gamepad.b) {
             low();
         } else if (gamepad.x) {
             high();
@@ -126,17 +108,28 @@ public class ScoringFSM extends Mechanism {
                 deposit.lockInner();
                 deposit.lockOuter();
 
-                if (timer.milliseconds() >= 25) {
-                    lift.bottom();
-                    arm.ready();
-                }
-
-                if (timer.milliseconds() >= 125) {
-                    deposit.ready();
-                }
-
-                if (timer.milliseconds() >= 600) {
+                if (isAuto) {
                     intake.idle();
+
+                    if (timer.milliseconds() >= 75) {
+                        lift.bottom();
+                        arm.ready();
+                        deposit.ready();
+                    }
+                } else {
+                    if (timer.milliseconds() >= 25) {
+                        lift.bottom();
+                        arm.ready();
+                    }
+
+                    if (timer.milliseconds() >= 125) {
+                        deposit.ready();
+                    }
+
+
+                    if (timer.milliseconds() >= 600) {
+                        intake.idle();
+                    }
                 }
 
                 break;
@@ -226,7 +219,7 @@ public class ScoringFSM extends Mechanism {
                 lift.isClimb = false;
                 deposit.lockInner();
                 deposit.lockOuter();
-                if (timer.milliseconds() >= 25) {
+                if (timer.milliseconds() >= 90) {
                     arm.ready();
                 }
 
@@ -274,12 +267,13 @@ public class ScoringFSM extends Mechanism {
                     lift.setPower(-gamepad2.left_trigger);
                 } else {
                     lift.setPower(0);
-                };
+                }
             case AUTO_INIT:
                 lift.isClimb = false;
+                isAuto = true;
                 intake.down();
                 arm.autoInit();
-                deposit.ready();
+                deposit.autoInit();
 
                 if (timer.milliseconds() > autoIntakeDelay) {
                     intake.up();
@@ -372,7 +366,7 @@ public class ScoringFSM extends Mechanism {
     public void climb() {
         state = STATES.CLIMB;
     }
-    
+
     public void autoInit() {
         timer.reset();
         state = STATES.AUTO_INIT;
@@ -384,5 +378,18 @@ public class ScoringFSM extends Mechanism {
         } else {
             intake();
         }
+    }
+
+    public enum STATES {
+        INTAKE,
+        READY,
+        BOTTOM,
+        LOW,
+        MEDIUM,
+        HIGH,
+        CUSTOM,
+        SCORE,
+        CLIMB,
+        AUTO_INIT
     }
 }

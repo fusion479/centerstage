@@ -20,9 +20,9 @@ public final class AutoConstants {
 
     // SPIKE & BACKDROP POSITIONS
     public static Pose2d CLOSE_LEFT_SPIKE = new Pose2d(17, 37, Math.toRadians(320));
-    public static Pose2d CLOSE_RIGHT_SPIKE = new Pose2d(7, 37, Math.toRadians(220));
-    public static Pose2d FRONT_LEFT_SPIKE = new Pose2d(-32, 37, Math.toRadians(320));
-    public static Pose2d FRONT_RIGHT_SPIKE = new Pose2d(-40, 37, Math.toRadians(220));
+    public static Pose2d CLOSE_RIGHT_SPIKE = new Pose2d(9, 37, Math.toRadians(220));
+    public static Pose2d FRONT_LEFT_SPIKE = new Pose2d(-33, 37, Math.toRadians(320));
+    public static Pose2d FRONT_RIGHT_SPIKE = new Pose2d(-39, 37, Math.toRadians(220));
     public static Pose2d LEFT_BACKDROP = new Pose2d(37.5, 42 - 2, Math.toRadians(0));
     public static Pose2d MIDDLE_BACKDROP = new Pose2d(37.5, 36 - 2, Math.toRadians(0));
     public static Pose2d RIGHT_BACKDROP = new Pose2d(37.5, 30 - 2, Math.toRadians(0));
@@ -31,10 +31,6 @@ public final class AutoConstants {
     public static Pose2d CLOSE_INITIAL = new Pose2d(11.75, 44, Math.toRadians(270));
     public static Pose2d FRONT_INITIAL = new Pose2d(-35.25, 44, Math.toRadians(270));
     public static Pose2d CLOSE_MID = new Pose2d(27.5, 10, Math.toRadians(0));
-
-    public static Pose2d CLOSE_POST_PRELOAD = new Pose2d(16, 36, Math.toRadians(0));
-
-    public static Pose2d STACK_1 = new Pose2d(-50, 36, Math.toRadians(0));
 
     // FOR RED AUTONS
     public static Pose2d reflectY(Pose2d pose) {

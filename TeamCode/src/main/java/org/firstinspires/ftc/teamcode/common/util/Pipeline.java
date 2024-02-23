@@ -25,6 +25,13 @@ public class Pipeline extends OpenCvPipeline {
     public static int redHighHSVR = 255;
     public static int redHighHSVG = 255;
     public static int redHighHSVB = 255;
+    public static int rightRectX = 565;
+    public static int rightRectY = 180;
+    public static int leftRectX = 0;
+    public static int leftRectY = 180;
+    public static int centerRectX = 275;
+    public static int centerRectY = 150;
+
     public double tolerance = 0.3;
 
     String color;
@@ -55,9 +62,9 @@ public class Pipeline extends OpenCvPipeline {
             highHSV = new Scalar(blueHighHSVR, blueHighHSVG, blueHighHSVB);
         }
 
-        RIGHT_RECT = new Rect(500, 200, 125, 125);
-        CENTER_RECT = new Rect(250, 200, 125, 125);
-        LEFT_RECT = new Rect(0, 200, 125, 125);
+        RIGHT_RECT = new Rect(rightRectX, rightRectY, 75, 125);
+        CENTER_RECT = new Rect(centerRectX, centerRectY, 125, 125);
+        LEFT_RECT = new Rect(leftRectX, leftRectY, 75, 125);
 
         Core.inRange(mat, lowHSV, highHSV, mat);
 

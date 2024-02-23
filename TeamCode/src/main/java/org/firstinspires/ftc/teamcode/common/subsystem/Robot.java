@@ -53,6 +53,8 @@ public class Robot extends Mechanism {
 
         if (gamepad2.x) {
             launcher.launch();
+        } else if (gamepad2.a) {
+            launcher.idle();
         } else if (gamepad2.b) {
             scoringFSM.climb();
         }
