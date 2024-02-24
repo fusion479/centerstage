@@ -14,13 +14,12 @@ public class ScoringFSM extends Mechanism {
     public static int armDelay = 300;
     public static int resetDelay = 400;
     public static int autoIntakeDelay = 100;
-    public static int PIXEL_THRESHOLD = 20;
 
     public Lift lift = new Lift();
     public Arm arm = new Arm();
     public Deposit deposit = new Deposit();
     public Intake intake = new Intake();
-    public PixelSensor innerSensor, outerSensor;
+    public PixelSensor pixelSensor = new PixelSensor();
 
     public int resetCounter = 0;
     public int sensorCounter = 0;
@@ -45,13 +44,11 @@ public class ScoringFSM extends Mechanism {
 
     @Override
     public void init(HardwareMap hwMap) {
-        innerSensor = new PixelSensor(opMode, "innerSensor", PIXEL_THRESHOLD);
-        outerSensor = new PixelSensor(opMode, "outerSensor", PIXEL_THRESHOLD);
         lift.init(hwMap);
         arm.init(hwMap);
         deposit.init(hwMap);
         intake.init(hwMap);
-
+        pixelSensor.init(hwMap);
 
         state = STATES.INTAKE;
         up = false;
@@ -93,7 +90,9 @@ public class ScoringFSM extends Mechanism {
 
         switch (state) {
             case INTAKE:
-                if (innerSensor.isPixel() && outerSensor.isPixel()) {
+
+
+                if (pixelSensor.hasPixel()) {
                     if (sensorCounter == 0) {
                         sensorTimer.reset();
                         sensorCounter++;
@@ -103,6 +102,8 @@ public class ScoringFSM extends Mechanism {
                 } else {
                     sensorCounter = 0;
                 }
+
+
                 // A toggle
                 up = false;
                 lift.isClimb = false;

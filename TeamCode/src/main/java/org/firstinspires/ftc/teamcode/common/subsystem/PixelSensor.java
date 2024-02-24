@@ -3,38 +3,48 @@ package org.firstinspires.ftc.teamcode.common.subsystem;
 import android.graphics.Color;
 
 import com.ThermalEquilibrium.homeostasis.Filters.FilterAlgorithms.LowPassFilter;
-import com.acmerobotics.dashboard.FtcDashboard;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.ColorRangeSensor;
-
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 public class PixelSensor extends Mechanism {
+    ColorSensor innerSensor, outerSensor;
 
-    private ColorRangeSensor sensor;
-    private String name;
+    public static double RED_GAIN = 0.2;
+    LowPassFilter lowPassFilterR = new LowPassFilter(RED_GAIN);
 
-    private double far;
+    public static double BLUE_GAIN = 0.2;
+    LowPassFilter lowPassFilterB = new LowPassFilter(BLUE_GAIN);
 
-    public PixelSensor(LinearOpMode opMode, String name, double far) {
-        this.opMode = opMode;
-        this.name = name;
-        this.far = far;
-    }
+    public static double GREEN_GAIN = 0.2;
+    LowPassFilter lowPassFilterG = new LowPassFilter(GREEN_GAIN);
 
+    @Override
     public void init(HardwareMap hwMap) {
-        sensor = hwMap.get(ColorRangeSensor.class, name);
+        innerSensor = hwMap.get(ColorSensor.class, "colorInner");
+        outerSensor = hwMap.get(ColorSensor.class, "colorOuter");
 
-        sensor.enableLed(false);
+        innerSensor.enableLed(false);
+        outerSensor.enableLed(false);
     }
 
-    public boolean isPixel() {
-        Telemetry t = FtcDashboard.getInstance().getTelemetry();
-        t.addData(name + " dist", sensor.getDistance(DistanceUnit.MM));
-        t.update();
-        return sensor.getDistance(DistanceUnit.MM) < far;
+    public boolean hasPixel() {
+        return (innerSensor.red() > 200 && outerSensor.red() > 200);
+    }
+
+    public double redEstimate(ColorSensor s){
+        return getLowPass(s.red(), lowPassFilterR);
+    }
+
+
+    public double blueEstimate(ColorSensor s){
+        return getLowPass(s.blue(), lowPassFilterB);
+    }
+
+    public double greenEstimate(ColorSensor s){
+        return getLowPass(s.green(), lowPassFilterG);
+    }
+
+    public double getLowPass(double value, LowPassFilter filter) {
+        return filter.estimate(value);
     }
 }
