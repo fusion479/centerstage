@@ -9,8 +9,8 @@ public final class AutoConstants {
     public static double INITIAL_FORWARD_DIST = 15.5;
     public static double MIDDLE_SPIKE_DISTANCE = 30;
     public static double ARM_LIFT_DELAY = -2.25;
-    public static double PRELOAD_SCORE_DELAY = .5;
-    public static double POST_PRELOAD_WAIT = 0;
+    public static double PRELOAD_SCORE_DELAY = 1;
+    public static double POST_PRELOAD_WAIT = 1.5;
 
     // STARTING & END POSITIONS
     public static Pose2d CLOSE_START = new Pose2d(11.75, 62.7, Math.toRadians(270));

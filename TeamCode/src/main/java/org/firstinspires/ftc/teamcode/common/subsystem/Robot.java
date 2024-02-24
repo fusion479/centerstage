@@ -38,7 +38,7 @@ public class Robot extends Mechanism {
         }
 
         if (scoringFSM.up) {
-            speedCoefficient = .6;
+            speedCoefficient = .69;
         } else {
             speedCoefficient = 1;
         }

@@ -13,9 +13,9 @@ public class Deposit extends Mechanism {
     public static double SCORE_POS = 0.79;
     public static double AUTO_INIT_POS = 1;
     public static double LOCKINNER = 0.85;
-    public static double OPENINNER = 0.4;
+    public static double OPENINNER = 0.65;
     public static double LOCKOUTER = 0.45;
-    public static double OPENOUTER = 0.8;
+    public static double OPENOUTER = 0.85;
     public static double pivotTarget = ACCEPTING_POS;
     public static double innerTarget = OPENINNER;
     public static double outerTarget = OPENINNER;
