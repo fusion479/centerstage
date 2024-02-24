@@ -2,6 +2,7 @@ repositories {
     mavenCentral()
     google() // Needed for androidx
     maven { url = 'https://maven.brott.dev/' }
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -23,4 +24,6 @@ dependencies {
 
     implementation 'org.ftclib.ftclib:core:2.0.1' // core
     implementation 'org.ftclib.ftclib:vision:2.0.1' // vision
+
+    implementation 'com.github.Thermal-Equilibrium:homeostasis-FTC:1.0.6'
 }

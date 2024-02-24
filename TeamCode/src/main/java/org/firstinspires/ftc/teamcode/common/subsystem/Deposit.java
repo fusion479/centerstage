@@ -1,12 +1,13 @@
 package org.firstinspires.ftc.teamcode.common.subsystem;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @Config
 public class Deposit extends Mechanism {
-    public static double ACCEPTING_POS = 0.15;
+    public static double ACCEPTING_POS = 0.2;
     public static double IDLE_POS = .61;
     public static double READY_POS = 0.51;
     public static double SCORE_POS = 0.79;
@@ -20,13 +21,13 @@ public class Deposit extends Mechanism {
     public static double outerTarget = OPENINNER;
     public boolean innerLocked = false;
     public boolean outerLocked = false;
+
     Servo pivot, inner, outer;
 
     public void init(HardwareMap hwMap) {
         pivot = hwMap.get(Servo.class, "depositPivot");
         inner = hwMap.get(Servo.class, "innerPixel");
         outer = hwMap.get(Servo.class, "outerPixel");
-
 
         idle();
     }

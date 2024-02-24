@@ -14,18 +14,23 @@ public class ScoringFSM extends Mechanism {
     public static int armDelay = 300;
     public static int resetDelay = 400;
     public static int autoIntakeDelay = 100;
+    public static int PIXEL_THRESHOLD = 20;
+
     public Lift lift = new Lift();
     public Arm arm = new Arm();
     public Deposit deposit = new Deposit();
     public Intake intake = new Intake();
-    public ColorSensor innerSensor, outerSensor;
+    public PixelSensor innerSensor, outerSensor;
+
     public int resetCounter = 0;
+    public int sensorCounter = 0;
 
     public STATES state;
     public boolean up;
     public boolean isAuto;
 
     public ElapsedTime timer = new ElapsedTime();
+    public ElapsedTime sensorTimer = new ElapsedTime();
     public ElapsedTime loopTimeTimer = new ElapsedTime();
     public boolean isPressedA = false;
     public boolean isPressedRB = false;
@@ -34,11 +39,14 @@ public class ScoringFSM extends Mechanism {
     public boolean isPressedLB2 = false;
     public boolean isPressedDPadUp = false;
     public boolean isPressedDPadDown = false;
+
     FtcDashboard dashboard = FtcDashboard.getInstance();
     Telemetry telemetry = dashboard.getTelemetry();
 
     @Override
     public void init(HardwareMap hwMap) {
+        innerSensor = new PixelSensor(opMode, "innerSensor", PIXEL_THRESHOLD);
+        outerSensor = new PixelSensor(opMode, "outerSensor", PIXEL_THRESHOLD);
         lift.init(hwMap);
         arm.init(hwMap);
         deposit.init(hwMap);
@@ -48,8 +56,6 @@ public class ScoringFSM extends Mechanism {
         state = STATES.INTAKE;
         up = false;
     }
-//    public double prevRTrigVal = 0;
-//    public boolean isRTrigReleased = false;
 
     public void update(Gamepad gamepad, Gamepad gamepad2) {
         if (!isPressedA && gamepad.a) {
@@ -87,6 +93,16 @@ public class ScoringFSM extends Mechanism {
 
         switch (state) {
             case INTAKE:
+                if (innerSensor.isPixel() && outerSensor.isPixel()) {
+                    if (sensorCounter == 0) {
+                        sensorTimer.reset();
+                        sensorCounter++;
+                    } else if (sensorTimer.milliseconds() >= 200) {
+                        state = STATES.READY;
+                    }
+                } else {
+                    sensorCounter = 0;
+                }
                 // A toggle
                 up = false;
                 lift.isClimb = false;
