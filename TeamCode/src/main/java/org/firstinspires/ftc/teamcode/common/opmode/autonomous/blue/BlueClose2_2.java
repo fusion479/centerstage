@@ -1,17 +1,6 @@
 package org.firstinspires.ftc.teamcode.common.opmode.autonomous.blue;
 
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_INITIAL;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_LEFT_SPIKE;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_PARK;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_RIGHT_SPIKE;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_START;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.INITIAL_FORWARD_DIST;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.LEFT_BACKDROP;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.MIDDLE_BACKDROP;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.MIDDLE_SPIKE_DISTANCE;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.POST_PRELOAD_WAIT;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.PRELOAD_SCORE_DELAY;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.RIGHT_BACKDROP;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.*;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
@@ -20,6 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.ejml.FancyPrint;
 import org.firstinspires.ftc.teamcode.common.subsystem.Camera;
 import org.firstinspires.ftc.teamcode.common.subsystem.ScoringFSM;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
@@ -36,6 +26,7 @@ public class BlueClose2_2 extends LinearOpMode {
     Camera camera = new Camera("blue");
     private int region;
     private STATES autoState;
+    private int scoreCounter = 0;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -128,21 +119,49 @@ public class BlueClose2_2 extends LinearOpMode {
                     break;
                 case BACKDROP_SCORE:
                     if (!drive.isBusy()) {
-                        autoState = STATES.PARK;
                         drive.setPoseEstimate(drive.getPoseEstimate());
-                        TrajectorySequence park = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
-                                .waitSeconds(POST_PRELOAD_WAIT)
-                                .back(7)
-                                .setTangent(Math.toRadians(180))
-                                .lineToLinearHeading(CLOSE_PARK)
-                                .build();
-                        drive.followTrajectorySequenceAsync(park);
-                        timer.reset();
+                        if (scoreCounter < 1) {
+                            autoState = STATES.BACKDROP_TO_STACK;
+                            TrajectorySequence backdropToStack = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
+                                    .waitSeconds(POST_PRELOAD_WAIT)
+                                    .UNSTABLE_addTemporalMarkerOffset(.5, () -> {
+                                        scoringFSM.ready();
+                                    })
+                                    .lineToLinearHeading(BACKDROP_TRUSS_ENTRANCE)
+                                    .lineToLinearHeading(WING_TRUSS_ENTRANCE)
+                                    .lineToLinearHeading(STACK_1)
+                                    .build();
+                            drive.followTrajectorySequenceAsync(backdropToStack);
+                            scoreCounter++;
+                            timer.reset();
+                        } else {
+                            autoState = STATES.PARK;
+                            TrajectorySequence park = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
+                                    .back(10)
+                                    .lineToLinearHeading(CLOSE_PARK)
+                                    .build();
+                            drive.followTrajectorySequenceAsync(park);
+                        }
                     }
                     break;
                 case BACKDROP_TO_STACK:
+                    if (!drive.isBusy()) {
+                        drive.setPoseEstimate(drive.getPoseEstimate());
+                        autoState =  STATES.STACK_TO_BACKDROP;
+                        TrajectorySequence stackToBackdrop = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
+                                .lineToLinearHeading(WING_TRUSS_ENTRANCE)
+                                .lineToLinearHeading(BACKDROP_TRUSS_ENTRANCE)
+                                .lineToLinearHeading(MIDDLE_BACKDROP)
+                                .build();
+                        drive.followTrajectorySequenceAsync(stackToBackdrop);
+                    }
                     break;
                 case STACK_TO_BACKDROP:
+                    if (!drive.isBusy()) {
+                        camera.setDesiredTag(2);
+                        autoState = STATES.APRIL_TAG;
+                        timer.reset();
+                    }
                     break;
                 case PARK:
                     if (!drive.isBusy()) {
@@ -156,6 +175,7 @@ public class BlueClose2_2 extends LinearOpMode {
 
             drive.update();
             tele.addData("camera finished", camera.getFinished());
+            tele.addData("score counter", scoreCounter);
             tele.addData("current state", autoState);
             tele.addData("detected region", region);
             tele.addData("loop time", loopTime.milliseconds());

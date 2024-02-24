@@ -82,6 +82,10 @@ public class Camera extends Mechanism {
                 .build();
     }
 
+    public void setDesiredTag(int region) {
+        DESIRED_TAG_ID = region;
+    }
+
     public void stopStreaming() {
         openCvCamera.stopStreaming();
         openCvCamera.closeCameraDevice();
