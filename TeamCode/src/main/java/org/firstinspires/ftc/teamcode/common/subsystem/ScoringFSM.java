@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.common.subsystem;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -285,6 +284,7 @@ public class ScoringFSM extends Mechanism {
                 } else {
                     lift.setPower(0);
                 }
+                break;
             case AUTO_INIT:
                 lift.isClimb = false;
                 isAuto = true;
@@ -297,6 +297,19 @@ public class ScoringFSM extends Mechanism {
                     deposit.lockInner();
                     deposit.lockOuter();
                 }
+                break;
+            case STACK:
+                intake.down();
+                arm.down();
+                deposit.accepting();
+                deposit.openInner();
+                deposit.openOuter();
+                if (!pixelSensor.hasPixel()) {
+                    intake.setPower(2);
+                } else {
+                    state = STATES.READY;
+                }
+                break;
         }
 
         if (!isPressedRB && gamepad.right_bumper) {
@@ -389,6 +402,11 @@ public class ScoringFSM extends Mechanism {
         state = STATES.AUTO_INIT;
     }
 
+    public void stack() {
+        timer.reset();
+        state = STATES.STACK;
+    }
+
     public void toggleReady() {
         if (state != STATES.READY) {
             ready();
@@ -407,6 +425,7 @@ public class ScoringFSM extends Mechanism {
         CUSTOM,
         SCORE,
         CLIMB,
-        AUTO_INIT
+        AUTO_INIT,
+        STACK
     }
 }

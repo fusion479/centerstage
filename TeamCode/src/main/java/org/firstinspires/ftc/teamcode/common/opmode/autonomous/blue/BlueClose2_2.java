@@ -1,6 +1,22 @@
 package org.firstinspires.ftc.teamcode.common.opmode.autonomous.blue;
 
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.*;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.BACKDROP_TRUSS_ENTRANCE;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_INITIAL;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_LEFT_SPIKE;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_PARK;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_RIGHT_SPIKE;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_START;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.INITIAL_FORWARD_DIST;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.LEFT_BACKDROP;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.MIDDLE_BACKDROP;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.MIDDLE_SPIKE_DISTANCE;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.POST_APRILTAG_FORWARD;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.POST_PRELOAD_WAIT;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.PRELOAD_SCORE_DELAY;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.RIGHT_BACKDROP;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.STACK_1;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.STACK_PICKUP_DELAY;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.WING_TRUSS_ENTRANCE;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
@@ -9,7 +25,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.ejml.FancyPrint;
 import org.firstinspires.ftc.teamcode.common.subsystem.Camera;
 import org.firstinspires.ftc.teamcode.common.subsystem.ScoringFSM;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
@@ -48,7 +63,6 @@ public class BlueClose2_2 extends LinearOpMode {
                 .splineToLinearHeading(CLOSE_LEFT_SPIKE, CLOSE_LEFT_SPIKE.getHeading())
                 .setTangent(Math.toRadians(180))
                 .splineToLinearHeading(CLOSE_INITIAL, Math.toRadians(90))
-                .back(7)
                 .lineToLinearHeading(LEFT_BACKDROP)
                 .build();
 
@@ -99,14 +113,14 @@ public class BlueClose2_2 extends LinearOpMode {
                         drive.setMotorPowers(0, 0, 0, 0);
                     }
 
-                    if (timer.milliseconds() >= 2000) {
+                    if (timer.milliseconds() >= 1250) {
                         autoState = STATES.BACKDROP_SCORE;
                         drive.setPoseEstimate(drive.getPoseEstimate());
                         TrajectorySequence backdropScore = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
                                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                                     scoringFSM.bottom();
                                 })
-                                .forward(6)
+                                .forward(POST_APRILTAG_FORWARD)
                                 .UNSTABLE_addTemporalMarkerOffset(PRELOAD_SCORE_DELAY, () -> {
                                     scoringFSM.score();
                                     scoringFSM.deposit.openOuter();
@@ -124,12 +138,20 @@ public class BlueClose2_2 extends LinearOpMode {
                             autoState = STATES.BACKDROP_TO_STACK;
                             TrajectorySequence backdropToStack = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
                                     .waitSeconds(POST_PRELOAD_WAIT)
-                                    .UNSTABLE_addTemporalMarkerOffset(.5, () -> {
+                                    .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                                         scoringFSM.ready();
                                     })
                                     .lineToLinearHeading(BACKDROP_TRUSS_ENTRANCE)
                                     .lineToLinearHeading(WING_TRUSS_ENTRANCE)
                                     .lineToLinearHeading(STACK_1)
+//                                    .setTangent(Math.toRadians(125))
+//                                    .splineToConstantHeading(new Vector2d(-55, 36), Math.toRadians(240))
+//                                    .setTangent(Math.toRadians(70))
+//                                    .splineToConstantHeading(new Vector2d(20, 58), 0)
+                                    .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                                        scoringFSM.stack();
+                                    })
+                                    .waitSeconds(STACK_PICKUP_DELAY)
                                     .build();
                             drive.followTrajectorySequenceAsync(backdropToStack);
                             scoreCounter++;
@@ -147,7 +169,7 @@ public class BlueClose2_2 extends LinearOpMode {
                 case BACKDROP_TO_STACK:
                     if (!drive.isBusy()) {
                         drive.setPoseEstimate(drive.getPoseEstimate());
-                        autoState =  STATES.STACK_TO_BACKDROP;
+                        autoState = STATES.STACK_TO_BACKDROP;
                         TrajectorySequence stackToBackdrop = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
                                 .lineToLinearHeading(WING_TRUSS_ENTRANCE)
                                 .lineToLinearHeading(BACKDROP_TRUSS_ENTRANCE)
