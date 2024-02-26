@@ -45,19 +45,20 @@ public class TwoWheelTrackingLocalizer extends TwoTrackingWheelLocalizer {
     public static double PERPENDICULAR_X = 5.7859019685;
     public static double PERPENDICULAR_Y = 0.0282507874;
 
-    public static double X_MULTIPLIER = 1.012276843586022;
+    public static double X_MULTIPLIER = 0.9994767505;
     // 210 / (69.14799065372236 + 69.22122879529275 + 69.08391091803799)
 
-    public static double Y_MULTIPLIER = 1.004575586360076;
+    public static double Y_MULTIPLIER = 1.001544277435;
     // 210 / (69.88955441517787 + 69.97 + 69.18394898201535)
 
 
     // Parallel/Perpendicular to the forward axis
     // Parallel wheel is parallel to the forward axis
     // Perpendicular is perpendicular to the forward axis
-    private Encoder parallelEncoder, perpendicularEncoder;
+    private final Encoder parallelEncoder;
+    private final Encoder perpendicularEncoder;
 
-    private SampleMecanumDrive drive;
+    private final SampleMecanumDrive drive;
 
     public TwoWheelTrackingLocalizer(HardwareMap hardwareMap, SampleMecanumDrive drive) {
         super(Arrays.asList(

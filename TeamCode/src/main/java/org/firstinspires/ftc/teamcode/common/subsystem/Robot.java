@@ -46,7 +46,7 @@ public class Robot extends Mechanism {
         drive.setWeightedDrivePower(
                 new Pose2d(
                         -gamepad1.left_stick_y * speedCoefficient,
-                       -gamepad1.left_stick_x * speedCoefficient,
+                        -gamepad1.left_stick_x * speedCoefficient,
                         -gamepad1.right_stick_x * speedCoefficient
                 )
         );
