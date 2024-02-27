@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.common.opmode.autonomous.blue;
 
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.BACKDROP_TRUSS_ENTRANCE;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_INITIAL;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_LEFT_SPIKE;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_PARK;
@@ -14,12 +13,11 @@ import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConsta
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.POST_PRELOAD_WAIT;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.PRELOAD_SCORE_DELAY;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.RIGHT_BACKDROP;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.STACK_1;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.STACK_PICKUP_DELAY;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.WING_TRUSS_ENTRANCE;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -27,6 +25,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.common.subsystem.Camera;
 import org.firstinspires.ftc.teamcode.common.subsystem.ScoringFSM;
+import org.firstinspires.ftc.teamcode.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
@@ -113,12 +112,12 @@ public class BlueClose2_2 extends LinearOpMode {
                         drive.setMotorPowers(0, 0, 0, 0);
                     }
 
-                    if (timer.milliseconds() >= 1250) {
+                    if (timer.milliseconds() >= 1500) {
                         autoState = STATES.BACKDROP_SCORE;
                         drive.setPoseEstimate(drive.getPoseEstimate());
                         TrajectorySequence backdropScore = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
                                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                                    scoringFSM.bottom();
+                                    scoringFSM.medium();
                                 })
                                 .forward(POST_APRILTAG_FORWARD)
                                 .UNSTABLE_addTemporalMarkerOffset(PRELOAD_SCORE_DELAY, () -> {
@@ -141,13 +140,10 @@ public class BlueClose2_2 extends LinearOpMode {
                                     .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                                         scoringFSM.ready();
                                     })
-                                    .lineToLinearHeading(BACKDROP_TRUSS_ENTRANCE)
-                                    .lineToLinearHeading(WING_TRUSS_ENTRANCE)
-                                    .lineToLinearHeading(STACK_1)
-//                                    .setTangent(Math.toRadians(125))
-//                                    .splineToConstantHeading(new Vector2d(-55, 36), Math.toRadians(240))
-//                                    .setTangent(Math.toRadians(70))
-//                                    .splineToConstantHeading(new Vector2d(20, 58), 0)
+                                    .setTangent(Math.toRadians(137)) // +
+                                    .splineToConstantHeading(new Vector2d(-55, 36), Math.toRadians(237),
+                                            SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - 10, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                                            SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - 10)) // -
                                     .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                                         scoringFSM.stack();
                                     })
@@ -171,11 +167,13 @@ public class BlueClose2_2 extends LinearOpMode {
                         drive.setPoseEstimate(drive.getPoseEstimate());
                         autoState = STATES.STACK_TO_BACKDROP;
                         TrajectorySequence stackToBackdrop = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
-                                .lineToLinearHeading(WING_TRUSS_ENTRANCE)
-                                .lineToLinearHeading(BACKDROP_TRUSS_ENTRANCE)
-                                .lineToLinearHeading(MIDDLE_BACKDROP)
+                                .setTangent(Math.toRadians(57)) // -
+                                .splineToConstantHeading(MIDDLE_BACKDROP.vec(), Math.toRadians(317),
+                                        SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - 10, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - 10)) // +
                                 .build();
                         drive.followTrajectorySequenceAsync(stackToBackdrop);
+                        timer.reset();
                     }
                     break;
                 case STACK_TO_BACKDROP:
