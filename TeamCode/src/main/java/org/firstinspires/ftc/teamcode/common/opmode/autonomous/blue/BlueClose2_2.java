@@ -115,18 +115,33 @@ public class BlueClose2_2 extends LinearOpMode {
                     if (timer.milliseconds() >= 1500) {
                         autoState = STATES.BACKDROP_SCORE;
                         drive.setPoseEstimate(drive.getPoseEstimate());
-                        TrajectorySequence backdropScore = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
-                                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                                    scoringFSM.medium();
-                                })
-                                .forward(POST_APRILTAG_FORWARD)
-                                .UNSTABLE_addTemporalMarkerOffset(PRELOAD_SCORE_DELAY, () -> {
-                                    scoringFSM.score();
-                                    scoringFSM.deposit.openOuter();
-                                    scoringFSM.deposit.openInner();
-                                })
-                                .build();
-                        drive.followTrajectorySequenceAsync(backdropScore);
+                        if (scoreCounter == 0) {
+                            TrajectorySequence backdropScore = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
+                                    .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                                        scoringFSM.bottom();
+                                    })
+                                    .forward(POST_APRILTAG_FORWARD)
+                                    .UNSTABLE_addTemporalMarkerOffset(PRELOAD_SCORE_DELAY, () -> {
+                                        scoringFSM.score();
+                                        scoringFSM.deposit.openOuter();
+                                        scoringFSM.deposit.openInner();
+                                    })
+                                    .build();
+                            drive.followTrajectorySequenceAsync(backdropScore);
+                        } else if (scoreCounter == 1) {
+                            TrajectorySequence backdropScore2 = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
+                                    .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                                        scoringFSM.low();
+                                    })
+                                    .forward(POST_APRILTAG_FORWARD)
+                                    .UNSTABLE_addTemporalMarkerOffset(PRELOAD_SCORE_DELAY, () -> {
+                                        scoringFSM.score();
+                                        scoringFSM.deposit.openOuter();
+                                        scoringFSM.deposit.openInner();
+                                    })
+                                    .build();
+                            drive.followTrajectorySequenceAsync(backdropScore2);
+                        }
                         timer.reset();
                     }
                     break;
@@ -147,6 +162,7 @@ public class BlueClose2_2 extends LinearOpMode {
                                     .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                                         scoringFSM.stack();
                                     })
+                                    .back(2.25)
                                     .waitSeconds(STACK_PICKUP_DELAY)
                                     .build();
                             drive.followTrajectorySequenceAsync(backdropToStack);
@@ -178,7 +194,11 @@ public class BlueClose2_2 extends LinearOpMode {
                     break;
                 case STACK_TO_BACKDROP:
                     if (!drive.isBusy()) {
-                        camera.setDesiredTag(2);
+                        if (region == 1) {
+                            camera.setDesiredTag(3);
+                        } else {
+                            camera.setDesiredTag(1);
+                        }
                         autoState = STATES.APRIL_TAG;
                         timer.reset();
                     }
@@ -210,6 +230,7 @@ public class BlueClose2_2 extends LinearOpMode {
         SPIKE_MARK,
         APRIL_TAG,
         BACKDROP_SCORE,
+        BACKDROP_SCORE_2,
         BACKDROP_TO_STACK,
         STACK_TO_BACKDROP,
         PARK,
