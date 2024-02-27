@@ -35,7 +35,7 @@ public class Intake extends Mechanism {
     public void update() {
         intakeLeft.setPosition(target);
         intakeRight.setPosition(1 - target);
-        intake.setPower(power * .95);
+        intake.setPower(power);
     }
 
     public void setPower(double power) {

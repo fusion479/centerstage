@@ -89,8 +89,6 @@ public class ScoringFSM extends Mechanism {
 
         switch (state) {
             case INTAKE:
-
-
                 if (pixelSensor.hasPixel()) {
                     if (sensorCounter == 0) {
                         sensorTimer.reset();
@@ -304,10 +302,17 @@ public class ScoringFSM extends Mechanism {
                 deposit.accepting();
                 deposit.openInner();
                 deposit.openOuter();
-                if (!pixelSensor.hasPixel()) {
-                    intake.setPower(2);
+                if (pixelSensor.hasPixel()) {
+                    if (sensorCounter == 0) {
+                        sensorTimer.reset();
+                        sensorCounter++;
+                        intake.setPower(1);
+                    } else if (sensorTimer.milliseconds() >= 400) {
+                        state = STATES.READY;
+                    }
                 } else {
-                    state = STATES.READY;
+                    intake.setPower(1);
+                    sensorCounter = 0;
                 }
                 break;
         }
