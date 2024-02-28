@@ -38,7 +38,7 @@ public final class AutoConstants {
     // FOR 2 + 2 AUTONS
     public static Pose2d BACKDROP_TRUSS_ENTRANCE = new Pose2d(20, 58, Math.toRadians(0));
     public static Pose2d WING_TRUSS_ENTRANCE = new Pose2d(-40, 58, Math.toRadians(0));
-    public static Pose2d STACK_1 = new Pose2d(-54.3, 36, Math.toRadians(0));
+    public static Pose2d STACK_1 = new Pose2d(-55, 36, Math.toRadians(0));
 
     // FOR RED AUTONS
     public static Pose2d reflectY(Pose2d pose) {
