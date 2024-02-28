@@ -54,10 +54,10 @@ public class MeepMeepTesting extends AutoConstants {
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(30, 30, 5, toRadians(60), 15.5)
                 .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(MIDDLE_BACKDROP)
-                        .setTangent(Math.toRadians(145)) // +
-                        .splineToConstantHeading(new Vector2d(-55, 36), Math.toRadians(230)) // -
-                        .setTangent(Math.toRadians(50)) // -
-                        .splineToConstantHeading(MIDDLE_BACKDROP.vec(), Math.toRadians(325)) // +
+                        .setTangent(Math.toRadians(120))
+                        .splineToConstantHeading(new Vector2d(-55, 36), Math.toRadians(240))
+                        .setTangent(Math.toRadians(60))
+                        .splineToConstantHeading(MIDDLE_BACKDROP.vec(), Math.toRadians(300))
                         .build()
                 );
 
