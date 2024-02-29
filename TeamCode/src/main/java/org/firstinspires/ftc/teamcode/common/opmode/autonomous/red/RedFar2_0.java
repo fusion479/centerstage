@@ -102,12 +102,12 @@ public class RedFar2_0 extends LinearOpMode {
                 .splineToLinearHeading(reflectY(new Pose2d(-36, 12, Math.toRadians(0))), Math.toRadians(0))
                 .lineToLinearHeading(
                         reflectY(CLOSE_MID),
-                        SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - 20, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - 20))
+                        SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - 10, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - 10))
                 .lineToLinearHeading(
                         reflectY(MIDDLE_BACKDROP),
-                        SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - 20, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - 20))
+                        SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - 10, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - 10))
                 .build();
 
         scoringFSM.init(hardwareMap);

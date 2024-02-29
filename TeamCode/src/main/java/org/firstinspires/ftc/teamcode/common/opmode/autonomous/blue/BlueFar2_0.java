@@ -57,12 +57,12 @@ public class BlueFar2_0 extends LinearOpMode {
                 .lineToLinearHeading(new Pose2d(-40, 12, Math.toRadians(0)))
                 .lineToLinearHeading(
                         CLOSE_MID,
-                        SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - 15, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - 15))
+                        SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - 10, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - 10))
                 .lineToLinearHeading(
                         LEFT_BACKDROP,
-                        SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - 15, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - 15))
+                        SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - 10, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - 10))
                 .build();
 
         TrajectorySequence rightSpikeMark = drive.trajectorySequenceBuilder(FRONT_START)
