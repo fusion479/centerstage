@@ -35,7 +35,7 @@ public class RedFar2_0 extends LinearOpMode {
     FtcDashboard dashboard = FtcDashboard.getInstance();
     MultipleTelemetry tele = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
     SampleMecanumDrive drive;
-    Camera camera = new Camera("red");
+    Camera camera = new Camera("blue");
     ScoringFSM scoringFSM = new ScoringFSM();
     private int region;
     private STATES autoState;
