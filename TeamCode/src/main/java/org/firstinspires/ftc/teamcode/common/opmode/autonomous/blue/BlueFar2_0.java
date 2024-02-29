@@ -46,7 +46,7 @@ public class BlueFar2_0 extends LinearOpMode {
         camera.init(hardwareMap);
 
         TrajectorySequence leftSpikeMark = drive.trajectorySequenceBuilder(FRONT_START)
-                .waitSeconds(5)
+                .waitSeconds(3)
                 .forward(14)
                 .setTangent(Math.toRadians(270))
                 .splineToLinearHeading(FRONT_LEFT_SPIKE, FRONT_LEFT_SPIKE.getHeading())
@@ -68,7 +68,7 @@ public class BlueFar2_0 extends LinearOpMode {
                 .build();
 
         TrajectorySequence rightSpikeMark = drive.trajectorySequenceBuilder(FRONT_START)
-                .waitSeconds(5)
+                .waitSeconds(3)
                 .forward(14)
                 .setTangent(Math.toRadians(270))
                 .splineToLinearHeading(FRONT_RIGHT_SPIKE, FRONT_RIGHT_SPIKE.getHeading())
@@ -91,7 +91,7 @@ public class BlueFar2_0 extends LinearOpMode {
                 .build();
 
         TrajectorySequence middleSpikeMark = drive.trajectorySequenceBuilder(FRONT_START)
-                .waitSeconds(5)
+                .waitSeconds(3)
                 .forward(MIDDLE_SPIKE_DISTANCE)
                 .lineToLinearHeading(FRONT_INITIAL)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
@@ -179,6 +179,9 @@ public class BlueFar2_0 extends LinearOpMode {
                         drive.setPoseEstimate(drive.getPoseEstimate());
                         TrajectorySequence park = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
                                 .waitSeconds(POST_PRELOAD_WAIT)
+                                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                                    scoringFSM.ready();
+                                })
                                 .back(7)
                                 .lineToLinearHeading(FRONT_PARK)
                                 .build();

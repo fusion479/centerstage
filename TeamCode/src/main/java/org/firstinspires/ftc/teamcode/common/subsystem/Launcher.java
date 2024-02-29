@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 @Config
 public class Launcher extends Mechanism {
     public static double LAUNCH_POS = 0.6;
-    public static double IDLE_POS = 0.81;
+    public static double IDLE_POS = 0.15;
     Servo servo;
     double target;
 

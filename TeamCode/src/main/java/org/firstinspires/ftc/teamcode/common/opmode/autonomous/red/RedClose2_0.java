@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.common.opmode.autonomous.blue;
+package org.firstinspires.ftc.teamcode.common.opmode.autonomous.red;
 
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_INITIAL;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_LEFT_SPIKE;
@@ -110,7 +110,7 @@ public class RedClose2_0 extends LinearOpMode {
                         drive.setMotorPowers(0, 0, 0, 0);
                     }
 
-                    if (timer.milliseconds() >= 3000) {
+                    if (timer.milliseconds() >= 2500) {
                         autoState = STATES.BACKDROP_SCORE;
                         drive.setPoseEstimate(drive.getPoseEstimate());
                         TrajectorySequence backdropScore = drive.trajectorySequenceBuilder(drive.getPoseEstimate())

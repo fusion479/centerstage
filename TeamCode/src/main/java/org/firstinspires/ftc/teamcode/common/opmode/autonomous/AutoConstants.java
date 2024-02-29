@@ -10,7 +10,7 @@ public final class AutoConstants {
     public static double MIDDLE_SPIKE_DISTANCE = 28.5;
     public static double ARM_LIFT_DELAY = -2.25;
     public static double PRELOAD_SCORE_DELAY = 1.5;
-    public static double POST_PRELOAD_WAIT = 0.75;
+    public static double POST_PRELOAD_WAIT = 1;
     public static double STACK_PICKUP_DELAY = 0.5;
     public static double POST_APRILTAG_FORWARD = 4.5;
 
@@ -21,10 +21,10 @@ public final class AutoConstants {
     public static Pose2d FRONT_PARK = new Pose2d(45, 18, Math.toRadians(0));
 
     // SPIKE & BACKDROP POSITIONS
-    public static Pose2d CLOSE_LEFT_SPIKE = new Pose2d(17, 37, Math.toRadians(320));
-    public static Pose2d CLOSE_RIGHT_SPIKE = new Pose2d(9, 37, Math.toRadians(220));
-    public static Pose2d FRONT_LEFT_SPIKE = new Pose2d(-33, 37, Math.toRadians(320));
-    public static Pose2d FRONT_RIGHT_SPIKE = new Pose2d(-39, 37, Math.toRadians(220));
+    public static Pose2d CLOSE_LEFT_SPIKE = new Pose2d(16, 37, Math.toRadians(320));
+    public static Pose2d CLOSE_RIGHT_SPIKE = new Pose2d(8, 37, Math.toRadians(220));
+    public static Pose2d FRONT_LEFT_SPIKE = new Pose2d(-32, 37, Math.toRadians(320));
+    public static Pose2d FRONT_RIGHT_SPIKE = new Pose2d(-38, 37, Math.toRadians(220));
     public static Pose2d LEFT_BACKDROP = new Pose2d(37.5, 42 - 2, Math.toRadians(0));
     public static Pose2d MIDDLE_BACKDROP = new Pose2d(39, 36 - 2, Math.toRadians(0));
     public static Pose2d RIGHT_BACKDROP = new Pose2d(37.5, 30 - 2, Math.toRadians(0));

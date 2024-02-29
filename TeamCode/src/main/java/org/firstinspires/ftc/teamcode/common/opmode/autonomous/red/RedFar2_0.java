@@ -27,7 +27,7 @@ import org.firstinspires.ftc.teamcode.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
-@Autonomous(name = "Red Far 2+0 Apriltag", group = "_Auto")
+@Autonomous(name = "Red Far 2+0", group = "_Auto")
 public class RedFar2_0 extends LinearOpMode {
     private static final double ACCEL_OFFSET = 10.0;
     private static final double VEL_OFFSET = 10.0;
@@ -47,7 +47,7 @@ public class RedFar2_0 extends LinearOpMode {
         camera.init(hardwareMap);
 
         TrajectorySequence leftSpikeMark = drive.trajectorySequenceBuilder(reflectY(FRONT_START))
-                .waitSeconds(5)
+                .waitSeconds(3)
                 .forward(14)
                 .setTangent(Math.toRadians(90))
                 .splineToLinearHeading(reflectY(FRONT_RIGHT_SPIKE), reflectY(FRONT_RIGHT_SPIKE).getHeading())
@@ -70,7 +70,7 @@ public class RedFar2_0 extends LinearOpMode {
                 .build();
 
         TrajectorySequence rightSpikeMark = drive.trajectorySequenceBuilder(reflectY(FRONT_START))
-                .waitSeconds(5)
+                .waitSeconds(3)
                 .forward(14)
                 .setTangent(Math.toRadians(90))
                 .splineToLinearHeading(reflectY(FRONT_LEFT_SPIKE), reflectY(FRONT_LEFT_SPIKE).getHeading())
@@ -92,7 +92,7 @@ public class RedFar2_0 extends LinearOpMode {
                 .build();
 
         TrajectorySequence middleSpikeMark = drive.trajectorySequenceBuilder(reflectY(FRONT_START))
-                .waitSeconds(5)
+                .waitSeconds(3)
                 .forward(MIDDLE_SPIKE_DISTANCE)
                 .lineToLinearHeading(reflectY(FRONT_INITIAL))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
