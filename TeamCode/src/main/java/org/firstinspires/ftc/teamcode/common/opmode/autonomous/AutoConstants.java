@@ -25,7 +25,7 @@ public final class AutoConstants {
     public static Pose2d FRONT_LEFT_SPIKE = new Pose2d(-33, 37, Math.toRadians(320));
     public static Pose2d FRONT_RIGHT_SPIKE = new Pose2d(-39, 37, Math.toRadians(220));
     public static Pose2d LEFT_BACKDROP = new Pose2d(37.5, 42 - 2, Math.toRadians(0));
-    public static Pose2d MIDDLE_BACKDROP = new Pose2d(37.5, 36 - 2, Math.toRadians(0));
+    public static Pose2d MIDDLE_BACKDROP = new Pose2d(39, 36 - 2, Math.toRadians(0));
     public static Pose2d RIGHT_BACKDROP = new Pose2d(37.5, 30 - 2, Math.toRadians(0));
 
     // MISC POSITIONS

@@ -297,7 +297,7 @@ public class ScoringFSM extends Mechanism {
                 }
                 break;
             case STACK:
-                intake.down();
+                intake.stack();
                 arm.down();
                 deposit.accepting();
                 deposit.openInner();

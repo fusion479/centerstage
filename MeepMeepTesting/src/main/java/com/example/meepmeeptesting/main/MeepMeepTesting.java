@@ -28,7 +28,7 @@ class AutoConstants {
     public static Pose2d FRONT_LEFT_SPIKE = new Pose2d(-32, 37, Math.toRadians(320));
     public static Pose2d FRONT_RIGHT_SPIKE = new Pose2d(-40, 37, Math.toRadians(220));
     public static Pose2d LEFT_BACKDROP = new Pose2d(37.5, 42 - 2, Math.toRadians(0));
-    public static Pose2d MIDDLE_BACKDROP = new Pose2d(37.5, 36 - 2, Math.toRadians(0));
+    public static Pose2d MIDDLE_BACKDROP = new Pose2d(39, 36 - 2, Math.toRadians(0));
     public static Pose2d RIGHT_BACKDROP = new Pose2d(37.5, 30 - 2, Math.toRadians(0));
 
     // MISC POSITIONS
@@ -54,10 +54,10 @@ public class MeepMeepTesting extends AutoConstants {
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(30, 30, 5, toRadians(60), 15.5)
                 .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(MIDDLE_BACKDROP)
-                        .setTangent(Math.toRadians(120))
-                        .splineToConstantHeading(new Vector2d(-55, 36), Math.toRadians(240))
-                        .setTangent(Math.toRadians(60))
-                        .splineToConstantHeading(MIDDLE_BACKDROP.vec(), Math.toRadians(300))
+                        .setTangent(Math.toRadians(123))
+                        .splineToConstantHeading(new Vector2d(-55, 36), Math.toRadians(238))
+                        .setTangent(Math.toRadians(58))
+                        .splineToConstantHeading(MIDDLE_BACKDROP.vec(), Math.toRadians(303))
                         .build()
                 );
 

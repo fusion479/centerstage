@@ -11,7 +11,7 @@ public class Intake extends Mechanism {
 
     public static double UP_POS = .9;
     public static double DOWN_POS = .27;
-    public static double STACK_POS = .33;
+    public static double STACK_POS = .35;
     public static double IDLE_POS = .7;
     public static double target = UP_POS;
     public static double power;

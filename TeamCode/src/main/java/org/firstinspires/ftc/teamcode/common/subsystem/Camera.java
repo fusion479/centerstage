@@ -28,8 +28,8 @@ public class Camera extends Mechanism {
     final double SPEED_GAIN = 0.03;
     final double STRAFE_GAIN = 0.025;
     final double TURN_GAIN = 0.03;
-    final double MAX_AUTO_SPEED = 0.3;
-    final double MAX_AUTO_STRAFE = 0.3;
+    final double MAX_AUTO_SPEED = 0.35;
+    final double MAX_AUTO_STRAFE = 0.35;
     private final String color;
     double MAX_AUTO_TURN = 0.15;
     OpenCvCamera openCvCamera;
@@ -140,7 +140,7 @@ public class Camera extends Mechanism {
                     desiredTag.metadata.fieldPosition.get(0) - desiredTag.ftcPose.range - 6,
                     desiredTag.metadata.fieldPosition.get(1),
                     Math.toRadians(desiredTag.ftcPose.yaw)));
-            
+
             isFinished = true;
         }
     }
@@ -187,7 +187,7 @@ public class Camera extends Mechanism {
                 exposureControl.setMode(ExposureControl.Mode.Manual);
                 opMode.sleep(50);
             }
-            exposureControl.setExposure((long) exposureMS, TimeUnit.MILLISECONDS);
+            exposureControl.setExposure(exposureMS, TimeUnit.MILLISECONDS);
             opMode.sleep(20);
             GainControl gainControl = visionPortal.getCameraControl(GainControl.class);
             gainControl.setGain(gain);

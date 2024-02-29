@@ -23,7 +23,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.common.subsystem.Camera;
 import org.firstinspires.ftc.teamcode.common.subsystem.ScoringFSM;
-import org.firstinspires.ftc.teamcode.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
@@ -45,7 +44,7 @@ public class RedFar2_0 extends LinearOpMode {
         camera.init(hardwareMap);
 
         TrajectorySequence leftSpikeMark = drive.trajectorySequenceBuilder(reflectY(FRONT_START))
-                .waitSeconds(5)
+                .waitSeconds(3)
                 .forward(14)
                 .setTangent(Math.toRadians(90))
                 .splineToLinearHeading(reflectY(FRONT_RIGHT_SPIKE), reflectY(FRONT_RIGHT_SPIKE).getHeading())
@@ -57,17 +56,12 @@ public class RedFar2_0 extends LinearOpMode {
                 .strafeRight(1.25)
                 .lineToLinearHeading(reflectY(new Pose2d(-34, 12, Math.toRadians(270))))
                 .turn(Math.toRadians(-90))
-                .lineToLinearHeading(
-                        reflectY(CLOSE_MID),
-                        SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - 20, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - 20))
-                .splineToLinearHeading(reflectY(RIGHT_BACKDROP), Math.toRadians(0),
-                        SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - 20, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - 20))
+                .lineToLinearHeading(reflectY(CLOSE_MID))
+                .splineToLinearHeading(reflectY(RIGHT_BACKDROP), Math.toRadians(0))
                 .build();
 
         TrajectorySequence rightSpikeMark = drive.trajectorySequenceBuilder(reflectY(FRONT_START))
-                .waitSeconds(5)
+                .waitSeconds(3)
                 .forward(14)
                 .setTangent(Math.toRadians(90))
                 .splineToLinearHeading(reflectY(FRONT_LEFT_SPIKE), reflectY(FRONT_LEFT_SPIKE).getHeading())
@@ -78,17 +72,12 @@ public class RedFar2_0 extends LinearOpMode {
                 .splineToLinearHeading(reflectY(FRONT_INITIAL), Math.toRadians(90))
                 .strafeLeft(4.75)
                 .lineToLinearHeading(reflectY(new Pose2d(-40, 12, Math.toRadians(0))))
-                .lineToLinearHeading(
-                        reflectY(CLOSE_MID),
-                        SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - 20, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - 20))
-                .splineToLinearHeading(reflectY(LEFT_BACKDROP), Math.toRadians(0),
-                        SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - 15, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - 20))
+                .lineToLinearHeading(reflectY(CLOSE_MID))
+                .splineToLinearHeading(reflectY(LEFT_BACKDROP), Math.toRadians(0))
                 .build();
 
         TrajectorySequence middleSpikeMark = drive.trajectorySequenceBuilder(reflectY(FRONT_START))
-                .waitSeconds(5)
+                .waitSeconds(3)
                 .forward(MIDDLE_SPIKE_DISTANCE)
                 .lineToLinearHeading(reflectY(FRONT_INITIAL))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
@@ -98,13 +87,8 @@ public class RedFar2_0 extends LinearOpMode {
                 .splineToLinearHeading(reflectY(new Pose2d(-52, 24, Math.toRadians(270))), Math.toRadians(90))
                 .setTangent(Math.toRadians(90))
                 .splineToLinearHeading(reflectY(new Pose2d(-36, 12, Math.toRadians(0))), Math.toRadians(0))
-                .lineToLinearHeading(
-                        reflectY(CLOSE_MID),
-                        SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - 20, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - 20))
-                .splineToLinearHeading(reflectY(MIDDLE_BACKDROP), Math.toRadians(0),
-                        SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - 20, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - 20))
+                .lineToLinearHeading(reflectY(CLOSE_MID))
+                .splineToLinearHeading(reflectY(MIDDLE_BACKDROP), Math.toRadians(0))
                 .build();
 
         scoringFSM.init(hardwareMap);
