@@ -126,10 +126,10 @@ public class BlueClose2_2 extends LinearOpMode {
                                         scoringFSM.deposit.openOuter();
                                         scoringFSM.deposit.openInner();
                                     })
-                                    .UNSTABLE_addTemporalMarkerOffset(PRELOAD_SCORE_DELAY + 2, () -> {
+                                    .waitSeconds(POST_PRELOAD_WAIT)
+                                    .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                                         scoringFSM.ready();
                                     })
-                                    .waitSeconds(1.5)
                                     .build();
                             drive.followTrajectorySequenceAsync(backdropScore);
                         } else if (scoreCounter == 1) {
@@ -143,10 +143,10 @@ public class BlueClose2_2 extends LinearOpMode {
                                         scoringFSM.deposit.openOuter();
                                         scoringFSM.deposit.openInner();
                                     })
-                                    .UNSTABLE_addTemporalMarkerOffset(PRELOAD_SCORE_DELAY + 2, () -> {
+                                    .waitSeconds(POST_PRELOAD_WAIT)
+                                    .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                                         scoringFSM.ready();
                                     })
-                                    .waitSeconds(1.5)
                                     .build();
                             drive.followTrajectorySequenceAsync(backdropScore2);
                         }
@@ -159,7 +159,6 @@ public class BlueClose2_2 extends LinearOpMode {
                         if (scoreCounter < 1) {
                             autoState = STATES.BACKDROP_TO_STACK;
                             TrajectorySequence backdropToStack = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
-                                    .waitSeconds(POST_PRELOAD_WAIT)
                                     .lineToLinearHeading(MIDDLE_BACKDROP)
                                     .setTangent(Math.toRadians(123))
                                     .splineToConstantHeading(new Vector2d(-55, 36), Math.toRadians(238),

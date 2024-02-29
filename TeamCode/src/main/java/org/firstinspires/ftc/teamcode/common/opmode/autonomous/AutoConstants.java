@@ -12,6 +12,7 @@ public final class AutoConstants {
     public static double PRELOAD_SCORE_DELAY = 1.5;
     public static double POST_PRELOAD_WAIT = 0.75;
     public static double STACK_PICKUP_DELAY = 0.5;
+    public static double POST_APRILTAG_FORWARD = 4.5;
 
     // STARTING & END POSITIONS
     public static Pose2d CLOSE_START = new Pose2d(11.75, 62.7, Math.toRadians(270));
@@ -31,14 +32,7 @@ public final class AutoConstants {
     // MISC POSITIONS
     public static Pose2d CLOSE_INITIAL = new Pose2d(11.75, 44, Math.toRadians(270));
     public static Pose2d FRONT_INITIAL = new Pose2d(-35.25, 44, Math.toRadians(270));
-    public static Pose2d CLOSE_MID = new Pose2d(27.5, 10, Math.toRadians(0));
-
-    public static double POST_APRILTAG_FORWARD = 4.5;
-
-    // FOR 2 + 2 AUTONS
-    public static Pose2d BACKDROP_TRUSS_ENTRANCE = new Pose2d(20, 58, Math.toRadians(0));
-    public static Pose2d WING_TRUSS_ENTRANCE = new Pose2d(-40, 58, Math.toRadians(0));
-    public static Pose2d STACK_1 = new Pose2d(-55, 36, Math.toRadians(0));
+    public static Pose2d CLOSE_MID = new Pose2d(27.5, 12, Math.toRadians(0));
 
     // FOR RED AUTONS
     public static Pose2d reflectY(Pose2d pose) {
