@@ -31,6 +31,10 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
 @Autonomous(name = "Blue Close 2+2", group = "_Auto")
 public class BlueClose2_2 extends LinearOpMode {
+    private static final double STARTING_ANGLE = 123; // + makes angle narrower (hits truss)     - makes angle steeper (hits wall)
+    private static final double ENDING_ANGLE = 238; // + makes angle steeper        - makes angle narrow
+    private static final double VEL_OFFSET = 7.0;
+    private static final double ACCEL_OFFSET = 15.0;
     FtcDashboard dashboard = FtcDashboard.getInstance();
     MultipleTelemetry tele = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
     ElapsedTime timer = new ElapsedTime();
@@ -162,8 +166,8 @@ public class BlueClose2_2 extends LinearOpMode {
                                     .lineToLinearHeading(MIDDLE_BACKDROP)
                                     .setTangent(Math.toRadians(123))
                                     .splineToConstantHeading(new Vector2d(-55, 36), Math.toRadians(238),
-                                            SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - 7, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                                            SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - 15)) // -
+                                            SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - VEL_OFFSET, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                                            SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - ACCEL_OFFSET)) // -
                                     .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                                         scoringFSM.stack();
                                     })
@@ -188,10 +192,10 @@ public class BlueClose2_2 extends LinearOpMode {
                         drive.setPoseEstimate(drive.getPoseEstimate());
                         autoState = STATES.STACK_TO_BACKDROP;
                         TrajectorySequence stackToBackdrop = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
-                                .setTangent(Math.toRadians(58))
-                                .splineToConstantHeading(MIDDLE_BACKDROP.vec(), Math.toRadians(303),
-                                        SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - 7, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - 15)) // +
+                                .setTangent(Math.toRadians(ENDING_ANGLE - 180))
+                                .splineToConstantHeading(MIDDLE_BACKDROP.vec(), Math.toRadians(STARTING_ANGLE + 180),
+                                        SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - VEL_OFFSET, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - ACCEL_OFFSET)) // +
                                 .build();
                         drive.followTrajectorySequenceAsync(stackToBackdrop);
                         timer.reset();
