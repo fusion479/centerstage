@@ -28,8 +28,8 @@ public class Camera extends Mechanism {
     final double SPEED_GAIN = 0.03;
     final double STRAFE_GAIN = 0.025;
     final double TURN_GAIN = 0.03;
-    final double MAX_AUTO_SPEED = 0.35;
-    final double MAX_AUTO_STRAFE = 0.35;
+    final double MAX_AUTO_SPEED = 0.3;
+    final double MAX_AUTO_STRAFE = 0.3;
     private final String color;
     double MAX_AUTO_TURN = 0.15;
     OpenCvCamera openCvCamera;
@@ -131,18 +131,14 @@ public class Camera extends Mechanism {
 
         if (((Math.abs(rangeError) + Math.abs(yawError)) / 2) > 0.15 && Math.abs(headingError) > 0.05) {
             drivetrain.setMotorPowers(leftFrontPower, leftBackPower, rightBackPower, rightFrontPower);
-            isFinished = false;
         } else {
-            // EXPERIMENTAL, REMOVE IF EVERYTHING BREAKS
-            // EXPERIMENTAL, REMOVE IF EVERYTHING BREAKS
-            // EXPERIMENTAL, REMOVE IF EVERYTHING BREAKS
-            drivetrain.setPoseEstimate(new Pose2d(
-                    desiredTag.metadata.fieldPosition.get(0) - desiredTag.ftcPose.range - 6,
-                    desiredTag.metadata.fieldPosition.get(1),
-                    Math.toRadians(desiredTag.ftcPose.yaw)));
-
             isFinished = true;
         }
+
+        drivetrain.setPoseEstimate(new Pose2d(
+                desiredTag.metadata.fieldPosition.get(0) - desiredTag.ftcPose.range - 6,
+                desiredTag.metadata.fieldPosition.get(1),
+                Math.toRadians(desiredTag.ftcPose.yaw)));
     }
 
     public boolean detectAprilTag(Telemetry telemetry) {

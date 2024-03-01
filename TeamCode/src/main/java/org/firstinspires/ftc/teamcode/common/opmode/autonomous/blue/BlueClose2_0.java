@@ -118,6 +118,8 @@ public class BlueClose2_0 extends LinearOpMode {
                                 .forward(6)
                                 .UNSTABLE_addTemporalMarkerOffset(PRELOAD_SCORE_DELAY, () -> {
                                     scoringFSM.score();
+                                })
+                                .UNSTABLE_addTemporalMarkerOffset(PRELOAD_SCORE_DELAY + 2, () -> {
                                     scoringFSM.deposit.openOuter();
                                     scoringFSM.deposit.openInner();
                                 })

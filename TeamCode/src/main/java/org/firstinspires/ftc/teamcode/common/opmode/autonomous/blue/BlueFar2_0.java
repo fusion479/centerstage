@@ -61,10 +61,7 @@ public class BlueFar2_0 extends LinearOpMode {
                         CLOSE_MID,
                         SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - VEL_OFFSET, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - ACCEL_OFFSET))
-                .lineToLinearHeading(
-                        LEFT_BACKDROP,
-                        SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - VEL_OFFSET, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - ACCEL_OFFSET))
+                .lineToLinearHeading(LEFT_BACKDROP)
                 .build();
 
         TrajectorySequence rightSpikeMark = drive.trajectorySequenceBuilder(FRONT_START)
@@ -84,10 +81,7 @@ public class BlueFar2_0 extends LinearOpMode {
                         CLOSE_MID,
                         SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - VEL_OFFSET, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - ACCEL_OFFSET))
-                .lineToLinearHeading(
-                        RIGHT_BACKDROP,
-                        SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - VEL_OFFSET, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - ACCEL_OFFSET))
+                .lineToLinearHeading(RIGHT_BACKDROP)
                 .build();
 
         TrajectorySequence middleSpikeMark = drive.trajectorySequenceBuilder(FRONT_START)
@@ -105,10 +99,7 @@ public class BlueFar2_0 extends LinearOpMode {
                         CLOSE_MID,
                         SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - VEL_OFFSET, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - ACCEL_OFFSET))
-                .lineToLinearHeading(
-                        MIDDLE_BACKDROP,
-                        SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - VEL_OFFSET, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - ACCEL_OFFSET))
+                .lineToLinearHeading(MIDDLE_BACKDROP)
                 .build();
 
         scoringFSM.init(hardwareMap);
@@ -155,16 +146,18 @@ public class BlueFar2_0 extends LinearOpMode {
                         drive.setMotorPowers(0, 0, 0, 0);
                     }
 
-                    if (timer.milliseconds() >= 2500) {
+                    if (timer.milliseconds() >= 3000) {
                         autoState = STATES.BACKDROP_SCORE;
                         drive.setPoseEstimate(drive.getPoseEstimate());
                         TrajectorySequence backdropScore = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
                                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                                     scoringFSM.bottom();
                                 })
-                                .forward(6)
+                                .forward(5)
                                 .UNSTABLE_addTemporalMarkerOffset(PRELOAD_SCORE_DELAY, () -> {
                                     scoringFSM.score();
+                                })
+                                .UNSTABLE_addTemporalMarkerOffset(PRELOAD_SCORE_DELAY + 2, () -> {
                                     scoringFSM.deposit.openOuter();
                                     scoringFSM.deposit.openInner();
                                 })

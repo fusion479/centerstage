@@ -127,6 +127,8 @@ public class BlueClose2_2 extends LinearOpMode {
                                     .forward(POST_APRILTAG_FORWARD)
                                     .UNSTABLE_addTemporalMarkerOffset(PRELOAD_SCORE_DELAY, () -> {
                                         scoringFSM.score();
+                                    })
+                                    .UNSTABLE_addTemporalMarkerOffset(PRELOAD_SCORE_DELAY + 2, () -> {
                                         scoringFSM.deposit.openOuter();
                                         scoringFSM.deposit.openInner();
                                     })
@@ -144,6 +146,8 @@ public class BlueClose2_2 extends LinearOpMode {
                                     .forward(POST_APRILTAG_FORWARD)
                                     .UNSTABLE_addTemporalMarkerOffset(PRELOAD_SCORE_DELAY, () -> {
                                         scoringFSM.score();
+                                    })
+                                    .UNSTABLE_addTemporalMarkerOffset(PRELOAD_SCORE_DELAY + 2, () -> {
                                         scoringFSM.deposit.openOuter();
                                         scoringFSM.deposit.openInner();
                                     })
@@ -164,10 +168,22 @@ public class BlueClose2_2 extends LinearOpMode {
                             autoState = STATES.BACKDROP_TO_STACK;
                             TrajectorySequence backdropToStack = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
                                     .lineToLinearHeading(MIDDLE_BACKDROP)
-                                    .setTangent(Math.toRadians(123))
-                                    .splineToConstantHeading(new Vector2d(-55, 36), Math.toRadians(238),
+                                    .setTangent(Math.toRadians(STARTING_ANGLE))
+                                    .splineToConstantHeading(
+                                            new Vector2d(15, 59),
+                                            Math.toRadians(180),
                                             SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - VEL_OFFSET, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                                            SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - ACCEL_OFFSET)) // -
+                                            SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - ACCEL_OFFSET))
+                                    .splineToConstantHeading(
+                                            new Vector2d(-30, 59),
+                                            Math.toRadians(180),
+                                            SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - VEL_OFFSET, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                                            SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - ACCEL_OFFSET))
+                                    .splineToConstantHeading(
+                                            new Vector2d(-55, 36),
+                                            Math.toRadians(ENDING_ANGLE),
+                                            SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - VEL_OFFSET, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                                            SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - ACCEL_OFFSET))
                                     .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                                         scoringFSM.stack();
                                     })
@@ -193,9 +209,21 @@ public class BlueClose2_2 extends LinearOpMode {
                         autoState = STATES.STACK_TO_BACKDROP;
                         TrajectorySequence stackToBackdrop = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
                                 .setTangent(Math.toRadians(ENDING_ANGLE - 180))
-                                .splineToConstantHeading(MIDDLE_BACKDROP.vec(), Math.toRadians(STARTING_ANGLE + 180),
+                                .splineToConstantHeading(
+                                        new Vector2d(-30, 59),
+                                        Math.toRadians(0),
                                         SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - VEL_OFFSET, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - ACCEL_OFFSET)) // +
+                                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - ACCEL_OFFSET))
+                                .splineToConstantHeading(
+                                        new Vector2d(15, 59),
+                                        Math.toRadians(0),
+                                        SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - VEL_OFFSET, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - ACCEL_OFFSET))
+                                .splineToConstantHeading(
+                                        MIDDLE_BACKDROP.vec(),
+                                        Math.toRadians(STARTING_ANGLE + 180),
+                                        SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - VEL_OFFSET, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - ACCEL_OFFSET))
                                 .build();
                         drive.followTrajectorySequenceAsync(stackToBackdrop);
                         timer.reset();

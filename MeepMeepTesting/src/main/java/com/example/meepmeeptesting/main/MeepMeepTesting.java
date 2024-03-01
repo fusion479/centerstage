@@ -3,6 +3,7 @@ package com.example.meepmeeptesting.main;
 import static java.lang.Math.toRadians;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.noahbres.meepmeep.MeepMeep;
 import com.noahbres.meepmeep.roadrunner.DefaultBotBuilder;
 import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
@@ -49,26 +50,25 @@ class AutoConstants {
 }
 
 public class MeepMeepTesting extends AutoConstants {
+    private static final double STARTING_ANGLE = 120; // + makes angle narrower (hits truss)     - makes angle steeper (hits wall)
+    private static final double ENDING_ANGLE = 240;
+
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(800);
 
         RoadRunnerBotEntity myBot = new DefaultBotBuilder(meepMeep)
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(30, 30, 5, toRadians(60), 15.5)
-                .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(FRONT_START)
-                                .waitSeconds(5)
-                                .forward(MIDDLE_SPIKE_DISTANCE)
-                                .lineToLinearHeading(FRONT_INITIAL)
-//                        .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-//                            scoringFSM.ready();
-//                        })
-                                .setTangent(Math.toRadians(180))
-                                .splineToLinearHeading(new Pose2d(-52, 24, Math.toRadians(270)), Math.toRadians(270))
-                                .setTangent(Math.toRadians(270))
-                                .splineToLinearHeading(new Pose2d(-36, 12, Math.toRadians(0)), Math.toRadians(0))
-                                .lineToLinearHeading(CLOSE_MID)
-                                .lineToLinearHeading(MIDDLE_BACKDROP)
-                                .build()
+                .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(MIDDLE_BACKDROP)
+                        .setTangent(Math.toRadians(STARTING_ANGLE))
+                        .splineToConstantHeading(new Vector2d(15, 59), Math.toRadians(180))
+                        .splineToConstantHeading(new Vector2d(-30, 59), Math.toRadians(180))
+                        .splineToConstantHeading(new Vector2d(-55, 36), Math.toRadians(ENDING_ANGLE))
+                        .setTangent(Math.toRadians(ENDING_ANGLE - 180))
+                        .splineToConstantHeading(new Vector2d(-30, 59), Math.toRadians(0))
+                        .splineToConstantHeading(new Vector2d(15, 59), Math.toRadians(0))
+                        .splineToConstantHeading(MIDDLE_BACKDROP.vec(), Math.toRadians(STARTING_ANGLE + 180))
+                        .build()
                 );
 
         meepMeep.setBackground(MeepMeep.Background.FIELD_CENTERSTAGE_JUICE_DARK)
