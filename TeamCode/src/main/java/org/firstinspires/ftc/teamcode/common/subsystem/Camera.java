@@ -134,7 +134,9 @@ public class Camera extends Mechanism {
         } else {
             isFinished = true;
         }
+    }
 
+    public void relocalize(SampleMecanumDrive drivetrain) {
         drivetrain.setPoseEstimate(new Pose2d(
                 desiredTag.metadata.fieldPosition.get(0) - desiredTag.ftcPose.range - 6,
                 desiredTag.metadata.fieldPosition.get(1),

@@ -9,10 +9,10 @@ public final class AutoConstants {
     public static double INITIAL_FORWARD_DIST = 15.5;
     public static double MIDDLE_SPIKE_DISTANCE = 28.5;
     public static double ARM_LIFT_DELAY = -2.25;
-    public static double PRELOAD_SCORE_DELAY = 1.5;
-    public static double POST_PRELOAD_WAIT = 1;
+    public static double PRELOAD_SCORE_DELAY = -0.5;
+    public static double POST_PRELOAD_WAIT = 0.5;
     public static double STACK_PICKUP_DELAY = 0.5;
-    public static double POST_APRILTAG_FORWARD = 4.5;
+    public static double POST_APRILTAG_FORWARD = 6.16; // this used to be 4.5 in 2+2
 
     // STARTING & END POSITIONS
     public static Pose2d CLOSE_START = new Pose2d(11.75, 62.7, Math.toRadians(270));
@@ -30,7 +30,7 @@ public final class AutoConstants {
     public static Pose2d RIGHT_BACKDROP = new Pose2d(37.5, 30 - 2, Math.toRadians(0));
 
     // MISC POSITIONS
-    public static Pose2d CLOSE_INITIAL = new Pose2d(11.75, 44, Math.toRadians(270));
+    public static Pose2d CLOSE_INITIAL = new Pose2d(11.75, 44, Math.toRadians(90));
     public static Pose2d FRONT_INITIAL = new Pose2d(-35.25, 44, Math.toRadians(270));
     public static Pose2d CLOSE_MID = new Pose2d(27.5, 12, Math.toRadians(0));
 
