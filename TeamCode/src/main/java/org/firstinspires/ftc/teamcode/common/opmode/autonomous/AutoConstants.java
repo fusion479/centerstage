@@ -30,7 +30,7 @@ public final class AutoConstants {
     public static Pose2d RIGHT_BACKDROP = new Pose2d(37.5, 30 - 2, Math.toRadians(0));
 
     // MISC POSITIONS
-    public static Pose2d CLOSE_INITIAL = new Pose2d(11.75, 44, Math.toRadians(90));
+    public static Pose2d CLOSE_INITIAL = new Pose2d(11.75, 44, Math.toRadians(270));
     public static Pose2d FRONT_INITIAL = new Pose2d(-35.25, 44, Math.toRadians(270));
     public static Pose2d CLOSE_MID = new Pose2d(27.5, 12, Math.toRadians(0));
 

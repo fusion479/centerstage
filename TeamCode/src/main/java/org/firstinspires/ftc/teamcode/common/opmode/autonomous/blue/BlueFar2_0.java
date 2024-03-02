@@ -58,10 +58,7 @@ public class BlueFar2_0 extends LinearOpMode {
                 .splineToLinearHeading(FRONT_INITIAL, Math.toRadians(90))
                 .strafeRight(4.75)
                 .lineToLinearHeading(new Pose2d(-40, 12, Math.toRadians(0)))
-                .lineToLinearHeading(
-                        CLOSE_MID,
-                        SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - VEL_OFFSET, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - ACCEL_OFFSET))
+                .lineToLinearHeading(CLOSE_MID)
                 .lineToLinearHeading(LEFT_BACKDROP)
                 .build();
 
@@ -78,10 +75,7 @@ public class BlueFar2_0 extends LinearOpMode {
                 .strafeLeft(1.25)
                 .lineToLinearHeading(new Pose2d(-34, 12, Math.toRadians(270)))
                 .turn(Math.toRadians(90))
-                .lineToLinearHeading(
-                        CLOSE_MID,
-                        SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - VEL_OFFSET, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - ACCEL_OFFSET))
+                .lineToLinearHeading(CLOSE_MID)
                 .lineToLinearHeading(RIGHT_BACKDROP)
                 .build();
 
@@ -96,10 +90,7 @@ public class BlueFar2_0 extends LinearOpMode {
                 .splineToLinearHeading(new Pose2d(-52, 24, Math.toRadians(270)), Math.toRadians(270))
                 .setTangent(Math.toRadians(270))
                 .splineToLinearHeading(new Pose2d(-36, 12, Math.toRadians(0)), Math.toRadians(0))
-                .lineToLinearHeading(
-                        CLOSE_MID,
-                        SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - VEL_OFFSET, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - ACCEL_OFFSET))
+                .lineToLinearHeading(CLOSE_MID)
                 .lineToLinearHeading(MIDDLE_BACKDROP)
                 .build();
 
@@ -148,7 +139,7 @@ public class BlueFar2_0 extends LinearOpMode {
                         drive.setMotorPowers(0, 0, 0, 0);
                     }
 
-                    if (timer.milliseconds() >= 3000) {
+                    if (timer.milliseconds() >= 1500) {
                         autoState = STATES.BACKDROP_SCORE;
                         drive.setPoseEstimate(drive.getPoseEstimate());
                         TrajectorySequence backdropScore = drive.trajectorySequenceBuilder(drive.getPoseEstimate())

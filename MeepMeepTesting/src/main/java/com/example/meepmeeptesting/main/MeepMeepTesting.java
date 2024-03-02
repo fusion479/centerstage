@@ -9,11 +9,12 @@ import com.noahbres.meepmeep.roadrunner.DefaultBotBuilder;
 import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 
 class AutoConstants {
+    // TIMERS & GENERAL DISTANCES
     public static double INITIAL_FORWARD_DIST = 15.5;
     public static double MIDDLE_SPIKE_DISTANCE = 28.5;
     public static double ARM_LIFT_DELAY = -2.25;
-    public static double PRELOAD_SCORE_DELAY = 1.5;
-    public static double POST_PRELOAD_WAIT = 1;
+    public static double PRELOAD_SCORE_DELAY = -0.5;
+    public static double POST_PRELOAD_WAIT = 0.5;
     public static double STACK_PICKUP_DELAY = 0.5;
     public static double POST_APRILTAG_FORWARD = 6.16; // this used to be 4.5 in 2+2
 
@@ -33,7 +34,7 @@ class AutoConstants {
     public static Pose2d RIGHT_BACKDROP = new Pose2d(37.5, 30 - 2, Math.toRadians(0));
 
     // MISC POSITIONS
-    public static Pose2d CLOSE_INITIAL = new Pose2d(11.75, 44, Math.toRadians(0));
+    public static Pose2d CLOSE_INITIAL = new Pose2d(11.75, 44, Math.toRadians(270));
     public static Pose2d FRONT_INITIAL = new Pose2d(-35.25, 44, Math.toRadians(270));
     public static Pose2d CLOSE_MID = new Pose2d(27.5, 12, Math.toRadians(0));
 
@@ -57,11 +58,12 @@ public class MeepMeepTesting extends AutoConstants {
 
 
 
-                        .forward(10)
-                        .splineToSplineHeading(CLOSE_RIGHT_SPIKE, CLOSE_RIGHT_SPIKE.getHeading())
-                        .setReversed(true)
-                        .splineToSplineHeading(CLOSE_INITIAL, Math.toRadians(90))
-                        .splineToConstantHeading(RIGHT_BACKDROP.vec(), Math.toRadians(0))
+                        .forward(INITIAL_FORWARD_DIST)
+                        .setTangent(Math.toRadians(270))
+                        .splineToLinearHeading(CLOSE_RIGHT_SPIKE, CLOSE_RIGHT_SPIKE.getHeading())
+                        .setTangent(Math.toRadians(30))
+                        .splineToLinearHeading(CLOSE_INITIAL, Math.toRadians(90))
+                        .lineToLinearHeading(RIGHT_BACKDROP)
 
 
 
