@@ -35,19 +35,22 @@ public class RedFront1_0 extends LinearOpMode {
                 .forward(14)
                 .setTangent(Math.toRadians(90))
                 .splineToLinearHeading(reflectY(FRONT_LEFT_SPIKE), reflectY(FRONT_LEFT_SPIKE).getHeading())
-                .back(5)
+                .back(10)
+                .lineToLinearHeading(reflectY(FRONT_START))
                 .build();
 
         TrajectorySequence rightSpikeMark = drive.trajectorySequenceBuilder(FRONT_START)
                 .forward(14)
                 .setTangent(Math.toRadians(90))
                 .splineToLinearHeading(reflectY(FRONT_RIGHT_SPIKE), reflectY(FRONT_RIGHT_SPIKE).getHeading())
-                .back(5)
+                .back(10)
+                .lineToLinearHeading(reflectY(FRONT_START))
                 .build();
 
         TrajectorySequence middleSpikeMark = drive.trajectorySequenceBuilder(FRONT_START)
                 .forward(MIDDLE_SPIKE_DISTANCE)
-                .back(5)
+                .back(10)
+                .lineToLinearHeading(reflectY(FRONT_START))
                 .build();
 
         scoringFSM.init(hardwareMap);
