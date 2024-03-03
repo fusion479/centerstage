@@ -18,10 +18,7 @@ public class Lift extends Mechanism {
     private static final double WHEEL_RADIUS = 0.7969769685;
     private static final double GEAR_RATIO = 1.0;
     private static final double TICKS_PER_REV = 537.7;
-
-    public boolean isClimb = false;
     public static int increment = 100;
-
     // PID Coefficients
     public static double kP = 0.0025;
     public static double kI = 0;
@@ -33,6 +30,7 @@ public class Lift extends Mechanism {
     public static double bound = 50;
     // slides heights
     public static int BOTTOM_POS = 0;
+    public static int BOTTOM_LOW_POS = 200;
     public static int LOW_POS = 400;
     public static int MEDIUM_POS = 1200;
     public static int HIGH_POS = 2150;
@@ -40,6 +38,7 @@ public class Lift extends Mechanism {
     // Motor info declarations
     public final DcMotorEx[] motors = new DcMotorEx[2];
     private final PIDController controller = new PIDController(kP, kI, kD);
+    public boolean isClimb = false;
     public boolean isReached = false;
     ElapsedTime timer = new ElapsedTime();
     // telemetry
@@ -108,6 +107,10 @@ public class Lift extends Mechanism {
         return target;
     }
 
+    public void setTarget(int target) {
+        Lift.target = target;
+    }
+
     public void initTele(Telemetry tele) {
         this.tele = tele;
         telemetry = new MultipleTelemetry(tele, dashboard.getTelemetry());
@@ -130,16 +133,16 @@ public class Lift extends Mechanism {
         setTarget(HIGH_POS);
     }
 
+    public void bottomLow() {
+        setTarget(BOTTOM_LOW_POS);
+    }
+
     public void upALittle() {
         setTarget(target + increment);
     }
 
     public void downALittle() {
         setTarget(target - increment);
-    }
-
-    public void setTarget(int target) {
-        Lift.target = target;
     }
 
     public double getPosition() {
