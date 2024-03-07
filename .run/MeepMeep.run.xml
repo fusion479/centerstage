@@ -1,7 +1,7 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="MeepMeep" type="Application" factoryName="Application">
     <option name="MAIN_CLASS_NAME" value="com.example.meepmeeptesting.main.MeepMeepTesting" />
-    <module name="centerstage.MeepMeepTesting.test" />
+    <module name="centerstage.MeepMeepTesting.main" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>

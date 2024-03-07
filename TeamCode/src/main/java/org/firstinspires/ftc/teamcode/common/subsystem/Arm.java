@@ -10,7 +10,7 @@ public class Arm extends Mechanism {
     public static double READY_POS = 0.7;
     public static double DOWN_POS = 0.72;
     public static double CLIMB_POS = 0.26;
-    public static double AUTO_INIT_POS = .65;
+    public static double AUTO_INIT_POS = .6;
     public static double target = DOWN_POS;
     Servo left, right;
     private boolean isUp;

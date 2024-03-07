@@ -19,7 +19,6 @@ import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConsta
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -33,8 +32,8 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
 @Autonomous(name = "Blue Close 2+2", group = "_Auto")
 public class BlueClose2_2 extends LinearOpMode {
-    private static final double STARTING_ANGLE = 120; // + makes angle narrower (hits truss)     - makes angle steeper (hits wall)
-    private static final double ENDING_ANGLE = 240; // + makes angle steeper        - makes angle narrow
+    private static final double STARTING_ANGLE = 235; // + makes angle narrower (hits truss)     - makes angle steeper (hits wall)
+    private static final double ENDING_ANGLE = 120; // + makes angle steeper        - makes angle narrow
     private static final double VEL_OFFSET = 15.0;
     private static final double ACCEL_OFFSET = 20.0;
     FtcDashboard dashboard = FtcDashboard.getInstance();
@@ -168,20 +167,22 @@ public class BlueClose2_2 extends LinearOpMode {
                                     .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                                         scoringFSM.ready();
                                     })
-                                    .lineToLinearHeading(MIDDLE_BACKDROP_PRE)
+                                    .lineToLinearHeading(MIDDLE_BACKDROP_PRE,
+                                            SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - VEL_OFFSET, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                                            SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - ACCEL_OFFSET))
                                     .setTangent(Math.toRadians(STARTING_ANGLE))
                                     .splineToLinearHeading(
-                                            new Pose2d(15, 58.5, Math.toRadians(0)),
+                                            new Pose2d(15, 13, Math.toRadians(0)),
                                             Math.toRadians(180),
                                             SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - VEL_OFFSET, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                                             SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - ACCEL_OFFSET))
                                     .splineToLinearHeading(
-                                            new Pose2d(-30, 58.5, Math.toRadians(0)),
+                                            new Pose2d(-30, 13, Math.toRadians(0)),
                                             Math.toRadians(180),
                                             SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - VEL_OFFSET, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                                             SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - ACCEL_OFFSET))
                                     .splineToLinearHeading(
-                                            new Pose2d(-55, 36, Math.toRadians(0)),
+                                            new Pose2d(-55, 23, Math.toRadians(0)),
                                             Math.toRadians(ENDING_ANGLE),
                                             SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - VEL_OFFSET, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                                             SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - ACCEL_OFFSET))
@@ -211,12 +212,12 @@ public class BlueClose2_2 extends LinearOpMode {
                         TrajectorySequence stackToBackdrop = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
                                 .setTangent(Math.toRadians(ENDING_ANGLE - 180))
                                 .splineToLinearHeading(
-                                        new Pose2d(-30, 58.5, Math.toRadians(0)),
+                                        new Pose2d(-30, 13, Math.toRadians(0)),
                                         Math.toRadians(0),
                                         SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - VEL_OFFSET, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - ACCEL_OFFSET))
                                 .splineToLinearHeading(
-                                        new Pose2d(15, 58.5, Math.toRadians(0)),
+                                        new Pose2d(15, 13, Math.toRadians(0)),
                                         Math.toRadians(0),
                                         SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - VEL_OFFSET, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - ACCEL_OFFSET))
