@@ -4,7 +4,6 @@ import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConsta
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_MID;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.FRONT_INITIAL;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.FRONT_LEFT_SPIKE;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.FRONT_PARK;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.FRONT_RIGHT_SPIKE;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.FRONT_START;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.LEFT_BACKDROP_PRE;
@@ -171,7 +170,6 @@ public class RedFar2_0 extends LinearOpMode {
                                     scoringFSM.ready();
                                 })
                                 .back(7)
-                                .lineToLinearHeading(reflectY(FRONT_PARK))
                                 .build();
                         drive.followTrajectorySequenceAsync(park);
                         timer.reset();
