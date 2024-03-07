@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.common.opmode.autonomous.blue;
 
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.APRILTAG_TIMEOUT;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_INITIAL;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_LEFT_SPIKE;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_PARK;
@@ -31,10 +32,10 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
 @Autonomous(name = "Blue Close 2+2", group = "_Auto")
 public class BlueClose2_2 extends LinearOpMode {
-    private static final double STARTING_ANGLE = 123; // + makes angle narrower (hits truss)     - makes angle steeper (hits wall)
-    private static final double ENDING_ANGLE = 238; // + makes angle steeper        - makes angle narrow
-    private static final double VEL_OFFSET = 7.0;
-    private static final double ACCEL_OFFSET = 15.0;
+    private static final double STARTING_ANGLE = 120; // + makes angle narrower (hits truss)     - makes angle steeper (hits wall)
+    private static final double ENDING_ANGLE = 240; // + makes angle steeper        - makes angle narrow
+    private static final double VEL_OFFSET = 15.0;
+    private static final double ACCEL_OFFSET = 20.0;
     FtcDashboard dashboard = FtcDashboard.getInstance();
     MultipleTelemetry tele = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
     ElapsedTime timer = new ElapsedTime();
@@ -117,7 +118,7 @@ public class BlueClose2_2 extends LinearOpMode {
                         drive.setMotorPowers(0, 0, 0, 0);
                     }
 
-                    if (timer.milliseconds() >= 1500) {
+                    if (timer.milliseconds() >= APRILTAG_TIMEOUT) {
                         autoState = STATES.BACKDROP_SCORE;
                         drive.setPoseEstimate(drive.getPoseEstimate());
                         if (scoreCounter == 0) {
@@ -133,10 +134,7 @@ public class BlueClose2_2 extends LinearOpMode {
                                         scoringFSM.deposit.openOuter();
                                         scoringFSM.deposit.openInner();
                                     })
-                                    .waitSeconds(POST_PRELOAD_WAIT)
-                                    .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                                        scoringFSM.ready();
-                                    })
+                                    .waitSeconds(0.5)
                                     .build();
                             drive.followTrajectorySequenceAsync(backdropScore);
                         } else if (scoreCounter == 1) {
@@ -152,10 +150,7 @@ public class BlueClose2_2 extends LinearOpMode {
                                         scoringFSM.deposit.openOuter();
                                         scoringFSM.deposit.openInner();
                                     })
-                                    .waitSeconds(POST_PRELOAD_WAIT)
-                                    .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                                        scoringFSM.ready();
-                                    })
+                                    .waitSeconds(0.5)
                                     .build();
                             drive.followTrajectorySequenceAsync(backdropScore2);
                         }
@@ -168,6 +163,10 @@ public class BlueClose2_2 extends LinearOpMode {
                         if (scoreCounter < 1) {
                             autoState = STATES.BACKDROP_TO_STACK;
                             TrajectorySequence backdropToStack = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
+                                    .waitSeconds(POST_PRELOAD_WAIT)
+                                    .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                                        scoringFSM.ready();
+                                    })
                                     .lineToLinearHeading(MIDDLE_BACKDROP_PRE)
                                     .setTangent(Math.toRadians(STARTING_ANGLE))
                                     .splineToConstantHeading(
