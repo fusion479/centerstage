@@ -1,18 +1,19 @@
 package org.firstinspires.ftc.teamcode.common.opmode.autonomous.blue;
 
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.APRILTAG_TIMEOUT;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_INITIAL;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_LEFT_SPIKE;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_PARK;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_RIGHT_SPIKE;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_START;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.INITIAL_FORWARD_DIST;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.LEFT_BACKDROP;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.MIDDLE_BACKDROP;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.LEFT_BACKDROP_PRE;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.MIDDLE_BACKDROP_PRE;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.MIDDLE_SPIKE_DISTANCE;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.POST_APRILTAG_FORWARD;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.POST_PRELOAD_WAIT;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.PRELOAD_SCORE_DELAY;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.RIGHT_BACKDROP;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.RIGHT_BACKDROP_PRE;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
@@ -49,11 +50,7 @@ public class BlueClose2_0 extends LinearOpMode {
         TrajectorySequence middleSpikeMark = drive.trajectorySequenceBuilder(CLOSE_START)
                 .forward(MIDDLE_SPIKE_DISTANCE)
                 .back(10)
-                .lineToLinearHeading(MIDDLE_BACKDROP)
-
-//                .forward(MIDDLE_SPIKE_DISTANCE)
-//                .splineToSplineHeading(CLOSE_INITIAL, Math.toRadians(90))
-//                .splineToConstantHeading(MIDDLE_BACKDROP.vec(), Math.toRadians(0))
+                .lineToLinearHeading(MIDDLE_BACKDROP_PRE)
                 .build();
 
         TrajectorySequence leftSpikeMark = drive.trajectorySequenceBuilder(CLOSE_START)
@@ -62,13 +59,12 @@ public class BlueClose2_0 extends LinearOpMode {
                 .splineToLinearHeading(CLOSE_LEFT_SPIKE, CLOSE_LEFT_SPIKE.getHeading())
                 .setTangent(Math.toRadians(180))
                 .splineToLinearHeading(CLOSE_INITIAL, Math.toRadians(90))
-                .back(7)
-                .lineToLinearHeading(LEFT_BACKDROP)
+                .lineToLinearHeading(LEFT_BACKDROP_PRE)
 
 //                .splineToSplineHeading(CLOSE_LEFT_SPIKE, CLOSE_LEFT_SPIKE.getHeading())
 //                .setReversed(true)
 //                .splineToSplineHeading(CLOSE_INITIAL, Math.toRadians(90))
-//                .splineToConstantHeading(LEFT_BACKDROP.vec(), Math.toRadians(0))
+//                .splineToConstantHeading(LEFT_BACKDROP_PRE.vec(), Math.toRadians(0))
                 .build();
 
         TrajectorySequence rightSpikeMark = drive.trajectorySequenceBuilder(CLOSE_START)
@@ -77,7 +73,7 @@ public class BlueClose2_0 extends LinearOpMode {
                 .splineToLinearHeading(CLOSE_RIGHT_SPIKE, CLOSE_RIGHT_SPIKE.getHeading())
                 .setTangent(Math.toRadians(30))
                 .splineToLinearHeading(CLOSE_INITIAL, Math.toRadians(90))
-                .lineToLinearHeading(RIGHT_BACKDROP)
+                .lineToLinearHeading(RIGHT_BACKDROP_PRE)
 
 //                .forward(10)
 //                .splineToSplineHeading(CLOSE_RIGHT_SPIKE, CLOSE_RIGHT_SPIKE.getHeading())
@@ -107,7 +103,7 @@ public class BlueClose2_0 extends LinearOpMode {
         }
         camera.stopStreaming();
         camera.aprilTagInit(hardwareMap, region);
-        camera.setManualExposure(6, 250, isStopRequested(), tele, this);
+//        camera.setManualExposure(6, 250, isStopRequested(), tele, this);
 
         while (opModeIsActive() && !isStopRequested()) {
             switch (autoState) {
@@ -125,7 +121,7 @@ public class BlueClose2_0 extends LinearOpMode {
                         drive.setMotorPowers(0, 0, 0, 0);
                     }
 
-                    if (timer.milliseconds() >= 1500) {
+                    if (timer.milliseconds() >= APRILTAG_TIMEOUT) {
                         autoState = STATES.BACKDROP_SCORE;
                         drive.setPoseEstimate(drive.getPoseEstimate());
                         TrajectorySequence backdropScore = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
@@ -140,6 +136,7 @@ public class BlueClose2_0 extends LinearOpMode {
                                     scoringFSM.deposit.openOuter();
                                     scoringFSM.deposit.openInner();
                                 })
+                                .waitSeconds(0.5)
                                 .build();
                         drive.followTrajectorySequenceAsync(backdropScore);
                         timer.reset();
@@ -151,11 +148,11 @@ public class BlueClose2_0 extends LinearOpMode {
                         drive.setPoseEstimate(drive.getPoseEstimate());
                         TrajectorySequence park = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
                                 .waitSeconds(POST_PRELOAD_WAIT)
-                                .back(8)
-                                .splineToConstantHeading(CLOSE_PARK.vec(), Math.toRadians(90))
                                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                                     scoringFSM.ready();
                                 })
+                                .back(7)
+                                .lineToLinearHeading(CLOSE_PARK)
                                 .build();
                         drive.followTrajectorySequenceAsync(park);
                         timer.reset();

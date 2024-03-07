@@ -129,7 +129,7 @@ public class Camera extends Mechanism {
         }
 
 
-        if (((Math.abs(rangeError) + Math.abs(yawError)) / 2) > 0.15 && Math.abs(headingError) > 0.05) {
+        if (((Math.abs(rangeError) + Math.abs(yawError)) / 2) > 0.15 && Math.abs(headingError) > .05) {
             drivetrain.setMotorPowers(leftFrontPower, leftBackPower, rightBackPower, rightFrontPower);
         } else {
             isFinished = true;

@@ -5,7 +5,6 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
@@ -18,8 +17,6 @@ public class Robot extends Mechanism {
     SampleMecanumDrive drive;
     ScoringFSM scoringFSM = new ScoringFSM();
     Launcher launcher = new Launcher();
-    ElapsedTime endgameTimer = new ElapsedTime();
-    int poopy = 0;
 
     @Override
     public void init(HardwareMap hwMap) {
@@ -32,11 +29,6 @@ public class Robot extends Mechanism {
     }
 
     public void update(Gamepad gamepad1, Gamepad gamepad2) {
-        if (poopy == 0) {
-            endgameTimer.reset();
-            poopy = 1;
-        }
-
         if (scoringFSM.up) {
             speedCoefficient = .69;
         } else {
@@ -55,8 +47,6 @@ public class Robot extends Mechanism {
             launcher.launch();
         } else if (gamepad2.a) {
             launcher.idle();
-        } else if (gamepad2.b) {
-            scoringFSM.climb();
         }
 
         drive.update();

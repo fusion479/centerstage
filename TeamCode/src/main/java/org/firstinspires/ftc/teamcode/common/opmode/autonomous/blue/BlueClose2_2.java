@@ -6,13 +6,13 @@ import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConsta
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_RIGHT_SPIKE;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_START;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.INITIAL_FORWARD_DIST;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.LEFT_BACKDROP;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.MIDDLE_BACKDROP;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.LEFT_BACKDROP_PRE;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.MIDDLE_BACKDROP_PRE;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.MIDDLE_SPIKE_DISTANCE;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.POST_APRILTAG_FORWARD;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.POST_PRELOAD_WAIT;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.PRELOAD_SCORE_DELAY;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.RIGHT_BACKDROP;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.RIGHT_BACKDROP_PRE;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.STACK_PICKUP_DELAY;
 
 import com.acmerobotics.dashboard.FtcDashboard;
@@ -57,7 +57,7 @@ public class BlueClose2_2 extends LinearOpMode {
         TrajectorySequence middleSpikeMark = drive.trajectorySequenceBuilder(CLOSE_START)
                 .forward(MIDDLE_SPIKE_DISTANCE)
                 .back(10)
-                .lineToLinearHeading(MIDDLE_BACKDROP)
+                .lineToLinearHeading(MIDDLE_BACKDROP_PRE)
                 .build();
 
         TrajectorySequence leftSpikeMark = drive.trajectorySequenceBuilder(CLOSE_START)
@@ -66,7 +66,7 @@ public class BlueClose2_2 extends LinearOpMode {
                 .splineToLinearHeading(CLOSE_LEFT_SPIKE, CLOSE_LEFT_SPIKE.getHeading())
                 .setTangent(Math.toRadians(180))
                 .splineToLinearHeading(CLOSE_INITIAL, Math.toRadians(90))
-                .lineToLinearHeading(LEFT_BACKDROP)
+                .lineToLinearHeading(LEFT_BACKDROP_PRE)
                 .build();
 
         TrajectorySequence rightSpikeMark = drive.trajectorySequenceBuilder(CLOSE_START)
@@ -75,7 +75,7 @@ public class BlueClose2_2 extends LinearOpMode {
                 .splineToLinearHeading(CLOSE_RIGHT_SPIKE, CLOSE_RIGHT_SPIKE.getHeading())
                 .setTangent(Math.toRadians(30))
                 .splineToLinearHeading(CLOSE_INITIAL, Math.toRadians(90))
-                .lineToLinearHeading(RIGHT_BACKDROP)
+                .lineToLinearHeading(RIGHT_BACKDROP_PRE)
                 .build();
 
         timer.reset();
@@ -168,7 +168,7 @@ public class BlueClose2_2 extends LinearOpMode {
                         if (scoreCounter < 1) {
                             autoState = STATES.BACKDROP_TO_STACK;
                             TrajectorySequence backdropToStack = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
-                                    .lineToLinearHeading(MIDDLE_BACKDROP)
+                                    .lineToLinearHeading(MIDDLE_BACKDROP_PRE)
                                     .setTangent(Math.toRadians(STARTING_ANGLE))
                                     .splineToConstantHeading(
                                             new Vector2d(15, 59),
@@ -221,7 +221,7 @@ public class BlueClose2_2 extends LinearOpMode {
                                         SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - VEL_OFFSET, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - ACCEL_OFFSET))
                                 .splineToConstantHeading(
-                                        MIDDLE_BACKDROP.vec(),
+                                        MIDDLE_BACKDROP_PRE.vec(),
                                         Math.toRadians(STARTING_ANGLE + 180),
                                         SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - VEL_OFFSET, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - ACCEL_OFFSET))

@@ -152,11 +152,30 @@ public class ScoringFSM extends Mechanism {
                 lift.isClimb = false;
                 deposit.lockInner();
                 deposit.lockOuter();
-                lift.bottom();
-
 
                 if (timer.milliseconds() >= 25) {
                     lift.bottom();
+                    arm.ready();
+                }
+
+                if (timer.milliseconds() >= 125) {
+                    arm.up();
+                    deposit.score();
+                }
+
+                if (timer.milliseconds() >= 150) {
+                    intake.idle();
+                }
+                break;
+            case BOTTOM_LOW:
+                up = true;
+                lift.isClimb = false;
+                deposit.lockInner();
+                deposit.lockOuter();
+
+
+                if (timer.milliseconds() >= 25) {
+                    lift.bottomLow();
                     arm.ready();
                 }
 
@@ -377,6 +396,11 @@ public class ScoringFSM extends Mechanism {
         state = STATES.LOW;
     }
 
+    public void bottomLow() {
+        timer.reset();
+        state = STATES.BOTTOM_LOW;
+    }
+
     public void medium() {
         timer.reset();
         state = STATES.MEDIUM;
@@ -431,6 +455,7 @@ public class ScoringFSM extends Mechanism {
         SCORE,
         CLIMB,
         AUTO_INIT,
-        STACK
+        STACK,
+        BOTTOM_LOW,
     }
 }

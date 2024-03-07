@@ -1,18 +1,19 @@
 package org.firstinspires.ftc.teamcode.common.opmode.autonomous.red;
 
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.APRILTAG_TIMEOUT;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_MID;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.FRONT_INITIAL;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.FRONT_LEFT_SPIKE;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.FRONT_PARK;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.FRONT_RIGHT_SPIKE;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.FRONT_START;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.LEFT_BACKDROP;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.MIDDLE_BACKDROP;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.LEFT_BACKDROP_PRE;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.MIDDLE_BACKDROP_PRE;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.MIDDLE_SPIKE_DISTANCE;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.POST_APRILTAG_FORWARD;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.POST_PRELOAD_WAIT;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.PRELOAD_SCORE_DELAY;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.RIGHT_BACKDROP;
+import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.RIGHT_BACKDROP_PRE;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.reflectY;
 
 import com.acmerobotics.dashboard.FtcDashboard;
@@ -24,7 +25,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.common.subsystem.Camera;
 import org.firstinspires.ftc.teamcode.common.subsystem.ScoringFSM;
-import org.firstinspires.ftc.teamcode.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
@@ -48,7 +48,7 @@ public class RedFar2_0 extends LinearOpMode {
         camera.init(hardwareMap);
 
         TrajectorySequence leftSpikeMark = drive.trajectorySequenceBuilder(reflectY(FRONT_START))
-                .waitSeconds(3)
+                .waitSeconds(5)
                 .forward(14)
                 .setTangent(Math.toRadians(90))
                 .splineToLinearHeading(reflectY(FRONT_RIGHT_SPIKE), reflectY(FRONT_RIGHT_SPIKE).getHeading())
@@ -58,14 +58,14 @@ public class RedFar2_0 extends LinearOpMode {
                 .setTangent(Math.toRadians(0))
                 .splineToLinearHeading(reflectY(FRONT_INITIAL), Math.toRadians(90))
                 .strafeRight(1.25)
-                .lineToLinearHeading(reflectY(new Pose2d(-34, 12, Math.toRadians(270))))
+                .lineToLinearHeading(reflectY(new Pose2d(-34, 11, Math.toRadians(270))))
                 .turn(Math.toRadians(-90))
                 .lineToLinearHeading(reflectY(CLOSE_MID))
-                .lineToLinearHeading(reflectY(RIGHT_BACKDROP))
+                .lineToLinearHeading(reflectY(RIGHT_BACKDROP_PRE))
                 .build();
 
         TrajectorySequence rightSpikeMark = drive.trajectorySequenceBuilder(reflectY(FRONT_START))
-                .waitSeconds(3)
+                .waitSeconds(5)
                 .forward(14)
                 .setTangent(Math.toRadians(90))
                 .splineToLinearHeading(reflectY(FRONT_LEFT_SPIKE), reflectY(FRONT_LEFT_SPIKE).getHeading())
@@ -75,13 +75,13 @@ public class RedFar2_0 extends LinearOpMode {
                 .setTangent(Math.toRadians(180))
                 .splineToLinearHeading(reflectY(FRONT_INITIAL), Math.toRadians(90))
                 .strafeLeft(4.75)
-                .lineToLinearHeading(reflectY(new Pose2d(-40, 12, Math.toRadians(0))))
+                .lineToLinearHeading(reflectY(new Pose2d(-40, 11, Math.toRadians(0))))
                 .lineToLinearHeading(reflectY(CLOSE_MID))
-                .lineToLinearHeading(reflectY(LEFT_BACKDROP))
+                .lineToLinearHeading(reflectY(LEFT_BACKDROP_PRE))
                 .build();
 
         TrajectorySequence middleSpikeMark = drive.trajectorySequenceBuilder(reflectY(FRONT_START))
-                .waitSeconds(3)
+                .waitSeconds(5)
                 .forward(MIDDLE_SPIKE_DISTANCE)
                 .lineToLinearHeading(reflectY(FRONT_INITIAL))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
@@ -90,9 +90,9 @@ public class RedFar2_0 extends LinearOpMode {
                 .setTangent(Math.toRadians(180))
                 .splineToLinearHeading(reflectY(new Pose2d(-52, 24, Math.toRadians(270))), Math.toRadians(90))
                 .setTangent(Math.toRadians(90))
-                .splineToLinearHeading(reflectY(new Pose2d(-36, 12, Math.toRadians(0))), Math.toRadians(0))
+                .splineToLinearHeading(reflectY(new Pose2d(-36, 11, Math.toRadians(0))), Math.toRadians(0))
                 .lineToLinearHeading(reflectY(CLOSE_MID))
-                .lineToLinearHeading(reflectY(MIDDLE_BACKDROP))
+                .lineToLinearHeading(reflectY(MIDDLE_BACKDROP_PRE))
                 .build();
 
         scoringFSM.init(hardwareMap);
@@ -140,21 +140,22 @@ public class RedFar2_0 extends LinearOpMode {
                         drive.setMotorPowers(0, 0, 0, 0);
                     }
 
-                    if (timer.milliseconds() >= 1500) {
+                    if (timer.milliseconds() >= APRILTAG_TIMEOUT) {
                         autoState = STATES.BACKDROP_SCORE;
                         drive.setPoseEstimate(drive.getPoseEstimate());
                         TrajectorySequence backdropScore = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
                                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                                    scoringFSM.bottom();
+                                    scoringFSM.bottomLow();
                                 })
                                 .forward(POST_APRILTAG_FORWARD)
                                 .UNSTABLE_addTemporalMarkerOffset(PRELOAD_SCORE_DELAY, () -> {
                                     scoringFSM.score();
                                 })
-                                .UNSTABLE_addTemporalMarkerOffset(PRELOAD_SCORE_DELAY + 2, () -> {
+                                .UNSTABLE_addTemporalMarkerOffset(PRELOAD_SCORE_DELAY + 1.5, () -> {
                                     scoringFSM.deposit.openOuter();
                                     scoringFSM.deposit.openInner();
                                 })
+                                .waitSeconds(0.5)
                                 .build();
                         drive.followTrajectorySequenceAsync(backdropScore);
                         timer.reset();
