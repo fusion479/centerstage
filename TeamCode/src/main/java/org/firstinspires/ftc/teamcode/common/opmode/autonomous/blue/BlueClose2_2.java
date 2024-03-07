@@ -18,6 +18,7 @@ import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConsta
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -169,18 +170,18 @@ public class BlueClose2_2 extends LinearOpMode {
                                     })
                                     .lineToLinearHeading(MIDDLE_BACKDROP_PRE)
                                     .setTangent(Math.toRadians(STARTING_ANGLE))
-                                    .splineToConstantHeading(
-                                            new Vector2d(15, 59),
+                                    .splineToLinearHeading(
+                                            new Pose2d(15, 58.5, Math.toRadians(0)),
                                             Math.toRadians(180),
                                             SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - VEL_OFFSET, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                                             SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - ACCEL_OFFSET))
-                                    .splineToConstantHeading(
-                                            new Vector2d(-30, 59),
+                                    .splineToLinearHeading(
+                                            new Pose2d(-30, 58.5, Math.toRadians(0)),
                                             Math.toRadians(180),
                                             SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - VEL_OFFSET, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                                             SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - ACCEL_OFFSET))
-                                    .splineToConstantHeading(
-                                            new Vector2d(-55, 36),
+                                    .splineToLinearHeading(
+                                            new Pose2d(-55, 36, Math.toRadians(0)),
                                             Math.toRadians(ENDING_ANGLE),
                                             SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - VEL_OFFSET, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                                             SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - ACCEL_OFFSET))
@@ -209,18 +210,18 @@ public class BlueClose2_2 extends LinearOpMode {
                         autoState = STATES.STACK_TO_BACKDROP;
                         TrajectorySequence stackToBackdrop = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
                                 .setTangent(Math.toRadians(ENDING_ANGLE - 180))
-                                .splineToConstantHeading(
-                                        new Vector2d(-30, 59),
+                                .splineToLinearHeading(
+                                        new Pose2d(-30, 58.5, Math.toRadians(0)),
                                         Math.toRadians(0),
                                         SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - VEL_OFFSET, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - ACCEL_OFFSET))
-                                .splineToConstantHeading(
-                                        new Vector2d(15, 59),
+                                .splineToLinearHeading(
+                                        new Pose2d(15, 58.5, Math.toRadians(0)),
                                         Math.toRadians(0),
                                         SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - VEL_OFFSET, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - ACCEL_OFFSET))
-                                .splineToConstantHeading(
-                                        MIDDLE_BACKDROP_PRE.vec(),
+                                .splineToLinearHeading(
+                                        MIDDLE_BACKDROP_PRE,
                                         Math.toRadians(STARTING_ANGLE + 180),
                                         SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - VEL_OFFSET, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - ACCEL_OFFSET))
