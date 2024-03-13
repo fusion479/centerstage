@@ -11,8 +11,9 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 @Config
 public class ScoringFSM extends Mechanism {
     public static int armDelay = 300;
-    public static int resetDelay = 400;
+    public static int resetDelay = 75;
     public static int autoIntakeDelay = 100;
+    public static int colorSensorDelay = 75;
 
     public Lift lift = new Lift();
     public Arm arm = new Arm();
@@ -93,7 +94,7 @@ public class ScoringFSM extends Mechanism {
                     if (sensorCounter == 0) {
                         sensorTimer.reset();
                         sensorCounter++;
-                    } else if (sensorTimer.milliseconds() >= 200) {
+                    } else if (sensorTimer.milliseconds() >= colorSensorDelay) {
                         state = STATES.READY;
                     }
                 } else {
@@ -141,7 +142,7 @@ public class ScoringFSM extends Mechanism {
                     }
 
 
-                    if (timer.milliseconds() >= 600) {
+                    if (timer.milliseconds() >= 300) {
                         intake.idle();
                     }
                 }
@@ -326,7 +327,7 @@ public class ScoringFSM extends Mechanism {
                         sensorTimer.reset();
                         sensorCounter++;
                         intake.setPower(1);
-                    } else if (sensorTimer.milliseconds() >= 400) {
+                    } else if (sensorTimer.milliseconds() >= 200) {
                         state = STATES.READY;
                     }
                 } else {

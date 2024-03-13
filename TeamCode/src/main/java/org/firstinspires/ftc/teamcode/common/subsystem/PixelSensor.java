@@ -3,11 +3,15 @@ package org.firstinspires.ftc.teamcode.common.subsystem;
 import android.graphics.Color;
 
 import com.ThermalEquilibrium.homeostasis.Filters.FilterAlgorithms.LowPassFilter;
+import com.qualcomm.robotcore.hardware.ColorRangeSensor;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
 public class PixelSensor extends Mechanism {
-    ColorSensor innerSensor, outerSensor;
+    ColorRangeSensor innerSensor, outerSensor;
+    public static int THRESHOLD_MM = 32;
 
     public static double RED_GAIN = 0.2;
     LowPassFilter lowPassFilterR = new LowPassFilter(RED_GAIN);
@@ -20,15 +24,16 @@ public class PixelSensor extends Mechanism {
 
     @Override
     public void init(HardwareMap hwMap) {
-        innerSensor = hwMap.get(ColorSensor.class, "colorInner");
-        outerSensor = hwMap.get(ColorSensor.class, "colorOuter");
+        innerSensor = hwMap.get(ColorRangeSensor.class, "colorInner");
+        outerSensor = hwMap.get(ColorRangeSensor.class, "colorOuter");
 
         innerSensor.enableLed(false);
         outerSensor.enableLed(false);
     }
 
     public boolean hasPixel() {
-        return (innerSensor.red() > 200 && outerSensor.red() > 200);
+//        return (innerSensor.red() > 200 && outerSensor.red() > 200);
+        return (innerSensor.getDistance(DistanceUnit.MM) < THRESHOLD_MM) && (outerSensor.getDistance(DistanceUnit.MM) < THRESHOLD_MM);
     }
 
     public double redEstimate(ColorSensor s){
