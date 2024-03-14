@@ -3,15 +3,17 @@ package org.firstinspires.ftc.teamcode.common.subsystem;
 import android.graphics.Color;
 
 import com.ThermalEquilibrium.homeostasis.Filters.FilterAlgorithms.LowPassFilter;
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.ColorRangeSensor;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
+@Config
 public class PixelSensor extends Mechanism {
     ColorRangeSensor innerSensor, outerSensor;
-    public static int THRESHOLD_MM = 32;
+    public static int THRESHOLD_MM = 30;
 
     public static double RED_GAIN = 0.2;
     LowPassFilter lowPassFilterR = new LowPassFilter(RED_GAIN);
