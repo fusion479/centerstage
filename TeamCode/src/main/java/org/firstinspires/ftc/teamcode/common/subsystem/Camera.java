@@ -140,7 +140,7 @@ public class Camera extends Mechanism {
         drivetrain.setPoseEstimate(new Pose2d(
                 desiredTag.metadata.fieldPosition.get(0) - desiredTag.ftcPose.range - 6,
                 desiredTag.metadata.fieldPosition.get(1),
-                Math.toRadians(desiredTag.ftcPose.yaw)));
+                Math.toRadians(0)));
     }
 
     public boolean detectAprilTag(Telemetry telemetry) {
