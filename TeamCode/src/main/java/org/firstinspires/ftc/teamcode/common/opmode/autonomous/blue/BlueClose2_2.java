@@ -177,7 +177,7 @@ public class BlueClose2_2 extends LinearOpMode {
                                             SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - VEL_OFFSET, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                                             SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - ACCEL_OFFSET))
                                     .splineToLinearHeading(
-                                            new Pose2d(-30, 13, Math.toRadians(0)),
+                                            new Pose2d(-34, 13, Math.toRadians(0)),
                                             Math.toRadians(180),
                                             SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - VEL_OFFSET, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                                             SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - ACCEL_OFFSET))
@@ -189,7 +189,6 @@ public class BlueClose2_2 extends LinearOpMode {
                                     .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                                         scoringFSM.stack();
                                     })
-                                    .back(2.25)
                                     .waitSeconds(STACK_PICKUP_DELAY)
                                     .build();
                             drive.followTrajectorySequenceAsync(backdropToStack);
@@ -198,6 +197,10 @@ public class BlueClose2_2 extends LinearOpMode {
                         } else {
                             autoState = STATES.PARK;
                             TrajectorySequence park = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
+                                    .waitSeconds(POST_PRELOAD_WAIT)
+                                    .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                                        scoringFSM.ready();
+                                    })
                                     .back(10)
                                     .lineToLinearHeading(CLOSE_PARK)
                                     .build();
@@ -209,10 +212,10 @@ public class BlueClose2_2 extends LinearOpMode {
                     if (!drive.isBusy()) {
                         drive.setPoseEstimate(drive.getPoseEstimate());
                         autoState = STATES.STACK_TO_BACKDROP;
-                        TrajectorySequence stackToBackdrop = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
+                        TrajectorySequence stackToBackdrop = drive.trajectorySequenceBuilder(new Pose2d(-55, 23, Math.toRadians(0)))
                                 .setTangent(Math.toRadians(ENDING_ANGLE - 180))
                                 .splineToLinearHeading(
-                                        new Pose2d(-30, 13, Math.toRadians(0)),
+                                        new Pose2d(-34, 13, Math.toRadians(0)),
                                         Math.toRadians(0),
                                         SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - VEL_OFFSET, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - ACCEL_OFFSET))

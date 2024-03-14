@@ -287,6 +287,11 @@ public class ScoringFSM extends Mechanism {
                             ready();
                         }
                     } else {
+                        if (resetCounter < 3) {
+                            lift.upALittle();
+                        }
+                        resetCounter++;
+
                         deposit.openOuter();
                         deposit.openInner();
                     }

@@ -10,7 +10,7 @@ import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 class AutoConstants {
     // TIMERS & GENERAL DISTANCES
     public static double INITIAL_FORWARD_DIST = 15.5;
-    public static double MIDDLE_SPIKE_DISTANCE = 29;
+    public static double MIDDLE_SPIKE_DISTANCE = 28;
     public static double ARM_LIFT_DELAY = -2.25;
     public static double PRELOAD_SCORE_DELAY = -0.5;
     public static double POST_PRELOAD_WAIT = 0.5;

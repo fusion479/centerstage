@@ -138,9 +138,9 @@ public class Camera extends Mechanism {
 
     public void relocalize(SampleMecanumDrive drivetrain) {
         drivetrain.setPoseEstimate(new Pose2d(
-                desiredTag.metadata.fieldPosition.get(0) - desiredTag.ftcPose.range - 6,
+                drivetrain.getPoseEstimate().getX(),
                 desiredTag.metadata.fieldPosition.get(1),
-                Math.toRadians(0)));
+                drivetrain.getPoseEstimate().getHeading()));
     }
 
     public boolean detectAprilTag(Telemetry telemetry) {
