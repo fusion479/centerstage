@@ -38,6 +38,7 @@ public class ScoringFSM extends Mechanism {
     public boolean isPressedLB2 = false;
     public boolean isPressedDPadUp = false;
     public boolean isPressedDPadDown = false;
+    public boolean isPressedDPadRight = false;
 
     FtcDashboard dashboard = FtcDashboard.getInstance();
     Telemetry telemetry = dashboard.getTelemetry();
@@ -86,6 +87,8 @@ public class ScoringFSM extends Mechanism {
         } else if (!isPressedDPadDown && gamepad.dpad_down) {
             custom();
             lift.downALittle();
+        } else if (!isPressedDPadRight && gamepad.dpad_right) {
+            stack();
         }
 
         switch (state) {
@@ -284,6 +287,11 @@ public class ScoringFSM extends Mechanism {
                             ready();
                         }
                     } else {
+                        if (resetCounter < 3) {
+                            lift.upALittle();
+                        }
+                        resetCounter++;
+
                         deposit.openOuter();
                         deposit.openInner();
                     }
@@ -317,11 +325,26 @@ public class ScoringFSM extends Mechanism {
                 }
                 break;
             case STACK:
+                up = true;
+                lift.isClimb = false;
+
                 intake.stack();
                 arm.down();
-                deposit.accepting();
+                lift.stack(); // 75
+                deposit.autoStack();
                 deposit.openInner();
                 deposit.openOuter();
+
+                if (timer.milliseconds() >= 25) {
+                    intake.stack();
+                }
+
+
+                if (timer.milliseconds() >= 125) {
+                    deposit.autoStack();
+                }
+
+
                 if (pixelSensor.hasPixel()) {
                     if (sensorCounter == 0) {
                         sensorTimer.reset();
@@ -331,7 +354,6 @@ public class ScoringFSM extends Mechanism {
                         state = STATES.READY;
                     }
                 } else {
-                    intake.setPower(1);
                     sensorCounter = 0;
                 }
                 break;

@@ -30,6 +30,7 @@ public class Lift extends Mechanism {
     public static double bound = 50;
     // slides heights
     public static int BOTTOM_POS = 0;
+    public static int STACK_POS = 75;
     public static int BOTTOM_LOW_POS = 200;
     public static int LOW_POS = 400;
     public static int MEDIUM_POS = 1200;
@@ -127,6 +128,10 @@ public class Lift extends Mechanism {
 
     public void medium() {
         setTarget(MEDIUM_POS);
+    }
+
+    public void stack() {
+        setTarget(STACK_POS);
     }
 
     public void high() {

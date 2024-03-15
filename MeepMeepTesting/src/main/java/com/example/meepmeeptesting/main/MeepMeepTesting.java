@@ -10,7 +10,7 @@ import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 class AutoConstants {
     // TIMERS & GENERAL DISTANCES
     public static double INITIAL_FORWARD_DIST = 15.5;
-    public static double MIDDLE_SPIKE_DISTANCE = 29;
+    public static double MIDDLE_SPIKE_DISTANCE = 28;
     public static double ARM_LIFT_DELAY = -2.25;
     public static double PRELOAD_SCORE_DELAY = -0.5;
     public static double POST_PRELOAD_WAIT = 0.5;
@@ -48,8 +48,8 @@ class AutoConstants {
 }
 
 public class MeepMeepTesting extends AutoConstants {
-    private static final double STARTING_ANGLE = 120; // + makes angle narrower (hits truss)     - makes angle steeper (hits wall)
-    private static final double ENDING_ANGLE = 240;
+    private static final double STARTING_ANGLE = 235; // + makes angle narrower (hits truss)     - makes angle steeper (hits wall)
+    private static final double ENDING_ANGLE = 120;
 
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(800);
@@ -62,20 +62,20 @@ public class MeepMeepTesting extends AutoConstants {
 
                         .setTangent(Math.toRadians(STARTING_ANGLE))
                         .splineToLinearHeading(
-                                new Pose2d(15, 58.5, Math.toRadians(0)),
+                                new Pose2d(15, 13, Math.toRadians(0)),
                                 Math.toRadians(180))
                         .splineToLinearHeading(
-                                new Pose2d(-30, 58.5, Math.toRadians(0)),
+                                new Pose2d(-34, 13, Math.toRadians(0)),
                                 Math.toRadians(180))
                         .splineToLinearHeading(
-                                new Pose2d(-55, 36, Math.toRadians(0)),
+                                new Pose2d(-55, 23, Math.toRadians(0)),
                                 Math.toRadians(ENDING_ANGLE))
                         .setTangent(Math.toRadians(ENDING_ANGLE - 180))
                         .splineToLinearHeading(
-                                new Pose2d(-30, 58.5, Math.toRadians(0)),
+                                new Pose2d(-34, 13, Math.toRadians(0)),
                                 Math.toRadians(0))
                         .splineToLinearHeading(
-                                new Pose2d(15, 58.5, Math.toRadians(0)),
+                                new Pose2d(15, 13, Math.toRadians(0)),
                                 Math.toRadians(0))
                         .splineToLinearHeading(
                                 MIDDLE_BACKDROP_PRE,

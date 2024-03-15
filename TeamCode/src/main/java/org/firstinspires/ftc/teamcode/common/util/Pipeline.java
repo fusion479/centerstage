@@ -26,11 +26,11 @@ public class Pipeline extends OpenCvPipeline {
     public static int redHighHSVG = 255;
     public static int redHighHSVB = 255;
     public static int rightRectX = 565;
-    public static int rightRectY = 180;
+    public static int rightRectY = 235;
     public static int leftRectX = 0;
-    public static int leftRectY = 180;
-    public static int centerRectX = 275;
-    public static int centerRectY = 150;
+    public static int leftRectY = 235;
+    public static int centerRectX = 235;
+    public static int centerRectY = 210;
 
     public double tolerance = 0.3;
 
