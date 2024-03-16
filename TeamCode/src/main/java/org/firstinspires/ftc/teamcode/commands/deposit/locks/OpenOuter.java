@@ -1,13 +1,13 @@
-package org.firstinspires.ftc.teamcode.commands.deposit;
+package org.firstinspires.ftc.teamcode.commands.deposit.locks;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 
 import org.firstinspires.ftc.teamcode.subsystems.Deposit;
 
-public class DepositUp extends CommandBase {
+public class OpenOuter extends CommandBase {
     private final Deposit deposit;
 
-    public DepositUp(final Deposit deposit) {
+    public OpenOuter(final Deposit deposit) {
         this.deposit = deposit;
 
         super.addRequirements(this.deposit);
@@ -15,7 +15,7 @@ public class DepositUp extends CommandBase {
 
     @Override
     public void initialize() {
-        this.deposit.setPosition(Deposit.SCORE_POS);
+        this.deposit.setOuterPosition(Deposit.OPENOUTER);
     }
 
     @Override

@@ -1,9 +1,11 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+@Config
 public class Deposit extends Subsystem {
     public static double ACCEPTING_POS = .1;
     public static double IDLE_POS = .81;
@@ -33,6 +35,9 @@ public class Deposit extends Subsystem {
 
     public void setInnerPosition(double position) {
         this.inner.setPosition(position);
+    }
+
+    public void setOuterPosition(double position) {
         this.outer.setPosition(position);
     }
 }

@@ -4,10 +4,10 @@ import com.arcrobotics.ftclib.command.CommandBase;
 
 import org.firstinspires.ftc.teamcode.subsystems.Deposit;
 
-public class DepositDown extends CommandBase {
+public class OpenInner extends CommandBase {
     private final Deposit deposit;
 
-    public DepositDown(final Deposit deposit) {
+    public OpenInner(final Deposit deposit) {
         this.deposit = deposit;
 
         super.addRequirements(this.deposit);
@@ -15,7 +15,7 @@ public class DepositDown extends CommandBase {
 
     @Override
     public void initialize() {
-        this.deposit.setPosition(Deposit.READY_POS);
+        this.deposit.setInnerPosition(Deposit.OPENINNER);
     }
 
     @Override

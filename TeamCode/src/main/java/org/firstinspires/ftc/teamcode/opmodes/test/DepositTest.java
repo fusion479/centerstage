@@ -10,8 +10,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.subsystems.Deposit;
 
-import org.firstinspires.ftc.teamcode.commands.deposit.DepositDown;
-import org.firstinspires.ftc.teamcode.commands.deposit.DepositUp;
+import org.firstinspires.ftc.teamcode.commands.deposit.DepositReady;
+import org.firstinspires.ftc.teamcode.commands.deposit.DepositScore;
 
 
 @TeleOp(name = "Deposit Test", group = "Test")
@@ -25,9 +25,9 @@ public class DepositTest extends CommandOpMode {
         this.gamepad = new GamepadEx(gamepad1);
 
         this.gamepad.getGamepadButton(GamepadKeys.Button.A)
-                .whenPressed(new DepositUp(this.deposit));
+                .whenPressed(new DepositScore(this.deposit));
         this.gamepad.getGamepadButton(GamepadKeys.Button.B)
-                .whenPressed(new DepositDown(this.deposit));
+                .whenPressed(new DepositReady(this.deposit));
     }
 
     @Override
