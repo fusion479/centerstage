@@ -4,7 +4,6 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.CommandScheduler;
-import com.arcrobotics.ftclib.command.button.GamepadButton;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -13,14 +12,15 @@ import org.firstinspires.ftc.teamcode.subsystems.Intake;
 
 import org.firstinspires.ftc.teamcode.commands.intake.IntakeDown;
 import org.firstinspires.ftc.teamcode.commands.intake.IntakeIdle;
-import org.firstinspires.ftc.teamcode.commands.intake.IntakeSetPower;
 import org.firstinspires.ftc.teamcode.commands.intake.IntakeUp;
+import org.firstinspires.ftc.teamcode.utils.GamepadTrigger;
 
 
 @TeleOp(name = "Intake Test", group = "Test")
 public class IntakeTest extends CommandOpMode {
     private Intake intake;
     private GamepadEx gamepad;
+    private GamepadTrigger intakeAccept, intakeReject;
 
     @Override
     public void initialize() {
@@ -33,6 +33,9 @@ public class IntakeTest extends CommandOpMode {
                 .whenPressed(new IntakeDown(this.intake));
         this.gamepad.getGamepadButton(GamepadKeys.Button.Y)
                 .whenPressed(new IntakeIdle(this.intake));
+
+        this.intakeAccept = new GamepadTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER, this.intake::setPower, this.gamepad);
+        this.intakeReject = new GamepadTrigger(GamepadKeys.Trigger.LEFT_TRIGGER, d -> this.intake.setPower(-d), this.gamepad);
     }
 
     @Override
@@ -43,14 +46,9 @@ public class IntakeTest extends CommandOpMode {
         while (!isStopRequested() && opModeIsActive()) {
             CommandScheduler.getInstance().run();
 
-            double rTrigValue = this.gamepad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER);
-            double lTrigValue = this.gamepad.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER);
-
-            if (rTrigValue > 0.05) {
-                this.intake.setPower(rTrigValue);
-            } else {
-                this.intake.setPower(lTrigValue);
-            }
-        }
+            // run sep thread?
+            this.intakeAccept.update();
+            this.intakeReject.update();
+       }
     }
 }
