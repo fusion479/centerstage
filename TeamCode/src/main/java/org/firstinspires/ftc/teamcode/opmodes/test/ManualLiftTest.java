@@ -27,8 +27,6 @@ public class ManualLiftTest extends CommandOpMode {
         this.gamepad.getGamepadButton(GamepadKeys.Button.X)
                 .whileHeld(new InstantCommand(() -> this.lift.setPower(0.5)))
                 .whenReleased(new InstantCommand(() -> this.lift.setPower(0)));
-        this.gamepad.getGamepadButton(GamepadKeys.Button.A)
-                .whenPressed(new InstantCommand(() -> this.multipleTelemetry.addLine("Pressed")));
     }
 
     @Override

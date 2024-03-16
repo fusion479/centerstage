@@ -35,7 +35,7 @@ public class Lift extends Subsystem {
 
     @Override
     public void periodic() {
-        double power = this.controller.calculate(this.leftMotor.getCurrentPosition() + 1.03, target); // 0.03 is Kg
+        this.power = this.controller.calculate(this.leftMotor.getCurrentPosition() + 1.03, target); // 0.03 is Kg
 
         this.leftMotor.setPower(power);
         this.rightMotor.setPower(power);
