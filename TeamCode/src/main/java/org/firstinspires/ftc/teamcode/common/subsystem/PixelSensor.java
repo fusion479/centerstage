@@ -13,7 +13,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 @Config
 public class PixelSensor extends Mechanism {
     ColorRangeSensor innerSensor, outerSensor;
-    public static int THRESHOLD_MM = 30;
+    public static int THRESHOLD_MM = 15;
 
     public static double RED_GAIN = 0.2;
     LowPassFilter lowPassFilterR = new LowPassFilter(RED_GAIN);

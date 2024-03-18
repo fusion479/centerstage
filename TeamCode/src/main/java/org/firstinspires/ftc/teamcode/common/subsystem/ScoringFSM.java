@@ -11,9 +11,9 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 @Config
 public class ScoringFSM extends Mechanism {
     public static int armDelay = 300;
-    public static int resetDelay = 75;
+    public static int resetDelay = 150;
     public static int autoIntakeDelay = 100;
-    public static int colorSensorDelay = 75;
+    public static int colorSensorDelay = 150;
 
     public Lift lift = new Lift();
     public Arm arm = new Arm();
@@ -69,15 +69,10 @@ public class ScoringFSM extends Mechanism {
         }
 
         if (gamepad.right_trigger > 0.1) {
-//            intake();
-            intake.setPower(gamepad.right_trigger);
+            intake.setPower(gamepad.right_trigger * .8);
         } else if (gamepad.left_trigger > 0.1) {
-            intake.setPower(-gamepad.left_trigger);
-        }
-//        else if (isRTrigReleased) {
-//          ready();
-//        }
-        else {
+            intake.setPower(-gamepad.left_trigger * .8);
+        } else {
             intake.setPower(0);
         }
 
@@ -125,6 +120,7 @@ public class ScoringFSM extends Mechanism {
                 lift.isClimb = false;
                 deposit.lockInner();
                 deposit.lockOuter();
+//                intake.setPower(0);
 
                 if (isAuto) {
                     intake.idle();
@@ -135,12 +131,12 @@ public class ScoringFSM extends Mechanism {
                         deposit.ready();
                     }
                 } else {
-                    if (timer.milliseconds() >= 25) {
+                    if (timer.milliseconds() >= 100) {
                         lift.bottom();
                         arm.ready();
                     }
 
-                    if (timer.milliseconds() >= 125) {
+                    if (timer.milliseconds() >= 150) {
                         deposit.ready();
                     }
 
@@ -283,7 +279,7 @@ public class ScoringFSM extends Mechanism {
                         }
                         resetCounter++;
 
-                        if (timer.milliseconds() > resetDelay + 250) {
+                        if (timer.milliseconds() > resetDelay + 200) {
                             ready();
                         }
                     } else {
