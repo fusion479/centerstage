@@ -7,9 +7,8 @@ import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
-
 import org.firstinspires.ftc.teamcode.commands.drivetrain.ManualDrive;
+import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
 
 
 @TeleOp(name = "Drivetrain Test", group = "Test")
@@ -30,11 +29,15 @@ public class DrivetrainTest extends CommandOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         this.initialize();
+        CommandScheduler.getInstance().enable();
 
         super.waitForStart();
         while (!isStopRequested() && opModeIsActive()) {
             CommandScheduler.getInstance().run();
+
             this.multipleTelemetry.update();
         }
+
+        CommandScheduler.getInstance().disable();
     }
 }

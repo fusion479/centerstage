@@ -8,11 +8,10 @@ import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.subsystems.Intake;
-
 import org.firstinspires.ftc.teamcode.commands.intake.IntakeDown;
 import org.firstinspires.ftc.teamcode.commands.intake.IntakeIdle;
 import org.firstinspires.ftc.teamcode.commands.intake.IntakeUp;
+import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.utils.GamepadTrigger;
 
 
@@ -21,10 +20,12 @@ public class IntakeTest extends CommandOpMode {
     private Intake intake;
     private GamepadEx gamepad;
     private GamepadTrigger intakeAccept, intakeReject;
+    private MultipleTelemetry multipleTelemetry;
 
     @Override
     public void initialize() {
-        this.intake = new Intake(this.hardwareMap, new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry()));
+        this.multipleTelemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
+        this.intake = new Intake(this.hardwareMap, this.multipleTelemetry);
         this.gamepad = new GamepadEx(gamepad1);
 
         this.gamepad.getGamepadButton(GamepadKeys.Button.A)
@@ -40,6 +41,7 @@ public class IntakeTest extends CommandOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
+        CommandScheduler.getInstance().enable();
         this.initialize();
 
         super.waitForStart();
@@ -49,6 +51,10 @@ public class IntakeTest extends CommandOpMode {
             // run sep thread?
             this.intakeAccept.update();
             this.intakeReject.update();
-       }
+
+            this.multipleTelemetry.update();
+        }
+
+        CommandScheduler.getInstance().disable();
     }
 }

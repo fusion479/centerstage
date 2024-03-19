@@ -8,10 +8,9 @@ import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.subsystems.Lift;
-
 import org.firstinspires.ftc.teamcode.commands.lift.LowLift;
 import org.firstinspires.ftc.teamcode.commands.lift.MediumLift;
+import org.firstinspires.ftc.teamcode.subsystems.Lift;
 
 
 @TeleOp(name = "Lift Test", group = "Test")
@@ -22,7 +21,7 @@ public class LiftTest extends CommandOpMode {
 
     @Override
     public void initialize() {
-        this.multipleTelemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
+        this.multipleTelemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry(), multipleTelemetry);
         this.lift = new Lift(this.hardwareMap, this.multipleTelemetry);
         this.gamepad = new GamepadEx(gamepad1);
 
@@ -34,12 +33,16 @@ public class LiftTest extends CommandOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
+        CommandScheduler.getInstance().enable();
         this.initialize();
 
         super.waitForStart();
         while (!isStopRequested() && opModeIsActive()) {
             CommandScheduler.getInstance().run();
+
             this.multipleTelemetry.update();
         }
+
+        CommandScheduler.getInstance().disable();
     }
 }

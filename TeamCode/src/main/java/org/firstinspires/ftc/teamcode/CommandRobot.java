@@ -4,14 +4,7 @@ import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.arcrobotics.ftclib.command.Robot;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
-import com.arcrobotics.ftclib.gamepad.TriggerReader;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-
-import org.firstinspires.ftc.teamcode.subsystems.Arm;
-import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
-import org.firstinspires.ftc.teamcode.subsystems.Intake;
-import org.firstinspires.ftc.teamcode.subsystems.Launcher;
-import org.firstinspires.ftc.teamcode.subsystems.Lift;
 
 import org.firstinspires.ftc.teamcode.commands.arm.ArmDown;
 import org.firstinspires.ftc.teamcode.commands.arm.ArmUp;
@@ -19,6 +12,11 @@ import org.firstinspires.ftc.teamcode.commands.drivetrain.ManualDrive;
 import org.firstinspires.ftc.teamcode.commands.launcher.Launch;
 import org.firstinspires.ftc.teamcode.commands.lift.LowLift;
 import org.firstinspires.ftc.teamcode.commands.lift.MediumLift;
+import org.firstinspires.ftc.teamcode.subsystems.Arm;
+import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
+import org.firstinspires.ftc.teamcode.subsystems.Intake;
+import org.firstinspires.ftc.teamcode.subsystems.Launcher;
+import org.firstinspires.ftc.teamcode.subsystems.Lift;
 
 public class CommandRobot extends Robot {
     private final Arm arm;
@@ -26,7 +24,6 @@ public class CommandRobot extends Robot {
     private final Lift lift;
     private final Launcher launcher;
     private final Intake intake;
-
     private final GamepadEx gamepad1;
     private final GamepadEx gamepad2;
 

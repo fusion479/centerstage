@@ -22,28 +22,32 @@ public class Lift extends Subsystem {
 
     public Lift(final HardwareMap hwMap, final MultipleTelemetry telemetry) {
         super(telemetry);
-        this.leftMotor = hwMap.get(DcMotorEx.class, "left");
-        this.rightMotor = hwMap.get(DcMotorEx.class, "right");
+        this.leftMotor = hwMap.get(DcMotorEx.class, "liftLeft");
+        this.rightMotor = hwMap.get(DcMotorEx.class, "liftRight");
 
         this.leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         this.rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        this.leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        this.rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
         this.leftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         this.rightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        this.leftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        this.rightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+
+        this.leftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        this.rightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     @Override
     public void periodic() {
-        this.power = this.controller.calculate(this.leftMotor.getCurrentPosition() + 1.03, target); // 0.03 is Kg
-
+        // this.power = this.controller.calculate(this.leftMotor.getCurrentPosition() + 1.03, target); // 0.03 is Kg
         this.leftMotor.setPower(power);
         this.rightMotor.setPower(power);
-
+        super.getTelemetry().addLine("RJA");
     }
 
     public void setTarget(double target) {
-        this.target = target;
+        Lift.target = target;
     }
 
     public void setPower(double power) {
