@@ -8,9 +8,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 @Config
 public class Intake extends Mechanism {
-
     public static double UP_POS = .9;
-    public static double DOWN_POS = .25;
+    public static double DOWN_POS = .37;
     public static double STACK_POS = .385;
     public static double IDLE_POS = .65;
     public static double target = UP_POS;
@@ -39,7 +38,7 @@ public class Intake extends Mechanism {
     }
 
     public void setPower(double power) {
-        Intake.power = power;
+        Intake.power = -power;
     }
 
     public void up() {
