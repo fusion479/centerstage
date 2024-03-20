@@ -15,7 +15,7 @@ public class LowLift extends CommandBase {
 
     @Override
     public void initialize() {
-        this.lift.setTarget(600);
+        this.lift.setTarget(325);
     }
 
     @Override

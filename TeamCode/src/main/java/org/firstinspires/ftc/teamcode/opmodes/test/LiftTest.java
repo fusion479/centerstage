@@ -21,7 +21,7 @@ public class LiftTest extends CommandOpMode {
 
     @Override
     public void initialize() {
-        this.multipleTelemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry(), multipleTelemetry);
+        this.multipleTelemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         this.lift = new Lift(this.hardwareMap, this.multipleTelemetry);
         this.gamepad = new GamepadEx(gamepad1);
 
