@@ -28,14 +28,15 @@ public class GamepadTrigger {
     }
 
     public void update() {
+        if (!isReleased) {
+            this.isReleased = true;
+            command.accept(0);
+        }
+
         if (this.gamepad.getTrigger(this.trigger) > 0) {
             this.isReleased = false;
             this.multipleTelemetry.addData("Trigger Value: ", this.gamepad.getTrigger(this.trigger));
             command.accept(this.gamepad.getTrigger(this.trigger));
-        } else if (!isReleased) {
-            command.accept(0);
-        } else {
-            this.isReleased = true;
         }
     }
 }
