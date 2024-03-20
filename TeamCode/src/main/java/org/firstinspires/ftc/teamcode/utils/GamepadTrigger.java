@@ -11,7 +11,7 @@ public class GamepadTrigger {
     private final DoubleConsumer command;
     private final GamepadEx gamepad;
     private final MultipleTelemetry multipleTelemetry;
-    private boolean isReleased = false;
+    private boolean isReleased = true;
 
     public GamepadTrigger(GamepadKeys.Trigger trigger, DoubleConsumer command, GamepadEx gamepad) {
         this.trigger = trigger;
