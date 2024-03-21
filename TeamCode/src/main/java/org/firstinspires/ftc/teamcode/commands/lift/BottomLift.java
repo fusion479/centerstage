@@ -15,7 +15,7 @@ public class BottomLift extends CommandBase {
 
     @Override
     public void initialize() {
-        this.lift.setTarget(0);
+        this.lift.setTarget(Lift.BOTTOM_POS);
     }
 
     @Override

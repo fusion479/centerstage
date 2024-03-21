@@ -16,7 +16,7 @@ public class MediumLift extends CommandBase {
 
     @Override
     public void initialize() {
-        this.lift.setTarget(1000);
+        this.lift.setTarget(Lift.MEDIUM_POS);
     }
 
     @Override

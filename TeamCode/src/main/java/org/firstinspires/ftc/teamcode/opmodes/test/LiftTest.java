@@ -8,6 +8,8 @@ import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.commands.lift.BottomLift;
+import org.firstinspires.ftc.teamcode.commands.lift.HighLift;
 import org.firstinspires.ftc.teamcode.commands.lift.LowLift;
 import org.firstinspires.ftc.teamcode.commands.lift.MediumLift;
 import org.firstinspires.ftc.teamcode.subsystems.Lift;
@@ -29,6 +31,10 @@ public class LiftTest extends CommandOpMode {
                 .whenPressed(new MediumLift(this.lift));
         this.gamepad.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT)
                 .whenPressed(new LowLift(this.lift));
+        this.gamepad.getGamepadButton(GamepadKeys.Button.DPAD_UP)
+                .whenPressed(new HighLift(this.lift));
+        this.gamepad.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
+                .whenPressed(new BottomLift(this.lift));
     }
 
     @Override
