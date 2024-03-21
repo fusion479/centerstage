@@ -45,7 +45,7 @@ public class IntakeTest extends CommandOpMode {
         this.initialize();
 
         super.waitForStart();
-        while (!isStopRequested() && opModeIsActive()) {
+        while (!super.isStopRequested() && super.opModeIsActive()) {
             CommandScheduler.getInstance().run();
 
             // run sep thread?
