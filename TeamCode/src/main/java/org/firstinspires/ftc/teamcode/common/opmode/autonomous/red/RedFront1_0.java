@@ -31,7 +31,7 @@ public class RedFront1_0 extends LinearOpMode {
         camera.init(hardwareMap);
 
         // TODO: LEFT AND RIGHT SPIKE MARK ARE NOT THE CORRECT PATH
-        TrajectorySequence leftSpikeMark = drive.trajectorySequenceBuilder(FRONT_START)
+        TrajectorySequence leftSpikeMark = drive.trajectorySequenceBuilder(reflectY(FRONT_START))
                 .forward(14)
                 .setTangent(Math.toRadians(90))
                 .splineToLinearHeading(reflectY(FRONT_LEFT_SPIKE), reflectY(FRONT_LEFT_SPIKE).getHeading())
@@ -39,7 +39,7 @@ public class RedFront1_0 extends LinearOpMode {
                 .lineToLinearHeading(reflectY(FRONT_START))
                 .build();
 
-        TrajectorySequence rightSpikeMark = drive.trajectorySequenceBuilder(FRONT_START)
+        TrajectorySequence rightSpikeMark = drive.trajectorySequenceBuilder(reflectY(FRONT_START))
                 .forward(14)
                 .setTangent(Math.toRadians(90))
                 .splineToLinearHeading(reflectY(FRONT_RIGHT_SPIKE), reflectY(FRONT_RIGHT_SPIKE).getHeading())
@@ -47,7 +47,7 @@ public class RedFront1_0 extends LinearOpMode {
                 .lineToLinearHeading(reflectY(FRONT_START))
                 .build();
 
-        TrajectorySequence middleSpikeMark = drive.trajectorySequenceBuilder(FRONT_START)
+        TrajectorySequence middleSpikeMark = drive.trajectorySequenceBuilder(reflectY(FRONT_START))
                 .forward(MIDDLE_SPIKE_DISTANCE)
                 .back(10)
                 .lineToLinearHeading(reflectY(FRONT_START))
