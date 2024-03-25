@@ -15,6 +15,4 @@ public abstract class Subsystem extends SubsystemBase {
     public Telemetry getTelemetry() {
         return telemetry;
     }
-
-    // abstract void configureCommands(final GamepadEx gamepad);
 }
