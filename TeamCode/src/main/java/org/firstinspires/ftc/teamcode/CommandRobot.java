@@ -26,6 +26,8 @@ import org.firstinspires.ftc.teamcode.commands.launcher.Idle;
 import org.firstinspires.ftc.teamcode.commands.launcher.Launch;
 import org.firstinspires.ftc.teamcode.commands.lift.BottomLift;
 import org.firstinspires.ftc.teamcode.commands.lift.HighLift;
+import org.firstinspires.ftc.teamcode.commands.lift.LiftDownALittle;
+import org.firstinspires.ftc.teamcode.commands.lift.LiftUpALittle;
 import org.firstinspires.ftc.teamcode.commands.lift.LowLift;
 import org.firstinspires.ftc.teamcode.commands.lift.MediumLift;
 import org.firstinspires.ftc.teamcode.subsystems.Arm;
@@ -98,6 +100,12 @@ public class CommandRobot extends Robot {
                         new ArmUp(this.arm),
                         new DepositScore(this.deposit)
                 ));
+        // LIFT UP A LITTLE
+        this.gamepad1.getGamepadButton(GamepadKeys.Button.DPAD_UP)
+                .whenPressed(new LiftUpALittle(this.lift));
+        // LIFT DOWN A LITTLE
+        this.gamepad1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
+                .whenPressed(new LiftDownALittle(this.lift));
         // SCORE PIXEL ONE
         this.gamepad1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
                 .whenPressed(new OpenOuter(this.deposit));

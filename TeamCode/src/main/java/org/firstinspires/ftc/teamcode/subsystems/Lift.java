@@ -14,6 +14,8 @@ public class Lift extends Subsystem {
     public static int BOTTOM_POS = 0;
     public static int LOW_POS = 325;
     public static int MEDIUM_POS = 1000;
+    public static int INCREMENT = 200;
+
     public static int HIGH_POS = 1600;
     public static double kP = 0.007;
     public static double kG = 0.04;
@@ -21,6 +23,7 @@ public class Lift extends Subsystem {
     private final DcMotorEx leftMotor;
     private final DcMotorEx rightMotor;
     private double power;
+    public double target;
 
     public Lift(final HardwareMap hwMap, final MultipleTelemetry telemetry) {
         super(telemetry);
@@ -53,10 +56,14 @@ public class Lift extends Subsystem {
     }
 
     public void setTarget(double target) {
+        this.target = target;
         this.controller.setTarget(target);
     }
 
     public void setPower(double power) {
         this.power = power;
+    }
+    public double getTarget() {
+        return target;
     }
 }
