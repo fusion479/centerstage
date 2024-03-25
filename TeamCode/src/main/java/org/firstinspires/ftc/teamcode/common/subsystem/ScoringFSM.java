@@ -14,6 +14,7 @@ public class ScoringFSM extends Mechanism {
     public static int resetDelay = 150;
     public static int autoIntakeDelay = 100;
     public static int colorSensorDelay = 150;
+    public static int readyDelay = 75;
 
     public Lift lift = new Lift();
     public Arm arm = new Arm();
@@ -39,6 +40,9 @@ public class ScoringFSM extends Mechanism {
     public boolean isPressedDPadUp = false;
     public boolean isPressedDPadDown = false;
     public boolean isPressedDPadRight = false;
+    public boolean isPressedDPadUp2 = false;
+    public boolean isPressedDPadDown2 = false;
+    public boolean isPressedDPadRight2 = false;
 
     FtcDashboard dashboard = FtcDashboard.getInstance();
     Telemetry telemetry = dashboard.getTelemetry();
@@ -82,8 +86,18 @@ public class ScoringFSM extends Mechanism {
         } else if (!isPressedDPadDown && gamepad.dpad_down) {
             custom();
             lift.downALittle();
-        } else if (!isPressedDPadRight && gamepad.dpad_right) {
-            stack();
+        }  else if (!isPressedDPadRight && gamepad.dpad_right) {
+            bottomLow();
+        }
+
+        if (!isPressedDPadUp2 && gamepad2.dpad_up) {
+            custom();
+            lift.upALittle();
+        } else if (!isPressedDPadDown2 && gamepad2.dpad_down) {
+            custom();
+            lift.downALittle();
+        }  else if (!isPressedDPadRight2 && gamepad2.dpad_right) {
+            bottomLow();
         }
 
         switch (state) {
@@ -158,7 +172,7 @@ public class ScoringFSM extends Mechanism {
                     arm.ready();
                 }
 
-                if (timer.milliseconds() >= 125) {
+                if (timer.milliseconds() >= readyDelay) {
                     arm.up();
                     deposit.score();
                 }
@@ -179,7 +193,7 @@ public class ScoringFSM extends Mechanism {
                     arm.ready();
                 }
 
-                if (timer.milliseconds() >= 125) {
+                if (timer.milliseconds() >= readyDelay) {
                     arm.up();
                     deposit.score();
                 }
@@ -198,7 +212,7 @@ public class ScoringFSM extends Mechanism {
                     arm.ready();
                 }
 
-                if (timer.milliseconds() >= 125) {
+                if (timer.milliseconds() >= readyDelay) {
                     arm.up();
                     deposit.score();
                 }
@@ -218,7 +232,7 @@ public class ScoringFSM extends Mechanism {
                     arm.ready();
                 }
 
-                if (timer.milliseconds() >= 125) {
+                if (timer.milliseconds() >= readyDelay) {
                     arm.up();
                     deposit.score();
                 }
@@ -238,7 +252,7 @@ public class ScoringFSM extends Mechanism {
                     arm.ready();
                 }
 
-                if (timer.milliseconds() >= 125) {
+                if (timer.milliseconds() >= readyDelay) {
                     arm.up();
                     deposit.score();
                 }
@@ -256,7 +270,7 @@ public class ScoringFSM extends Mechanism {
                     arm.ready();
                 }
 
-                if (timer.milliseconds() >= 125) {
+                if (timer.milliseconds() >= readyDelay) {
                     arm.up();
                     deposit.score();
                 }
@@ -367,6 +381,10 @@ public class ScoringFSM extends Mechanism {
         isPressedRB2 = gamepad.right_bumper;
         isPressedDPadUp = gamepad.dpad_up;
         isPressedDPadDown = gamepad.dpad_down;
+        isPressedDPadRight = gamepad.dpad_right;
+        isPressedDPadUp2 = gamepad2.dpad_up;
+        isPressedDPadDown2 = gamepad2.dpad_down;
+        isPressedDPadRight2 = gamepad2.dpad_right;
         isPressedA = gamepad.a;
 
 //        if (prevRTrigVal > 0 && gamepad.right_trigger == 0) {
