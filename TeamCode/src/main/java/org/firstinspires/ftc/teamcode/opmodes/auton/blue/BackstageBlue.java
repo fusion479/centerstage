@@ -29,11 +29,8 @@ public class BackstageBlue extends CommandOpMode {
     @Override
     public void initialize() {
         this.multipleTelemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        this.drive = new Drivetrain(hardwareMap, this.multipleTelemetry);
-        this.lift = new Lift(hardwareMap, this.multipleTelemetry);
         this.arm = new Arm(hardwareMap, this.multipleTelemetry);
         this.deposit = new Deposit(hardwareMap, this.multipleTelemetry);
-        this.intake = new Intake(hardwareMap, this.multipleTelemetry);
     }
 
     @Override
