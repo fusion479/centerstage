@@ -35,6 +35,7 @@ public class Lift extends Mechanism {
     public static int LOW_POS = 200;
     public static int MEDIUM_POS = 925;
     public static int HIGH_POS = 1600;
+    public static int MAX_POS = 2300;
     public static double bottomMotorOffDelay = 2000;
     // Motor info declarations
     public final DcMotorEx[] motors = new DcMotorEx[2];
@@ -136,6 +137,10 @@ public class Lift extends Mechanism {
 
     public void high() {
         setTarget(HIGH_POS);
+    }
+
+    public void max() {
+        setTarget(MAX_POS);
     }
 
     public void bottomLow() {

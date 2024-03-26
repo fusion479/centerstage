@@ -6,11 +6,11 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 @Config
 public class Arm extends Mechanism {
-    public static double UP_POS = 0.05;
+    public static double SCORE_POS = 0.05;
     public static double READY_POS = 0.62;
-
+    public static double MAX_SCORE_POS = .6;
     public static double DOWN_POS = 0.70;
-    public static double CLIMB_POS = 0.26;
+
     public static double AUTO_INIT_POS = .55;
     public static double target = DOWN_POS;
     Servo left, right;
@@ -26,8 +26,8 @@ public class Arm extends Mechanism {
         right.setPosition(1 - target);
     }
 
-    public void up() {
-        target = UP_POS;
+    public void score() {
+        target = SCORE_POS;
     }
 
     public void autoInit() {
@@ -42,7 +42,7 @@ public class Arm extends Mechanism {
         target = DOWN_POS;
     }
 
-    public void climb() {
-        target = CLIMB_POS;
+    public void maxScore() {
+        target = MAX_SCORE_POS;
     }
 }

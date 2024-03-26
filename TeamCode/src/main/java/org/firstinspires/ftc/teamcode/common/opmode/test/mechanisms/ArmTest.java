@@ -29,7 +29,7 @@ public class ArmTest extends LinearOpMode {
         // Scan servo till stop pressed.
         while(opModeIsActive() && !isStopRequested()){
             if (gamepad1.a) {
-                arm.up();
+                arm.score();
             } else if (gamepad1.b) {
                 arm.down();
             } else if (gamepad1.x) {

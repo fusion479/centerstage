@@ -29,6 +29,7 @@ public class ScoringFSM extends Mechanism {
     public STATES state;
     public boolean up;
     public boolean isAuto;
+    public boolean wasGigaHigh;
 
     public ElapsedTime timer = new ElapsedTime();
     public ElapsedTime sensorTimer = new ElapsedTime();
@@ -41,6 +42,7 @@ public class ScoringFSM extends Mechanism {
     public boolean isPressedDPadUp = false;
     public boolean isPressedDPadDown = false;
     public boolean isPressedDPadRight = false;
+    public boolean isPressedDPadLeft = false;
     public boolean isPressedDPadUp2 = false;
     public boolean isPressedDPadDown2 = false;
     public boolean isPressedDPadRight2 = false;
@@ -89,6 +91,8 @@ public class ScoringFSM extends Mechanism {
             lift.downALittle();
         }  else if (!isPressedDPadRight && gamepad.dpad_right) {
             bottomLow();
+        } else if (!isPressedDPadLeft && gamepad.dpad_left) {
+            gigaHigh();
         }
 
         if (!isPressedDPadUp2 && gamepad2.dpad_up) {
@@ -170,11 +174,10 @@ public class ScoringFSM extends Mechanism {
 
                 if (timer.milliseconds() >= 25) {
                     lift.bottom();
-                    arm.ready();
                 }
 
                 if (timer.milliseconds() >= readyDelay) {
-                    arm.up();
+                    arm.score();
                     deposit.score();
                 }
 
@@ -191,11 +194,10 @@ public class ScoringFSM extends Mechanism {
 
                 if (timer.milliseconds() >= 25) {
                     lift.bottomLow();
-                    arm.ready();
                 }
 
                 if (timer.milliseconds() >= readyDelay) {
-                    arm.up();
+                    arm.score();
                     deposit.score();
                 }
 
@@ -210,11 +212,10 @@ public class ScoringFSM extends Mechanism {
                 deposit.lockOuter();
                 if (timer.milliseconds() >= 25) {
                     lift.low();
-                    arm.ready();
                 }
 
                 if (timer.milliseconds() >= readyDelay) {
-                    arm.up();
+                    arm.score();
                     deposit.score();
                 }
 
@@ -230,11 +231,10 @@ public class ScoringFSM extends Mechanism {
                 deposit.lockOuter();
                 if (timer.milliseconds() >= 25) {
                     lift.medium();
-                    arm.ready();
                 }
 
                 if (timer.milliseconds() >= readyDelay) {
-                    arm.up();
+                    arm.score();
                     deposit.score();
                 }
 
@@ -250,12 +250,29 @@ public class ScoringFSM extends Mechanism {
                 deposit.lockOuter();
                 if (timer.milliseconds() >= 25) {
                     lift.high();
-                    arm.ready();
                 }
 
                 if (timer.milliseconds() >= readyDelay) {
-                    arm.up();
+                    arm.score();
                     deposit.score();
+                }
+
+                if (timer.milliseconds() >= 150) {
+                    intake.idle();
+                }
+                break;
+            case GIGA_HIGH:
+                up = true;
+                lift.isClimb = false;
+                deposit.lockInner();
+                deposit.lockOuter();
+                if (timer.milliseconds() >= 25) {
+                    lift.max();
+                }
+
+                if (timer.milliseconds() >= readyDelay) {
+                    arm.maxScore();
+                    deposit.maxScore();
                 }
 
                 if (timer.milliseconds() >= 150) {
@@ -272,25 +289,28 @@ public class ScoringFSM extends Mechanism {
                 }
 
                 if (timer.milliseconds() >= readyDelay) {
-                    arm.up();
+                    arm.score();
                     deposit.score();
                 }
 
                 if (timer.milliseconds() >= 150) {
                     intake.idle();
                 }
+                break;
             case SCORE:
                 // Left or Right
                 up = true;
                 lift.isClimb = false;
-                arm.up();
+                arm.score();
                 deposit.score();
                 intake.idle();
 
                 if (timer.milliseconds() > resetDelay && !deposit.innerLocked && !deposit.outerLocked) {
                     if (!isAuto) {
                         if (resetCounter < 3) {
-                            lift.upALittle();
+                            if (!wasGigaHigh) {
+                                lift.upALittle();
+                            }
                         }
                         resetCounter++;
 
@@ -299,27 +319,13 @@ public class ScoringFSM extends Mechanism {
                         }
                     } else {
                         if (resetCounter < 3) {
-                            lift.upALittle();
+                            // TODO: ??
                         }
                         resetCounter++;
 
                         deposit.openOuter();
                         deposit.openInner();
                     }
-                }
-                break;
-            case CLIMB:
-                up = true;
-                lift.isClimb = true;
-                arm.climb();
-                deposit.idle();
-                intake.up();
-                if (gamepad2.right_trigger > .1) {
-                    lift.setPower(gamepad2.right_trigger);
-                } else if (gamepad2.left_trigger > .1) {
-                    lift.setPower(-gamepad2.left_trigger);
-                } else {
-                    lift.setPower(0);
                 }
                 break;
             case AUTO_INIT:
@@ -383,17 +389,11 @@ public class ScoringFSM extends Mechanism {
         isPressedDPadUp = gamepad.dpad_up;
         isPressedDPadDown = gamepad.dpad_down;
         isPressedDPadRight = gamepad.dpad_right;
+        isPressedDPadLeft = gamepad.dpad_left;
         isPressedDPadUp2 = gamepad2.dpad_up;
         isPressedDPadDown2 = gamepad2.dpad_down;
         isPressedDPadRight2 = gamepad2.dpad_right;
         isPressedA = gamepad.a;
-
-//        if (prevRTrigVal > 0 && gamepad.right_trigger == 0) {
-//            isRTrigReleased = true;
-//        } else {
-//            isRTrigReleased = false;
-//        }
-//        prevRTrigVal = gamepad.right_trigger;
 
         lift.update();
         arm.update();
@@ -463,10 +463,6 @@ public class ScoringFSM extends Mechanism {
         resetCounter = 0;
     }
 
-    public void climb() {
-        state = STATES.CLIMB;
-    }
-
     public void autoInit() {
         timer.reset();
         state = STATES.AUTO_INIT;
@@ -485,6 +481,11 @@ public class ScoringFSM extends Mechanism {
         }
     }
 
+    public void gigaHigh() {
+        timer.reset();
+        state = STATES.GIGA_HIGH;
+    }
+
     public enum STATES {
         INTAKE,
         READY,
@@ -494,9 +495,9 @@ public class ScoringFSM extends Mechanism {
         HIGH,
         CUSTOM,
         SCORE,
-        CLIMB,
         AUTO_INIT,
         STACK,
         BOTTOM_LOW,
+        GIGA_HIGH
     }
 }

@@ -37,7 +37,7 @@ public class RobotTest extends LinearOpMode {
             );
 
             if (gamepad1.a) {
-                arm.up();
+                arm.score();
             } else if (gamepad1.b) {
                 arm.down();
             } else if (gamepad1.x) {

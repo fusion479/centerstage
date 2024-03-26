@@ -55,8 +55,6 @@ public class RobotFlipped extends Mechanism {
             launcher.launch();
         } else if (gamepad2.a) {
             launcher.idle();
-        } else if (gamepad2.b) {
-            scoringFSM.climb();
         }
 
         drive.update();

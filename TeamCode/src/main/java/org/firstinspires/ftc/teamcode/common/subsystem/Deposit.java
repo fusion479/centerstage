@@ -7,19 +7,23 @@ import com.qualcomm.robotcore.hardware.Servo;
 @Config
 public class Deposit extends Mechanism {
     public static double ACCEPTING_POS = .78;
-    public static double IDLE_POS = .81;
     public static double READY_POS = .5;
     public static double SCORE_POS = .25;
+    public static double MAX_SCORE_POS = .3;
+
     public static double AUTO_INIT_POS = 1;
     public static double AUTO_STACK_POS = 0.25;
-    public static double LOCKINNER = 0.4;
-    public static double OPENINNER = 0.3;
 
-    public static double LOCKOUTER = 0.25;
-    public static double OPENOUTER = 0.35;
+    public static double LOCK_INNER = 0.4;
+    public static double LOCK_OUTER = 0.25;
+
+    public static double OPEN_INNER = 0.3;
+    public static double OPEN_OUTER = 0.35;
+
     public static double pivotTarget = ACCEPTING_POS;
-    public static double innerTarget = OPENINNER;
-    public static double outerTarget = OPENINNER;
+    public static double innerTarget = OPEN_INNER;
+    public static double outerTarget = OPEN_INNER;
+
     public boolean innerLocked = false;
     public boolean outerLocked = false;
 
@@ -29,8 +33,6 @@ public class Deposit extends Mechanism {
         pivot = hwMap.get(Servo.class, "depositPivot");
         inner = hwMap.get(Servo.class, "innerPixel");
         outer = hwMap.get(Servo.class, "outerPixel");
-
-        idle();
     }
 
     public void update() {
@@ -43,16 +45,16 @@ public class Deposit extends Mechanism {
         pivotTarget = ACCEPTING_POS;
     }
 
-    public void idle() {
-        pivotTarget = IDLE_POS;
-    }
-
     public void ready() {
         pivotTarget = READY_POS;
     }
 
     public void score() {
         pivotTarget = SCORE_POS;
+    }
+
+    public void maxScore() {
+        pivotTarget = MAX_SCORE_POS;
     }
 
     public void autoInit() {
@@ -80,22 +82,22 @@ public class Deposit extends Mechanism {
     }
 
     public void lockInner() {
-        innerTarget = LOCKINNER;
+        innerTarget = LOCK_INNER;
         innerLocked = true;
     }
 
     public void lockOuter() {
-        outerTarget = LOCKOUTER;
+        outerTarget = LOCK_OUTER;
         outerLocked = true;
     }
 
     public void openInner() {
-        innerTarget = OPENINNER;
+        innerTarget = OPEN_INNER;
         innerLocked = false;
     }
 
     public void openOuter() {
-        outerTarget = OPENOUTER;
+        outerTarget = OPEN_OUTER;
         outerLocked = false;
     }
 }
