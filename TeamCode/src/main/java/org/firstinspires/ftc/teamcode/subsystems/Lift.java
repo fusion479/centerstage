@@ -23,7 +23,6 @@ public class Lift extends Subsystem {
     private final DcMotorEx leftMotor;
     private final DcMotorEx rightMotor;
     private double power;
-    public double target;
 
     public Lift(final HardwareMap hwMap, final MultipleTelemetry telemetry) {
         super(telemetry);
@@ -55,15 +54,15 @@ public class Lift extends Subsystem {
         super.getTelemetry().addData("currPos", this.leftMotor.getCurrentPosition());
     }
 
-    public void setTarget(double target) {
-        this.target = target;
-        this.controller.setTarget(target);
-    }
-
     public void setPower(double power) {
         this.power = power;
     }
+
     public double getTarget() {
-        return target;
+        return this.controller.getTarget();
+    }
+
+    public void setTarget(double target) {
+        this.controller.setTarget(target);
     }
 }

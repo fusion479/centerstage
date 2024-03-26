@@ -27,6 +27,7 @@ public class Camera extends Subsystem {
     public final static double MAX_AUTO_STRAFE = 0.3;
     public final static double DESIRED_DISTANCE = 5;
     public static double MAX_AUTO_TURN = 0.15;
+
     public static int desiredTagId = 2;
     private final Pipeline pipeline;
     private final Color color;

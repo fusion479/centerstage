@@ -1,18 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
-import com.arcrobotics.ftclib.command.Command;
-import com.arcrobotics.ftclib.command.ConditionalCommand;
-import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.Robot;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
-import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.checkerframework.common.subtyping.qual.Bottom;
-import org.firstinspires.ftc.teamcode.commands.arm.ArmDown;
 import org.firstinspires.ftc.teamcode.commands.arm.ArmReady;
 import org.firstinspires.ftc.teamcode.commands.arm.ArmUp;
 import org.firstinspires.ftc.teamcode.commands.deposit.DepositAccepting;
@@ -26,8 +20,8 @@ import org.firstinspires.ftc.teamcode.commands.launcher.Idle;
 import org.firstinspires.ftc.teamcode.commands.launcher.Launch;
 import org.firstinspires.ftc.teamcode.commands.lift.BottomLift;
 import org.firstinspires.ftc.teamcode.commands.lift.HighLift;
-import org.firstinspires.ftc.teamcode.commands.lift.LiftDownALittle;
-import org.firstinspires.ftc.teamcode.commands.lift.LiftUpALittle;
+import org.firstinspires.ftc.teamcode.commands.lift.LiftLower;
+import org.firstinspires.ftc.teamcode.commands.lift.LiftRaise;
 import org.firstinspires.ftc.teamcode.commands.lift.LowLift;
 import org.firstinspires.ftc.teamcode.commands.lift.MediumLift;
 import org.firstinspires.ftc.teamcode.subsystems.Arm;
@@ -64,6 +58,7 @@ public class CommandRobot extends Robot {
 
         this.configureCommands();
     }
+
     public void configureCommands() {
         // Ready - figure out how to togle
         this.gamepad1.getGamepadButton(GamepadKeys.Button.A)
@@ -75,8 +70,7 @@ public class CommandRobot extends Robot {
                         new OpenInner(this.deposit),
                         new OpenOuter(this.deposit),
                         new DepositAccepting(this.deposit)
-                        ));
-
+                ));
 
 
         // LIFT LOW
@@ -102,10 +96,10 @@ public class CommandRobot extends Robot {
                 ));
         // LIFT UP A LITTLE
         this.gamepad1.getGamepadButton(GamepadKeys.Button.DPAD_UP)
-                .whenPressed(new LiftUpALittle(this.lift));
+                .whenPressed(new LiftRaise(this.lift));
         // LIFT DOWN A LITTLE
         this.gamepad1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
-                .whenPressed(new LiftDownALittle(this.lift));
+                .whenPressed(new LiftLower(this.lift));
         // SCORE PIXEL ONE
         this.gamepad1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
                 .whenPressed(new OpenOuter(this.deposit));

@@ -4,10 +4,10 @@ import com.arcrobotics.ftclib.command.CommandBase;
 
 import org.firstinspires.ftc.teamcode.subsystems.Lift;
 
-public class LiftUpALittle extends CommandBase {
+public class LiftLower extends CommandBase {
     private final Lift lift;
 
-    public LiftUpALittle(final Lift lift) {
+    public LiftLower(final Lift lift) {
         this.lift = lift;
         super.addRequirements(this.lift);
 
@@ -15,7 +15,7 @@ public class LiftUpALittle extends CommandBase {
 
     @Override
     public void initialize() {
-        this.lift.setTarget(lift.getTarget() + Lift.INCREMENT);
+        this.lift.setTarget(lift.getTarget() - Lift.INCREMENT);
     }
 
     @Override
