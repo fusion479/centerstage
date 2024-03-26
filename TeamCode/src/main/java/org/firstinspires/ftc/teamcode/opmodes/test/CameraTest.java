@@ -4,30 +4,19 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.CommandScheduler;
-import com.arcrobotics.ftclib.gamepad.GamepadEx;
-import com.arcrobotics.ftclib.gamepad.GamepadKeys;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.commands.arm.ArmDown;
-import org.firstinspires.ftc.teamcode.commands.arm.ArmUp;
-import org.firstinspires.ftc.teamcode.subsystems.Arm;
+import org.firstinspires.ftc.teamcode.subsystems.camera.Camera;
 
-
-@TeleOp(name = "Arm Test", group = "Test")
-public class ArmTest extends CommandOpMode {
-    private Arm arm;
-    private GamepadEx gamepad;
+public class CameraTest extends CommandOpMode {
+    private Camera camera;
     private MultipleTelemetry multipleTelemetry;
 
     @Override
     public void initialize() {
         this.multipleTelemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        this.arm = new Arm(super.hardwareMap, this.multipleTelemetry);
-        this.gamepad = new GamepadEx(gamepad1);
-        this.gamepad.getGamepadButton(GamepadKeys.Button.A)
-                .whenPressed(new ArmUp(this.arm));
-        this.gamepad.getGamepadButton(GamepadKeys.Button.B)
-                .whenPressed(new ArmDown(this.arm));
+        this.camera = new Camera(Camera.Color.BLUE, this.multipleTelemetry);
+
+        this.camera.initCamera(super.hardwareMap);
     }
 
     @Override
@@ -38,6 +27,8 @@ public class ArmTest extends CommandOpMode {
         super.waitForStart();
         while (!isStopRequested() && opModeIsActive()) {
             CommandScheduler.getInstance().run();
+
+            this.multipleTelemetry.addData("Region", this.camera.getRegion());
 
             this.multipleTelemetry.update();
         }
