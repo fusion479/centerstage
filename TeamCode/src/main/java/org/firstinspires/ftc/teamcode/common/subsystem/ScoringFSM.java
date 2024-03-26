@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 @Config
 public class ScoringFSM extends Mechanism {
@@ -411,6 +412,9 @@ public class ScoringFSM extends Mechanism {
 //        telemetry.addData("LIFT POWER", Lift.power);
 //        telemetry.addData("LIFT ERROR", Lift.error);
 //        telemetry.addData("LIFT TARGET", Lift.target);
+        telemetry.addData("outer reading", pixelSensor.outerSensor.getDistance(DistanceUnit.MM));
+        telemetry.addData("inner reading", pixelSensor.innerSensor.getDistance(DistanceUnit.MM));
+        telemetry.update();
     }
 
     public void intake() {

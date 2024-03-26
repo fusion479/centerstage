@@ -31,9 +31,9 @@ public class Lift extends Mechanism {
     // slides heights
     public static int BOTTOM_POS = 0;
     public static int STACK_POS = 75;
-    public static int BOTTOM_LOW_POS = 200;
-    public static int LOW_POS = 325;
-    public static int MEDIUM_POS = 1000;
+    public static int BOTTOM_LOW_POS = 0;
+    public static int LOW_POS = 200;
+    public static int MEDIUM_POS = 925;
     public static int HIGH_POS = 1600;
     public static double bottomMotorOffDelay = 2000;
     // Motor info declarations

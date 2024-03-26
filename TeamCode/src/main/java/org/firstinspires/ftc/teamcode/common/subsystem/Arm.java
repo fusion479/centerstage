@@ -9,7 +9,7 @@ public class Arm extends Mechanism {
     public static double UP_POS = 0.05;
     public static double READY_POS = 0.62;
 
-    public static double DOWN_POS = 0.68;
+    public static double DOWN_POS = 0.70;
     public static double CLIMB_POS = 0.26;
     public static double AUTO_INIT_POS = .55;
     public static double target = DOWN_POS;
