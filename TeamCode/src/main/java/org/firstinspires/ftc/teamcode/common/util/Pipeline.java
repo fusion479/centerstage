@@ -19,12 +19,14 @@ public class Pipeline extends OpenCvPipeline {
     public static int blueHighHSVR = 180;
     public static int blueHighHSVG = 255;
     public static int blueHighHSVB = 180;
+
     public static int redLowHSVR = 0;
     public static int redLowHSVG = 120;
     public static int redLowHSVB = 0;
     public static int redHighHSVR = 255;
     public static int redHighHSVG = 255;
     public static int redHighHSVB = 255;
+
     public static int rightRectX = 565;
     public static int rightRectY = 235;
     public static int leftRectX = 0;
