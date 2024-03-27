@@ -33,9 +33,8 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 @Autonomous(name = "Blue Close 2+2", group = "_Auto")
 public class BlueClose2_2 extends LinearOpMode {
     private static final double STARTING_ANGLE = 270; // + makes angle narrower (hits truss)     - makes angle steeper (hits wall)
-    private static final double ENDING_ANGLE = 120; // + makes angle steeper        - makes angle narrow
-    private static final double VEL_OFFSET = 0;
-    private static final double ACCEL_OFFSET = 0;
+    private static final double VEL_OFFSET = 20;
+    private static final double ACCEL_OFFSET = 30;
     FtcDashboard dashboard = FtcDashboard.getInstance();
     MultipleTelemetry tele = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
     ElapsedTime timer = new ElapsedTime();
