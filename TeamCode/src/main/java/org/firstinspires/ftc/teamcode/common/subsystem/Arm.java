@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 @Config
 public class Arm extends Mechanism {
     public static double SCORE_POS = 0.05;
-    public static double READY_POS = 0.65;
+    public static double READY_POS = 0.63;
     public static double MAX_SCORE_POS = .6;
     public static double STACK_TOP_POS = 0.72;
     public static double DOWN_POS = 0.70;
