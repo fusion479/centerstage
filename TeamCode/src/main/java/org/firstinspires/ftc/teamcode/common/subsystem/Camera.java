@@ -136,11 +136,12 @@ public class Camera extends Mechanism {
         }
     }
 
-    public void relocalize(SampleMecanumDrive drivetrain) {
-        drivetrain.setPoseEstimate(new Pose2d(
-                drivetrain.getPoseEstimate().getX(),
-                desiredTag.metadata.fieldPosition.get(1),
-                drivetrain.getPoseEstimate().getHeading()));
+    public void relocalize(SampleMecanumDrive drive) {
+        drive.setPoseEstimate(new Pose2d(
+                desiredTag.metadata.fieldPosition.get(0) - desiredTag.ftcPose.x - 0.0394 * 205.6,
+                desiredTag.metadata.fieldPosition.get(1) - desiredTag.ftcPose.y,
+                Math.toRadians(0) + desiredTag.ftcPose.bearing
+        ));
     }
 
     public boolean detectAprilTag(Telemetry telemetry) {

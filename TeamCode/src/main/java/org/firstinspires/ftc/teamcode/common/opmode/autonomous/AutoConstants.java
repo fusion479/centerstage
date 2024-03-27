@@ -11,7 +11,7 @@ public final class AutoConstants {
     public static double ARM_LIFT_DELAY = -2.25;
     public static double PRELOAD_SCORE_DELAY = -0.5;
     public static double POST_PRELOAD_WAIT = 0.5;
-    public static double STACK_PICKUP_DELAY = 0.5;
+    public static double STACK_PICKUP_DELAY = 1;
     public static double POST_APRILTAG_FORWARD = 6.16; // this used to be 4.5 in 2+2
     public static int APRILTAG_TIMEOUT = 2000;
 
