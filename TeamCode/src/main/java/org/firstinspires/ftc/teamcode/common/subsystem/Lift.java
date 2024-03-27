@@ -20,7 +20,7 @@ public class Lift extends Mechanism {
     private static final double TICKS_PER_REV = 537.7;
     public static int increment = 200;
     // PID Coefficients
-    public static double kP = 0.0025;
+    public static double kP = 0.004;
     public static double kI = 0;
     public static double kD = 0;
     public static double kG = 0.03;

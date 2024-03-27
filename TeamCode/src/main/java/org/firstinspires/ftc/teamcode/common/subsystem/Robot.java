@@ -30,7 +30,7 @@ public class Robot extends Mechanism {
 
     public void update(Gamepad gamepad1, Gamepad gamepad2) {
         if (scoringFSM.up) {
-            speedCoefficient = .69;
+            speedCoefficient = .45;
         } else {
             speedCoefficient = 1;
         }

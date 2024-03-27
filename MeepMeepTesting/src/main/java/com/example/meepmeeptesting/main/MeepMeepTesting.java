@@ -48,8 +48,7 @@ class AutoConstants {
 }
 
 public class MeepMeepTesting extends AutoConstants {
-    private static final double STARTING_ANGLE = 235; // + makes angle narrower (hits truss)     - makes angle steeper (hits wall)
-    private static final double ENDING_ANGLE = 120;
+    private static final double STARTING_ANGLE = 270; // + makes angle narrower (hits truss)     - makes angle steeper (hits wall)
 
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(800);
@@ -62,21 +61,10 @@ public class MeepMeepTesting extends AutoConstants {
 
                         .setTangent(Math.toRadians(STARTING_ANGLE))
                         .splineToLinearHeading(
-                                new Pose2d(15, 13, Math.toRadians(0)),
+                                new Pose2d(30, 11, Math.toRadians(0)),
                                 Math.toRadians(180))
-                        .splineToLinearHeading(
-                                new Pose2d(-34, 13, Math.toRadians(0)),
-                                Math.toRadians(180))
-                        .splineToLinearHeading(
-                                new Pose2d(-55, 23, Math.toRadians(0)),
-                                Math.toRadians(ENDING_ANGLE))
-                        .setTangent(Math.toRadians(ENDING_ANGLE - 180))
-                        .splineToLinearHeading(
-                                new Pose2d(-34, 13, Math.toRadians(0)),
-                                Math.toRadians(0))
-                        .splineToLinearHeading(
-                                new Pose2d(15, 13, Math.toRadians(0)),
-                                Math.toRadians(0))
+                        .lineToLinearHeading(new Pose2d(-55, 11))
+                        .lineToLinearHeading(new Pose2d(30, 11))
                         .splineToLinearHeading(
                                 MIDDLE_BACKDROP_PRE,
                                 Math.toRadians(STARTING_ANGLE + 180))

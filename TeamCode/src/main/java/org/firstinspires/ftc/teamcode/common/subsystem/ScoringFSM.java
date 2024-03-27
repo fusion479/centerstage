@@ -75,6 +75,12 @@ public class ScoringFSM extends Mechanism {
             score();
         }
 
+        if (gamepad.dpad_left) {
+            stack();
+        } else if (gamepad.right_stick_button) {
+            intake();
+        }
+
         if (gamepad.right_trigger > 0.1) {
             intake.setPower(gamepad.right_trigger * .8);
         } else if (gamepad.left_trigger > 0.1) {
@@ -107,16 +113,7 @@ public class ScoringFSM extends Mechanism {
 
         switch (state) {
             case INTAKE:
-                if (pixelSensor.hasPixel()) {
-                    if (sensorCounter == 0) {
-                        sensorTimer.reset();
-                        sensorCounter++;
-                    } else if (sensorTimer.milliseconds() >= colorSensorDelay) {
-                        state = STATES.READY;
-                    }
-                } else {
-                    sensorCounter = 0;
-                }
+                hasPixel();
 
 
                 // A toggle
@@ -346,9 +343,9 @@ public class ScoringFSM extends Mechanism {
                 lift.isClimb = false;
 
                 intake.stack();
-                arm.down();
-                lift.stack(); // 75
-                deposit.autoStack();
+                arm.stack();
+                lift.bottom();
+                deposit.stack();
                 deposit.openInner();
                 deposit.openOuter();
 
@@ -358,21 +355,11 @@ public class ScoringFSM extends Mechanism {
 
 
                 if (timer.milliseconds() >= 125) {
-                    deposit.autoStack();
+                    deposit.stack();
                 }
 
 
-                if (pixelSensor.hasPixel()) {
-                    if (sensorCounter == 0) {
-                        sensorTimer.reset();
-                        sensorCounter++;
-                        intake.setPower(1);
-                    } else if (sensorTimer.milliseconds() >= 200) {
-                        state = STATES.READY;
-                    }
-                } else {
-                    sensorCounter = 0;
-                }
+                hasPixel();
                 break;
         }
 
@@ -484,6 +471,19 @@ public class ScoringFSM extends Mechanism {
     public void gigaHigh() {
         timer.reset();
         state = STATES.GIGA_HIGH;
+    }
+
+    public void hasPixel() {
+        if (pixelSensor.hasPixel()) {
+            if (sensorCounter == 0) {
+                sensorTimer.reset();
+                sensorCounter++;
+            } else if (sensorTimer.milliseconds() >= colorSensorDelay) {
+                state = STATES.READY;
+            }
+        } else {
+            sensorCounter = 0;
+        }
     }
 
     public enum STATES {

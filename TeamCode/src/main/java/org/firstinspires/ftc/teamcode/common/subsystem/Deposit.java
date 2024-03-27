@@ -6,13 +6,13 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 @Config
 public class Deposit extends Mechanism {
-    public static double ACCEPTING_POS = .78;
-    public static double READY_POS = .5;
-    public static double SCORE_POS = .25;
-    public static double MAX_SCORE_POS = .3;
+    public static double ACCEPTING_POS = 0.63;
+    public static double READY_POS = 0.38;
+    public static double SCORE_POS = 0.11;
+    public static double MAX_SCORE_POS = 0.26;
 
-    public static double AUTO_INIT_POS = 1;
-    public static double AUTO_STACK_POS = 0.25;
+    public static double AUTO_INIT_POS = 0;
+    public static double STACK_TOP_POS = 0.52;
 
     public static double LOCK_INNER = 0.4;
     public static double LOCK_OUTER = 0.25;
@@ -61,8 +61,8 @@ public class Deposit extends Mechanism {
         pivotTarget = AUTO_INIT_POS;
     }
 
-    public void autoStack() {
-        pivotTarget = AUTO_STACK_POS;
+    public void stack() {
+        pivotTarget = STACK_TOP_POS;
     }
 
     public void toggleInner() {

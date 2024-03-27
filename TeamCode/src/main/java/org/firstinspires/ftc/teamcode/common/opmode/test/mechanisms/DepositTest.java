@@ -23,9 +23,7 @@ public class DepositTest extends LinearOpMode {
                 deposit.accepting();
             } else if (gamepad1.b) {
                 deposit.ready();
-            } else if (gamepad1.x) {
-                deposit.idle();
-            }else if (gamepad1.y) {
+            } else if (gamepad1.y) {
                 deposit.score();
             } else if (gamepad1.dpad_down) {
                 deposit.lockOuter();

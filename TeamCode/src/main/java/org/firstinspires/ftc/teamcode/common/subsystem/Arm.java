@@ -7,11 +7,12 @@ import com.qualcomm.robotcore.hardware.Servo;
 @Config
 public class Arm extends Mechanism {
     public static double SCORE_POS = 0.05;
-    public static double READY_POS = 0.62;
+    public static double READY_POS = 0.65;
     public static double MAX_SCORE_POS = .6;
+    public static double STACK_TOP_POS = 0.72;
     public static double DOWN_POS = 0.70;
 
-    public static double AUTO_INIT_POS = .55;
+    public static double AUTO_INIT_POS = .64;
     public static double target = DOWN_POS;
     Servo left, right;
 
@@ -44,5 +45,9 @@ public class Arm extends Mechanism {
 
     public void maxScore() {
         target = MAX_SCORE_POS;
+    }
+
+    public void stack() {
+        target = STACK_TOP_POS;
     }
 }
