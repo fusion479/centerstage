@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 @Config
 public class Intake extends Mechanism {
     public static double UP_POS = 0.9;
-    public static double DOWN_POS = 0.29;
+    public static double DOWN_POS = 0.27;
     public static double STACK_POS = 0.39;
     public static double IDLE_POS = 0.6;
 

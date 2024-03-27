@@ -75,9 +75,7 @@ public class ScoringFSM extends Mechanism {
             score();
         }
 
-        if (gamepad.dpad_left) {
-            stack();
-        } else if (gamepad.right_stick_button) {
+        if (gamepad.right_stick_button) {
             intake();
         }
 
@@ -134,6 +132,7 @@ public class ScoringFSM extends Mechanism {
                 // A toggle
                 up = false;
                 lift.isClimb = false;
+                wasGigaHigh = false;
                 deposit.lockInner();
                 deposit.lockOuter();
 //                intake.setPower(0);
@@ -261,6 +260,7 @@ public class ScoringFSM extends Mechanism {
             case GIGA_HIGH:
                 up = true;
                 lift.isClimb = false;
+                wasGigaHigh = true;
                 deposit.lockInner();
                 deposit.lockOuter();
                 if (timer.milliseconds() >= 25) {
@@ -298,9 +298,11 @@ public class ScoringFSM extends Mechanism {
                 // Left or Right
                 up = true;
                 lift.isClimb = false;
-                arm.score();
-                deposit.score();
-                intake.idle();
+                if (!wasGigaHigh) {
+                    arm.score();
+                    deposit.score();
+                    intake.idle();
+                }
 
                 if (timer.milliseconds() > resetDelay && !deposit.innerLocked && !deposit.outerLocked) {
                     if (!isAuto) {
