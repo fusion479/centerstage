@@ -112,8 +112,8 @@ public class BlueClose2_2 extends LinearOpMode {
                 case APRIL_TAG:
                     if (camera.detectAprilTag(tele)) {
                         camera.moveRobot(drive, tele);
-                        camera.relocalize(drive);
                     } else {
+                        camera.relocalize(drive);
                         drive.setMotorPowers(0, 0, 0, 0);
                     }
 

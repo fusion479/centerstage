@@ -136,8 +136,8 @@ public class BlueFar2_0 extends LinearOpMode {
 
                     if (camera.detectAprilTag(tele)) {
                         camera.moveRobot(drive, tele);
-                        camera.relocalize(drive);
                     } else {
+                        camera.relocalize(drive);
                         drive.setMotorPowers(0, 0, 0, 0);
                     }
 

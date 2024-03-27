@@ -32,15 +32,15 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
 @Autonomous(name = "Intake 2+2", group = "_Auto")
 public class Intake2_2 extends LinearOpMode {
-    private static final double VEL_OFFSET = 20;
-    private static final double ACCEL_OFFSET = 30;
+    private static final double VEL_OFFSET = 25;
+    private static final double ACCEL_OFFSET = 35;
     FtcDashboard dashboard = FtcDashboard.getInstance();
     MultipleTelemetry tele = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
     ElapsedTime timer = new ElapsedTime();
     ElapsedTime loopTime = new ElapsedTime();
     SampleMecanumDrive drive;
     ScoringFSM scoringFSM = new ScoringFSM();
-    private STATES autoState;
+    private STATES autoState = STATES.TO_STACK;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -61,7 +61,7 @@ public class Intake2_2 extends LinearOpMode {
                         new Pose2d(-55, 11),
                         SampleMecanumDrive.getVelocityConstraint(DriveConstants.MAX_VEL - VEL_OFFSET, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(DriveConstants.MAX_ACCEL - ACCEL_OFFSET))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(-1, () -> {
                     scoringFSM.stack();
                 })
                 .waitSeconds(STACK_PICKUP_DELAY)
