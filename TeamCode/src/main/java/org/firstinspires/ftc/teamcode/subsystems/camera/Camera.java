@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.subsystems.camera;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.Range;
 
@@ -35,6 +36,7 @@ public class Camera extends Subsystem {
     private VisionPortal visionPortal;
     private AprilTagProcessor aprilTagProcessor;
     private AprilTagDetection desiredTag;
+    private boolean isFinished = false;
 
     public Camera(final Color color, final MultipleTelemetry telemetry) {
         super(telemetry);
@@ -106,8 +108,15 @@ public class Camera extends Subsystem {
         }
 
 
-        if (((Math.abs(rangeError) + Math.abs(yawError)) / 2) > 0.15 && Math.abs(headingError) > .05) {
-            // drivetrain.setDrivePowers(leftFrontPower, leftBackPower, rightBackPower, rightFrontPower);
+        if (((Math.abs(rangeError) + Math.abs(yawError)) / 2) > 0.12 && Math.abs(headingError) > .04) {
+            drivetrain.setMotorPowers(leftFrontPower, leftBackPower, rightBackPower, rightFrontPower);
+        } else {
+            this.isFinished = true;
+            drivetrain.setPoseEstimate(new Pose2d(
+                    desiredTag.metadata.fieldPosition.get(0) - desiredTag.ftcPose.x - 0.0394 * 205.6,
+                    desiredTag.metadata.fieldPosition.get(1) - desiredTag.ftcPose.y,
+                    Math.toRadians(0) + desiredTag.ftcPose.bearing
+            ));
         }
     }
 

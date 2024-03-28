@@ -4,9 +4,12 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.CommandScheduler;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.subsystems.camera.Camera;
 
+
+@TeleOp(name = "Camera Test", group = "Test")
 public class CameraTest extends CommandOpMode {
     private Camera camera;
     private MultipleTelemetry multipleTelemetry;
