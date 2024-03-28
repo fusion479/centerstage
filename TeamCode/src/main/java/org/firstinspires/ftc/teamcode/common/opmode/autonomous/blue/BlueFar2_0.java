@@ -1,19 +1,11 @@
 package org.firstinspires.ftc.teamcode.common.opmode.autonomous.blue;
 
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.APRILTAG_TIMEOUT;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.CLOSE_MID;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.FRONT_INITIAL;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.FRONT_LEFT_SPIKE;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.FRONT_PARK;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.FRONT_RIGHT_SPIKE;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.FRONT_START;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.LEFT_BACKDROP_PRE;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.MIDDLE_BACKDROP_PRE;
+
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.MIDDLE_SPIKE_DISTANCE;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.POST_APRILTAG_FORWARD;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.POST_PRELOAD_WAIT;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.PRELOAD_SCORE_DELAY;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.RIGHT_BACKDROP_PRE;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
@@ -22,6 +14,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants;
 import org.firstinspires.ftc.teamcode.common.subsystem.Camera;
 import org.firstinspires.ftc.teamcode.common.subsystem.ScoringFSM;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
@@ -39,50 +32,50 @@ public class BlueFar2_0 extends LinearOpMode {
     ScoringFSM scoringFSM = new ScoringFSM();
     private int region;
     private STATES autoState;
-
+    AutoConstants constants = new AutoConstants();
     @Override
     public void runOpMode() throws InterruptedException {
         autoState = STATES.SPIKE_MARK;
         drive = new SampleMecanumDrive(hardwareMap);
         camera.init(hardwareMap);
 
-        TrajectorySequence leftSpikeMark = drive.trajectorySequenceBuilder(FRONT_START)
+        TrajectorySequence leftSpikeMark = drive.trajectorySequenceBuilder(constants.FRONT_START)
                 .waitSeconds(5)
                 .forward(14)
                 .setTangent(Math.toRadians(270))
-                .splineToLinearHeading(FRONT_LEFT_SPIKE, FRONT_LEFT_SPIKE.getHeading())
+                .splineToLinearHeading(constants.FRONT_LEFT_SPIKE, constants.FRONT_LEFT_SPIKE.getHeading())
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     scoringFSM.ready();
                 })
                 .setTangent(Math.toRadians(180))
-                .splineToLinearHeading(FRONT_INITIAL, Math.toRadians(90))
+                .splineToLinearHeading(constants.FRONT_INITIAL, Math.toRadians(90))
                 .strafeRight(4.75)
                 .lineToLinearHeading(new Pose2d(-40, 11, Math.toRadians(0)))
-                .lineToLinearHeading(CLOSE_MID)
-                .lineToLinearHeading(LEFT_BACKDROP_PRE)
+                .lineToLinearHeading(constants.CLOSE_MID)
+                .lineToLinearHeading(constants.LEFT_BACKDROP_PRE)
                 .build();
 
-        TrajectorySequence rightSpikeMark = drive.trajectorySequenceBuilder(FRONT_START)
+        TrajectorySequence rightSpikeMark = drive.trajectorySequenceBuilder(constants.FRONT_START)
                 .waitSeconds(5)
                 .forward(14)
                 .setTangent(Math.toRadians(270))
-                .splineToLinearHeading(FRONT_RIGHT_SPIKE, FRONT_RIGHT_SPIKE.getHeading())
+                .splineToLinearHeading(constants.FRONT_RIGHT_SPIKE, constants.FRONT_RIGHT_SPIKE.getHeading())
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     scoringFSM.ready();
                 })
                 .setTangent(Math.toRadians(10))
-                .splineToLinearHeading(FRONT_INITIAL, Math.toRadians(90))
+                .splineToLinearHeading(constants.FRONT_INITIAL, Math.toRadians(90))
                 .strafeLeft(1.25)
                 .lineToLinearHeading(new Pose2d(-34, 11, Math.toRadians(270)))
                 .turn(Math.toRadians(90))
-                .lineToLinearHeading(CLOSE_MID)
-                .lineToLinearHeading(RIGHT_BACKDROP_PRE)
+                .lineToLinearHeading(constants.CLOSE_MID)
+                .lineToLinearHeading(constants.RIGHT_BACKDROP_PRE)
                 .build();
 
-        TrajectorySequence middleSpikeMark = drive.trajectorySequenceBuilder(FRONT_START)
+        TrajectorySequence middleSpikeMark = drive.trajectorySequenceBuilder(constants.FRONT_START)
                 .waitSeconds(5)
                 .forward(MIDDLE_SPIKE_DISTANCE)
-                .lineToLinearHeading(FRONT_INITIAL)
+                .lineToLinearHeading(constants.FRONT_INITIAL)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     scoringFSM.ready();
                 })
@@ -90,8 +83,8 @@ public class BlueFar2_0 extends LinearOpMode {
                 .splineToLinearHeading(new Pose2d(-52, 24, Math.toRadians(270)), Math.toRadians(270))
                 .setTangent(Math.toRadians(270))
                 .splineToLinearHeading(new Pose2d(-36, 11, Math.toRadians(0)), Math.toRadians(0))
-                .lineToLinearHeading(CLOSE_MID)
-                .lineToLinearHeading(MIDDLE_BACKDROP_PRE)
+                .lineToLinearHeading(constants.CLOSE_MID)
+                .lineToLinearHeading(constants.MIDDLE_BACKDROP_PRE)
                 .build();
 
         scoringFSM.init(hardwareMap);
@@ -104,7 +97,7 @@ public class BlueFar2_0 extends LinearOpMode {
             tele.update();
         }
 
-        drive.setPoseEstimate(FRONT_START);
+        drive.setPoseEstimate(constants.FRONT_START);
 
         if (region == 1) {
             drive.followTrajectorySequenceAsync(leftSpikeMark);
@@ -172,7 +165,7 @@ public class BlueFar2_0 extends LinearOpMode {
                                     scoringFSM.ready();
                                 })
                                 .back(7)
-                                .lineToLinearHeading(FRONT_PARK)
+                                .lineToLinearHeading(constants.FRONT_PARK)
                                 .build();
                         drive.followTrajectorySequenceAsync(park);
                         timer.reset();

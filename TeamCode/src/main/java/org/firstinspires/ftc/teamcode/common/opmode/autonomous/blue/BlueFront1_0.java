@@ -1,8 +1,5 @@
 package org.firstinspires.ftc.teamcode.common.opmode.autonomous.blue;
 
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.FRONT_LEFT_SPIKE;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.FRONT_RIGHT_SPIKE;
-import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.FRONT_START;
 import static org.firstinspires.ftc.teamcode.common.opmode.autonomous.AutoConstants.MIDDLE_SPIKE_DISTANCE;
 
 import com.acmerobotics.dashboard.FtcDashboard;
@@ -23,6 +20,7 @@ public class BlueFront1_0 extends LinearOpMode {
     SampleMecanumDrive drive;
     ScoringFSM scoringFSM = new ScoringFSM();
     Camera camera = new Camera("blue");
+    AutoConstants constants = new AutoConstants();
     private int region;
 
     @Override
@@ -30,26 +28,26 @@ public class BlueFront1_0 extends LinearOpMode {
         drive = new SampleMecanumDrive(hardwareMap);
         camera.init(hardwareMap);
 
-        TrajectorySequence leftSpikeMark = drive.trajectorySequenceBuilder(FRONT_START)
+        TrajectorySequence leftSpikeMark = drive.trajectorySequenceBuilder(constants.FRONT_START)
                 .forward(14)
                 .setTangent(Math.toRadians(270))
-                .splineToLinearHeading(FRONT_LEFT_SPIKE, FRONT_LEFT_SPIKE.getHeading())
+                .splineToLinearHeading(constants.FRONT_LEFT_SPIKE, constants.FRONT_LEFT_SPIKE.getHeading())
                 .back(10)
-                .lineToLinearHeading(FRONT_START)
+                .lineToLinearHeading(constants.FRONT_START)
                 .build();
 
-        TrajectorySequence rightSpikeMark = drive.trajectorySequenceBuilder(FRONT_START)
+        TrajectorySequence rightSpikeMark = drive.trajectorySequenceBuilder(constants.FRONT_START)
                 .forward(14)
                 .setTangent(Math.toRadians(270))
-                .splineToLinearHeading(FRONT_RIGHT_SPIKE, FRONT_RIGHT_SPIKE.getHeading())
+                .splineToLinearHeading(constants.FRONT_RIGHT_SPIKE, constants.FRONT_RIGHT_SPIKE.getHeading())
                 .back(10)
-                .lineToLinearHeading(FRONT_START)
+                .lineToLinearHeading(constants.FRONT_START)
                 .build();
 
-        TrajectorySequence middleSpikeMark = drive.trajectorySequenceBuilder(FRONT_START)
+        TrajectorySequence middleSpikeMark = drive.trajectorySequenceBuilder(constants.FRONT_START)
                 .forward(MIDDLE_SPIKE_DISTANCE)
                 .back(10)
-                .lineToLinearHeading(FRONT_START)
+                .lineToLinearHeading(constants.FRONT_START)
                 .build();
 
         scoringFSM.init(hardwareMap);
@@ -64,7 +62,7 @@ public class BlueFront1_0 extends LinearOpMode {
 
         camera.stopStreaming();
 
-        drive.setPoseEstimate(AutoConstants.FRONT_START);
+        drive.setPoseEstimate(constants.FRONT_START);
 
         if (region == 1) {
             drive.followTrajectorySequenceAsync(leftSpikeMark);

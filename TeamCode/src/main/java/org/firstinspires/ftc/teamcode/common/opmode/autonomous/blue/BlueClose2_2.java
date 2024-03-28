@@ -37,6 +37,7 @@ public class BlueClose2_2 extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         drive = new SampleMecanumDrive(hardwareMap);
+        constants = new AutoConstants();
         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         scoringFSM.init(hardwareMap);
         camera.init(hardwareMap);
