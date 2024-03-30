@@ -30,7 +30,7 @@ class AutoConstants {
     public static Pose2d FRONT_LEFT_SPIKE = new Pose2d(-32, 37, Math.toRadians(320));
     public static Pose2d FRONT_RIGHT_SPIKE = new Pose2d(-39, 37, Math.toRadians(220));
     public static Pose2d LEFT_BACKDROP_PRE = new Pose2d(37.5, 42 - 2, Math.toRadians(0));
-    public static Pose2d MIDDLE_BACKDROP_PRE = new Pose2d(39, 36 - 2, Math.toRadians(0));
+    public static Pose2d MIDDLE_BACKDROP_PRE = new Pose2d(45, 36 - 2, Math.toRadians(0));
     public static Pose2d RIGHT_BACKDROP_PRE = new Pose2d(37.5, 30 - 2, Math.toRadians(0));
     public static Pose2d LEFT_BACKDROP = new Pose2d(42, 42 - 2, Math.toRadians(0));
     public static Pose2d MIDDLE_BACKDROP = new Pose2d(42, 36 - 2, Math.toRadians(0));
@@ -48,7 +48,7 @@ class AutoConstants {
 }
 
 public class MeepMeepTesting extends AutoConstants {
-    private static final double STARTING_ANGLE = 270; // + makes angle narrower (hits truss)     - makes angle steeper (hits wall)
+    private static final double STARTING_ANGLE = 235; // + makes angle narrower (hits truss)     - makes angle steeper (hits wall)
 
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(800);
@@ -57,17 +57,8 @@ public class MeepMeepTesting extends AutoConstants {
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(45, 40, 6, toRadians(180), 15.5)
                 .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(MIDDLE_BACKDROP_PRE)
-
-
-                        .setTangent(Math.toRadians(STARTING_ANGLE))
-                        .splineToLinearHeading(
-                                new Pose2d(30, 11, Math.toRadians(0)),
-                                Math.toRadians(180))
-                        .lineToLinearHeading(new Pose2d(-55, 11))
-                        .lineToLinearHeading(new Pose2d(30, 11))
-                        .splineToLinearHeading(
-                                MIDDLE_BACKDROP_PRE,
-                                Math.toRadians(STARTING_ANGLE + 180))
+                        .lineToLinearHeading(new Pose2d(-58, 34))
+                        .lineToLinearHeading(MIDDLE_BACKDROP_PRE)
                         .build()
                 );
 

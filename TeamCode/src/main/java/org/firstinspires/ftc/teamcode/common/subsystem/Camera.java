@@ -27,9 +27,9 @@ public class Camera extends Mechanism {
     final double DESIRED_DISTANCE = 5;
     final double SPEED_GAIN = 0.03;
     final double STRAFE_GAIN = 0.025;
-    final double TURN_GAIN = 0.03;
-    final double MAX_AUTO_SPEED = 0.3;
-    final double MAX_AUTO_STRAFE = 0.3;
+    double TURN_GAIN = 0.03;
+    final double MAX_AUTO_SPEED = 0.25;
+    final double MAX_AUTO_STRAFE = 0.25;
     private final String color;
     double MAX_AUTO_TURN = 0.15;
     OpenCvCamera openCvCamera;
@@ -124,10 +124,11 @@ public class Camera extends Mechanism {
 
         if (Math.abs(headingError) < 5) {
             MAX_AUTO_TURN = 0.1;
+            TURN_GAIN = 0.2;
         } else if (Math.abs(headingError) < 2.5) {
             MAX_AUTO_TURN = 0.05;
+            TURN_GAIN = 0.15;
         }
-
 
         if (((Math.abs(rangeError) + Math.abs(yawError)) / 2) > 0.15 && Math.abs(headingError) > .05) {
             drivetrain.setMotorPowers(leftFrontPower, leftBackPower, rightBackPower, rightFrontPower);
@@ -139,8 +140,8 @@ public class Camera extends Mechanism {
     public void relocalize(SampleMecanumDrive drive) {
         drive.setPoseEstimate(new Pose2d(
                 desiredTag.metadata.fieldPosition.get(0) - desiredTag.ftcPose.x - 0.0394 * 205.6,
-                desiredTag.metadata.fieldPosition.get(1) - desiredTag.ftcPose.y,
-                Math.toRadians(0) + desiredTag.ftcPose.bearing
+                desiredTag.metadata.fieldPosition.get(1) + desiredTag.ftcPose.y - 0.0394 * 168.000,
+                -Math.toRadians(desiredTag.ftcPose.bearing)
         ));
     }
 

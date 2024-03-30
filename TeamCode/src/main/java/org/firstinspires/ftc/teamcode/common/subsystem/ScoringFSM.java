@@ -8,6 +8,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.drive.DriveConstants;
+import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
 @Config
 public class ScoringFSM extends Mechanism {
@@ -66,7 +68,7 @@ public class ScoringFSM extends Mechanism {
         if (!isPressedA && gamepad.a) {
             toggleReady();
         } else if (gamepad.b) {
-            low();
+            stack();
         } else if (gamepad.x) {
             high();
         } else if (gamepad.y) {
@@ -345,9 +347,7 @@ public class ScoringFSM extends Mechanism {
                 lift.isClimb = false;
 
                 intake.stack();
-                arm.stack();
                 lift.bottom();
-                deposit.stack();
                 deposit.openInner();
                 deposit.openOuter();
 
@@ -357,9 +357,18 @@ public class ScoringFSM extends Mechanism {
 
 
                 if (timer.milliseconds() >= 125) {
+                    lift.upALittle();
+                    arm.stack();
                     deposit.stack();
                 }
 
+                if (timer.milliseconds() >= 400) {
+                    lift.downALittle();
+                }
+
+                if (timer.milliseconds() >= 750) {
+                    intake.setPower(1);
+                }
 
                 hasPixel();
                 break;

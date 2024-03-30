@@ -108,7 +108,7 @@ public class BlueClose2_0 extends LinearOpMode {
                         camera.moveRobot(drive, tele);
                     } else {
                         drive.setMotorPowers(0, 0, 0, 0);
-                        camera.relocalize(drive);
+                            camera.relocalize(drive);
                     }
 
                     if (timer.milliseconds() >= constants.APRILTAG_TIMEOUT) {
@@ -122,7 +122,7 @@ public class BlueClose2_0 extends LinearOpMode {
                                 .UNSTABLE_addTemporalMarkerOffset(constants.PRELOAD_SCORE_DELAY, () -> {
                                     scoringFSM.score();
                                 })
-                                .UNSTABLE_addTemporalMarkerOffset(constants.PRELOAD_SCORE_DELAY + 1.5, () -> {
+                                .UNSTABLE_addTemporalMarkerOffset(constants.PRELOAD_SCORE_DELAY + 1, () -> {
                                     scoringFSM.deposit.openOuter();
                                     scoringFSM.deposit.openInner();
                                 })

@@ -29,6 +29,7 @@ public class AutoAprilTagTest extends LinearOpMode {
         while (opModeIsActive() && !isStopRequested()) {
             if (camera.detectAprilTag(tele)) {
                 camera.moveRobot(drive, tele);
+                camera.relocalize(drive);
             } else {
                 drive.setMotorPowers(0, 0, 0, 0);
             }

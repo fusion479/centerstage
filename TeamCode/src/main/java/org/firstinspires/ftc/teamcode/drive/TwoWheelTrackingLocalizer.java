@@ -45,10 +45,10 @@ public class TwoWheelTrackingLocalizer extends TwoTrackingWheelLocalizer {
     public static double PERPENDICULAR_X = 5.7859019685;
     public static double PERPENDICULAR_Y = 0.0282507874;
 
-    public static double X_MULTIPLIER = 0.9994767505;
+    public static double X_MULTIPLIER = 0.9892324912;
     // 210 / (69.14799065372236 + 69.22122879529275 + 69.08391091803799)
 
-    public static double Y_MULTIPLIER = 1.001544277435;
+    public static double Y_MULTIPLIER = 1.008227578567;
     // 210 / (69.88955441517787 + 69.97 + 69.18394898201535)
 
 
