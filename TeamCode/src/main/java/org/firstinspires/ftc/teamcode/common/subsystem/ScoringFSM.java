@@ -16,7 +16,7 @@ public class ScoringFSM extends Mechanism {
     public static int armDelay = 300;
     public static int resetDelay = 150;
     public static int autoIntakeDelay = 100;
-    public static int colorSensorDelay = 150;
+    public static int colorSensorDelay = 50;
     public static int readyDelay = 75;
 
     public Lift lift = new Lift();
@@ -37,6 +37,7 @@ public class ScoringFSM extends Mechanism {
     public ElapsedTime sensorTimer = new ElapsedTime();
     public ElapsedTime loopTimeTimer = new ElapsedTime();
     public boolean isPressedA = false;
+    public boolean isPressedA2 = false;
     public boolean isPressedRB = false;
     public boolean isPressedLB = false;
     public boolean isPressedRB2 = false;
@@ -65,13 +66,13 @@ public class ScoringFSM extends Mechanism {
     }
 
     public void update(Gamepad gamepad, Gamepad gamepad2) {
-        if (!isPressedA && gamepad.a) {
+        if ((!isPressedA && gamepad.a) || (!isPressedA2 && gamepad2.a)) {
             toggleReady();
-        } else if (gamepad.b) {
-            stack();
-        } else if (gamepad.x) {
+        } else if (gamepad.b || gamepad2.b) {
+            low();
+        } else if (gamepad.x || gamepad2.x) {
             high();
-        } else if (gamepad.y) {
+        } else if (gamepad.y || gamepad2.y) {
             medium();
         } else if (gamepad.left_bumper || gamepad.right_bumper) {
             score();
@@ -392,6 +393,7 @@ public class ScoringFSM extends Mechanism {
         isPressedDPadDown2 = gamepad2.dpad_down;
         isPressedDPadRight2 = gamepad2.dpad_right;
         isPressedA = gamepad.a;
+        isPressedA2 = gamepad2.a;
 
         lift.update();
         arm.update();

@@ -43,9 +43,9 @@ public class Robot extends Mechanism {
                 )
         );
 
-        if (gamepad2.x) {
+        if (gamepad2.right_bumper) {
             launcher.launch();
-        } else if (gamepad2.a) {
+        } else if (gamepad2.left_bumper) {
             launcher.idle();
         }
 

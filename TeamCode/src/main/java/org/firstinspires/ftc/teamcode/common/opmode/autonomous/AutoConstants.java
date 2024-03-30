@@ -42,27 +42,27 @@ public final class AutoConstants {
     public Pose2d FRONT_INITIAL;
     public Pose2d CLOSE_MID;
 
-    public static PoseValues V_CLOSE_START = new PoseValues(11.75, 62.7, Math.toRadians(270));
-    public static PoseValues V_FRONT_START = new PoseValues(-35.25, 62.7, Math.toRadians(270));
-    public static PoseValues V_CLOSE_PARK = new PoseValues(45, 57, Math.toRadians(0));
-    public static PoseValues V_FRONT_PARK = new PoseValues(45, 18, Math.toRadians(0));
+    public static PoseValues V_CLOSE_START = new PoseValues(11.75, 62.7, 270);
+    public static PoseValues V_FRONT_START = new PoseValues(-35.25, 62.7, 270);
+    public static PoseValues V_CLOSE_PARK = new PoseValues(48, 57, 0);
+    public static PoseValues V_FRONT_PARK = new PoseValues(48, 18, 0);
 
     // SPIKE & BACKDROP POSITIONS
-    public static PoseValues V_CLOSE_LEFT_SPIKE = new PoseValues(15.5, 37, Math.toRadians(320));
-    public static PoseValues V_CLOSE_RIGHT_SPIKE = new PoseValues(7.5, 37, Math.toRadians(220));
-    public static PoseValues V_FRONT_LEFT_SPIKE = new PoseValues(-32, 37, Math.toRadians(320));
-    public static PoseValues V_FRONT_RIGHT_SPIKE = new PoseValues(-39, 37, Math.toRadians(220));
-    public static PoseValues V_LEFT_BACKDROP_PRE = new PoseValues(37.5, 42 - 2, Math.toRadians(0));
-    public static PoseValues V_MIDDLE_BACKDROP_PRE = new PoseValues(48, 35, Math.toRadians(0));
-    public static PoseValues V_RIGHT_BACKDROP_PRE = new PoseValues(37.5, 30 - 2, Math.toRadians(0));
-    public static PoseValues V_LEFT_BACKDROP = new PoseValues(42, 42 - 2, Math.toRadians(0));
-    public static PoseValues V_MIDDLE_BACKDROP = new PoseValues(42, 36 - 2, Math.toRadians(0));
-    public static PoseValues V_RIGHT_BACKDROP = new PoseValues(42, 30 - 2, Math.toRadians(0));
+    public static PoseValues V_CLOSE_LEFT_SPIKE = new PoseValues(15.5, 37, 320);
+    public static PoseValues V_CLOSE_RIGHT_SPIKE = new PoseValues(7.5, 37, 220);
+    public static PoseValues V_FRONT_LEFT_SPIKE = new PoseValues(-32, 37, 320);
+    public static PoseValues V_FRONT_RIGHT_SPIKE = new PoseValues(-39, 37, 220);
+    public static PoseValues V_LEFT_BACKDROP_PRE = new PoseValues(37.5, 42 - 2, 0);
+    public static PoseValues V_MIDDLE_BACKDROP_PRE = new PoseValues(44, 35, 0);
+    public static PoseValues V_RIGHT_BACKDROP_PRE = new PoseValues(37.5, 30 - 2, 0);
+    public static PoseValues V_LEFT_BACKDROP = new PoseValues(42, 42 - 2, 0);
+    public static PoseValues V_MIDDLE_BACKDROP = new PoseValues(42, 36 - 2, 0);
+    public static PoseValues V_RIGHT_BACKDROP = new PoseValues(42, 30 - 2, 0);
 
     // MISC POSITIONS
-    public static PoseValues V_CLOSE_INITIAL = new PoseValues(11.75, 44, Math.toRadians(270));
-    public static PoseValues V_FRONT_INITIAL = new PoseValues(-35.25, 44, Math.toRadians(270));
-    public static PoseValues V_CLOSE_MID = new PoseValues(27.5, 11, Math.toRadians(0));
+    public static PoseValues V_CLOSE_INITIAL = new PoseValues(11.75, 44, 270);
+    public static PoseValues V_FRONT_INITIAL = new PoseValues(-35.25, 44, 270);
+    public static PoseValues V_CLOSE_MID = new PoseValues(27.5, 11, 0);
 
     public AutoConstants() {
         INITIAL_FORWARD_DIST = 15.5;
