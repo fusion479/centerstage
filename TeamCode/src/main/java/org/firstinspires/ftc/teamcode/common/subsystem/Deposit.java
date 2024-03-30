@@ -15,10 +15,10 @@ public class Deposit extends Mechanism {
     public static double STACK_TOP_POS = 0.52;
 
     public static double LOCK_INNER = 0.5;
-    public static double LOCK_OUTER = 0.7;
+    public static double LOCK_OUTER = .3;
 
     public static double OPEN_INNER = 0.3;
-    public static double OPEN_OUTER = 0.35;
+    public static double OPEN_OUTER = 0.5;
 
     public static double pivotTarget = ACCEPTING_POS;
     public static double innerTarget = OPEN_INNER;
