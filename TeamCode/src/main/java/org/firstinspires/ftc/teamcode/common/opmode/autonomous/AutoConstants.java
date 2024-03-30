@@ -1,20 +1,22 @@
 package org.firstinspires.ftc.teamcode.common.opmode.autonomous;
 
 
+import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 
 
 
 // BLUE AUTONS POSITIONS
+@Config
 public final class AutoConstants {
 
     public static double INITIAL_FORWARD_DIST = 15.5;
     public static double MIDDLE_SPIKE_DISTANCE = 29;
     public static double ARM_LIFT_DELAY = -2.25;
-    public static double PRELOAD_SCORE_DELAY = -0.5;
+    public static double PRELOAD_SCORE_DELAY = -2;
     public static double POST_PRELOAD_WAIT = 0.5;
-    public static double STACK_PICKUP_DELAY = 1;
-    public static double POST_APRILTAG_FORWARD = 6.16; // this used to be 4.5 in 2+2
+    public static double STACK_PICKUP_DELAY = 2.5;
+    public static double POST_APRILTAG_FORWARD = 5; // this used to be 4.5 in 2+2
     public static int APRILTAG_TIMEOUT = 2000;
 
     // STARTING & END POSITIONS
@@ -51,7 +53,7 @@ public final class AutoConstants {
     public static PoseValues V_FRONT_LEFT_SPIKE = new PoseValues(-32, 37, Math.toRadians(320));
     public static PoseValues V_FRONT_RIGHT_SPIKE = new PoseValues(-39, 37, Math.toRadians(220));
     public static PoseValues V_LEFT_BACKDROP_PRE = new PoseValues(37.5, 42 - 2, Math.toRadians(0));
-    public static PoseValues V_MIDDLE_BACKDROP_PRE = new PoseValues(39, 36 - 2, Math.toRadians(0));
+    public static PoseValues V_MIDDLE_BACKDROP_PRE = new PoseValues(48, 35, Math.toRadians(0));
     public static PoseValues V_RIGHT_BACKDROP_PRE = new PoseValues(37.5, 30 - 2, Math.toRadians(0));
     public static PoseValues V_LEFT_BACKDROP = new PoseValues(42, 42 - 2, Math.toRadians(0));
     public static PoseValues V_MIDDLE_BACKDROP = new PoseValues(42, 36 - 2, Math.toRadians(0));
@@ -70,7 +72,7 @@ public final class AutoConstants {
         POST_PRELOAD_WAIT = 0.5;
         STACK_PICKUP_DELAY = 1;
         POST_APRILTAG_FORWARD = 6.16; // this used to be 4.5 in 2+2
-        APRILTAG_TIMEOUT = 2000;
+        APRILTAG_TIMEOUT = 3000;
 
         CLOSE_START = new Pose2d(V_CLOSE_START.x, V_CLOSE_START.y, V_CLOSE_START.heading);
         FRONT_START = new Pose2d(V_FRONT_START.x, V_FRONT_START.y, V_FRONT_START.heading);

@@ -9,7 +9,7 @@ public class Arm extends Mechanism {
     public static double SCORE_POS = 0;
     public static double READY_POS = 0.61;
     public static double MAX_SCORE_POS = .05;
-    public static double STACK_TOP_POS = 0.72;
+    public static double STACK_TOP_POS = 0.85;
     public static double DOWN_POS = 0.69;
 
     public static double AUTO_INIT_POS = .64;

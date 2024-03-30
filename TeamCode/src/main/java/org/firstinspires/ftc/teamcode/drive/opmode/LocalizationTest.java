@@ -21,20 +21,14 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 public class LocalizationTest extends LinearOpMode {
     FtcDashboard dashboard = FtcDashboard.getInstance();
     MultipleTelemetry multipleTelemetry = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
-    Camera camera = new Camera("blue");
 
     @Override
     public void runOpMode() throws InterruptedException {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
-        camera.init(hardwareMap);
 
         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         waitForStart();
-
-        camera.stopStreaming();
-        camera.aprilTagInit(hardwareMap, 1);
-        camera.setManualExposure(6, 250, isStopRequested(), multipleTelemetry, this);
 
         while (!isStopRequested()) {
             drive.setWeightedDrivePower(
@@ -49,13 +43,6 @@ public class LocalizationTest extends LinearOpMode {
 
             Pose2d poseEstimate = drive.getPoseEstimate();
 
-            if (camera.detectAprilTag(multipleTelemetry)) {
-                camera.moveRobot(drive, multipleTelemetry);
-                camera.relocalize(drive);
-
-            } else {
-                drive.setMotorPowers(0, 0, 0, 0);
-            }
             multipleTelemetry.addData("right stick x: ", gamepad1.right_stick_x);
             multipleTelemetry.addData("right stick y: ", gamepad1.right_stick_y);
             multipleTelemetry.addData("x", poseEstimate.getX());
