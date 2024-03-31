@@ -308,26 +308,29 @@ public class ScoringFSM extends Mechanism {
                     intake.idle();
                 }
 
-                if (timer.milliseconds() > resetDelay && !deposit.innerLocked && !deposit.outerLocked) {
-                    if (!isAuto) {
-                        if (resetCounter < 3) {
-                            if (!wasGigaHigh) {
-                                lift.upALittle();
+                if (!deposit.innerLocked && !deposit.outerLocked) {
+                    intake.down();
+                    if (timer.milliseconds() > resetDelay) {
+                        if (!isAuto) {
+                            if (resetCounter < 3) {
+                                if (!wasGigaHigh) {
+                                    lift.upALittle();
+                                }
                             }
-                        }
-                        resetCounter++;
+                            resetCounter++;
 
-                        if (timer.milliseconds() > resetDelay + 200) {
-                            ready();
-                        }
-                    } else {
-                        if (resetCounter < 3) {
-                            // TODO: ??
-                        }
-                        resetCounter++;
+                            if (timer.milliseconds() > resetDelay + 200) {
+                                intake();
+                            }
+                        } else {
+                            if (resetCounter < 3) {
+                                // TODO: ??
+                            }
+                            resetCounter++;
 
-                        deposit.openOuter();
-                        deposit.openInner();
+                            deposit.openOuter();
+                            deposit.openInner();
+                        }
                     }
                 }
                 break;
