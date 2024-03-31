@@ -70,6 +70,7 @@ public class ScoringFSM extends Mechanism {
             toggleReady();
         } else if (gamepad.b || gamepad2.b) {
             low();
+//            stack();
         } else if (gamepad.x || gamepad2.x) {
             high();
         } else if (gamepad.y || gamepad2.y) {

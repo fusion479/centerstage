@@ -66,7 +66,7 @@ public final class AutoConstants {
 
     public AutoConstants() {
         INITIAL_FORWARD_DIST = 15.5;
-        MIDDLE_SPIKE_DISTANCE = 29;
+        MIDDLE_SPIKE_DISTANCE = 31.5;
         ARM_LIFT_DELAY = -2.25;
         PRELOAD_SCORE_DELAY = -0.5;
         POST_PRELOAD_WAIT = 0.5;

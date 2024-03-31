@@ -12,7 +12,7 @@ public class Deposit extends Mechanism {
     public static double MAX_SCORE_POS = .2;
 
     public static double AUTO_INIT_POS = 0;
-    public static double STACK_TOP_POS = 0.65;
+    public static double STACK_TOP_POS = 0.7;
 
     public static double LOCK_INNER = 0.5;
     public static double LOCK_OUTER = .3;

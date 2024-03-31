@@ -19,8 +19,8 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
 @Autonomous(name = "Blue Close 2+2", group = "_Auto")
 public class BlueClose2_2 extends LinearOpMode {
-    private static final double VEL_OFFSET = 17.5;
-    private static final double ACCEL_OFFSET = 22.5;
+    private static final double VEL_OFFSET = 0;
+    private static final double ACCEL_OFFSET = 0;
     FtcDashboard dashboard = FtcDashboard.getInstance();
     MultipleTelemetry tele = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
     ElapsedTime timer = new ElapsedTime();
