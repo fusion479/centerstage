@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.common.subsystem.ScoringFSM;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
-@Autonomous(name = "Blue Close 2+0", group = "_Auto")
+@Autonomous(name = "Blue Close 2+0", group = "_Auto", preselectTeleOp = "ABCDEFGHIJKLMNOPQRSTUVWXYZ")
 public class BlueClose2_0 extends LinearOpMode {
     FtcDashboard dashboard = FtcDashboard.getInstance();
     MultipleTelemetry tele = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
@@ -104,12 +104,12 @@ public class BlueClose2_0 extends LinearOpMode {
                     }
                     break;
                 case APRIL_TAG:
-                    if (camera.detectAprilTag(tele)) {
-                        camera.moveRobot(drive, tele);
-                        camera.relocalize(drive);
-                    } else {
-                        drive.setMotorPowers(0, 0, 0, 0);
-                    }
+//                    if (camera.detectAprilTag(tele)) {
+//                        camera.moveRobot(drive, tele);
+//                        camera.relocalize(drive);
+//                    } else {
+//                        drive.setMotorPowers(0, 0, 0, 0);
+//                    }
 
                     if (timer.milliseconds() >= constants.APRILTAG_TIMEOUT) {
                         autoState = STATES.BACKDROP_SCORE;
