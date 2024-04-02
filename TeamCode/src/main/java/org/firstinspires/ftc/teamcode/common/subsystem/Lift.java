@@ -87,8 +87,8 @@ public class Lift extends Mechanism {
             }
         }
 
-        if (getPosition() >= 2400) {
-            power = 0;
+        if (target >= 2500) {
+            target = 2500;
         }
 
         motors[0].setPower(power);

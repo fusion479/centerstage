@@ -142,7 +142,7 @@ public class BlueClose2_0 extends LinearOpMode {
                                     scoringFSM.ready();
                                 })
                                 .back(7)
-                                .lineToLinearHeading(constants.CLOSE_PARK)
+//                                .lineToLinearHeading(constants.CLOSE_PARK)
                                 .build();
                         drive.followTrajectorySequenceAsync(park);
                         timer.reset();

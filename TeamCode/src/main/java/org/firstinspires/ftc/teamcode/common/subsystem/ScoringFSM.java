@@ -309,7 +309,7 @@ public class ScoringFSM extends Mechanism {
                 }
 
                 if (!deposit.innerLocked && !deposit.outerLocked) {
-                    intake.down();
+//                    intake.down();
                     if (timer.milliseconds() > resetDelay) {
                         if (!isAuto) {
                             if (resetCounter < 3) {
@@ -320,7 +320,7 @@ public class ScoringFSM extends Mechanism {
                             resetCounter++;
 
                             if (timer.milliseconds() > resetDelay + 200) {
-                                intake();
+                                ready();
                             }
                         } else {
                             if (resetCounter < 3) {

@@ -53,7 +53,7 @@ public final class AutoConstants {
     public static PoseValues V_FRONT_LEFT_SPIKE = new PoseValues(-32, 37, 320);
     public static PoseValues V_FRONT_RIGHT_SPIKE = new PoseValues(-39, 37, 220);
     public static PoseValues V_LEFT_BACKDROP_PRE = new PoseValues(37.5, 42 - 2, 0);
-    public static PoseValues V_MIDDLE_BACKDROP_PRE = new PoseValues(48, 33.5, 0);
+    public static PoseValues V_MIDDLE_BACKDROP_PRE = new PoseValues(46, 33.2, 0);
     public static PoseValues V_RIGHT_BACKDROP_PRE = new PoseValues(37.5, 30 - 2, 0);
     public static PoseValues V_LEFT_BACKDROP = new PoseValues(42, 42 - 2, 0);
     public static PoseValues V_MIDDLE_BACKDROP = new PoseValues(42, 36 - 2, 0);
