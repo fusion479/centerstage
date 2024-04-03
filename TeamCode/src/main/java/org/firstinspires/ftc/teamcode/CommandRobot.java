@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.arcrobotics.ftclib.command.ConditionalCommand;
 import com.arcrobotics.ftclib.command.Robot;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
@@ -12,6 +13,8 @@ import org.firstinspires.ftc.teamcode.commands.arm.ArmUp;
 import org.firstinspires.ftc.teamcode.commands.deposit.DepositAccepting;
 import org.firstinspires.ftc.teamcode.commands.deposit.DepositReady;
 import org.firstinspires.ftc.teamcode.commands.deposit.DepositScore;
+import org.firstinspires.ftc.teamcode.commands.deposit.LockInner;
+import org.firstinspires.ftc.teamcode.commands.deposit.LockOuter;
 import org.firstinspires.ftc.teamcode.commands.deposit.OpenInner;
 import org.firstinspires.ftc.teamcode.commands.deposit.locks.OpenOuter;
 import org.firstinspires.ftc.teamcode.commands.drivetrain.ManualDrive;
@@ -30,6 +33,8 @@ import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.Launcher;
 import org.firstinspires.ftc.teamcode.subsystems.Lift;
+
+import java.util.concurrent.locks.Lock;
 
 public class CommandRobot extends Robot {
     private final Arm arm;
@@ -71,6 +76,8 @@ public class CommandRobot extends Robot {
                         new OpenOuter(this.deposit),
                         new DepositAccepting(this.deposit)
                 ));
+        this.gamepad1.getGamepadButton(GamepadKeys.Button.A);
+
 
 
         // LIFT LOW
@@ -125,6 +132,11 @@ public class CommandRobot extends Robot {
             this.intake.setPower(rTrigValue);
         } else {
             this.intake.setPower(lTrigValue);
+        }
+        if (this.deposit.hasPixel()) {
+            new LockOuter(this.deposit);
+            new LockInner(this.deposit);
+
         }
     }
 }

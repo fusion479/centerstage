@@ -31,6 +31,8 @@ public class Main extends CommandOpMode {
 
         super.waitForStart();
         while (!isStopRequested() && opModeIsActive()) {
+            this.robot.configureCommands();
+            this.robot.intakeTriggers();
             this.robot.run(); // runs the command scheduler
             this.telemetry.update();
         }
