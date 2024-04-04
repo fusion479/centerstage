@@ -24,10 +24,10 @@ public class Drivetrain extends Subsystem {
     public void manualDrive(final GamepadEx gamepad) {
         this.drive.setDrivePowers(new PoseVelocity2d(
                 new Vector2d(
-                        -gamepad.getRightX(),
+                        gamepad.getLeftY(),
                         -gamepad.getLeftX()
                 ),
-                gamepad.getLeftY()
+                -gamepad.getRightX()
         ));
         this.drive.updatePoseEstimate();
     }

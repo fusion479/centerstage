@@ -10,6 +10,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.commands.lift.BottomLift;
 import org.firstinspires.ftc.teamcode.commands.lift.HighLift;
+import org.firstinspires.ftc.teamcode.commands.lift.LiftLower;
+import org.firstinspires.ftc.teamcode.commands.lift.LiftRaise;
 import org.firstinspires.ftc.teamcode.commands.lift.LowLift;
 import org.firstinspires.ftc.teamcode.commands.lift.MediumLift;
 import org.firstinspires.ftc.teamcode.subsystems.Lift;
@@ -27,14 +29,18 @@ public class LiftTest extends CommandOpMode {
         this.lift = new Lift(this.hardwareMap, this.multipleTelemetry);
         this.gamepad = new GamepadEx(gamepad1);
 
-        this.gamepad.getGamepadButton(GamepadKeys.Button.DPAD_LEFT)
+        this.gamepad.getGamepadButton(GamepadKeys.Button.A)
                 .whenPressed(new MediumLift(this.lift));
-        this.gamepad.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT)
+        this.gamepad.getGamepadButton(GamepadKeys.Button.B)
                 .whenPressed(new LowLift(this.lift));
-        this.gamepad.getGamepadButton(GamepadKeys.Button.DPAD_UP)
+        this.gamepad.getGamepadButton(GamepadKeys.Button.X)
                 .whenPressed(new HighLift(this.lift));
-        this.gamepad.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
+        this.gamepad.getGamepadButton(GamepadKeys.Button.Y)
                 .whenPressed(new BottomLift(this.lift));
+        this.gamepad.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
+                .whenPressed(new LiftLower(this.lift));
+        this.gamepad.getGamepadButton(GamepadKeys.Button.DPAD_UP)
+                .whenPressed(new LiftRaise(this.lift, this.multipleTelemetry));
     }
 
     @Override

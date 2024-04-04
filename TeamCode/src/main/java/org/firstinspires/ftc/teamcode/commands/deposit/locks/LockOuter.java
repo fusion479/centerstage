@@ -15,7 +15,7 @@ public class LockOuter extends CommandBase {
 
     @Override
     public void initialize() {
-        this.deposit.setOuterPosition(Deposit.LOCKOUTER);
+        this.deposit.setOuterPosition(Deposit.LOCK_OUTER);
     }
 
     @Override

@@ -15,7 +15,7 @@ public class OpenOuter extends CommandBase {
 
     @Override
     public void initialize() {
-        this.deposit.setOuterPosition(Deposit.OPENOUTER);
+        this.deposit.setOuterPosition(Deposit.OPEN_OUTER);
     }
 
     @Override

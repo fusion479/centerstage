@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 @Config
 public class Intake extends Subsystem {
     public static double UP_POS = .9;
-    public static double DOWN_POS = .3;
+    public static double DOWN_POS = .28;
     public static double STACK_POS = .35;
     public static double IDLE_POS = .65;
     private final DcMotorEx intake;

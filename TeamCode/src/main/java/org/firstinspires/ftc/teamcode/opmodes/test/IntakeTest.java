@@ -48,7 +48,6 @@ public class IntakeTest extends CommandOpMode {
         while (!super.isStopRequested() && super.opModeIsActive()) {
             CommandScheduler.getInstance().run();
 
-            // run sep thread?
             this.intakeAccept.update();
             this.intakeReject.update();
 

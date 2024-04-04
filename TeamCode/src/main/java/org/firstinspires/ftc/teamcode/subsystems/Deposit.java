@@ -12,28 +12,30 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 @Config
 public class Deposit extends Subsystem {
-    public static double ACCEPTING_POS = .1;
+    public static double ACCEPTING_POS = 0.75;
     public static double IDLE_POS = .81;
-    public static double READY_POS = 0.5;
-    public static double SCORE_POS = 0.82;
+    public static double READY_POS = 0.58;
+    public static double SCORE_POS = 0.35;
+
     public static double AUTO_INIT_POS = 1;
     public static double AUTO_STACK_POS = 0.25;
-    public static double LOCKINNER = 0.85;
-    public static double OPENINNER = 0.65;
-    public static double LOCKOUTER = 0.45;
-    public static double OPENOUTER = 0.85;
-    ColorRangeSensor innerSensor, outerSensor;
+
+    public static double LOCK_INNER = 0.85;
+    public static double OPEN_INNER = 0.65;
+    public static double LOCK_OUTER = 0.2;
+    public static double OPEN_OUTER = 0.85;
+
     public static int THRESHOLD_MM = 15;
-
     public static double RED_GAIN = 0.2;
-    LowPassFilter lowPassFilterR = new LowPassFilter(RED_GAIN);
-
     public static double BLUE_GAIN = 0.2;
-    LowPassFilter lowPassFilterB = new LowPassFilter(BLUE_GAIN);
-
     public static double GREEN_GAIN = 0.2;
-    LowPassFilter lowPassFilterG = new LowPassFilter(GREEN_GAIN);
+
+
     private final Servo pivot, inner, outer;
+    ColorRangeSensor innerSensor, outerSensor;
+    LowPassFilter lowPassFilterR = new LowPassFilter(RED_GAIN);
+    LowPassFilter lowPassFilterB = new LowPassFilter(BLUE_GAIN);
+    LowPassFilter lowPassFilterG = new LowPassFilter(GREEN_GAIN);
 
     public Deposit(final HardwareMap hwMap, final MultipleTelemetry telemetry) {
         super(telemetry);
@@ -67,16 +69,16 @@ public class Deposit extends Subsystem {
         return (innerSensor.getDistance(DistanceUnit.MM) < THRESHOLD_MM) && (outerSensor.getDistance(DistanceUnit.MM) < THRESHOLD_MM);
     }
 
-    public double redEstimate(ColorSensor s){
+    public double redEstimate(ColorSensor s) {
         return getLowPass(s.red(), lowPassFilterR);
     }
 
 
-    public double blueEstimate(ColorSensor s){
+    public double blueEstimate(ColorSensor s) {
         return getLowPass(s.blue(), lowPassFilterB);
     }
 
-    public double greenEstimate(ColorSensor s){
+    public double greenEstimate(ColorSensor s) {
         return getLowPass(s.green(), lowPassFilterG);
     }
 

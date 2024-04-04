@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.commands.deposit;
+package org.firstinspires.ftc.teamcode.commands.deposit.locks;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 
@@ -15,7 +15,7 @@ public class OpenInner extends CommandBase {
 
     @Override
     public void initialize() {
-        this.deposit.setInnerPosition(Deposit.OPENINNER);
+        this.deposit.setInnerPosition(Deposit.OPEN_INNER);
     }
 
     @Override
