@@ -4,10 +4,10 @@ import com.arcrobotics.ftclib.command.CommandBase;
 
 import org.firstinspires.ftc.teamcode.subsystems.Arm;
 
-public class ArmAutoInit extends CommandBase {
+public class ArmAccepting extends CommandBase {
     private final Arm arm;
 
-    public ArmAutoInit(Arm arm) {
+    public ArmAccepting(Arm arm) {
         this.arm = arm;
 
         super.addRequirements(this.arm);
@@ -15,7 +15,7 @@ public class ArmAutoInit extends CommandBase {
 
     @Override
     public void initialize() {
-        this.arm.setPosition(Arm.AUTO_INIT_POS);
+        this.arm.setPosition(Arm.ACCEPTING_POS);
     }
 
     @Override

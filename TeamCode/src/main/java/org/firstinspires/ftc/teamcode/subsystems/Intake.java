@@ -9,10 +9,9 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 @Config
 public class Intake extends Subsystem {
-    public static double UP_POS = .9;
-    public static double DOWN_POS = .28;
-    public static double STACK_POS = .35;
-    public static double IDLE_POS = .65;
+    public static double ACCEPTING_POS = .35;
+    public static double READY_POS = .65;
+
     private final DcMotorEx intake;
     private final Servo intakeRight, intakeLeft;
     private double power;
@@ -28,7 +27,7 @@ public class Intake extends Subsystem {
         this.intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         this.intake.setDirection(DcMotorEx.Direction.REVERSE);
 
-        this.setPosition(Intake.IDLE_POS);
+        this.setPosition(0.9);
     }
 
     @Override

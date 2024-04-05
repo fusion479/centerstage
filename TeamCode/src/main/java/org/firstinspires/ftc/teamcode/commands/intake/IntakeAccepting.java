@@ -1,13 +1,14 @@
 package org.firstinspires.ftc.teamcode.commands.intake;
 
+
 import com.arcrobotics.ftclib.command.CommandBase;
 
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
 
-public class IntakeStack extends CommandBase {
+public class IntakeAccepting extends CommandBase {
     private final Intake intake;
 
-    public IntakeStack(final Intake intake) {
+    public IntakeAccepting(final Intake intake) {
         this.intake = intake;
 
         super.addRequirements(this.intake);
@@ -15,7 +16,7 @@ public class IntakeStack extends CommandBase {
 
     @Override
     public void initialize() {
-        this.intake.setPosition(Intake.STACK_POS);
+        this.intake.setPosition(Intake.ACCEPTING_POS);
     }
 
     @Override

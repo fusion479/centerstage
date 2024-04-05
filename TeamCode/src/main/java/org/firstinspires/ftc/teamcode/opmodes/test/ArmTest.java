@@ -8,8 +8,8 @@ import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.commands.arm.ArmDown;
-import org.firstinspires.ftc.teamcode.commands.arm.ArmUp;
+import org.firstinspires.ftc.teamcode.commands.arm.ArmAccepting;
+import org.firstinspires.ftc.teamcode.commands.arm.ArmScore;
 import org.firstinspires.ftc.teamcode.subsystems.Arm;
 
 
@@ -25,9 +25,9 @@ public class ArmTest extends CommandOpMode {
         this.arm = new Arm(super.hardwareMap, this.multipleTelemetry);
         this.gamepad = new GamepadEx(gamepad1);
         this.gamepad.getGamepadButton(GamepadKeys.Button.A)
-                .whenPressed(new ArmUp(this.arm));
+                .whenPressed(new ArmScore(this.arm));
         this.gamepad.getGamepadButton(GamepadKeys.Button.B)
-                .whenPressed(new ArmDown(this.arm));
+                .whenPressed(new ArmAccepting(this.arm));
     }
 
     @Override

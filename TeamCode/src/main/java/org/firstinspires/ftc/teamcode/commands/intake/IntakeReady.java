@@ -4,10 +4,10 @@ import com.arcrobotics.ftclib.command.CommandBase;
 
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
 
-public class IntakeIdle extends CommandBase {
+public class IntakeReady extends CommandBase {
     private final Intake intake;
 
-    public IntakeIdle(final Intake intake) {
+    public IntakeReady(final Intake intake) {
         this.intake = intake;
 
         super.addRequirements(this.intake);
@@ -15,7 +15,7 @@ public class IntakeIdle extends CommandBase {
 
     @Override
     public void initialize() {
-        this.intake.setPosition(Intake.IDLE_POS);
+        this.intake.setPosition(Intake.READY_POS);
     }
 
     @Override

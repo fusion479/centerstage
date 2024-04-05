@@ -7,18 +7,16 @@ import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.commands.arm.ArmDown;
-import org.firstinspires.ftc.teamcode.commands.arm.ArmUp;
+import org.firstinspires.ftc.teamcode.commands.arm.ArmAccepting;
+import org.firstinspires.ftc.teamcode.commands.arm.ArmScore;
 import org.firstinspires.ftc.teamcode.commands.deposit.DepositAccepting;
-import org.firstinspires.ftc.teamcode.commands.deposit.DepositIdle;
 import org.firstinspires.ftc.teamcode.commands.deposit.DepositReady;
 import org.firstinspires.ftc.teamcode.commands.deposit.DepositScore;
 import org.firstinspires.ftc.teamcode.commands.deposit.LockOuter;
 import org.firstinspires.ftc.teamcode.commands.deposit.locks.OpenInner;
 import org.firstinspires.ftc.teamcode.commands.deposit.locks.OpenOuter;
 import org.firstinspires.ftc.teamcode.commands.drivetrain.ManualDrive;
-import org.firstinspires.ftc.teamcode.commands.intake.IntakeDown;
-import org.firstinspires.ftc.teamcode.commands.intake.IntakeIdle;
+import org.firstinspires.ftc.teamcode.commands.intake.IntakeReady;
 import org.firstinspires.ftc.teamcode.commands.launcher.Idle;
 import org.firstinspires.ftc.teamcode.commands.launcher.Launch;
 import org.firstinspires.ftc.teamcode.commands.lift.BottomLift;
@@ -70,16 +68,16 @@ public class CommandRobot extends Robot {
         this.gamepad1.getGamepadButton(GamepadKeys.Button.A)
                 .toggleWhenPressed(new SequentialCommandGroup(
                         new BottomLift(this.lift),
-                        new IntakeDown(this.intake),
-                        new ArmDown(this.arm),
+                        new IntakeReady(this.intake),
+                        new ArmAccepting(this.arm),
                         new DepositReady(this.deposit),
                         new OpenInner(this.deposit),
                         new OpenOuter(this.deposit),
                         new DepositAccepting(this.deposit)
                 ), new SequentialCommandGroup(
                         new BottomLift(this.lift),
-                        new DepositIdle(this.deposit),
-                        new IntakeIdle(this.intake)
+                        new DepositReady(this.deposit),
+                        new IntakeReady(this.intake)
                 ));
 
 
@@ -87,25 +85,25 @@ public class CommandRobot extends Robot {
         this.gamepad1.getGamepadButton(GamepadKeys.Button.B)
                 .whenPressed(new SequentialCommandGroup(
                         new LowLift(this.lift),
-                        new ArmUp(this.arm),
+                        new ArmScore(this.arm),
                         new DepositScore(this.deposit),
-                        new IntakeIdle(this.intake)
+                        new IntakeReady(this.intake)
                 ));
         // LIFT HIGH
         this.gamepad1.getGamepadButton(GamepadKeys.Button.X)
                 .whenPressed(new SequentialCommandGroup(
                         new HighLift(this.lift),
-                        new ArmUp(this.arm),
+                        new ArmScore(this.arm),
                         new DepositScore(this.deposit),
-                        new IntakeIdle(this.intake)));
+                        new IntakeReady(this.intake)));
 
         // LIFT MEDIUM
         this.gamepad1.getGamepadButton(GamepadKeys.Button.X)
                 .whenPressed(new SequentialCommandGroup(
                         new MediumLift(this.lift),
-                        new ArmUp(this.arm),
+                        new ArmScore(this.arm),
                         new DepositScore(this.deposit),
-                        new IntakeIdle(this.intake)));
+                        new IntakeReady(this.intake)));
 
         // LIFT UP A LITTLE
         this.gamepad1.getGamepadButton(GamepadKeys.Button.DPAD_UP)

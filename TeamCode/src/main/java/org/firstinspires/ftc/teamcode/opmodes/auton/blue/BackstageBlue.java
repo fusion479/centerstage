@@ -8,7 +8,7 @@ import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-import org.firstinspires.ftc.teamcode.commands.arm.ArmUp;
+import org.firstinspires.ftc.teamcode.commands.arm.ArmScore;
 import org.firstinspires.ftc.teamcode.commands.deposit.DepositScore;
 import org.firstinspires.ftc.teamcode.subsystems.Arm;
 import org.firstinspires.ftc.teamcode.subsystems.Deposit;
@@ -46,7 +46,7 @@ public class BackstageBlue extends CommandOpMode {
             Actions.runBlocking(
                     new CommandGroupAction(
                             new SequentialCommandGroup(
-                                    new ArmUp(this.arm),
+                                    new ArmScore(this.arm),
                                     new DepositScore(this.deposit)
                             )
                     )

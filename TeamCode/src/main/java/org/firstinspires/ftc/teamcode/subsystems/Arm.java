@@ -7,11 +7,10 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 @Config
 public class Arm extends Subsystem {
-    public static double UP_POS = 0.05;
+    public static double SCORE_POS = 0.05;
     public static double READY_POS = 0.61;
-    public static double DOWN_POS = 0.7;
-    public static double CLIMB_POS = 0.26;
-    public static double AUTO_INIT_POS = .6;
+    public static double ACCEPTING_POS = 0.7;
+
     private final Servo leftServo, rightServo;
 
     public Arm(final HardwareMap hwMap, final MultipleTelemetry telemetry) {
@@ -20,7 +19,7 @@ public class Arm extends Subsystem {
         this.leftServo = hwMap.get(Servo.class, "armLeft");
         this.rightServo = hwMap.get(Servo.class, "armRight");
 
-        this.setPosition(Arm.DOWN_POS);
+        this.setPosition(0.6);
     }
 
     public void setPosition(double position) {

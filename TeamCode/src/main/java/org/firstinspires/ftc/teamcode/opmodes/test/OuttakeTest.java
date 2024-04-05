@@ -10,11 +10,11 @@ import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.commands.arm.ArmDown;
+import org.firstinspires.ftc.teamcode.commands.arm.ArmAccepting;
 import org.firstinspires.ftc.teamcode.commands.arm.ArmReady;
-import org.firstinspires.ftc.teamcode.commands.arm.ArmUp;
+import org.firstinspires.ftc.teamcode.commands.arm.ArmScore;
 import org.firstinspires.ftc.teamcode.commands.deposit.DepositAccepting;
-import org.firstinspires.ftc.teamcode.commands.deposit.DepositIdle;
+import org.firstinspires.ftc.teamcode.commands.deposit.DepositReady;
 import org.firstinspires.ftc.teamcode.commands.deposit.DepositScore;
 import org.firstinspires.ftc.teamcode.subsystems.Arm;
 import org.firstinspires.ftc.teamcode.subsystems.Deposit;
@@ -48,11 +48,11 @@ public class OuttakeTest extends CommandOpMode {
 
     public void configureCommands() {
         this.gamepad.getGamepadButton(GamepadKeys.Button.A)
-                .whenPressed(new ParallelCommandGroup(new ArmUp(this.arm), new DepositScore(this.deposit)));
+                .whenPressed(new ParallelCommandGroup(new ArmScore(this.arm), new DepositScore(this.deposit)));
         this.gamepad.getGamepadButton(GamepadKeys.Button.B)
-                .whenPressed(new ParallelRaceGroup(new ArmReady(this.arm), new DepositIdle(this.deposit)));
+                .whenPressed(new ParallelRaceGroup(new ArmReady(this.arm), new DepositReady(this.deposit)));
         this.gamepad.getGamepadButton(GamepadKeys.Button.X)
-                .whenPressed(new ParallelCommandGroup(new ArmDown(this.arm), new DepositAccepting(this.deposit)));
+                .whenPressed(new ParallelCommandGroup(new ArmAccepting(this.arm), new DepositAccepting(this.deposit)));
     }
 
     @Override

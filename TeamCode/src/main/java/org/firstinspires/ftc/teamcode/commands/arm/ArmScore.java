@@ -4,10 +4,10 @@ import com.arcrobotics.ftclib.command.CommandBase;
 
 import org.firstinspires.ftc.teamcode.subsystems.Arm;
 
-public class ArmClimb extends CommandBase {
+public class ArmScore extends CommandBase {
     private final Arm arm;
 
-    public ArmClimb(Arm arm) {
+    public ArmScore(Arm arm) {
         this.arm = arm;
 
         super.addRequirements(this.arm);
@@ -15,7 +15,7 @@ public class ArmClimb extends CommandBase {
 
     @Override
     public void initialize() {
-        this.arm.setPosition(Arm.CLIMB_POS);
+        this.arm.setPosition(Arm.SCORE_POS);
     }
 
     @Override

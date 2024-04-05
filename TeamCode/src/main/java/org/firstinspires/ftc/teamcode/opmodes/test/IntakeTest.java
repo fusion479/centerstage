@@ -8,9 +8,8 @@ import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.commands.intake.IntakeDown;
-import org.firstinspires.ftc.teamcode.commands.intake.IntakeIdle;
-import org.firstinspires.ftc.teamcode.commands.intake.IntakeUp;
+import org.firstinspires.ftc.teamcode.commands.intake.IntakeAccepting;
+import org.firstinspires.ftc.teamcode.commands.intake.IntakeReady;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.utils.GamepadTrigger;
 
@@ -28,12 +27,10 @@ public class IntakeTest extends CommandOpMode {
         this.intake = new Intake(this.hardwareMap, this.multipleTelemetry);
         this.gamepad = new GamepadEx(gamepad1);
 
-        this.gamepad.getGamepadButton(GamepadKeys.Button.A)
-                .whenPressed(new IntakeUp(this.intake));
         this.gamepad.getGamepadButton(GamepadKeys.Button.B)
-                .whenPressed(new IntakeDown(this.intake));
+                .whenPressed(new IntakeReady(this.intake));
         this.gamepad.getGamepadButton(GamepadKeys.Button.Y)
-                .whenPressed(new IntakeIdle(this.intake));
+                .whenPressed(new IntakeAccepting(this.intake));
 
         this.intakeAccept = new GamepadTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER, this.intake::setPower, this.gamepad);
         this.intakeReject = new GamepadTrigger(GamepadKeys.Trigger.LEFT_TRIGGER, d -> this.intake.setPower(-d), this.gamepad);
