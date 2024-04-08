@@ -50,12 +50,12 @@ public class CommandRobot extends Robot {
     private final GamepadTrigger intakeReject;
 
     public CommandRobot(final HardwareMap hwMap, final GamepadEx gamepad1, final GamepadEx gamepad2, final MultipleTelemetry telemetry) { // Create different bots for teleop, testing, and auton?
+        this.deposit = new Deposit(hwMap, telemetry);
         this.arm = new Arm(hwMap, telemetry);
         this.drive = new Drivetrain(hwMap, telemetry);
         this.lift = new Lift(hwMap, telemetry);
         this.launcher = new Launcher(hwMap, telemetry);
         this.intake = new Intake(hwMap, telemetry);
-        this.deposit = new Deposit(hwMap, telemetry);
 
         this.gamepad1 = gamepad1;
         this.gamepad2 = gamepad2;
@@ -71,13 +71,16 @@ public class CommandRobot extends Robot {
     public void configureCommands() {
         this.gamepad1.getGamepadButton(GamepadKeys.Button.A)
                 .toggleWhenPressed(new SequentialCommandGroup(
-                        new BottomLift(this.lift),
-                        new IntakeAccepting(this.intake),
+                        new LowLift(this.lift),
+                        new WaitCommand(75),
                         new ArmAccepting(this.arm),
                         new DepositReady(this.deposit),
+                        new WaitCommand(75),
+                        new IntakeAccepting(this.intake),
                         new OpenInner(this.deposit),
                         new OpenOuter(this.deposit),
-                        new DepositAccepting(this.deposit)
+                        new DepositAccepting(this.deposit),
+                        new BottomLift(this.lift)
                 ), new SequentialCommandGroup(
                         new LockInner(this.deposit),
                         new LockOuter(this.deposit),
@@ -130,7 +133,7 @@ public class CommandRobot extends Robot {
                         new LiftRaise(this.lift)));
 
         // LIFT DOWN A LITTLE
-        this.gamepad1.getGamepadButton(GamepadKeys.Button.DPAD_UP)
+        this.gamepad1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
                 .whenPressed(new SequentialCommandGroup(
                         new LockOuter(this.deposit),
                         new LockInner(this.deposit),
