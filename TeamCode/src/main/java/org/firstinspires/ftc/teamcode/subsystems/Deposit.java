@@ -12,7 +12,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 @Config
 public class Deposit extends Subsystem {
-    public static double ACCEPTING_POS = 0.75;
+    public static double ACCEPTING_POS = 0.78;
     public static double READY_POS = 0.58;
     public static double SCORE_POS = 0.35;
 

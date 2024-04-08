@@ -40,7 +40,7 @@ public class LiftTest extends CommandOpMode {
         this.gamepad.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
                 .whenPressed(new LiftLower(this.lift));
         this.gamepad.getGamepadButton(GamepadKeys.Button.DPAD_UP)
-                .whenPressed(new LiftRaise(this.lift, this.multipleTelemetry));
+                .whenPressed(new LiftRaise(this.lift));
     }
 
     @Override
