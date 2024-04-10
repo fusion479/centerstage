@@ -49,6 +49,14 @@ public class Deposit extends Subsystem {
 
         this.setPosition(0.1);
     }
+    @Override
+    public void periodic() {
+        if (hasPixel()) {
+            setInnerPosition(LOCK_INNER);
+            setOuterPosition(LOCK_OUTER);
+        }
+        // This method will be called once per scheduler run
+    }
 
     public void setPosition(double position) {
         this.pivot.setPosition(position);
@@ -83,4 +91,6 @@ public class Deposit extends Subsystem {
     public double getLowPass(double value, LowPassFilter filter) {
         return filter.estimate(value);
     }
+
+
 }
