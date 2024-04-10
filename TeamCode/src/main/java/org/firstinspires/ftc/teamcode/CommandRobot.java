@@ -183,6 +183,8 @@ public class CommandRobot extends Robot {
 
     public void senseColor() {
         if (this.deposit.hasPixel() && !this.autoLocked && timer.milliseconds() >= 300) {
+            // new LockInner(this.deposit).schedule();
+            // new LockOuter(this.deposit).schedule();
             this.deposit.setInnerPosition(Deposit.LOCK_INNER);
             this.deposit.setOuterPosition(Deposit.LOCK_OUTER);
             this.autoLocked = true;
