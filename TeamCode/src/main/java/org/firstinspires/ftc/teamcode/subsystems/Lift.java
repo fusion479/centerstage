@@ -14,7 +14,7 @@ public class Lift extends Subsystem {
     public static int BOTTOM_POS = 0;
     public static int LOW_POS = 325;
     public static int MEDIUM_POS = 1000;
-    public static int INCREMENT = 100;
+    public static int INCREMENT = 200;
 
     public static int HIGH_POS = 1600;
     public static double kP = 0.007;
@@ -52,6 +52,10 @@ public class Lift extends Subsystem {
         this.rightMotor.setPower(power);
 
         super.getTelemetry().addData("currPos", this.leftMotor.getCurrentPosition());
+    }
+
+    public boolean isFinished() {
+        return this.controller.getLastError() < 0.1;
     }
 
     public void setPower(double power) {

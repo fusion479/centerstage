@@ -12,7 +12,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 @Config
 public class Deposit extends Subsystem {
-    public static double ACCEPTING_POS = 0.95;
+    public static double ACCEPTING_POS = 0.85;
     public static double READY_POS = 0.7;
     public static double SCORE_POS = 0.42;
 
@@ -28,10 +28,11 @@ public class Deposit extends Subsystem {
 
 
     private final Servo pivot, inner, outer;
-    ColorRangeSensor innerSensor, outerSensor;
-    LowPassFilter lowPassFilterR = new LowPassFilter(RED_GAIN);
-    LowPassFilter lowPassFilterB = new LowPassFilter(BLUE_GAIN);
-    LowPassFilter lowPassFilterG = new LowPassFilter(GREEN_GAIN);
+    private final ColorRangeSensor innerSensor;
+    private final ColorRangeSensor outerSensor;
+    private final LowPassFilter lowPassFilterR = new LowPassFilter(RED_GAIN);
+    private final LowPassFilter lowPassFilterB = new LowPassFilter(BLUE_GAIN);
+    private final LowPassFilter lowPassFilterG = new LowPassFilter(GREEN_GAIN);
 
     public Deposit(final HardwareMap hwMap, final MultipleTelemetry telemetry) {
         super(telemetry);
@@ -39,6 +40,7 @@ public class Deposit extends Subsystem {
         this.pivot = hwMap.get(Servo.class, "depositPivot");
         this.inner = hwMap.get(Servo.class, "innerPixel");
         this.outer = hwMap.get(Servo.class, "outerPixel");
+
         innerSensor = hwMap.get(ColorRangeSensor.class, "colorInner");
         outerSensor = hwMap.get(ColorRangeSensor.class, "colorOuter");
 

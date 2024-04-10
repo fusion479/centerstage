@@ -21,6 +21,6 @@ public class MediumLift extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return true;
+        return this.lift.isFinished();
     }
 }

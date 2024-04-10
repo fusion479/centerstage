@@ -39,6 +39,7 @@ public class Main extends CommandOpMode {
             CommandScheduler.getInstance().run();
 
             this.robot.updateTriggers();
+            this.robot.senseColor();
 
             this.multipleTelemetry.update();
         }
