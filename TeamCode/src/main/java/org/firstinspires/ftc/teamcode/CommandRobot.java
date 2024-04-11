@@ -77,7 +77,6 @@ public class CommandRobot extends Robot {
                 .toggleWhenPressed(new SequentialCommandGroup(
                         new LowLift(this.lift),
                         new ArmAccepting(this.arm),
-                        new DepositReady(this.deposit),
                         new IntakeAccepting(this.intake),
                         new OpenInner(this.deposit),
                         new OpenOuter(this.deposit),
@@ -147,7 +146,7 @@ public class CommandRobot extends Robot {
         // SCORE PIXEL ONE
         this.gamepad1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
                 .whenPressed(new SequentialCommandGroup(
-                        new InstantCommand(() -> this.deposit.setOuterPosition(Deposit.OPEN_OUTER)),
+                        new OpenOuter(this.deposit),
                         new WaitCommand(175),
                         new LiftRaise(this.lift),
                         new InstantCommand(() -> {
@@ -183,10 +182,8 @@ public class CommandRobot extends Robot {
 
     public void senseColor() {
         if (this.deposit.hasPixel() && !this.autoLocked && timer.milliseconds() >= 300) {
-            // new LockInner(this.deposit).schedule();
-            // new LockOuter(this.deposit).schedule();
-            this.deposit.setInnerPosition(Deposit.LOCK_INNER);
-            this.deposit.setOuterPosition(Deposit.LOCK_OUTER);
+            new LockInner(this.deposit).schedule();
+            new LockOuter(this.deposit).schedule();
             this.autoLocked = true;
         }
     }

@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class Arm extends Subsystem {
     public static double SCORE_POS = 0.05;
     public static double READY_POS = 0.61;
-    public static double ACCEPTING_POS = 0.7;
+    public static double ACCEPTING_POS = 0.62;
 
     private final Servo leftServo, rightServo;
 
