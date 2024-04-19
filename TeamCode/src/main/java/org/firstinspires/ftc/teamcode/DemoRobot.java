@@ -20,6 +20,7 @@ import org.firstinspires.ftc.teamcode.commands.deposit.LockOuter;
 import org.firstinspires.ftc.teamcode.commands.deposit.locks.LockInner;
 import org.firstinspires.ftc.teamcode.commands.deposit.locks.OpenInner;
 import org.firstinspires.ftc.teamcode.commands.deposit.locks.OpenOuter;
+import org.firstinspires.ftc.teamcode.commands.drivetrain.DemoDrive;
 import org.firstinspires.ftc.teamcode.commands.drivetrain.ManualDrive;
 import org.firstinspires.ftc.teamcode.commands.intake.IntakeAccepting;
 import org.firstinspires.ftc.teamcode.commands.intake.IntakeReady;
@@ -32,6 +33,7 @@ import org.firstinspires.ftc.teamcode.commands.lift.LiftRaise;
 import org.firstinspires.ftc.teamcode.commands.lift.LowLift;
 import org.firstinspires.ftc.teamcode.commands.lift.MediumLift;
 import org.firstinspires.ftc.teamcode.subsystems.Arm;
+import org.firstinspires.ftc.teamcode.subsystems.DemoDrivetrain;
 import org.firstinspires.ftc.teamcode.subsystems.Deposit;
 import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
@@ -39,9 +41,9 @@ import org.firstinspires.ftc.teamcode.subsystems.Launcher;
 import org.firstinspires.ftc.teamcode.subsystems.Lift;
 import org.firstinspires.ftc.teamcode.utils.GamepadTrigger;
 
-public class CommandRobot extends Robot {
+public class DemoRobot extends Robot {
     private final Arm arm;
-    private final Drivetrain drive;
+    private final DemoDrivetrain drive;
     private final Lift lift;
     private final Launcher launcher;
     private final Intake intake;
@@ -53,10 +55,10 @@ public class CommandRobot extends Robot {
     private final ElapsedTime timer = new ElapsedTime();
     private boolean autoLocked = false;
 
-    public CommandRobot(final HardwareMap hwMap, final GamepadEx gamepad1, final GamepadEx gamepad2, final MultipleTelemetry telemetry) { // Create different bots for teleop, testing, and auton?
+    public DemoRobot(final HardwareMap hwMap, final GamepadEx gamepad1, final GamepadEx gamepad2, final MultipleTelemetry telemetry) { // Create different bots for teleop, testing, and auton?
         this.deposit = new Deposit(hwMap, telemetry);
         this.arm = new Arm(hwMap, telemetry);
-        this.drive = new Drivetrain(hwMap, telemetry);
+        this.drive = new DemoDrivetrain(hwMap, telemetry);
         this.lift = new Lift(hwMap, telemetry);
         this.launcher = new Launcher(hwMap, telemetry);
         this.intake = new Intake(hwMap, telemetry);
@@ -67,7 +69,7 @@ public class CommandRobot extends Robot {
         this.intakeAccept = new GamepadTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER, this.intake::setPower, this.gamepad1);
         this.intakeReject = new GamepadTrigger(GamepadKeys.Trigger.LEFT_TRIGGER, d -> this.intake.setPower(-d), this.gamepad1);
 
-        this.drive.setDefaultCommand(new ManualDrive(this.drive, this.gamepad1));
+        this.drive.setDefaultCommand(new DemoDrive(this.drive, this.gamepad1));
 
         this.configureCommands();
     }
