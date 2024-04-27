@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.commands.deposit;
+package org.firstinspires.ftc.teamcode.commands.deposit.locks;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 
@@ -9,8 +9,6 @@ public class LockOuter extends CommandBase {
 
     public LockOuter(final Deposit deposit) {
         this.deposit = deposit;
-
-        super.addRequirements(this.deposit);
     }
 
     @Override

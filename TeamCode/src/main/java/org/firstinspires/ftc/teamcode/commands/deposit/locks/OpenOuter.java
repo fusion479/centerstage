@@ -9,8 +9,6 @@ public class OpenOuter extends CommandBase {
 
     public OpenOuter(final Deposit deposit) {
         this.deposit = deposit;
-
-        super.addRequirements(this.deposit);
     }
 
     @Override

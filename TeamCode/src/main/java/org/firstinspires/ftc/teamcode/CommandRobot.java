@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.arcrobotics.ftclib.command.InstantCommand;
+import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.Robot;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
@@ -16,8 +17,8 @@ import org.firstinspires.ftc.teamcode.commands.arm.ArmScore;
 import org.firstinspires.ftc.teamcode.commands.deposit.DepositAccepting;
 import org.firstinspires.ftc.teamcode.commands.deposit.DepositReady;
 import org.firstinspires.ftc.teamcode.commands.deposit.DepositScore;
-import org.firstinspires.ftc.teamcode.commands.deposit.LockOuter;
 import org.firstinspires.ftc.teamcode.commands.deposit.locks.LockInner;
+import org.firstinspires.ftc.teamcode.commands.deposit.locks.LockOuter;
 import org.firstinspires.ftc.teamcode.commands.deposit.locks.OpenInner;
 import org.firstinspires.ftc.teamcode.commands.deposit.locks.OpenOuter;
 import org.firstinspires.ftc.teamcode.commands.drivetrain.ManualDrive;
@@ -95,7 +96,7 @@ public class CommandRobot extends Robot {
 
         // LIFT LOW
         this.gamepad1.getGamepadButton(GamepadKeys.Button.B)
-                .whenPressed(new SequentialCommandGroup(
+                .whenPressed(new ParallelCommandGroup(
                         new LockOuter(this.deposit),
                         new LockInner(this.deposit),
                         new LowLift(this.lift),
@@ -105,7 +106,7 @@ public class CommandRobot extends Robot {
                 ));
         // LIFT HIGH
         this.gamepad1.getGamepadButton(GamepadKeys.Button.Y)
-                .whenPressed(new SequentialCommandGroup(
+                .whenPressed(new ParallelCommandGroup(
                         new LockOuter(this.deposit),
                         new LockInner(this.deposit),
                         new HighLift(this.lift),
@@ -115,7 +116,7 @@ public class CommandRobot extends Robot {
 
         // LIFT MEDIUM
         this.gamepad1.getGamepadButton(GamepadKeys.Button.X)
-                .whenPressed(new SequentialCommandGroup(
+                .whenPressed(new ParallelCommandGroup(
                         new LockOuter(this.deposit),
                         new LockInner(this.deposit),
                         new MediumLift(this.lift),

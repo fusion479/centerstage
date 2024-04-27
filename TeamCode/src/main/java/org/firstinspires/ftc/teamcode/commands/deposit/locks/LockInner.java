@@ -9,8 +9,6 @@ public class LockInner extends CommandBase {
 
     public LockInner(final Deposit deposit) {
         this.deposit = deposit;
-
-        super.addRequirements(this.deposit);
     }
 
     @Override

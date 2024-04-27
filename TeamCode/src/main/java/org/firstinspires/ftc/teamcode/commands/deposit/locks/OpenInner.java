@@ -9,8 +9,6 @@ public class OpenInner extends CommandBase {
 
     public OpenInner(final Deposit deposit) {
         this.deposit = deposit;
-
-        super.addRequirements(this.deposit);
     }
 
     @Override
