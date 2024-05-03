@@ -1,9 +1,7 @@
 package org.firstinspires.ftc.teamcode.subsystems.camera;
 
-import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Rect;
@@ -33,77 +31,60 @@ public class Pipeline extends OpenCvPipeline {
     public static int leftRectX = 0;
     public static int leftRectY = 235;
 
-    public static int centerRectX = 235;
-    public static int centerRectY = 210;
-
     public static double tolerance = 0.3;
-
-    Camera.Color color;
-    FtcDashboard dashboard = FtcDashboard.getInstance();
-    Telemetry telemetry = dashboard.getTelemetry();
-    Mat mat = new Mat();
-    Scalar lowHSV;
-    Scalar highHSV;
-    Rect RIGHT_RECT, CENTER_RECT, LEFT_RECT;
-    double rightRegionPercent, centerRegionPercent, leftRegionPercent;
+    private final Camera.Color color;
     int region;
+    private Mat mat;
+    private Scalar lowFilter, highFilter;
+    private Rect RIGHT_RECT, LEFT_RECT;
 
-    public Pipeline(Camera.Color colorChoice) {
-        this.color = colorChoice;
+    public Pipeline(Camera.Color color) {
+        this.color = color;
     }
 
     @Override
     public Mat processFrame(Mat input) {
+        // turn image to HSV to reduce illumination noise
         Imgproc.cvtColor(input, mat, Imgproc.COLOR_RGB2HSV);
 
         if (color == Camera.Color.RED) {
-            lowHSV = new Scalar(redLowHSVR, redLowHSVG, redLowHSVB);
-            highHSV = new Scalar(redHighHSVR, redHighHSVG, redHighHSVB);
-        }
-        if (color == Camera.Color.BLUE) {
-            lowHSV = new Scalar(blueLowHSVR, blueLowHSVG, blueLowHSVB);
-            highHSV = new Scalar(blueHighHSVR, blueHighHSVG, blueHighHSVB);
+            lowFilter = new Scalar(redLowHSVR, redLowHSVG, redLowHSVB);
+            highFilter = new Scalar(redHighHSVR, redHighHSVG, redHighHSVB);
+        } else {
+            lowFilter = new Scalar(blueLowHSVR, blueLowHSVG, blueLowHSVB);
+            highFilter = new Scalar(blueHighHSVR, blueHighHSVG, blueHighHSVB);
         }
 
         RIGHT_RECT = new Rect(rightRectX, rightRectY, 75, 125);
-        CENTER_RECT = new Rect(centerRectX, centerRectY, 125, 125);
         LEFT_RECT = new Rect(leftRectX, leftRectY, 75, 125);
 
-        Core.inRange(mat, lowHSV, highHSV, mat);
+        Core.inRange(mat, lowFilter, highFilter, mat);
 
         // submats for the boxes, these are the regions that'll detect the color
         Mat rightBox = mat.submat(RIGHT_RECT);
-        Mat centerBox = mat.submat(CENTER_RECT);
         Mat leftBox = mat.submat(LEFT_RECT);
-
-        // how much in each region is white aka the color we filtered through the mask
-        rightRegionPercent = Core.sumElems(rightBox).val[0] / RIGHT_RECT.area() / 255;
-        centerRegionPercent = Core.sumElems(centerBox).val[0] / CENTER_RECT.area() / 255;
-        leftRegionPercent = Core.sumElems(leftBox).val[0] / LEFT_RECT.area() / 255;
-
-        telemetry.addData("right region", rightRegionPercent);
-        telemetry.addData("center region", centerRegionPercent);
-        telemetry.addData("left region", leftRegionPercent);
-        telemetry.update();
 
         Imgproc.rectangle(mat, LEFT_RECT, new Scalar(60, 255, 255), 5);
         Imgproc.rectangle(mat, RIGHT_RECT, new Scalar(60, 255, 255), 5);
-        Imgproc.rectangle(mat, CENTER_RECT, new Scalar(60, 255, 255), 5);
 
-        if (leftRegionPercent > tolerance && leftRegionPercent > centerRegionPercent && leftRegionPercent > rightRegionPercent) {
+        /*
+            region 1: left
+            region 2: center
+            region 3: right
+        */
+
+        if (Core.sumElems(leftBox).val[0] / LEFT_RECT.area() / 255 > tolerance) {
             Imgproc.rectangle(mat, LEFT_RECT, new Scalar(60, 255, 255), 10);
             region = 1;
-        } else if (rightRegionPercent > tolerance && rightRegionPercent > centerRegionPercent && rightRegionPercent > leftRegionPercent) {
+        } else if (Core.sumElems(rightBox).val[0] / RIGHT_RECT.area() / 255 > tolerance) {
             Imgproc.rectangle(mat, RIGHT_RECT, new Scalar(60, 255, 255), 10);
             region = 3;
         } else {
-            Imgproc.rectangle(mat, CENTER_RECT, new Scalar(60, 255, 255), 10);
             region = 2;
         }
 
         rightBox.release();
         leftBox.release();
-        centerBox.release();
 
         return mat;
     }
