@@ -7,11 +7,11 @@ import org.firstinspires.ftc.teamcode.roadrunner.MecanumDrive;
 import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.subsystems.camera.Camera;
 
-public class AutonTrajectories {
+public class Trajectories {
     private final Camera.Color color;
     private final MecanumDrive drive;
 
-    public AutonTrajectories(Camera.Color color, Drivetrain drivetrain) {
+    public Trajectories(Camera.Color color, Drivetrain drivetrain) {
         this.color = color;
         this.drive = drivetrain.drive;
     }

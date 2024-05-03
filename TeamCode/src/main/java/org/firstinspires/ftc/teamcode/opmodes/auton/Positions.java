@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.opmodes.auton;
 
 import com.acmerobotics.roadrunner.Pose2d;
 
-public class AutonPositions {
+public class Positions {
     public interface CLOSE {
         Pose2d START = new Pose2d(0, 0, 0);
         Pose2d BACKDROP_MID = new Pose2d(0, 0, 0);
