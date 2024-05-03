@@ -16,12 +16,11 @@ import org.firstinspires.ftc.teamcode.commands.arm.ArmScore;
 import org.firstinspires.ftc.teamcode.commands.deposit.DepositAccepting;
 import org.firstinspires.ftc.teamcode.commands.deposit.DepositReady;
 import org.firstinspires.ftc.teamcode.commands.deposit.DepositScore;
-import org.firstinspires.ftc.teamcode.commands.deposit.LockOuter;
 import org.firstinspires.ftc.teamcode.commands.deposit.locks.LockInner;
+import org.firstinspires.ftc.teamcode.commands.deposit.locks.LockOuter;
 import org.firstinspires.ftc.teamcode.commands.deposit.locks.OpenInner;
 import org.firstinspires.ftc.teamcode.commands.deposit.locks.OpenOuter;
 import org.firstinspires.ftc.teamcode.commands.drivetrain.DemoDrive;
-import org.firstinspires.ftc.teamcode.commands.drivetrain.ManualDrive;
 import org.firstinspires.ftc.teamcode.commands.intake.IntakeAccepting;
 import org.firstinspires.ftc.teamcode.commands.intake.IntakeReady;
 import org.firstinspires.ftc.teamcode.commands.launcher.Idle;
@@ -35,13 +34,13 @@ import org.firstinspires.ftc.teamcode.commands.lift.MediumLift;
 import org.firstinspires.ftc.teamcode.subsystems.Arm;
 import org.firstinspires.ftc.teamcode.subsystems.DemoDrivetrain;
 import org.firstinspires.ftc.teamcode.subsystems.Deposit;
-import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.Launcher;
 import org.firstinspires.ftc.teamcode.subsystems.Lift;
 import org.firstinspires.ftc.teamcode.utils.GamepadTrigger;
 
 public class DemoRobot extends Robot {
+    final Deposit deposit;
     private final Arm arm;
     private final DemoDrivetrain drive;
     private final Lift lift;
@@ -49,7 +48,6 @@ public class DemoRobot extends Robot {
     private final Intake intake;
     private final GamepadEx gamepad1;
     private final GamepadEx gamepad2;
-    final Deposit deposit;
     private final GamepadTrigger intakeAccept;
     private final GamepadTrigger intakeReject;
     private final ElapsedTime timer = new ElapsedTime();

@@ -4,7 +4,6 @@ import com.ThermalEquilibrium.homeostasis.Filters.FilterAlgorithms.LowPassFilter
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.hardware.ColorRangeSensor;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -63,26 +62,6 @@ public class Deposit extends Subsystem {
     }
 
     public boolean hasPixel() {
-//        return (innerSensor.red() > 200 && outerSensor.red() > 200);
         return (innerSensor.getDistance(DistanceUnit.MM) < THRESHOLD_MM) && (outerSensor.getDistance(DistanceUnit.MM) < THRESHOLD_MM);
     }
-
-    public double redEstimate(ColorSensor s) {
-        return getLowPass(s.red(), lowPassFilterR);
-    }
-
-
-    public double blueEstimate(ColorSensor s) {
-        return getLowPass(s.blue(), lowPassFilterB);
-    }
-
-    public double greenEstimate(ColorSensor s) {
-        return getLowPass(s.green(), lowPassFilterG);
-    }
-
-    public double getLowPass(double value, LowPassFilter filter) {
-        return filter.estimate(value);
-    }
-
-
 }
