@@ -15,7 +15,7 @@ public class MeepMeepTesting {
                 .build();
 
         myBot.runAction(myBot.getDrive().actionBuilder(Positions.FAR.START)
-                .splineTo(Positions.CLOSE.SPIKEMARK_LEFT, Math.toRadians(180))
+                .splineTo(Positions.GENERAL.STACK_TWO.component1(), Math.toRadians(180))
                 .build());
 
         meepMeep.setBackground(MeepMeep.Background.FIELD_CENTERSTAGE_JUICE_DARK)
