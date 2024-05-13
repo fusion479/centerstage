@@ -25,6 +25,11 @@ public class MeepMeepTesting {
                         Math.toRadians(90))
                 .setTangent(0)
                 .splineTo(Positions.modifyPose(Positions.GENERAL.BACKDROP_LEFT, -Constants.ROBOT_LENGTH / 2, 0), Math.toRadians(0))
+                .setTangent(Math.toRadians(270))
+                .splineToSplineHeading(Positions.vectorToPose(Positions.GENERAL.STACK_ONE, Math.toRadians(0)), Math.toRadians(180))
+                        .setTangent(0)
+                .splineToConstantHeading(Positions.modifyPose(Positions.GENERAL.BACKDROP_LEFT, -Constants.ROBOT_LENGTH / 2, 0), Math.toRadians(90))
+//                .splineTo(Positions.modifyPose(Positions.GENERAL.BACKDROP_LEFT, -Constants.ROBOT_LENGTH / 2, 0), Math.toRadians(90))
                 .build());
 
         meepMeep.setBackground(MeepMeep.Background.FIELD_CENTERSTAGE_JUICE_DARK)

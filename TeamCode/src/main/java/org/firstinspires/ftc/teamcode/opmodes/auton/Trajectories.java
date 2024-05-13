@@ -23,12 +23,15 @@ public class Trajectories {
     public class Far {
         // SPIKEMARK
         public Action MID_SPIKEMARK = drive.actionBuilder(drive.pose)
+
                 .build();
 
         public Action RIGHT_SPIKEMARK = drive.actionBuilder(drive.pose)
                 .build();
 
         public Action LEFT_SPIKEMARK = drive.actionBuilder(drive.pose)
+                .setTangent(Math.toRadians(270))
+                .splineToSplineHeading(Positions.vectorToPose(Positions.GENERAL.STACK_ONE, Math.toRadians(0)), Math.toRadians(180))
                 .build();
 
         // BACKDROP
@@ -39,6 +42,8 @@ public class Trajectories {
                 .build();
 
         public Action LEFT_BACKDROP = drive.actionBuilder(drive.pose)
+                .setTangent(0)
+                .splineToConstantHeading(Positions.modifyPose(Positions.GENERAL.BACKDROP_LEFT, -Constants.ROBOT_LENGTH / 2, 0), Math.toRadians(90))
                 .build();
 
         // PARK
