@@ -14,8 +14,17 @@ public class MeepMeepTesting {
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
                 .build();
 
-        myBot.runAction(myBot.getDrive().actionBuilder(Positions.FAR.START)
-                .splineTo(Positions.GENERAL.STACK_TWO.component1(), Math.toRadians(180))
+        myBot.runAction(myBot.getDrive().actionBuilder(Positions.CLOSE.START)
+                .lineToY(50)
+                .splineTo(
+                        Positions.modifyPose(Positions.CLOSE.SPIKEMARK_LEFT, -5, 5),
+                        Math.toRadians(320))
+                .setReversed(true)
+                .splineToLinearHeading(
+                        Positions.vectorToPose(Positions.CLOSE.SPIKEMARK_SETUP, Math.toRadians(0)),
+                        Math.toRadians(90))
+                .setTangent(0)
+                .splineTo(Positions.modifyPose(Positions.GENERAL.BACKDROP_LEFT, -Constants.ROBOT_LENGTH / 2, 0), Math.toRadians(0))
                 .build());
 
         meepMeep.setBackground(MeepMeep.Background.FIELD_CENTERSTAGE_JUICE_DARK)
