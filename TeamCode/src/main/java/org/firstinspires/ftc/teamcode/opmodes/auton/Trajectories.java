@@ -38,19 +38,19 @@ public class Trajectories {
                 .setTangent(160)
                 .splineToLinearHeading(new Pose2d(Positions.modifyPose(Positions.GENERAL.BACKDROP_MID, -Constants.TILE_LENGTH,0).x, Positions.GENERAL.STACK_ONE.y, 0), Math.toRadians(180))
                 .strafeTo(new Vector2d(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH/2, 0).x, Positions.GENERAL.STACK_ONE.y))
-                .lineToX(Positions.modifyPose(Positions.GENERAL.BACKDROP_RIGHT, -Constants.TILE_LENGTH, 0).x)
+                .lineToX(Positions.modifyPose(Positions.GENERAL.BACKDROP_MID, -Constants.TILE_LENGTH, 0).x)
                 .splineToLinearHeading(Positions.vectorToPose(Positions.modifyPose(Positions.GENERAL.BACKDROP_MID, -Constants.ROBOT_LENGTH/2, 0), 0), Math.toRadians(0))
                 .build();
 
         public Action RIGHT_SPIKEMARK = drive.actionBuilder(drive.pose)
-                .lineToY(50)
+                .lineToY(Positions.FAR.SPIKEMARK_SETUP.y)
                 .splineTo(Positions.modifyPose(Positions.FAR.SPIKEMARK_RIGHT, 5, 5), Math.toRadians(220))
                 .setReversed(true)
                 .splineTo(Positions.FAR.SPIKEMARK_SETUP, Math.toRadians(90))
                 .lineToY(Positions.GENERAL.STACK_ONE.y)
                 .turnTo(0)
                 .lineToX(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH/2, 0).x)
-                .lineToX(Positions.modifyPose(Positions.GENERAL.BACKDROP_MID, -Constants.TILE_LENGTH, 0).x)
+                .lineToX(Positions.modifyPose(Positions.GENERAL.BACKDROP_RIGHT, -Constants.TILE_LENGTH, 0).x)
                 .splineToLinearHeading(Positions.vectorToPose(Positions.modifyPose(Positions.GENERAL.BACKDROP_RIGHT, -Constants.ROBOT_LENGTH / 2, 0), 0), Math.toRadians(0))
                 .build();
 
@@ -66,20 +66,14 @@ public class Trajectories {
 
 
         public Action LEFT_SPIKEMARK = drive.actionBuilder(drive.pose)
-                .lineToY(50)
+                .lineToY(Positions.FAR.SPIKEMARK_SETUP.y)
                 .splineTo(Positions.modifyPose(Positions.FAR.SPIKEMARK_LEFT, -5, 5), Math.toRadians(320))
                 .setReversed(true)
                 .splineToLinearHeading(Positions.vectorToPose(Positions.FAR.SPIKEMARK_SETUP, Math.toRadians(0)), Math.toRadians(90))
                 .lineToY(Positions.GENERAL.STACK_ONE.y)
                 .turnTo(0)
                 .lineToX(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH/2, 0).x)
-                .lineToX(Positions.modifyPose(Positions.GENERAL.BACKDROP_MID, -Constants.TILE_LENGTH, 0).x)
-                .splineToLinearHeading(Positions.vectorToPose(Positions.modifyPose(Positions.GENERAL.BACKDROP_LEFT, -Constants.ROBOT_LENGTH/2, 0), 0), Math.toRadians(0))
-                .waitSeconds(1)
-                .setTangent(160)
-                .splineToLinearHeading(new Pose2d(Positions.modifyPose(Positions.GENERAL.BACKDROP_LEFT, -Constants.TILE_LENGTH,0).x, Positions.GENERAL.STACK_ONE.y, 0), Math.toRadians(180))
-                .strafeTo(new Vector2d(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH/2, 0).x, Positions.GENERAL.STACK_ONE.y))
-                .lineToX(Positions.modifyPose(Positions.GENERAL.BACKDROP_LEFT,  -Constants.TILE_LENGTH, 0).x)
+                .lineToX(Positions.modifyPose(Positions.GENERAL.BACKDROP_LEFT, -Constants.TILE_LENGTH, 0).x)
                 .splineToLinearHeading(Positions.vectorToPose(Positions.modifyPose(Positions.GENERAL.BACKDROP_LEFT, -Constants.ROBOT_LENGTH/2, 0), 0), Math.toRadians(0))
                 .build();
 
@@ -91,7 +85,7 @@ public class Trajectories {
                 .strafeTo(new Vector2d(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH/2, 0).x, Positions.GENERAL.STACK_ONE.y))
                 .lineToX(Positions.modifyPose(Positions.GENERAL.BACKDROP_LEFT,  -Constants.TILE_LENGTH, 0).x)
                 .splineToLinearHeading(Positions.vectorToPose(Positions.modifyPose(Positions.GENERAL.BACKDROP_LEFT, -Constants.ROBOT_LENGTH/2, 0), 0), Math.toRadians(0))
-                .build()
+                .build();
 
         // PARK
         public Action PARK = drive.actionBuilder(drive.pose)
