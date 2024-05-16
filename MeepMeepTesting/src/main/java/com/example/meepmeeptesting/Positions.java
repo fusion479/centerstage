@@ -61,7 +61,7 @@ public class Positions {
 
     public interface GENERAL {
         Vector2d STACK_ONE = new Vector2d(
-                -Constants.FIELD_LENGTH + Constants.PIXEL_LENGTH / 2 + 15,
+                -Constants.FIELD_LENGTH + Constants.PIXEL_LENGTH / 2,
                 Constants.STACK_BETWEEN_DISTANCE + Constants.TAPE_WIDTH / 2);
         Vector2d STACK_TWO = new Vector2d(
                 -Constants.FIELD_LENGTH + Constants.PIXEL_LENGTH / 2,
