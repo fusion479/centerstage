@@ -22,8 +22,6 @@ public class Positions {
                 Constants.TILE_LENGTH / 2,
                 Constants.FIELD_LENGTH - Constants.ROBOT_LENGTH / 2,
                 Math.toRadians(270));
-
-
         Vector2d SPIKEMARK_SETUP = new Vector2d(Constants.TILE_LENGTH / 2, 45);
 
         // SPIKEMARKS
@@ -36,6 +34,9 @@ public class Positions {
         Vector2d SPIKEMARK_RIGHT = new Vector2d(
                 0 + Constants.TAPE_WIDTH / 2,
                 Constants.TILE_LENGTH + Constants.SPIKE_TAPE_LENGTH / 2);
+        Vector2d PARK_CLOSE = new Vector2d(
+                Constants.TILE_LENGTH * 2,
+                Constants.TILE_LENGTH * 2.5);
     }
 
     public interface FAR {
@@ -47,7 +48,6 @@ public class Positions {
 
         Vector2d SPIKEMARK_SETUP = new Vector2d(-Constants.TILE_LENGTH - Constants.TILE_LENGTH / 2, 45);
 
-
         Vector2d SPIKEMARK_MID = new Vector2d(
                 START.position.x,
                 Constants.FIELD_LENGTH - Constants.TILE_LENGTH * 2 + Constants.TAPE_WIDTH / 2);
@@ -57,6 +57,9 @@ public class Positions {
         Vector2d SPIKEMARK_RIGHT = new Vector2d(
                 -Constants.TILE_LENGTH * 2 + Constants.TAPE_WIDTH / 2,
                 Constants.TILE_LENGTH + Constants.SPIKE_TAPE_LENGTH / 2);
+        Vector2d PARK_FAR = new Vector2d(
+                Constants.TILE_LENGTH * 2,
+                Constants.TILE_LENGTH * 0.5);
     }
 
     public interface GENERAL {
