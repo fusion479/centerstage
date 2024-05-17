@@ -52,11 +52,13 @@ public class Trajectories {
                 .turnTo(0)
                 .lineToX(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH / 2, 0).x)
                 .lineToX(Positions.modifyPose(Positions.GENERAL.BACKDROP_LEFT, -Constants.TILE_LENGTH, 0).x)
-                .splineToLinearHeading(Positions.vectorToPose(Positions.modifyPose(Positions.GENERAL.BACKDROP_LEFT, -Constants.ROBOT_LENGTH / 2, 0), 0), Math.toRadians(0))
+                .splineToConstantHeading(Positions.modifyPose(Positions.GENERAL.BACKDROP_LEFT, -Constants.ROBOT_LENGTH / 2, 0), 0)
                 .build();
 
         // PARK
-        public Action PARK = drive.actionBuilder(drive.pose)
+        public Action CLOSE_PARK = drive.actionBuilder(drive.pose)
+                .lineToX(Positions.modifyPose(Positions.GENERAL.BACKDROP_MID, -Constants.ROBOT_LENGTH, 0).x)
+                .strafeTo(Positions.FAR.PARK_FAR)
                 .build();
     }
 
@@ -67,19 +69,16 @@ public class Trajectories {
                 .splineToConstantHeading(new Vector2d(Positions.modifyPose(Positions.GENERAL.BACKDROP_MID, -Constants.TILE_LENGTH, 0).x, Positions.GENERAL.STACK_ONE.y), Math.toRadians(180))
                 .lineToX(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH / 2, 0).x)
                 .build();
-
         public Action STACK_TO_MID_BACKDROP = drive.actionBuilder(drive.pose)
                 .lineToX(Positions.modifyPose(Positions.GENERAL.BACKDROP_MID, -Constants.TILE_LENGTH, 0).x)
                 .splineToConstantHeading(Positions.modifyPose(Positions.GENERAL.BACKDROP_MID, -Constants.ROBOT_LENGTH / 2, 0), Math.toRadians(0))
                 .build();
-
         public Action RIGHT_BACKDROP_TO_STACK = drive.actionBuilder(drive.pose)
                 .waitSeconds(1)
                 .setTangent(Math.toRadians(180))
                 .splineToConstantHeading(new Vector2d(Positions.modifyPose(Positions.GENERAL.BACKDROP_RIGHT, -Constants.TILE_LENGTH, 0).x, Positions.GENERAL.STACK_ONE.y), Math.toRadians(180))
                 .lineToX(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH / 2, 0).x)
                 .build();
-
         public Action STACK_TO_RIGHT_BACKDROP = drive.actionBuilder(drive.pose)
                 .lineToX(Positions.modifyPose(Positions.GENERAL.BACKDROP_RIGHT, -Constants.TILE_LENGTH, 0).x)
                 .splineToConstantHeading(Positions.modifyPose(Positions.GENERAL.BACKDROP_RIGHT, -Constants.ROBOT_LENGTH / 2, 0), Math.toRadians(0))
@@ -90,7 +89,6 @@ public class Trajectories {
                 .splineToConstantHeading(new Vector2d(Positions.modifyPose(Positions.GENERAL.BACKDROP_LEFT, -Constants.TILE_LENGTH, 0).x, Positions.GENERAL.STACK_ONE.y), Math.toRadians(180))
                 .lineToX(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH / 2, 0).x)
                 .build();
-
         public Action STACK_TO_LEFT_BACKDROP = drive.actionBuilder(drive.pose)
                 .lineToX(Positions.modifyPose(Positions.GENERAL.BACKDROP_LEFT, -Constants.TILE_LENGTH, 0).x)
                 .splineToConstantHeading(Positions.modifyPose(Positions.GENERAL.BACKDROP_LEFT, -Constants.ROBOT_LENGTH / 2, 0), Math.toRadians(0))
@@ -133,7 +131,9 @@ public class Trajectories {
                 .splineTo(Positions.modifyPose(Positions.GENERAL.BACKDROP_LEFT, -Constants.ROBOT_LENGTH / 2, 0), Math.toRadians(0))
                 .build();
 
-        public Action PARK = drive.actionBuilder(drive.pose)
+        public Action FAR_PARK = drive.actionBuilder(drive.pose)
+                .lineToX(Positions.modifyPose(Positions.GENERAL.BACKDROP_MID, -Constants.ROBOT_LENGTH, 0).x)
+                .strafeTo(Positions.CLOSE.PARK_CLOSE)
                 .build();
     }
 }
