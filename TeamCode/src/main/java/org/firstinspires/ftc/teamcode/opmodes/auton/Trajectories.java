@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.opmodes.auton;
 
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
+import com.acmerobotics.roadrunner.Vector2d;
 
 import org.firstinspires.ftc.teamcode.roadrunner.MecanumDrive;
 import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
@@ -31,7 +32,6 @@ public class Trajectories {
                 .lineToX(Positions.modifyPose(Positions.GENERAL.BACKDROP_MID, -Constants.TILE_LENGTH, 0).x)
                 .splineToConstantHeading(Positions.modifyPose(Positions.GENERAL.BACKDROP_MID, -Constants.ROBOT_LENGTH / 2, 0), 0)
                 .build();
-
         public Action RIGHT_SPIKEMARK = drive.actionBuilder(drive.pose)
                 .lineToY(Positions.FAR.SPIKEMARK_SETUP.y)
                 .splineTo(Positions.modifyPose(Positions.FAR.SPIKEMARK_RIGHT, 5, 5), Math.toRadians(220))
@@ -43,7 +43,6 @@ public class Trajectories {
                 .lineToX(Positions.modifyPose(Positions.GENERAL.BACKDROP_RIGHT, -Constants.TILE_LENGTH, 0).x)
                 .splineToConstantHeading(Positions.modifyPose(Positions.GENERAL.BACKDROP_RIGHT, -Constants.ROBOT_LENGTH / 2, 0), 0)
                 .build();
-
         public Action LEFT_SPIKEMARK = drive.actionBuilder(drive.pose)
                 .lineToY(Positions.FAR.SPIKEMARK_SETUP.y)
                 .splineTo(Positions.modifyPose(Positions.FAR.SPIKEMARK_LEFT, -5, 5), Math.toRadians(320))
@@ -65,7 +64,7 @@ public class Trajectories {
         public Action MID_BACKDROP_TO_STACK = drive.actionBuilder(drive.pose)
                 .waitSeconds(1)
                 .setTangent(Math.toRadians(180))
-                .splineToConstantHeading(Positions.modifyPose(Positions.GENERAL.BACKDROP_MID, -Constants.TILE_LENGTH, 0), Math.toRadians(180))
+                .splineToConstantHeading(new Vector2d(Positions.modifyPose(Positions.GENERAL.BACKDROP_MID, -Constants.TILE_LENGTH, 0).x, Positions.GENERAL.STACK_ONE.y), Math.toRadians(180))
                 .lineToX(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH / 2, 0).x)
                 .build();
 
@@ -77,7 +76,7 @@ public class Trajectories {
         public Action RIGHT_BACKDROP_TO_STACK = drive.actionBuilder(drive.pose)
                 .waitSeconds(1)
                 .setTangent(Math.toRadians(180))
-                .splineToConstantHeading(Positions.modifyPose(Positions.GENERAL.BACKDROP_RIGHT, -Constants.TILE_LENGTH, 0), Math.toRadians(180))
+                .splineToConstantHeading(new Vector2d(Positions.modifyPose(Positions.GENERAL.BACKDROP_RIGHT, -Constants.TILE_LENGTH, 0).x, Positions.GENERAL.STACK_ONE.y), Math.toRadians(180))
                 .lineToX(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH / 2, 0).x)
                 .build();
 
@@ -88,7 +87,7 @@ public class Trajectories {
         public Action LEFT_BACKDROP_TO_STACK = drive.actionBuilder(drive.pose)
                 .waitSeconds(1)
                 .setTangent(Math.toRadians(180))
-                .splineToConstantHeading(Positions.modifyPose(Positions.GENERAL.BACKDROP_LEFT, -Constants.TILE_LENGTH, 0), Math.toRadians(180))
+                .splineToConstantHeading(new Vector2d(Positions.modifyPose(Positions.GENERAL.BACKDROP_LEFT, -Constants.TILE_LENGTH, 0).x, Positions.GENERAL.STACK_ONE.y), Math.toRadians(180))
                 .lineToX(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH / 2, 0).x)
                 .build();
 
