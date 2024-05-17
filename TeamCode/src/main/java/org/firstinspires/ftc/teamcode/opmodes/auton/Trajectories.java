@@ -97,6 +97,7 @@ public class Trajectories {
                 .build();
 
     }
+
     public class Close {
         // SPIKEMARK
         public Action MID_SPIKEMARK = drive.actionBuilder(drive.pose)
@@ -116,6 +117,7 @@ public class Trajectories {
                 .setReversed(true)
                 .splineTo(Positions.CLOSE.SPIKEMARK_SETUP, Math.toRadians(90))
                 .setTangent(0)
+                .splineTo(Positions.modifyPose(Positions.GENERAL.BACKDROP_RIGHT, -Constants.ROBOT_LENGTH / 2, 0), Math.toRadians(0))
                 .build();
 
         public Action LEFT_SPIKEMARK = drive.actionBuilder(drive.pose)
