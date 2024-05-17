@@ -59,7 +59,7 @@ public class Trajectories {
                 .waitSeconds(1)
                 .setTangent(Math.toRadians(180))
                 .splineToLinearHeading(new Pose2d(Positions.modifyPose(Positions.GENERAL.BACKDROP_RIGHT, -Constants.TILE_LENGTH, 0).x, Positions.GENERAL.STACK_ONE.y, 0), Math.toRadians(180))
-                .strafeTo(new Vector2d(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH / 2, 0).x, Positions.GENERAL.STACK_ONE.y))
+                .lineToX(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH / 2, 0).x)
                 .lineToX(Positions.modifyPose(Positions.GENERAL.BACKDROP_RIGHT, -Constants.TILE_LENGTH, 0).x)
                 .splineToLinearHeading(Positions.vectorToPose(Positions.modifyPose(Positions.GENERAL.BACKDROP_RIGHT, -Constants.ROBOT_LENGTH / 2, 0), 0), Math.toRadians(0))
                 .build();
