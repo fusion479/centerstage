@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.opmodes.auton;
 
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
-import com.acmerobotics.roadrunner.Vector2d;
 
 import org.firstinspires.ftc.teamcode.roadrunner.MecanumDrive;
 import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
@@ -88,7 +87,7 @@ public class Trajectories {
                 .waitSeconds(1)
                 .setTangent(Math.toRadians(180))
                 .splineToLinearHeading(new Pose2d(Positions.modifyPose(Positions.GENERAL.BACKDROP_LEFT, -Constants.TILE_LENGTH, 0).x, Positions.GENERAL.STACK_ONE.y, 0), Math.toRadians(180))
-                .strafeTo(new Vector2d(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH / 2, 0).x, Positions.GENERAL.STACK_ONE.y))
+                .lineToX(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH / 2, 0).x)
                 .build();
 
         public Action STACK_TO_LEFT_BACKDROP = drive.actionBuilder(drive.pose)
