@@ -46,9 +46,9 @@ public class CommandRobot extends Robot {
     private final Lift lift;
     private final Launcher launcher;
     private final Intake intake;
+    private final Deposit deposit;
     private final GamepadEx gamepad1;
     private final GamepadEx gamepad2;
-    final Deposit deposit;
     private final GamepadTrigger intakeAccept;
     private final GamepadTrigger intakeReject;
     private final ElapsedTime timer = new ElapsedTime();
