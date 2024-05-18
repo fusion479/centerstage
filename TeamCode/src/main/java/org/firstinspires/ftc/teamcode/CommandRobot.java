@@ -25,10 +25,10 @@ public class CommandRobot extends Robot {
     private final Intake intake;
     private final GamepadEx gamepad1;
     private final GamepadEx gamepad2;
-    private final GamepadTrigger intakeAccept;
-    private final GamepadTrigger intakeReject;
     private final ElapsedTime timer;
     public Commands commands;
+    private GamepadTrigger intakeAccept;
+    private GamepadTrigger intakeReject;
     private boolean autoLocked;
 
     public CommandRobot(final HardwareMap hwMap, final GamepadEx gamepad1, final GamepadEx gamepad2, final MultipleTelemetry telemetry) {
@@ -51,16 +51,9 @@ public class CommandRobot extends Robot {
                 this.timer,
                 () -> this.autoLocked = false,
                 this.timer::reset);
-
-        this.intakeAccept = new GamepadTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER, this.intake::setPower, this.gamepad1);
-        this.intakeReject = new GamepadTrigger(GamepadKeys.Trigger.LEFT_TRIGGER, d -> this.intake.setPower(-d), this.gamepad1);
-
-        this.drive.setDefaultCommand(new ManualDrive(this.drive, this.gamepad1));
-
-        this.configureGamepad();
     }
 
-    public void configureGamepad() {
+    public void configureControls() {
         this.gamepad1.getGamepadButton(GamepadKeys.Button.A)
                 .toggleWhenPressed(this.commands.intake, this.commands.ready);
         this.gamepad1.getGamepadButton(GamepadKeys.Button.B)
@@ -81,6 +74,11 @@ public class CommandRobot extends Robot {
                 .whenPressed(this.commands.launch);
         this.gamepad2.getGamepadButton(GamepadKeys.Button.A)
                 .whenPressed(this.commands.launchIdle);
+
+        this.intakeAccept = new GamepadTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER, this.intake::setPower, this.gamepad1);
+        this.intakeReject = new GamepadTrigger(GamepadKeys.Trigger.LEFT_TRIGGER, d -> this.intake.setPower(-d), this.gamepad1);
+
+        this.drive.setDefaultCommand(new ManualDrive(this.drive, this.gamepad1));
     }
 
     public void updateTriggers() {

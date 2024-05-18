@@ -24,7 +24,7 @@ public class Main extends CommandOpMode {
                 new GamepadEx(gamepad2),
                 new MultipleTelemetry(telemetry, this.multipleTelemetry));
 
-        this.robot.configureCommands();
+        this.robot.configureControls();
     }
 
     @Override
