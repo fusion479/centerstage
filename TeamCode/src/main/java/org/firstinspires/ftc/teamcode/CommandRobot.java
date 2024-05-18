@@ -27,11 +27,14 @@ public class CommandRobot extends Robot {
     private final GamepadEx gamepad2;
     private final GamepadTrigger intakeAccept;
     private final GamepadTrigger intakeReject;
-    private final ElapsedTime timer = new ElapsedTime();
+    private final ElapsedTime timer;
     public Commands commands;
-    private boolean autoLocked = false;
+    private boolean autoLocked;
 
     public CommandRobot(final HardwareMap hwMap, final GamepadEx gamepad1, final GamepadEx gamepad2, final MultipleTelemetry telemetry) {
+        this.timer = new ElapsedTime();
+        this.autoLocked = false;
+
         this.deposit = new Deposit(hwMap, telemetry);
         this.drive = new Drivetrain(hwMap, telemetry);
         this.intake = new Intake(hwMap, telemetry);
@@ -39,47 +42,41 @@ public class CommandRobot extends Robot {
         this.gamepad1 = gamepad1;
         this.gamepad2 = gamepad2;
 
+        this.commands = new Commands(
+                new Arm(hwMap, telemetry),
+                new Lift(hwMap, telemetry),
+                new Launcher(hwMap, telemetry),
+                new Intake(hwMap, telemetry),
+                this.deposit,
+                this.timer,
+                () -> this.autoLocked = false,
+                this.timer::reset);
+
         this.intakeAccept = new GamepadTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER, this.intake::setPower, this.gamepad1);
         this.intakeReject = new GamepadTrigger(GamepadKeys.Trigger.LEFT_TRIGGER, d -> this.intake.setPower(-d), this.gamepad1);
-        this.commands = new Commands(new Arm(hwMap, telemetry), new Lift(hwMap, telemetry), new Launcher(hwMap, telemetry), new Intake(hwMap, telemetry), this.deposit, this.timer, () -> this.autoLocked = false, this.timer::reset);
 
         this.drive.setDefaultCommand(new ManualDrive(this.drive, this.gamepad1));
 
-        this.configureCommands();
+        this.configureGamepad();
     }
 
-    public void configureCommands() {
+    public void configureGamepad() {
         this.gamepad1.getGamepadButton(GamepadKeys.Button.A)
                 .toggleWhenPressed(this.commands.intake, this.commands.ready);
-
-        // LIFT LOW
         this.gamepad1.getGamepadButton(GamepadKeys.Button.B)
                 .whenPressed(this.commands.scoreLow);
-        // LIFT HIGH
         this.gamepad1.getGamepadButton(GamepadKeys.Button.Y)
                 .whenPressed(this.commands.scoreHigh);
-
-        // LIFT MEDIUM
         this.gamepad1.getGamepadButton(GamepadKeys.Button.X)
                 .whenPressed(this.commands.scoreMid);
-
-        // LIFT UP A LITTLE
         this.gamepad1.getGamepadButton(GamepadKeys.Button.DPAD_UP)
                 .whenPressed(this.commands.liftRaise);
-
-        // LIFT DOWN A LITTLE
         this.gamepad1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
                 .whenPressed(this.commands.liftLower);
-
-        // SCORE PIXEL ONE
         this.gamepad1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
                 .whenPressed(this.commands.scoreOne);
-
-        // SCORE PIXEL TWO
         this.gamepad1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
                 .whenPressed(this.commands.scoreTwo);
-
-        // LAUNCHER COMMANDS
         this.gamepad2.getGamepadButton(GamepadKeys.Button.X)
                 .whenPressed(this.commands.launch);
         this.gamepad2.getGamepadButton(GamepadKeys.Button.A)
