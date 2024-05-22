@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.utils.Subsystem;
 public class Deposit extends Subsystem {
     public static double ACCEPTING_POS = 0.83;
     public static double READY_POS = 0.45;
-    public static double SCORE_POS = 0.35;
+    public static double SCORE_POS = 0.42;
 
     public static double LOCK_INNER = 0.85;
     public static double OPEN_INNER = 0.65;
