@@ -21,7 +21,7 @@ public class Deposit extends Subsystem {
     public static double LOCK_OUTER = 0.2;
     public static double OPEN_OUTER = 0.85;
 
-    public static int THRESHOLD_MM = 25;
+    public static int THRESHOLD_MM = 23;
     public static double RED_GAIN = 0.2;
     public static double BLUE_GAIN = 0.2;
     public static double GREEN_GAIN = 0.2;
@@ -62,7 +62,11 @@ public class Deposit extends Subsystem {
         this.outer.setPosition(position);
     }
 
-    public boolean hasPixel() {
-        return (innerSensor.getDistance(DistanceUnit.MM) < THRESHOLD_MM) && (outerSensor.getDistance(DistanceUnit.MM) < THRESHOLD_MM);
+    public boolean hasPixelInner() {
+        return innerSensor.getDistance(DistanceUnit.MM) < THRESHOLD_MM;
+    }
+
+    public boolean hasPixelOuter() {
+        return outerSensor.getDistance(DistanceUnit.MM) < THRESHOLD_MM;
     }
 }

@@ -146,7 +146,15 @@ public class CommandRobot extends Robot {
                         new InstantCommand(() -> {
                             this.autoLocked = false;
                             this.timer.reset();
-                        })
+                        }),
+                        new LowLift(this.lift),
+                        new DepositAccepting(this.deposit),
+                        new WaitCommand(500),
+                        new ArmAccepting(this.arm),
+                        new IntakeAccepting(this.intake),
+                        new OpenInner(this.deposit),
+                        new OpenOuter(this.deposit),
+                        new BottomLift(this.lift)
                 ));
 
         // SCORE PIXEL TWO
@@ -159,8 +167,16 @@ public class CommandRobot extends Robot {
                         new InstantCommand(() -> {
                             this.autoLocked = false;
                             this.timer.reset();
-                        }
-                        )));
+                        }),
+                        new LowLift(this.lift),
+                        new DepositAccepting(this.deposit),
+                        new WaitCommand(500),
+                        new ArmAccepting(this.arm),
+                        new IntakeAccepting(this.intake),
+                        new OpenInner(this.deposit),
+                        new OpenOuter(this.deposit),
+                        new BottomLift(this.lift)
+                        ));
 
         // LAUNCHER COMMANDS
         this.gamepad2.getGamepadButton(GamepadKeys.Button.X)
@@ -175,7 +191,11 @@ public class CommandRobot extends Robot {
     }
 
     public void senseColor() {
-        if (this.deposit.hasPixel() && !this.autoLocked && timer.milliseconds() >= 300) {
+        if (!this.deposit.hasPixelInner() || !this.deposit.hasPixelOuter()) {
+            timer.reset();
+        }
+
+        if (this.deposit.hasPixelInner() && !this.autoLocked && timer.milliseconds() >= 500) {
             new LockInner(this.deposit).schedule();
             new LockOuter(this.deposit).schedule();
             this.autoLocked = true;
