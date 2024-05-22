@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.utils.Subsystem;
 public class Arm extends Subsystem {
     public static double SCORE_POS = 0.01;
     public static double READY_POS = 0.61;
-    public static double ACCEPTING_POS = 0.62;
+    public static double ACCEPTING_POS = 0.7;
 
     private final Servo leftServo, rightServo;
 

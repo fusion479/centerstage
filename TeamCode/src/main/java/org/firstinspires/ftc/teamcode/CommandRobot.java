@@ -75,21 +75,14 @@ public class CommandRobot extends Robot {
 
     public void configureCommands() {
         this.gamepad1.getGamepadButton(GamepadKeys.Button.A)
-                .toggleWhenPressed(new SequentialCommandGroup(
+                .whenPressed(new SequentialCommandGroup(
                         new LowLift(this.lift),
+                        new DepositAccepting(this.deposit),
+                        new WaitCommand(500),
                         new ArmAccepting(this.arm),
                         new IntakeAccepting(this.intake),
                         new OpenInner(this.deposit),
                         new OpenOuter(this.deposit),
-                        new DepositAccepting(this.deposit),
-                        new BottomLift(this.lift)
-                ), new SequentialCommandGroup(
-                        new LockInner(this.deposit),
-                        new LockOuter(this.deposit),
-                        new LowLift(this.lift),
-                        new ArmReady(this.arm),
-                        new DepositReady(this.deposit),
-                        new IntakeReady(this.intake),
                         new BottomLift(this.lift)
                 ));
 

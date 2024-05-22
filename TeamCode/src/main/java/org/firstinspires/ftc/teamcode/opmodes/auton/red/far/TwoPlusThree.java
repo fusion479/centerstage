@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.Lift;
 import org.firstinspires.ftc.teamcode.utils.CommandGroupAction;
 
-@Autonomous(name = "2+3 Blue Far", group = "_Auto")
+@Autonomous(name = "2+3 Red Far", group = "_Auto")
 public class TwoPlusThree extends CommandOpMode {
     private MultipleTelemetry multipleTelemetry;
     private Drivetrain drive;
