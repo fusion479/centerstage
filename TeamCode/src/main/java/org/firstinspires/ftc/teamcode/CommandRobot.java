@@ -53,6 +53,7 @@ public class CommandRobot extends Robot {
     private final GamepadTrigger intakeReject;
     private final ElapsedTime timer = new ElapsedTime();
     private boolean autoLocked = false;
+    private boolean pixel1Dropped, pixel2Dropped = false;
 
     public CommandRobot(final HardwareMap hwMap, final GamepadEx gamepad1, final GamepadEx gamepad2, final MultipleTelemetry telemetry) { // Create different bots for teleop, testing, and auton?
         this.deposit = new Deposit(hwMap, telemetry);
@@ -141,25 +142,32 @@ public class CommandRobot extends Robot {
         this.gamepad1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
                 .whenPressed(new SequentialCommandGroup(
                         new OpenOuter(this.deposit),
-                        new WaitCommand(175),
-                        new LiftRaise(this.lift),
                         new InstantCommand(() -> {
-                            this.autoLocked = false;
-                            this.timer.reset();
+                            pixel1Dropped = true;
                         })
+//                        new WaitCommand(175),
+//                        new LiftRaise(this.lift),
+//                        new InstantCommand(() -> {
+//                            this.autoLocked = false;
+//                            this.timer.reset();
+//                        })
                 ));
 
         // SCORE PIXEL TWO
         this.gamepad1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
                 .whenPressed(new SequentialCommandGroup(
                         new OpenInner(this.deposit),
-                        new InstantCommand(() -> this.autoLocked = false),
-                        new WaitCommand(175),
-                        new LiftRaise(this.lift),
                         new InstantCommand(() -> {
-                            this.autoLocked = false;
-                            this.timer.reset();
-                        })));
+                            pixel2Dropped = true;
+                        })
+//                        new InstantCommand(() -> this.autoLocked = false),
+//                        new WaitCommand(175),
+//                        new LiftRaise(this.lift),
+//                        new InstantCommand(() -> {
+//                            this.autoLocked = false;
+//                            this.timer.reset();
+//                        })
+            ));
 
         // LAUNCHER COMMANDS
         this.gamepad2.getGamepadButton(GamepadKeys.Button.X)
@@ -178,10 +186,29 @@ public class CommandRobot extends Robot {
             timer.reset();
         }
 
-        if (this.deposit.hasPixelInner() && !this.autoLocked && timer.milliseconds() >= 500) {
+        if (this.deposit.hasPixelInner() && !this.autoLocked && timer.milliseconds() >= 350) {
             new LockInner(this.deposit).schedule();
             new LockOuter(this.deposit).schedule();
             this.autoLocked = true;
+        }
+    }
+
+    public void updateScoring() {
+        if (pixel1Dropped && pixel2Dropped) {
+            new SequentialCommandGroup(
+                new LiftRaise(this.lift),
+                new WaitCommand(175),
+                new LowLift(this.lift),
+                new DepositAccepting(this.deposit),
+                new WaitCommand(500),
+                new ArmAccepting(this.arm),
+                new IntakeAccepting(this.intake),
+                new OpenInner(this.deposit),
+                new OpenOuter(this.deposit),
+                new BottomLift(this.lift)
+            ).schedule();
+            pixel1Dropped = false;
+            pixel2Dropped = false;
         }
     }
 }

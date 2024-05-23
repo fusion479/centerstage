@@ -40,6 +40,7 @@ public class Main extends CommandOpMode {
 
             this.robot.updateTriggers();
             this.robot.senseColor();
+            this.robot.updateScoring();
 
             this.multipleTelemetry.update();
         }
