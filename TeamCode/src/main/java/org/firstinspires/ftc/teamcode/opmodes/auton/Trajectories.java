@@ -12,9 +12,9 @@ public class Trajectories {
     private final Camera.Color color;
     private final MecanumDrive drive;
 
-    public Trajectories(Camera.Color color, Drivetrain drivetrain) {
+    public Trajectories(Camera.Color color, MecanumDrive drive) {
         this.color = color;
-        this.drive = drivetrain.drive;
+        this.drive = drive;
     }
 
     public Pose2d reflectY(Pose2d pose) {

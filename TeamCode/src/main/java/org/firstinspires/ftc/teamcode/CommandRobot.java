@@ -33,6 +33,7 @@ import org.firstinspires.ftc.teamcode.commands.lift.LiftLower;
 import org.firstinspires.ftc.teamcode.commands.lift.LiftRaise;
 import org.firstinspires.ftc.teamcode.commands.lift.LowLift;
 import org.firstinspires.ftc.teamcode.commands.lift.MediumLift;
+import org.firstinspires.ftc.teamcode.roadrunner.MecanumDrive;
 import org.firstinspires.ftc.teamcode.subsystems.Arm;
 import org.firstinspires.ftc.teamcode.subsystems.Deposit;
 import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
@@ -117,6 +118,10 @@ public class CommandRobot extends Robot {
             new LockOuter(this.deposit).schedule();
             this.locked = true;
         }
+    }
+
+    public MecanumDrive getDrive() {
+        return this.drive.drive;
     }
 
     public class Commands {
