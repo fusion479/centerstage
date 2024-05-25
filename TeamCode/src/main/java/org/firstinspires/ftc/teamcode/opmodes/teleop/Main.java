@@ -29,7 +29,6 @@ public class Main extends CommandOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        Robot.enable();
         CommandScheduler.getInstance().enable();
 
         this.initialize();
@@ -44,9 +43,9 @@ public class Main extends CommandOpMode {
             this.multipleTelemetry.update();
         }
 
-        CommandScheduler.getInstance().disable();
+
         CommandScheduler.getInstance().cancelAll();
-        Robot.disable();
-        this.robot.reset();
+        CommandScheduler.getInstance().disable();
+        CommandScheduler.getInstance().reset();
     }
 }

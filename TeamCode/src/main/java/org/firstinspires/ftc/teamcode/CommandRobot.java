@@ -49,14 +49,18 @@ public class CommandRobot extends Robot {
     private final Intake intake;
     private final GamepadEx gamepad1;
     private final GamepadEx gamepad2;
-    final Deposit deposit;
+    private final Deposit deposit;
     private final GamepadTrigger intakeAccept;
     private final GamepadTrigger intakeReject;
-    private final ElapsedTime timer = new ElapsedTime();
-    private boolean autoLocked = false;
-    public final Commands COMMANDS = new Commands();
+    private final ElapsedTime timer;
+    private boolean autoLocked;
+    public final Commands COMMANDS;
 
     public CommandRobot(final HardwareMap hwMap, final GamepadEx gamepad1, final GamepadEx gamepad2, final MultipleTelemetry telemetry) { // Create different bots for teleop, testing, and auton?
+        this.COMMANDS = new Commands();
+        this.timer = new ElapsedTime();
+        this.autoLocked = false;
+
         this.deposit = new Deposit(hwMap, telemetry);
         this.arm = new Arm(hwMap, telemetry);
         this.drive = new Drivetrain(hwMap, telemetry);
@@ -122,13 +126,13 @@ public class CommandRobot extends Robot {
                 new BottomLift(lift));
 
         public final Command READY = new SequentialCommandGroup(
-                        new LockInner(deposit),
-                        new LockOuter(deposit),
-                        new LowLift(lift),
-                        new ArmReady(arm),
-                        new DepositReady(deposit),
-                        new IntakeReady(intake),
-                        new BottomLift(lift));
+                new LockInner(deposit),
+                new LockOuter(deposit),
+                new LowLift(lift),
+                new ArmReady(arm),
+                new DepositReady(deposit),
+                new IntakeReady(intake),
+                new BottomLift(lift));
 
         public final Command SCORE_LOW = new ParallelCommandGroup(
                 new LockOuter(deposit),
@@ -139,12 +143,12 @@ public class CommandRobot extends Robot {
                 new IntakeReady(intake));
 
         public final Command SCORE_HIGH = new ParallelCommandGroup(
-                        new LockOuter(deposit),
-                        new LockInner(deposit),
-                        new HighLift(lift),
-                        new ArmScore(arm),
-                        new DepositScore(deposit),
-                        new IntakeReady(intake));
+                new LockOuter(deposit),
+                new LockInner(deposit),
+                new HighLift(lift),
+                new ArmScore(arm),
+                new DepositScore(deposit),
+                new IntakeReady(intake));
 
         public final Command SCORE_MID = new ParallelCommandGroup(
                 new LockOuter(deposit),

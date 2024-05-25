@@ -55,6 +55,8 @@ public class TwoPlusTwo extends CommandOpMode {
             this.multipleTelemetry.update();
         }
 
+        CommandScheduler.getInstance().cancelAll();
         CommandScheduler.getInstance().disable();
+        CommandScheduler.getInstance().reset();
     }
 }

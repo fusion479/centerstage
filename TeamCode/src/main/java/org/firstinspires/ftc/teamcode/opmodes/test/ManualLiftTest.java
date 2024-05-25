@@ -48,6 +48,8 @@ public class ManualLiftTest extends CommandOpMode {
         }
 
 
+        CommandScheduler.getInstance().cancelAll();
         CommandScheduler.getInstance().disable();
+        CommandScheduler.getInstance().reset();
     }
 }
