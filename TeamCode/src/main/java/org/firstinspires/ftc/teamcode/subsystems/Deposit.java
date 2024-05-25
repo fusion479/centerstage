@@ -62,7 +62,11 @@ public class Deposit extends Subsystem {
         this.outer.setPosition(position);
     }
 
-    public boolean hasPixel() {
-        return (innerSensor.getDistance(DistanceUnit.MM) < THRESHOLD_MM) && (outerSensor.getDistance(DistanceUnit.MM) < THRESHOLD_MM);
+    public boolean hasInnerPixel() {
+        return innerSensor.getDistance(DistanceUnit.MM) < THRESHOLD_MM;
+    }
+
+    public boolean hasOuterPixel() {
+        return outerSensor.getDistance(DistanceUnit.MM) < THRESHOLD_MM;
     }
 }

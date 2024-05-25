@@ -53,13 +53,13 @@ public class CommandRobot extends Robot {
     private final GamepadTrigger intakeAccept;
     private final GamepadTrigger intakeReject;
     private final ElapsedTime timer;
-    private boolean autoLocked;
+    private boolean locked;
     public final Commands COMMANDS;
 
     public CommandRobot(final HardwareMap hwMap, final GamepadEx gamepad1, final GamepadEx gamepad2, final MultipleTelemetry telemetry) { // Create different bots for teleop, testing, and auton?
         this.COMMANDS = new Commands();
         this.timer = new ElapsedTime();
-        this.autoLocked = false;
+        this.locked = false;
 
         this.deposit = new Deposit(hwMap, telemetry);
         this.arm = new Arm(hwMap, telemetry);
@@ -108,10 +108,14 @@ public class CommandRobot extends Robot {
     }
 
     public void senseColor() {
-        if (this.deposit.hasPixel() && !this.autoLocked && timer.milliseconds() >= 300) {
+        if (!this.deposit.hasInnerPixel() || !this.deposit.hasOuterPixel()) {
+            timer.reset();
+        }
+
+        if ((this.deposit.hasOuterPixel() && this.deposit.hasInnerPixel()) && !this.locked && timer.milliseconds() >= 350) {
             new LockInner(this.deposit).schedule();
             new LockOuter(this.deposit).schedule();
-            this.autoLocked = true;
+            this.locked = true;
         }
     }
 
@@ -179,18 +183,18 @@ public class CommandRobot extends Robot {
                 new WaitCommand(175),
                 new LiftRaise(lift),
                 new InstantCommand(() -> {
-                    autoLocked = false;
+                    locked = false;
                     timer.reset();
                 })
         );
 
         public final Command SCORE_TWO = new SequentialCommandGroup(
                 new OpenInner(deposit),
-                new InstantCommand(() -> autoLocked = false),
+                new InstantCommand(() -> locked = false),
                 new WaitCommand(175),
                 new LiftRaise(lift),
                 new InstantCommand(() -> {
-                    autoLocked = false;
+                    locked = false;
                     timer.reset();
                 }));
 
