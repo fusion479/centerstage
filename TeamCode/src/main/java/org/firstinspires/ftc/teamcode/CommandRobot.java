@@ -43,6 +43,7 @@ import org.firstinspires.ftc.teamcode.subsystems.Lift;
 import org.firstinspires.ftc.teamcode.utils.GamepadTrigger;
 
 public class CommandRobot extends Robot {
+    // SUBSYSTEMS & CONTROLLERS
     private final Arm arm;
     private final Drivetrain drive;
     private final Lift lift;
@@ -51,10 +52,6 @@ public class CommandRobot extends Robot {
     private final GamepadEx gamepad1;
     private final GamepadEx gamepad2;
     private final Deposit deposit;
-    private final GamepadTrigger intakeAccept;
-    private final GamepadTrigger intakeReject;
-    private final ElapsedTime timer;
-    private boolean locked;
 
     // COMMANDS
     public final Command accepting;
@@ -68,6 +65,13 @@ public class CommandRobot extends Robot {
     public final Command scoreTwo;
     public final Command launch;
     public final Command idle;
+
+    private final GamepadTrigger intakeAccept;
+    private final GamepadTrigger intakeReject;
+
+    // MISC. VARIABLES
+    private final ElapsedTime timer;
+    private boolean locked;
 
     public CommandRobot(final HardwareMap hwMap, final GamepadEx gamepad1, final GamepadEx gamepad2, final MultipleTelemetry telemetry) { // Create different bots for teleop, testing, and auton?
         this.timer = new ElapsedTime();
