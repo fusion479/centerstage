@@ -46,8 +46,8 @@ public class TwoPlusZero extends CommandOpMode {
                 this.TRAJECTORIES.MID_SPIKEMARK,
                 new SequentialAction(
                         new CommandAction(new WaitCommand(5000)),
-                        new CommandAction(this.robot.COMMANDS.SCORE_LOW),
-                        new CommandAction(this.robot.COMMANDS.SCORE_ONE)
+                        new CommandAction(this.robot.scoreLow),
+                        new CommandAction(this.robot.scoreOne)
                 )
         ));
 

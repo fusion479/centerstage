@@ -55,10 +55,21 @@ public class CommandRobot extends Robot {
     private final GamepadTrigger intakeReject;
     private final ElapsedTime timer;
     private boolean locked;
-    public final Commands COMMANDS;
+
+    // COMMANDS
+    public final Command accepting;
+    public final Command ready;
+    public final Command scoreLow;
+    public final Command scoreHigh;
+    public final Command scoreMid;
+    public final Command liftRaise;
+    public final Command liftLower;
+    public final Command scoreOne;
+    public final Command scoreTwo;
+    public final Command launch;
+    public final Command idle;
 
     public CommandRobot(final HardwareMap hwMap, final GamepadEx gamepad1, final GamepadEx gamepad2, final MultipleTelemetry telemetry) { // Create different bots for teleop, testing, and auton?
-        this.COMMANDS = new Commands();
         this.timer = new ElapsedTime();
         this.locked = false;
 
@@ -72,35 +83,113 @@ public class CommandRobot extends Robot {
         this.gamepad1 = gamepad1;
         this.gamepad2 = gamepad2;
 
+        this.accepting = new SequentialCommandGroup(
+                new LowLift(this.lift),
+                new ArmAccepting(this.arm),
+                new IntakeAccepting(this.intake),
+                new OpenInner(this.deposit),
+                new OpenOuter(this.deposit),
+                new DepositAccepting(this.deposit),
+                new BottomLift(this.lift));
+
+        this.ready = new SequentialCommandGroup(
+                new LockInner(this.deposit),
+                new LockOuter(this.deposit),
+                new LowLift(this.lift),
+                new ArmReady(this.arm),
+                new DepositReady(this.deposit),
+                new IntakeReady(this.intake),
+                new BottomLift(this.lift));
+
+        this.scoreLow = new ParallelCommandGroup(
+                new LockOuter(this.deposit),
+                new LockInner(this.deposit),
+                new LowLift(this.lift),
+                new ArmScore(this.arm),
+                new DepositScore(this.deposit),
+                new IntakeReady(this.intake));
+
+        this.scoreHigh = new ParallelCommandGroup(
+                new LockOuter(this.deposit),
+                new LockInner(this.deposit),
+                new HighLift(this.lift),
+                new ArmScore(this.arm),
+                new DepositScore(this.deposit),
+                new IntakeReady(this.intake));
+
+        this.scoreMid = new ParallelCommandGroup(
+                new LockOuter(this.deposit),
+                new LockInner(this.deposit),
+                new MediumLift(this.lift),
+                new ArmScore(this.arm),
+                new DepositScore(this.deposit),
+                new IntakeReady(this.intake));
+
+        this.liftRaise = new SequentialCommandGroup(
+                new LockOuter(this.deposit),
+                new LockInner(this.deposit),
+                new ArmScore(this.arm),
+                new DepositScore(this.deposit),
+                new IntakeReady(this.intake),
+                new LiftRaise(this.lift));
+
+        this.liftLower = new SequentialCommandGroup(
+                new LockOuter(this.deposit),
+                new LockInner(this.deposit),
+                new ArmScore(this.arm),
+                new DepositScore(this.deposit),
+                new IntakeReady(this.intake),
+                new LiftLower(this.lift));
+
+        this.scoreOne = new SequentialCommandGroup(
+                new OpenOuter(this.deposit),
+                new WaitCommand(175),
+                new LiftRaise(this.lift),
+                new InstantCommand(() -> {
+                    this.locked = false;
+                    this.timer.reset();
+                }));
+
+        this.scoreTwo = new SequentialCommandGroup(
+                new OpenInner(this.deposit),
+                new InstantCommand(() -> locked = false),
+                new WaitCommand(175),
+                new LiftRaise(this.lift),
+                new InstantCommand(() -> {
+                    this.locked = false;
+                    this.timer.reset();
+                }));
+
+        this.idle = new Idle(this.launcher);
+        this.launch = new Launch(this.launcher);
+
         this.intakeAccept = new GamepadTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER, this.intake::setPower, this.gamepad1);
         this.intakeReject = new GamepadTrigger(GamepadKeys.Trigger.LEFT_TRIGGER, d -> this.intake.setPower(-d), this.gamepad1);
 
         this.drive.setDefaultCommand(new ManualDrive(this.drive, this.gamepad1));
-
-        this.configureCommands();
     }
 
     public void configureCommands() {
         this.gamepad1.getGamepadButton(GamepadKeys.Button.A)
-                .toggleWhenPressed(COMMANDS.ACCEPTING, COMMANDS.READY);
+                .toggleWhenPressed(this.accepting, this.ready);
         this.gamepad1.getGamepadButton(GamepadKeys.Button.B)
-                .whenPressed(COMMANDS.SCORE_LOW);
+                .whenPressed(this.scoreLow);
         this.gamepad1.getGamepadButton(GamepadKeys.Button.Y)
-                .whenPressed(COMMANDS.SCORE_HIGH);
+                .whenPressed(this.scoreHigh);
         this.gamepad1.getGamepadButton(GamepadKeys.Button.X)
-                .whenPressed(COMMANDS.SCORE_MID);
+                .whenPressed(this.scoreMid);
         this.gamepad1.getGamepadButton(GamepadKeys.Button.DPAD_UP)
-                .whenPressed(COMMANDS.LIFT_RAISE);
+                .whenPressed(this.liftRaise);
         this.gamepad1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
-                .whenPressed(COMMANDS.LIFT_LOWER);
+                .whenPressed(this.liftLower);
         this.gamepad1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
-                .whenPressed(COMMANDS.SCORE_ONE);
+                .whenPressed(this.scoreOne);
         this.gamepad1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
-                .whenPressed(COMMANDS.SCORE_TWO);
+                .whenPressed(this.scoreTwo);
         this.gamepad2.getGamepadButton(GamepadKeys.Button.X)
-                .whenPressed(COMMANDS.LAUNCH);
+                .whenPressed(this.launch);
         this.gamepad2.getGamepadButton(GamepadKeys.Button.A)
-                .whenPressed(COMMANDS.IDLE);
+                .whenPressed(this.idle);
     }
 
     public void updateTriggers() {
@@ -122,89 +211,5 @@ public class CommandRobot extends Robot {
 
     public MecanumDrive getDrive() {
         return this.drive.drive;
-    }
-
-    public class Commands {
-        public final Command ACCEPTING = new SequentialCommandGroup(
-                new LowLift(lift),
-                new ArmAccepting(arm),
-                new IntakeAccepting(intake),
-                new OpenInner(deposit),
-                new OpenOuter(deposit),
-                new DepositAccepting(deposit),
-                new BottomLift(lift));
-
-        public final Command READY = new SequentialCommandGroup(
-                new LockInner(deposit),
-                new LockOuter(deposit),
-                new LowLift(lift),
-                new ArmReady(arm),
-                new DepositReady(deposit),
-                new IntakeReady(intake),
-                new BottomLift(lift));
-
-        public final Command SCORE_LOW = new ParallelCommandGroup(
-                new LockOuter(deposit),
-                new LockInner(deposit),
-                new LowLift(lift),
-                new ArmScore(arm),
-                new DepositScore(deposit),
-                new IntakeReady(intake));
-
-        public final Command SCORE_HIGH = new ParallelCommandGroup(
-                new LockOuter(deposit),
-                new LockInner(deposit),
-                new HighLift(lift),
-                new ArmScore(arm),
-                new DepositScore(deposit),
-                new IntakeReady(intake));
-
-        public final Command SCORE_MID = new ParallelCommandGroup(
-                new LockOuter(deposit),
-                new LockInner(deposit),
-                new MediumLift(lift),
-                new ArmScore(arm),
-                new DepositScore(deposit),
-                new IntakeReady(intake));
-
-        public final Command LIFT_RAISE = new SequentialCommandGroup(
-                new LockOuter(deposit),
-                new LockInner(deposit),
-                new ArmScore(arm),
-                new DepositScore(deposit),
-                new IntakeReady(intake),
-                new LiftRaise(lift));
-
-        public final Command LIFT_LOWER = new SequentialCommandGroup(
-                new LockOuter(deposit),
-                new LockInner(deposit),
-                new ArmScore(arm),
-                new DepositScore(deposit),
-                new IntakeReady(intake),
-                new LiftLower(lift));
-
-        public final Command SCORE_ONE = new SequentialCommandGroup(
-                new OpenOuter(deposit),
-                new WaitCommand(175),
-                new LiftRaise(lift),
-                new InstantCommand(() -> {
-                    locked = false;
-                    timer.reset();
-                })
-        );
-
-        public final Command SCORE_TWO = new SequentialCommandGroup(
-                new OpenInner(deposit),
-                new InstantCommand(() -> locked = false),
-                new WaitCommand(175),
-                new LiftRaise(lift),
-                new InstantCommand(() -> {
-                    locked = false;
-                    timer.reset();
-                }));
-
-        public final Command LAUNCH = new Launch(launcher);
-
-        public final Command IDLE = new Idle(launcher);
     }
 }
