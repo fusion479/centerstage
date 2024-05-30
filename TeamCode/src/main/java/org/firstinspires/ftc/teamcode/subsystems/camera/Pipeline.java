@@ -26,15 +26,15 @@ public class Pipeline extends OpenCvPipeline {
     public static int redHighHSVB = 255;
 
     public static int rightRectX = 565;
-    public static int rightRectY = 235;
+    public static int rightRectY = 125;
 
     public static int leftRectX = 0;
-    public static int leftRectY = 235;
+    public static int leftRectY = 125;
 
     public static double tolerance = 0.3;
     private final Camera.Color color;
     int region;
-    private Mat mat;
+    private Mat mat = new Mat();
     private Scalar lowFilter, highFilter;
     private Rect RIGHT_RECT, LEFT_RECT;
 
@@ -60,7 +60,6 @@ public class Pipeline extends OpenCvPipeline {
 
         Core.inRange(mat, lowFilter, highFilter, mat);
 
-        // submats for the boxes, these are the regions that'll detect the color
         Mat rightBox = mat.submat(RIGHT_RECT);
         Mat leftBox = mat.submat(LEFT_RECT);
 
@@ -68,9 +67,9 @@ public class Pipeline extends OpenCvPipeline {
         Imgproc.rectangle(mat, RIGHT_RECT, new Scalar(60, 255, 255), 5);
 
         /*
-            region 1: left
-            region 2: center
-            region 3: right
+            REGION 1: LEFT
+            REGION 2: CENTER
+            REGION 3: RIGHT
         */
 
         if (Core.sumElems(leftBox).val[0] / LEFT_RECT.area() / 255 > tolerance) {
