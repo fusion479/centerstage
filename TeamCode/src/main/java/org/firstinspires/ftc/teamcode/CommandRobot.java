@@ -89,11 +89,12 @@ public class CommandRobot extends Robot {
 
         this.accepting = new SequentialCommandGroup(
                 new LowLift(this.lift),
+                new DepositAccepting(this.deposit),
+                new WaitCommand(500),
                 new ArmAccepting(this.arm),
                 new IntakeAccepting(this.intake),
                 new OpenInner(this.deposit),
                 new OpenOuter(this.deposit),
-                new DepositAccepting(this.deposit),
                 new BottomLift(this.lift));
 
         this.ready = new SequentialCommandGroup(
