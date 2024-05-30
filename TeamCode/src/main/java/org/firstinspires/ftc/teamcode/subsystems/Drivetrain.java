@@ -15,11 +15,10 @@ import org.firstinspires.ftc.teamcode.utils.Subsystem;
 public class Drivetrain extends Subsystem {
     public final MecanumDrive drive;
 
-    public Drivetrain(final HardwareMap hwMap, final MultipleTelemetry telemetry) {
+    public Drivetrain(final HardwareMap hwMap, final MultipleTelemetry telemetry, final Pose2d startPose) {
         super(telemetry);
 
-        this.drive = new MecanumDrive(hwMap, new Pose2d(0, 0, 0));
-        // this.drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        this.drive = new MecanumDrive(hwMap, startPose);
     }
 
     public void manualDrive(final GamepadEx gamepad) {

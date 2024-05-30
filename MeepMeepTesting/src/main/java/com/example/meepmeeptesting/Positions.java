@@ -9,7 +9,7 @@ public class Positions {
     }
 
     public static Pose2d modifyPose(Pose2d pose, double dX, double dY) {
-        return new Pose2d(pose.position.x + dX, pose.position.y + dY, pose.heading.imag);
+        return new Pose2d(pose.position.x + dX, pose.position.y + dY, pose.heading.real);
     }
 
     public static Pose2d vectorToPose(Vector2d vector, double heading) {
@@ -27,7 +27,7 @@ public class Positions {
         // SPIKEMARKS
         Vector2d SPIKEMARK_MID = new Vector2d(
                 START.position.x,
-                Constants.FIELD_LENGTH - Constants.TILE_LENGTH * 2 - Constants.TAPE_WIDTH / 2);
+                Constants.FIELD_LENGTH - Constants.TILE_LENGTH * 2 + Constants.TAPE_WIDTH / 2);
         Vector2d SPIKEMARK_LEFT = new Vector2d(
                 Constants.TILE_LENGTH - Constants.TAPE_WIDTH / 2,
                 Constants.TILE_LENGTH + Constants.SPIKE_TAPE_LENGTH / 2);
@@ -47,6 +47,7 @@ public class Positions {
                 Math.toRadians(270));
 
         Vector2d SPIKEMARK_SETUP = new Vector2d(-Constants.TILE_LENGTH - Constants.TILE_LENGTH / 2, 45);
+
 
         Vector2d SPIKEMARK_MID = new Vector2d(
                 START.position.x,
@@ -82,3 +83,4 @@ public class Positions {
                 Constants.FIELD_LENGTH - Constants.BACKDROP_TO_WALL_Y - Constants.BACKDROP_WIDTH / 2 - 1.5 - 6);
     }
 }
+

@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.opmodes.test;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.acmerobotics.roadrunner.Pose2d;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
@@ -20,7 +21,7 @@ public class DrivetrainTest extends CommandOpMode {
     @Override
     public void initialize() {
         this.multipleTelemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        this.drive = new Drivetrain(hardwareMap, this.multipleTelemetry);
+        this.drive = new Drivetrain(hardwareMap, this.multipleTelemetry, new Pose2d(0, 0, 0));
         this.gamepad = new GamepadEx(gamepad1);
 
         this.drive.setDefaultCommand(new ManualDrive(this.drive, this.gamepad));

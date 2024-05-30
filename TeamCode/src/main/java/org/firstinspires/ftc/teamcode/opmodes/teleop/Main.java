@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.opmodes.teleop;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.acmerobotics.roadrunner.Pose2d;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.Robot;
@@ -22,7 +23,9 @@ public class Main extends CommandOpMode {
                 this.hardwareMap,
                 new GamepadEx(gamepad1),
                 new GamepadEx(gamepad2),
-                new MultipleTelemetry(telemetry, this.multipleTelemetry));
+                new MultipleTelemetry(telemetry, this.multipleTelemetry),
+                new Pose2d(0, 0, 0)
+        );
 
         this.robot.configureCommands();
     }

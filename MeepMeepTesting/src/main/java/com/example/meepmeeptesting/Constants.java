@@ -18,5 +18,4 @@ public class Constants {
 
     public static double ROBOT_WIDTH = 13.5;
     public static double ROBOT_LENGTH = 15.6;
-
 }

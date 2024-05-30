@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.acmerobotics.roadrunner.Pose2d;
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
@@ -73,13 +74,13 @@ public class CommandRobot extends Robot {
     private final ElapsedTime timer;
     private boolean locked;
 
-    public CommandRobot(final HardwareMap hwMap, final GamepadEx gamepad1, final GamepadEx gamepad2, final MultipleTelemetry telemetry) { // Create different bots for teleop, testing, and auton?
+    public CommandRobot(final HardwareMap hwMap, final GamepadEx gamepad1, final GamepadEx gamepad2, final MultipleTelemetry telemetry, Pose2d startPose) { // Create different bots for teleop, testing, and auton?
         this.timer = new ElapsedTime();
         this.locked = false;
 
         this.deposit = new Deposit(hwMap, telemetry);
         this.arm = new Arm(hwMap, telemetry);
-        this.drive = new Drivetrain(hwMap, telemetry);
+        this.drive = new Drivetrain(hwMap, telemetry, startPose);
         this.lift = new Lift(hwMap, telemetry);
         this.launcher = new Launcher(hwMap, telemetry);
         this.intake = new Intake(hwMap, telemetry);
