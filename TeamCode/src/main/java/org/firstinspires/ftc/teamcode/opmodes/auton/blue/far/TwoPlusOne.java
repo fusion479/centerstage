@@ -8,24 +8,16 @@ import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.CommandScheduler;
-import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.example.meepmeeptesting.Positions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.CommandRobot;
-import org.firstinspires.ftc.teamcode.commands.arm.ArmScore;
-import org.firstinspires.ftc.teamcode.commands.deposit.DepositScore;
+import org.firstinspires.ftc.teamcode.commands.intake.IntakeSetPower;
 import org.firstinspires.ftc.teamcode.opmodes.auton.Trajectories;
-import org.firstinspires.ftc.teamcode.subsystems.Arm;
-import org.firstinspires.ftc.teamcode.subsystems.Deposit;
-import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
-import org.firstinspires.ftc.teamcode.subsystems.Intake;
-import org.firstinspires.ftc.teamcode.subsystems.Lift;
 import org.firstinspires.ftc.teamcode.subsystems.camera.Camera;
 import org.firstinspires.ftc.teamcode.utils.CommandAction;
-import org.firstinspires.ftc.teamcode.utils.CommandGroupAction;
 
 @Autonomous(name = "2+1 Blue Far", group = "_Auto")
 public class TwoPlusOne extends CommandOpMode {
@@ -76,18 +68,22 @@ public class TwoPlusOne extends CommandOpMode {
                 new SequentialAction(
                         new CommandAction(new WaitCommand(5000)),
                         new CommandAction(this.robot.scoreLow),
-                        new CommandAction(this.robot.scoreOne)
+                        new CommandAction(this.robot.scoreOne),
+                        new CommandAction(new WaitCommand(2000)),
+                        new CommandAction(this.robot.stack)
                 ),
                 backdropToStack,
-                new SequentialAction(
-                        new CommandAction(new WaitCommand(5000))
-                        // Stack
+                new ParallelAction(
+                        new CommandAction(new WaitCommand(5000)),
+                        new CommandAction(new IntakeSetPower(this.robot.intake, 0.5))
                 ),
                 stackToBackdrop,
                 new SequentialAction(
                         new CommandAction(new WaitCommand(5000)),
                         new CommandAction(this.robot.scoreLow),
-                        new CommandAction(this.robot.scoreTwo)
+                        new CommandAction(this.robot.scoreTwo),
+                        new CommandAction(new WaitCommand(2000)),
+                        new CommandAction(this.robot.ready)
                 ),
                 this.FAR.getPark()
         ));
