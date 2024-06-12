@@ -88,7 +88,7 @@ public class TwoPlusTwo extends CommandOpMode {
                 new SequentialAction(
                         new CommandAction(new WaitCommand(5000)),
                         new CommandAction(this.robot.scoreLow),
-                        new CommandAction(this.robot.scoreOne)
+                        new CommandAction(this.robot.scoreTwo)
                 ),
                 this.CLOSE.getPark()
         ));
