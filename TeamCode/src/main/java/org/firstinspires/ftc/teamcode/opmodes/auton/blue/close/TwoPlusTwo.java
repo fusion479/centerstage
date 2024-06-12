@@ -18,6 +18,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import org.firstinspires.ftc.teamcode.CommandRobot;
 import org.firstinspires.ftc.teamcode.commands.arm.ArmScore;
 import org.firstinspires.ftc.teamcode.commands.deposit.DepositScore;
+import org.firstinspires.ftc.teamcode.commands.intake.IntakeSetPower;
 import org.firstinspires.ftc.teamcode.opmodes.auton.Trajectories;
 import org.firstinspires.ftc.teamcode.subsystems.Arm;
 import org.firstinspires.ftc.teamcode.subsystems.Deposit;
@@ -77,12 +78,13 @@ public class TwoPlusTwo extends CommandOpMode {
                 new SequentialAction(
                         new CommandAction(new WaitCommand(5000)),
                         new CommandAction(this.robot.scoreLow),
-                        new CommandAction(this.robot.scoreOne)
+                        new CommandAction(this.robot.scoreOne),
+                        new CommandAction(this.robot.stack)
                 ),
                 backdropToStack,
-                new SequentialAction(
-                        new CommandAction(new WaitCommand(5000))
-                        // Stack
+                new ParallelAction(
+                        new CommandAction(new WaitCommand(5000)),
+                        new CommandAction(new IntakeSetPower(this.robot.intake, 0.5))
                 ),
                 stackToBackdrop,
                 new SequentialAction(

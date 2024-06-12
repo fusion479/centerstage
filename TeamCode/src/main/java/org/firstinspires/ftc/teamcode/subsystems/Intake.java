@@ -14,6 +14,7 @@ public class Intake extends Subsystem {
     public static double ACCEPTING_POS = .28;
     public static double READY_POS = .65;
 
+    public static double STACK_POS = .40;
     private final DcMotorEx intake;
     private final Servo intakeRight, intakeLeft;
     private double power;

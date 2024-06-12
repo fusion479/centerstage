@@ -26,6 +26,7 @@ import org.firstinspires.ftc.teamcode.commands.deposit.locks.OpenOuter;
 import org.firstinspires.ftc.teamcode.commands.drivetrain.ManualDrive;
 import org.firstinspires.ftc.teamcode.commands.intake.IntakeAccepting;
 import org.firstinspires.ftc.teamcode.commands.intake.IntakeReady;
+import org.firstinspires.ftc.teamcode.commands.intake.IntakeStack;
 import org.firstinspires.ftc.teamcode.commands.launcher.Idle;
 import org.firstinspires.ftc.teamcode.commands.launcher.Launch;
 import org.firstinspires.ftc.teamcode.commands.lift.BottomLift;
@@ -49,7 +50,7 @@ public class CommandRobot extends Robot {
     private final Drivetrain drive;
     private final Lift lift;
     private final Launcher launcher;
-    private final Intake intake;
+    public final Intake intake;
     private final GamepadEx gamepad1;
     private final GamepadEx gamepad2;
     private final Deposit deposit;
@@ -64,6 +65,8 @@ public class CommandRobot extends Robot {
     public final Command liftLower;
     public final Command scoreOne;
     public final Command scoreTwo;
+
+    public final Command stack;
     public final Command launch;
     public final Command idle;
 
@@ -165,6 +168,17 @@ public class CommandRobot extends Robot {
                     this.locked = false;
                     this.timer.reset();
                 }));
+
+        this.stack = new SequentialCommandGroup(
+                new LowLift(this.lift),
+                new DepositAccepting(this.deposit),
+                new WaitCommand(500),
+                new ArmAccepting(this.arm),
+                new IntakeStack(this.intake),
+                new OpenInner(this.deposit),
+                new OpenOuter(this.deposit),
+                new BottomLift(this.lift)
+                );
 
         this.idle = new Idle(this.launcher);
         this.launch = new Launch(this.launcher);
