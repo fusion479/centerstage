@@ -79,6 +79,7 @@ public class TwoPlusTwo extends CommandOpMode {
                         new CommandAction(new WaitCommand(5000)),
                         new CommandAction(this.robot.scoreLow),
                         new CommandAction(this.robot.scoreOne),
+                        new CommandAction(new WaitCommand(2000)),
                         new CommandAction(this.robot.stack)
                 ),
                 backdropToStack,
@@ -90,7 +91,9 @@ public class TwoPlusTwo extends CommandOpMode {
                 new SequentialAction(
                         new CommandAction(new WaitCommand(5000)),
                         new CommandAction(this.robot.scoreLow),
-                        new CommandAction(this.robot.scoreTwo)
+                        new CommandAction(this.robot.scoreTwo),
+                        new CommandAction(new WaitCommand(2000)),
+                        new CommandAction(this.robot.ready)
                 ),
                 this.CLOSE.getPark()
         ));
