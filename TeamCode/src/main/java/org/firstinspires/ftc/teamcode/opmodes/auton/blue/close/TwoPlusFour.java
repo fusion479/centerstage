@@ -107,8 +107,7 @@ private MultipleTelemetry multipleTelemetry;
                         new CommandAction(this.robot.scoreLow),
                         new CommandAction(this.robot.scoreOne),
                         new CommandAction(this.robot.scoreTwo),
-                        new CommandAction(new WaitCommand(2000)),
-                        new CommandAction(this.robot.ready)
+                        new CommandAction(new WaitCommand(2000))
                 ),
                 this.CLOSE.getPark()
         ));

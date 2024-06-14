@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.commands.intake.IntakeAccepting;
 import org.firstinspires.ftc.teamcode.commands.intake.IntakeReady;
+import org.firstinspires.ftc.teamcode.commands.intake.IntakeStack;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.utils.GamepadTrigger;
 
@@ -31,6 +32,8 @@ public class IntakeTest extends CommandOpMode {
                 .whenPressed(new IntakeReady(this.intake));
         this.gamepad.getGamepadButton(GamepadKeys.Button.Y)
                 .whenPressed(new IntakeAccepting(this.intake));
+        this.gamepad.getGamepadButton(GamepadKeys.Button.A)
+                .whenPressed(new IntakeStack(this.intake));
 
         this.intakeAccept = new GamepadTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER, this.intake::setPower, this.gamepad);
         this.intakeReject = new GamepadTrigger(GamepadKeys.Trigger.LEFT_TRIGGER, d -> this.intake.setPower(-d), this.gamepad);

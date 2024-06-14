@@ -16,14 +16,12 @@ public class MeepMeepTesting {
                 .build();
 
         myBot.runAction(myBot.getDrive().actionBuilder(Positions.CLOSE.START)
-                .lineToY(Positions.modifyPose(Positions.CLOSE.SPIKEMARK_MID, 0, Constants.ROBOT_LENGTH / 2).y)
-                .lineToY(Positions.modifyPose(Positions.CLOSE.SPIKEMARK_MID, 0, Constants.ROBOT_LENGTH / 2).y + 5)
+                .lineToY(50)
+                .splineTo(Positions.modifyPose(Positions.CLOSE.SPIKEMARK_RIGHT, 5, 5), Math.toRadians(220))
+                .setReversed(true)
+                .splineTo(Positions.CLOSE.SPIKEMARK_SETUP, Math.toRadians(90))
                 .setTangent(0)
-                .splineToLinearHeading(
-                        Positions.modifyPose(
-                                Positions.vectorToPose(Positions.GENERAL.BACKDROP_MID, Math.toRadians(0)),
-                                -Constants.ROBOT_LENGTH / 2, 0),
-                        Math.toRadians(0))
+                .splineToLinearHeading(Positions.vectorToPose(Positions.modifyPose(Positions.GENERAL.BACKDROP_RIGHT, -Constants.ROBOT_LENGTH / 2, 0), 0), Math.toRadians(0))
                 .build());
 
         meepMeep.setBackground(MeepMeep.Background.FIELD_CENTERSTAGE_JUICE_DARK)

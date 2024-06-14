@@ -10,25 +10,28 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.commands.deposit.DepositReady;
 import org.firstinspires.ftc.teamcode.commands.deposit.DepositScore;
+import org.firstinspires.ftc.teamcode.commands.launcher.Idle;
+import org.firstinspires.ftc.teamcode.commands.launcher.Launch;
 import org.firstinspires.ftc.teamcode.subsystems.Deposit;
+import org.firstinspires.ftc.teamcode.subsystems.Launcher;
 
 
-@TeleOp(name = "Deposit Test", group = "Test")
-public class DepositTest extends CommandOpMode {
-    private Deposit deposit;
+@TeleOp(name = "Launcher Test", group = "Test")
+public class LauncherTest extends CommandOpMode {
+    private Launcher launcher;
     private GamepadEx gamepad;
     private MultipleTelemetry multipleTelemetry;
 
     @Override
     public void initialize() {
         this.multipleTelemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        this.deposit = new Deposit(this.hardwareMap, this.multipleTelemetry);
+        this.launcher = new Launcher(super.hardwareMap, this.multipleTelemetry);
         this.gamepad = new GamepadEx(gamepad1);
 
         this.gamepad.getGamepadButton(GamepadKeys.Button.A)
-                .whenPressed(new DepositScore(this.deposit));
+                .whenPressed(new Idle(this.launcher));
         this.gamepad.getGamepadButton(GamepadKeys.Button.B)
-                .whenPressed(new DepositReady(this.deposit));
+                .whenPressed(new Launch(this.launcher));
     }
 
     @Override

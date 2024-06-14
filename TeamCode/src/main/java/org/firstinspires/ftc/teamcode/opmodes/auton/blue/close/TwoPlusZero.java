@@ -51,8 +51,7 @@ public class TwoPlusZero extends CommandOpMode {
                         new CommandAction(this.robot.scoreOne),
                         new CommandAction(new WaitCommand(2000)),
                         new CommandAction(this.robot.ready)
-                ),
-                this.TRAJECTORIES.getPark()
+                )
         ));
 
         CommandScheduler.getInstance().cancelAll();

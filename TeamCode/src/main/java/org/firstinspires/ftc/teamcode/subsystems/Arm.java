@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.utils.Subsystem;
 public class Arm extends Subsystem {
     public static double SCORE_POS = 0.01;
     public static double READY_POS = 0.61;
-    public static double ACCEPTING_POS = 0.76;
+    public static double ACCEPTING_POS = 0.65;
 
     private final Servo leftServo, rightServo;
 
@@ -21,7 +21,7 @@ public class Arm extends Subsystem {
         this.leftServo = hwMap.get(Servo.class, "armLeft");
         this.rightServo = hwMap.get(Servo.class, "armRight");
 
-        this.setPosition(0.6);
+        this.setPosition(0.4);
     }
 
     public void setPosition(double position) {

@@ -191,7 +191,7 @@ public class CommandRobot extends Robot {
 
     public void configureCommands() {
         this.gamepad1.getGamepadButton(GamepadKeys.Button.A)
-                .toggleWhenPressed(this.accepting, this.ready);
+                .whenPressed(this.accepting);
         this.gamepad1.getGamepadButton(GamepadKeys.Button.B)
                 .whenPressed(this.scoreLow);
         this.gamepad1.getGamepadButton(GamepadKeys.Button.Y)
@@ -210,6 +210,11 @@ public class CommandRobot extends Robot {
                 .whenPressed(this.launch);
         this.gamepad2.getGamepadButton(GamepadKeys.Button.A)
                 .whenPressed(this.idle);
+        this.gamepad1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT)
+                .whenPressed(new ParallelCommandGroup(
+                        new LockOuter(this.deposit),
+                        new LockInner(this.deposit)
+                ));
     }
 
     public void updateTriggers() {
@@ -218,15 +223,6 @@ public class CommandRobot extends Robot {
     }
 
     public void senseColor() {
-        if (!this.deposit.hasInnerPixel() || !this.deposit.hasOuterPixel()) {
-            timer.reset();
-        }
-
-        if ((this.deposit.hasOuterPixel() && this.deposit.hasInnerPixel()) && !this.locked && timer.milliseconds() >= 350) {
-            new LockInner(this.deposit).schedule();
-            new LockOuter(this.deposit).schedule();
-            this.locked = true;
-        }
     }
 
     public MecanumDrive getDrive() {

@@ -9,7 +9,7 @@ public class Positions {
     }
 
     public static Pose2d modifyPose(Pose2d pose, double dX, double dY) {
-        return new Pose2d(pose.position.x + dX, pose.position.y + dY, pose.heading.real);
+        return new Pose2d(pose.position.x + dX, pose.position.y + dY, pose.heading.imag);
     }
 
     public static Pose2d vectorToPose(Vector2d vector, double heading) {
