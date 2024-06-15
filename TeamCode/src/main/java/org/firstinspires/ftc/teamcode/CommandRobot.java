@@ -177,8 +177,7 @@ public class CommandRobot extends Robot {
                 new IntakeStack(this.intake),
                 new OpenInner(this.deposit),
                 new OpenOuter(this.deposit),
-                new BottomLift(this.lift)
-                );
+                new BottomLift(this.lift));
 
         this.idle = new Idle(this.launcher);
         this.launch = new Launch(this.launcher);
@@ -210,11 +209,6 @@ public class CommandRobot extends Robot {
                 .whenPressed(this.launch);
         this.gamepad2.getGamepadButton(GamepadKeys.Button.A)
                 .whenPressed(this.idle);
-        this.gamepad1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT)
-                .whenPressed(new ParallelCommandGroup(
-                        new LockOuter(this.deposit),
-                        new LockInner(this.deposit)
-                ));
     }
 
     public void updateTriggers() {
@@ -223,6 +217,15 @@ public class CommandRobot extends Robot {
     }
 
     public void senseColor() {
+        if (!this.deposit.hasInnerPixel() || !this.deposit.hasOuterPixel()) {
+            timer.reset();
+        }
+
+        if ((this.deposit.hasOuterPixel() && this.deposit.hasInnerPixel()) && !this.locked && timer.milliseconds() >= 350) {
+            new LockInner(this.deposit).schedule();
+            new LockOuter(this.deposit).schedule();
+            this.locked = true;
+        }
     }
 
     public MecanumDrive getDrive() {
