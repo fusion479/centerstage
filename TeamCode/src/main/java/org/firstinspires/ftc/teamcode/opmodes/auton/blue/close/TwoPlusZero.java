@@ -38,9 +38,11 @@ public class TwoPlusZero extends CommandOpMode {
     public void runOpMode() throws InterruptedException {
         CommandScheduler.getInstance().enable();
         this.initialize();
+        int region = this.camera.getRegion();
+        telemetry.addData("Region:", region);
+        telemetry.update();
 
         Action determinedPath = this.camera.getRegion() == 1 ? this.TRAJECTORIES.LEFT_SPIKEMARK : this.camera.getRegion() == 2 ? this.TRAJECTORIES.MID_SPIKEMARK : this.TRAJECTORIES.RIGHT_SPIKEMARK;
-
         super.waitForStart();
 
         Actions.runBlocking(new ParallelAction(

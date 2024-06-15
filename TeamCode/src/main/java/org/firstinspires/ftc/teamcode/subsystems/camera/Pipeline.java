@@ -31,7 +31,7 @@ public class Pipeline extends OpenCvPipeline {
     public static int leftRectX = 0;
     public static int leftRectY = 125;
 
-    public static double tolerance = 0.3;
+    public static double tolerance = 0.2;
     private final Camera.Color color;
     int region;
     private Mat mat = new Mat();

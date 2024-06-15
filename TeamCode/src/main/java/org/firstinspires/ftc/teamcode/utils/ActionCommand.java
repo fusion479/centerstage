@@ -8,7 +8,7 @@ import com.arcrobotics.ftclib.command.Subsystem;
 
 import java.util.Set;
 
-public class ActionCommand implements Command {
+public class    ActionCommand implements Command {
     private final Action action;
     private final Set<Subsystem> requirements;
     private boolean finished = false;

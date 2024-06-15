@@ -205,7 +205,11 @@ public class CommandRobot extends Robot {
         this.gamepad1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
                 .whenPressed(this.scoreOne);
         this.gamepad1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
-                .whenPressed(this.scoreTwo);
+                .whenPressed(new SequentialCommandGroup(
+                        this.scoreTwo,
+                        new WaitCommand(500),
+                        this.accepting
+                ));
         this.gamepad2.getGamepadButton(GamepadKeys.Button.X)
                 .whenPressed(this.launch);
         this.gamepad2.getGamepadButton(GamepadKeys.Button.A)

@@ -138,7 +138,7 @@ public class Trajectories {
                         Positions.vectorToPose(Positions.CLOSE.SPIKEMARK_SETUP, Math.toRadians(0)),
                         Math.toRadians(90))
                 .setTangent(0)
-                .splineTo(Positions.modifyPose(Positions.GENERAL.BACKDROP_LEFT, -Constants.ROBOT_LENGTH / 2, 0), Math.toRadians(0))
+                .splineToLinearHeading(Positions.vectorToPose(Positions.modifyPose(Positions.GENERAL.BACKDROP_LEFT, -Constants.ROBOT_LENGTH / 2, 0), 0), Math.toRadians(0))
                 .build();
 
         public Action getPark() {
