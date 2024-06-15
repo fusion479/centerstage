@@ -56,7 +56,7 @@ public class Lift extends Subsystem {
     }
 
     public boolean isFinished() {
-        return this.controller.getLastError() < 0.1;
+        return this.controller.getLastError() < 0.4;
     }
 
     public void setPower(double power) {

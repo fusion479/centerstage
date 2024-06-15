@@ -161,13 +161,21 @@ public class CommandRobot extends Robot {
 
         this.scoreTwo = new SequentialCommandGroup(
                 new OpenInner(this.deposit),
-                new InstantCommand(() -> locked = false),
-                new WaitCommand(175),
+                new WaitCommand(500),
                 new LiftRaise(this.lift),
                 new InstantCommand(() -> {
                     this.locked = false;
                     this.timer.reset();
-                }));
+                }),
+                new WaitCommand(500),
+                new LowLift(this.lift),
+                new DepositAccepting(this.deposit),
+                new WaitCommand(500),
+                new ArmAccepting(this.arm),
+                new IntakeAccepting(this.intake),
+                new OpenInner(this.deposit),
+                new OpenOuter(this.deposit),
+                new BottomLift(this.lift));
 
         this.stack = new SequentialCommandGroup(
                 new LowLift(this.lift),
@@ -204,11 +212,7 @@ public class CommandRobot extends Robot {
         this.gamepad1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
                 .whenPressed(this.scoreOne);
         this.gamepad1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
-                .whenPressed(new SequentialCommandGroup(
-                        this.scoreTwo,
-                        new WaitCommand(500),
-                        this.accepting
-                ));
+                .whenPressed(this.scoreTwo);
         this.gamepad2.getGamepadButton(GamepadKeys.Button.X)
                 .whenPressed(this.launch);
         this.gamepad2.getGamepadButton(GamepadKeys.Button.A)
@@ -225,7 +229,7 @@ public class CommandRobot extends Robot {
             timer.reset();
         }
 
-        if ((this.deposit.hasOuterPixel() && this.deposit.hasInnerPixel()) && !this.locked && timer.milliseconds() >= 350) {
+        if ((this.deposit.hasOuterPixel() && this.deposit.hasInnerPixel()) && !this.locked && timer.milliseconds() >= 150) {
             new LockInner(this.deposit).schedule();
             new LockOuter(this.deposit).schedule();
             this.locked = true;

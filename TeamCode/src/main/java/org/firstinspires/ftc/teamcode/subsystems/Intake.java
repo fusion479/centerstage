@@ -11,9 +11,9 @@ import org.firstinspires.ftc.teamcode.utils.Subsystem;
 
 @Config
 public class Intake extends Subsystem {
-    public static double ACCEPTING_POS = .68;
-    public static double READY_POS = .9;
-    public static double STACK_POS = .78;
+    public static double ACCEPTING_POS = .4;
+    public static double READY_POS = .6;
+    public static double STACK_POS = .47;
 
     private final DcMotorEx intake;
     private final Servo intakeRight, intakeLeft;
@@ -29,9 +29,8 @@ public class Intake extends Subsystem {
 
         this.intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         this.intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        this.intake.setDirection(DcMotorEx.Direction.REVERSE);
 
-        this.setPosition(0.9);
+        this.setPosition(1);
     }
 
     @Override
