@@ -29,7 +29,9 @@ public class TwoPlusZero extends CommandOpMode {
     public void initialize() {
         this.multipleTelemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         this.robot = new CommandRobot(super.hardwareMap, new GamepadEx(this.gamepad1), new GamepadEx(this.gamepad2), this.multipleTelemetry, Positions.CLOSE.START);
+
         this.camera = new Camera(Camera.Color.BLUE, this.multipleTelemetry);
+        this.camera.initCamera(super.hardwareMap);
 
         this.TRAJECTORIES = new Trajectories(Camera.Color.BLUE, this.robot.getDrive()).new Close();
     }
@@ -42,7 +44,14 @@ public class TwoPlusZero extends CommandOpMode {
         telemetry.addData("Region:", region);
         telemetry.update();
 
+        while (this.camera.getRegion() == 0);
+
+        this.multipleTelemetry.addData("Region: ", this.camera.getRegion());
+        this.multipleTelemetry.update();
+
         Action determinedPath = this.camera.getRegion() == 1 ? this.TRAJECTORIES.LEFT_SPIKEMARK : this.camera.getRegion() == 2 ? this.TRAJECTORIES.MID_SPIKEMARK : this.TRAJECTORIES.RIGHT_SPIKEMARK;
+
+        this.camera.stopStreaming();
         super.waitForStart();
 
         Actions.runBlocking(new ParallelAction(

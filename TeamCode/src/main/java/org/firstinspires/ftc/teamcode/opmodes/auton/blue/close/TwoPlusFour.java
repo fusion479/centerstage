@@ -42,6 +42,7 @@ private MultipleTelemetry multipleTelemetry;
         this.multipleTelemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         this.robot = new CommandRobot(super.hardwareMap, new GamepadEx(this.gamepad1), new GamepadEx(this.gamepad2), this.multipleTelemetry, Positions.CLOSE.START);
         this.camera = new Camera(Camera.Color.BLUE, this.multipleTelemetry);
+        this.camera.initCamera(super.hardwareMap);
 
         this.CLOSE = new Trajectories(Camera.Color.BLUE, this.robot.getDrive()).new Close();
         this.GENERAL = new Trajectories(Camera.Color.BLUE, this.robot.getDrive()).new General();
@@ -52,6 +53,10 @@ private MultipleTelemetry multipleTelemetry;
     public void runOpMode() throws InterruptedException {
         CommandScheduler.getInstance().enable();
         this.initialize();
+
+        while (this.camera.getRegion() == 0);
+        this.multipleTelemetry.addData("Region: ", this.camera.getRegion());
+        this.multipleTelemetry.update();
 
         Action initialPath;
         Action backdropToStack;
@@ -71,6 +76,7 @@ private MultipleTelemetry multipleTelemetry;
             stackToBackdrop = this.GENERAL.STACK_TO_RIGHT_BACKDROP;
         }
 
+        this.camera.stopStreaming();
         super.waitForStart();
 
         Actions.runBlocking(new ParallelAction(
