@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
-import com.ThermalEquilibrium.homeostasis.Filters.FilterAlgorithms.LowPassFilter;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.hardware.ColorRangeSensor;
@@ -12,7 +11,7 @@ import org.firstinspires.ftc.teamcode.utils.Subsystem;
 
 @Config
 public class Deposit extends Subsystem {
-    public static double ACCEPTING_POS =  0.37;
+    public static double ACCEPTING_POS = 0.34;
     public static double READY_POS = 0.58;
     public static double SCORE_POS = .87;
 

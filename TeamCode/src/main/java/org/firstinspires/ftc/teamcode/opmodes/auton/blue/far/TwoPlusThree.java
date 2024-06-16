@@ -15,7 +15,6 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.CommandRobot;
 import org.firstinspires.ftc.teamcode.commands.intake.IntakeSetPower;
-import org.firstinspires.ftc.teamcode.opmodes.auton.Trajectories;
 import org.firstinspires.ftc.teamcode.subsystems.camera.Camera;
 import org.firstinspires.ftc.teamcode.utils.CommandAction;
 
@@ -48,9 +47,9 @@ public class TwoPlusThree extends CommandOpMode {
         Action stackToBackdrop;
 
         if (this.camera.getRegion() == 1) {
-           initialPath = this.FAR.LEFT_SPIKEMARK;
-           backdropToStack = this.GENERAL.LEFT_BACKDROP_TO_STACK;
-           stackToBackdrop = this.GENERAL.STACK_TO_LEFT_BACKDROP;
+            initialPath = this.FAR.LEFT_SPIKEMARK;
+            backdropToStack = this.GENERAL.LEFT_BACKDROP_TO_STACK;
+            stackToBackdrop = this.GENERAL.STACK_TO_LEFT_BACKDROP;
         } else if (this.camera.getRegion() == 2) {
             initialPath = this.FAR.MID_SPIKEMARK;
             backdropToStack = this.GENERAL.MID_BACKDROP_TO_STACK;

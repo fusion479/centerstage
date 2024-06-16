@@ -8,30 +8,19 @@ import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.CommandScheduler;
-import com.arcrobotics.ftclib.command.ParallelCommandGroup;
-import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.example.meepmeeptesting.Positions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.CommandRobot;
-import org.firstinspires.ftc.teamcode.commands.arm.ArmScore;
-import org.firstinspires.ftc.teamcode.commands.deposit.DepositScore;
 import org.firstinspires.ftc.teamcode.commands.intake.IntakeSetPower;
-import org.firstinspires.ftc.teamcode.opmodes.auton.Trajectories;
-import org.firstinspires.ftc.teamcode.subsystems.Arm;
-import org.firstinspires.ftc.teamcode.subsystems.Deposit;
-import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
-import org.firstinspires.ftc.teamcode.subsystems.Intake;
-import org.firstinspires.ftc.teamcode.subsystems.Lift;
 import org.firstinspires.ftc.teamcode.subsystems.camera.Camera;
 import org.firstinspires.ftc.teamcode.utils.CommandAction;
-import org.firstinspires.ftc.teamcode.utils.CommandGroupAction;
 
 @Autonomous(name = "2+4 Blue Close", group = "_Auto")
 public class TwoPlusFour extends CommandOpMode {
-private MultipleTelemetry multipleTelemetry;
+    private MultipleTelemetry multipleTelemetry;
     private CommandRobot robot;
     private Trajectories.Close CLOSE;
     private Trajectories.General GENERAL;
@@ -64,9 +53,9 @@ private MultipleTelemetry multipleTelemetry;
         Action stackToBackdrop;
 
         if (this.camera.getRegion() == 1) {
-           initialPath = this.CLOSE.LEFT_SPIKEMARK;
-           backdropToStack = this.GENERAL.LEFT_BACKDROP_TO_STACK;
-           stackToBackdrop = this.GENERAL.STACK_TO_LEFT_BACKDROP;
+            initialPath = this.CLOSE.LEFT_SPIKEMARK;
+            backdropToStack = this.GENERAL.LEFT_BACKDROP_TO_STACK;
+            stackToBackdrop = this.GENERAL.STACK_TO_LEFT_BACKDROP;
         } else if (this.camera.getRegion() == 2) {
             initialPath = this.CLOSE.MID_SPIKEMARK;
             backdropToStack = this.GENERAL.MID_BACKDROP_TO_STACK;

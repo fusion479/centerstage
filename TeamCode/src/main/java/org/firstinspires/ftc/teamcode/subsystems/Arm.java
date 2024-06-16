@@ -21,7 +21,7 @@ public class Arm extends Subsystem {
         this.leftServo = hwMap.get(Servo.class, "armLeft");
         this.rightServo = hwMap.get(Servo.class, "armRight");
 
-        this.setPosition(0.4);
+        this.setPosition(0.38);
     }
 
     public void setPosition(double position) {

@@ -148,13 +148,13 @@ public class CommandRobot extends Robot {
 
         this.scoreTwo = new SequentialCommandGroup(
                 new OpenInner(this.deposit),
-                new WaitCommand(500),
+                new WaitCommand(250),
                 new LiftRaise(this.lift),
                 new InstantCommand(() -> {
                     this.locked = false;
                     this.timer.reset();
                 }),
-                new WaitCommand(500),
+                new WaitCommand(300),
                 new LowLift(this.lift),
                 new DepositAccepting(this.deposit),
                 new WaitCommand(500),
@@ -181,8 +181,8 @@ public class CommandRobot extends Robot {
         this.idle = new Idle(this.launcher);
         this.launch = new Launch(this.launcher);
 
-        this.intakeAccept = new GamepadTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER, this.intake::setPower, this.gamepad1);
-        this.intakeReject = new GamepadTrigger(GamepadKeys.Trigger.LEFT_TRIGGER, d -> this.intake.setPower(-d), this.gamepad1);
+        this.intakeAccept = new GamepadTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER, d -> this.intake.setPower(-d), this.gamepad1);
+        this.intakeReject = new GamepadTrigger(GamepadKeys.Trigger.LEFT_TRIGGER, this.intake::setPower, this.gamepad1);
 
         this.drive.setDefaultCommand(new ManualDrive(this.drive, this.gamepad1));
     }
@@ -192,9 +192,9 @@ public class CommandRobot extends Robot {
                 .whenPressed(this.accepting);
         this.gamepad1.getGamepadButton(GamepadKeys.Button.B)
                 .whenPressed(this.scoreLow);
-        this.gamepad1.getGamepadButton(GamepadKeys.Button.Y)
-                .whenPressed(this.scoreHigh);
         this.gamepad1.getGamepadButton(GamepadKeys.Button.X)
+                .whenPressed(this.scoreHigh);
+        this.gamepad1.getGamepadButton(GamepadKeys.Button.Y)
                 .whenPressed(this.scoreMid);
         this.gamepad1.getGamepadButton(GamepadKeys.Button.DPAD_UP)
                 .whenPressed(this.liftRaise);
