@@ -32,10 +32,10 @@ public class TwoPlusOne extends CommandOpMode {
         this.multipleTelemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         this.robot = new CommandRobot(super.hardwareMap, new GamepadEx(this.gamepad1), new GamepadEx(this.gamepad2), this.multipleTelemetry, Positions.CLOSE.START);
         this.camera = new Camera(Camera.Color.BLUE, this.multipleTelemetry);
+        this.camera.initCamera(super.hardwareMap);
 
         this.FAR = new Trajectories(Camera.Color.BLUE, this.robot.getDrive()).new Far();
         this.GENERAL = new Trajectories(Camera.Color.BLUE, this.robot.getDrive()).new General();
-
     }
 
     @Override
@@ -43,47 +43,38 @@ public class TwoPlusOne extends CommandOpMode {
         CommandScheduler.getInstance().enable();
         this.initialize();
 
-        Action initialPath;
-        Action backdropToStack;
-        Action stackToBackdrop;
-
-        if (this.camera.getRegion() == 1) {
-           initialPath = this.FAR.LEFT_SPIKEMARK;
-           backdropToStack = this.GENERAL.LEFT_BACKDROP_TO_STACK;
-           stackToBackdrop = this.GENERAL.STACK_TO_LEFT_BACKDROP;
-        } else if (this.camera.getRegion() == 2) {
-            initialPath = this.FAR.MID_SPIKEMARK;
-            backdropToStack = this.GENERAL.MID_BACKDROP_TO_STACK;
-            stackToBackdrop = this.GENERAL.STACK_TO_MID_BACKDROP;
-        } else {
-            initialPath = this.FAR.RIGHT_SPIKEMARK;
-            backdropToStack = this.GENERAL.RIGHT_BACKDROP_TO_STACK;
-            stackToBackdrop = this.GENERAL.STACK_TO_RIGHT_BACKDROP;
+        while (!super.isStarted()) {
+            this.multipleTelemetry.addData("Region:", this.camera.getRegion());
+            this.multipleTelemetry.update();
         }
 
-        super.waitForStart();
+        Action initialPath = this.camera.getRegion() == 1 ? this.FAR.LEFT_SPIKEMARK : this.camera.getRegion() == 2 ? this.FAR.MID_SPIKEMARK : this.FAR.RIGHT_SPIKEMARK;
 
+        this.camera.stopStreaming();
         Actions.runBlocking(new ParallelAction(
                 initialPath,
                 new SequentialAction(
                         new CommandAction(new WaitCommand(5000)),
-                        new CommandAction(this.robot.scoreLow),
-                        new CommandAction(this.robot.scoreOne),
-                        new CommandAction(new WaitCommand(2000)),
-                        new CommandAction(this.robot.stack)
+                        new CommandAction(this.robot.stack),
+                        new ParallelAction(
+                                new CommandAction(new WaitCommand(2000)),
+                                new CommandAction(new IntakeSetPower(this.robot.intake, 1))
+                        ),
+                        new CommandAction(this.robot.ready),
+                        new CommandAction(new WaitCommand(1000)),
+                        new CommandAction(this.robot.lock),
+                        new CommandAction(new WaitCommand(1000)),
+                        new ParallelAction(
+                                new CommandAction(new WaitCommand(2000)),
+                                new CommandAction(new IntakeSetPower(this.robot.intake, -1))
+                        )
                 ),
-                backdropToStack,
-                new ParallelAction(
-                        new CommandAction(new WaitCommand(5000)),
-                        new CommandAction(new IntakeSetPower(this.robot.intake, 0.5))
-                ),
-                stackToBackdrop,
                 new SequentialAction(
-                        new CommandAction(new WaitCommand(5000)),
+                        new CommandAction(new WaitCommand(10000)),
                         new CommandAction(this.robot.scoreLow),
-                        new CommandAction(this.robot.scoreTwo),
                         new CommandAction(new WaitCommand(2000)),
-                        new CommandAction(this.robot.ready)
+                        new CommandAction(this.robot.scoreOne),
+                        new CommandAction(this.robot.scoreTwo)
                 )
         ));
 

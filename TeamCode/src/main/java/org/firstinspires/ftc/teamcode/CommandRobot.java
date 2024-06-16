@@ -45,31 +45,18 @@ import org.firstinspires.ftc.teamcode.subsystems.Lift;
 import org.firstinspires.ftc.teamcode.utils.GamepadTrigger;
 
 public class CommandRobot extends Robot {
+    public final Intake intake;
+    // COMMANDS
+    public final Command accepting, ready, scoreLow, scoreHigh, scoreMid, liftRaise, liftLower, scoreOne, scoreTwo, stack, launch, idle, lock;
+
     // SUBSYSTEMS & CONTROLLERS
     private final Arm arm;
     private final Drivetrain drive;
     private final Lift lift;
     private final Launcher launcher;
-    public final Intake intake;
     private final GamepadEx gamepad1;
     private final GamepadEx gamepad2;
     private final Deposit deposit;
-
-    // COMMANDS
-    public final Command accepting;
-    public final Command ready;
-    public final Command scoreLow;
-    public final Command scoreHigh;
-    public final Command scoreMid;
-    public final Command liftRaise;
-    public final Command liftLower;
-    public final Command scoreOne;
-    public final Command scoreTwo;
-
-    public final Command stack;
-    public final Command launch;
-    public final Command idle;
-
     private final GamepadTrigger intakeAccept;
     private final GamepadTrigger intakeReject;
 
@@ -186,6 +173,10 @@ public class CommandRobot extends Robot {
                 new OpenInner(this.deposit),
                 new OpenOuter(this.deposit),
                 new BottomLift(this.lift));
+
+        this.lock = new SequentialCommandGroup(
+                new LockInner(this.deposit),
+                new LockOuter(this.deposit));
 
         this.idle = new Idle(this.launcher);
         this.launch = new Launch(this.launcher);

@@ -46,11 +46,11 @@ public class TwoPlusZero extends CommandOpMode {
             this.multipleTelemetry.update();
         }
 
-        Action determinedPath = this.camera.getRegion() == 1 ? this.TRAJECTORIES.LEFT_SPIKEMARK : this.camera.getRegion() == 2 ? this.TRAJECTORIES.MID_SPIKEMARK : this.TRAJECTORIES.RIGHT_SPIKEMARK;
+        Action initialPath = this.camera.getRegion() == 1 ? this.TRAJECTORIES.LEFT_SPIKEMARK : this.camera.getRegion() == 2 ? this.TRAJECTORIES.MID_SPIKEMARK : this.TRAJECTORIES.RIGHT_SPIKEMARK;
 
         this.camera.stopStreaming();
         Actions.runBlocking(new ParallelAction(
-                determinedPath,
+                initialPath,
                 new SequentialAction(
                         new CommandAction(new WaitCommand(5000)),
                         new CommandAction(this.robot.scoreLow),
