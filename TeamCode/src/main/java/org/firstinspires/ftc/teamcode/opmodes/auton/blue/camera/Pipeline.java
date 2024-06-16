@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.subsystems.camera;
+package org.firstinspires.ftc.teamcode.opmodes.auton.blue.camera;
 
 import com.acmerobotics.dashboard.config.Config;
 
@@ -33,7 +33,7 @@ public class Pipeline extends OpenCvPipeline {
     public static double tolerance = 0.1;
     private final Camera.Color color;
     int region;
-    private Mat mat = new Mat();
+    private final Mat mat = new Mat();
     private Scalar lowFilter, highFilter;
     private Rect RIGHT_RECT, LEFT_RECT;
 

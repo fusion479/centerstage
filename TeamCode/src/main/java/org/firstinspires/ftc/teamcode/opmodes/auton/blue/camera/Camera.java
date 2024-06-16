@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.subsystems.camera;
+package org.firstinspires.ftc.teamcode.opmodes.auton.blue.camera;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;

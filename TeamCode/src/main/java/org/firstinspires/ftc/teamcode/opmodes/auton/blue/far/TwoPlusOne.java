@@ -15,7 +15,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.CommandRobot;
 import org.firstinspires.ftc.teamcode.commands.intake.IntakeSetPower;
-import org.firstinspires.ftc.teamcode.subsystems.camera.Camera;
+import org.firstinspires.ftc.teamcode.opmodes.auton.Trajectories;
+import org.firstinspires.ftc.teamcode.opmodes.auton.blue.camera.Camera;
 import org.firstinspires.ftc.teamcode.utils.CommandAction;
 
 @Autonomous(name = "2+1 Blue Far", group = "_Auto")
