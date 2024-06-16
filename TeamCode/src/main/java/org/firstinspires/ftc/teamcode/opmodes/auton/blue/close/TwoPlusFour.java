@@ -54,9 +54,10 @@ private MultipleTelemetry multipleTelemetry;
         CommandScheduler.getInstance().enable();
         this.initialize();
 
-        while (this.camera.getRegion() == 0);
-        this.multipleTelemetry.addData("Region: ", this.camera.getRegion());
-        this.multipleTelemetry.update();
+        while (!super.isStarted()) {
+            this.multipleTelemetry.addData("Region: ", this.camera.getRegion());
+            this.multipleTelemetry.update();
+        }
 
         Action initialPath;
         Action backdropToStack;
@@ -77,8 +78,6 @@ private MultipleTelemetry multipleTelemetry;
         }
 
         this.camera.stopStreaming();
-        super.waitForStart();
-
         Actions.runBlocking(new ParallelAction(
                 initialPath,
                 new SequentialAction(

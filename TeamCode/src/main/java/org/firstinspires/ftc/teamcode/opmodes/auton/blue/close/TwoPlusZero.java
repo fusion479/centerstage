@@ -40,30 +40,29 @@ public class TwoPlusZero extends CommandOpMode {
     public void runOpMode() throws InterruptedException {
         CommandScheduler.getInstance().enable();
         this.initialize();
-        int region = this.camera.getRegion();
-        telemetry.addData("Region:", region);
-        telemetry.update();
 
-        while (this.camera.getRegion() == 0);
-
-        this.multipleTelemetry.addData("Region: ", this.camera.getRegion());
-        this.multipleTelemetry.update();
+        while (!super.isStarted()) {
+            this.multipleTelemetry.addData("Region:", this.camera.getRegion());
+            this.multipleTelemetry.update();
+        }
 
         Action determinedPath = this.camera.getRegion() == 1 ? this.TRAJECTORIES.LEFT_SPIKEMARK : this.camera.getRegion() == 2 ? this.TRAJECTORIES.MID_SPIKEMARK : this.TRAJECTORIES.RIGHT_SPIKEMARK;
 
         this.camera.stopStreaming();
-        super.waitForStart();
-
         Actions.runBlocking(new ParallelAction(
                 determinedPath,
                 new SequentialAction(
                         new CommandAction(new WaitCommand(5000)),
                         new CommandAction(this.robot.scoreLow),
-                        new CommandAction(this.robot.scoreOne),
                         new CommandAction(new WaitCommand(2000)),
-                        new CommandAction(this.robot.ready)
+                        new CommandAction(this.robot.scoreOne),
+                        new CommandAction(new WaitCommand(500)),
+                        new CommandAction(this.robot.ready),
+                        new CommandAction(new WaitCommand(1000))
                 )
         ));
+
+        Actions.runBlocking(this.TRAJECTORIES.getPark());
 
         CommandScheduler.getInstance().cancelAll();
         CommandScheduler.getInstance().disable();

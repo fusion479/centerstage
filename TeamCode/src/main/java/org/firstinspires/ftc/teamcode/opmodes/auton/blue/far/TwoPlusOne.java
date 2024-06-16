@@ -84,9 +84,10 @@ public class TwoPlusOne extends CommandOpMode {
                         new CommandAction(this.robot.scoreTwo),
                         new CommandAction(new WaitCommand(2000)),
                         new CommandAction(this.robot.ready)
-                ),
-                this.FAR.getPark()
+                )
         ));
+
+        Actions.runBlocking(this.FAR.getPark());
 
         CommandScheduler.getInstance().cancelAll();
         CommandScheduler.getInstance().disable();
