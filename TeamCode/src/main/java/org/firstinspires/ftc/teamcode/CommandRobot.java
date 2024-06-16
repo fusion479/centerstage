@@ -26,6 +26,7 @@ import org.firstinspires.ftc.teamcode.commands.deposit.locks.OpenOuter;
 import org.firstinspires.ftc.teamcode.commands.drivetrain.ManualDrive;
 import org.firstinspires.ftc.teamcode.commands.intake.IntakeAccepting;
 import org.firstinspires.ftc.teamcode.commands.intake.IntakeReady;
+import org.firstinspires.ftc.teamcode.commands.intake.IntakeSetPower;
 import org.firstinspires.ftc.teamcode.commands.intake.IntakeStack;
 import org.firstinspires.ftc.teamcode.commands.launcher.Idle;
 import org.firstinspires.ftc.teamcode.commands.launcher.Launch;
@@ -174,9 +175,10 @@ public class CommandRobot extends Robot {
                 new OpenOuter(this.deposit),
                 new BottomLift(this.lift));
 
-        this.lock = new SequentialCommandGroup(
+        this.lock = new ParallelCommandGroup(
                 new LockInner(this.deposit),
-                new LockOuter(this.deposit));
+                new LockOuter(this.deposit)
+        );
 
         this.idle = new Idle(this.launcher);
         this.launch = new Launch(this.launcher);
@@ -190,6 +192,10 @@ public class CommandRobot extends Robot {
     public void configureCommands() {
         this.gamepad1.getGamepadButton(GamepadKeys.Button.A)
                 .whenPressed(this.accepting);
+        this.gamepad1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT)
+                .whenPressed(this.stack);
+        this.gamepad1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT)
+                .whenPressed(new IntakeSetPower(this.intake, 1, 1000));
         this.gamepad1.getGamepadButton(GamepadKeys.Button.B)
                 .whenPressed(this.scoreLow);
         this.gamepad1.getGamepadButton(GamepadKeys.Button.X)

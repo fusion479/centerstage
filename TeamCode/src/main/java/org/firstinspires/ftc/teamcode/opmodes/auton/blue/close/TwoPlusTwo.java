@@ -14,7 +14,6 @@ import com.example.meepmeeptesting.Positions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.CommandRobot;
-import org.firstinspires.ftc.teamcode.commands.intake.IntakeSetPower;
 import org.firstinspires.ftc.teamcode.opmodes.auton.Trajectories;
 import org.firstinspires.ftc.teamcode.opmodes.auton.blue.camera.Camera;
 import org.firstinspires.ftc.teamcode.utils.CommandAction;
@@ -78,10 +77,7 @@ public class TwoPlusTwo extends CommandOpMode {
                         new CommandAction(this.robot.stack)
                 ),
                 backdropToStack,
-                new ParallelAction(
-                        new CommandAction(new WaitCommand(5000)),
-                        new CommandAction(new IntakeSetPower(this.robot.intake, 0.5))
-                ),
+                // intake set power
                 stackToBackdrop,
                 new SequentialAction(
                         new CommandAction(new WaitCommand(5000)),

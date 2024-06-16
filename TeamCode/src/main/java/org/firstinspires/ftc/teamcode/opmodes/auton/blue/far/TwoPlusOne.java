@@ -30,12 +30,11 @@ public class TwoPlusOne extends CommandOpMode {
     @Override
     public void initialize() {
         this.multipleTelemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        this.robot = new CommandRobot(super.hardwareMap, new GamepadEx(this.gamepad1), new GamepadEx(this.gamepad2), this.multipleTelemetry, Positions.CLOSE.START);
+        this.robot = new CommandRobot(super.hardwareMap, new GamepadEx(this.gamepad1), new GamepadEx(this.gamepad2), this.multipleTelemetry, Positions.FAR.START);
         this.camera = new Camera(Camera.Color.BLUE, this.multipleTelemetry);
         this.camera.initCamera(super.hardwareMap);
 
         this.FAR = new Trajectories(Camera.Color.BLUE, this.robot.getDrive()).new Far();
-        this.GENERAL = new Trajectories(Camera.Color.BLUE, this.robot.getDrive()).new General();
     }
 
     @Override
@@ -54,27 +53,21 @@ public class TwoPlusOne extends CommandOpMode {
         Actions.runBlocking(new ParallelAction(
                 initialPath,
                 new SequentialAction(
-                        new CommandAction(new WaitCommand(5000)),
+                        new CommandAction(new WaitCommand(7000)),
                         new CommandAction(this.robot.stack),
-                        new ParallelAction(
-                                new CommandAction(new WaitCommand(2000)),
-                                new CommandAction(new IntakeSetPower(this.robot.intake, 1))
-                        ),
-                        new CommandAction(this.robot.ready),
+                        new CommandAction(new IntakeSetPower(this.robot.intake, 1, 1000)),
                         new CommandAction(new WaitCommand(1000)),
                         new CommandAction(this.robot.lock),
                         new CommandAction(new WaitCommand(1000)),
-                        new ParallelAction(
-                                new CommandAction(new WaitCommand(2000)),
-                                new CommandAction(new IntakeSetPower(this.robot.intake, -1))
-                        )
+                        new CommandAction(new IntakeSetPower(this.robot.intake, -1, 1000))
                 ),
                 new SequentialAction(
-                        new CommandAction(new WaitCommand(10000)),
+                        new CommandAction(new WaitCommand(15000)),
                         new CommandAction(this.robot.scoreLow),
                         new CommandAction(new WaitCommand(2000)),
                         new CommandAction(this.robot.scoreOne),
-                        new CommandAction(this.robot.scoreTwo)
+                        new CommandAction(this.robot.scoreTwo),
+                        new CommandAction(new WaitCommand(2000))
                 )
         ));
 

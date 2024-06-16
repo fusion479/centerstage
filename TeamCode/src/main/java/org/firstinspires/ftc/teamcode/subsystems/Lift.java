@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.utils.Subsystem;
 
 @Config
 public class Lift extends Subsystem {
-    public static int BOTTOM_POS = 0;
+    public static int BOTTOM_POS = 10;
     public static int LOW_POS = 325;
     public static int MEDIUM_POS = 1000;
     public static int INCREMENT = 200;
