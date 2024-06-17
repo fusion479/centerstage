@@ -6,8 +6,8 @@ import com.acmerobotics.roadrunner.Vector2d;
 import com.example.meepmeeptesting.Constants;
 import com.example.meepmeeptesting.Positions;
 
-import org.firstinspires.ftc.teamcode.opmodes.auton.blue.camera.Camera;
 import org.firstinspires.ftc.teamcode.roadrunner.MecanumDrive;
+import org.firstinspires.ftc.teamcode.subsystems.camera.Camera;
 
 public class Trajectories {
     private final Camera.Color color;
