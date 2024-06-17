@@ -6,7 +6,7 @@ import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.opmodes.auton.blue.camera.Camera;
+import org.firstinspires.ftc.teamcode.subsystems.camera.Camera;
 
 
 @TeleOp(name = "Camera Test", group = "Test")
