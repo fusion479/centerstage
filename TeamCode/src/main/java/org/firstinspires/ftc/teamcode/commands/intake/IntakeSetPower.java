@@ -23,10 +23,6 @@ public class IntakeSetPower extends CommandBase {
     @Override
     public void initialize() {
         this.timer.reset();
-    }
-
-    @Override
-    public void execute() {
         this.intake.setPower(this.power);
     }
 
