@@ -1,6 +1,7 @@
-package org.firstinspires.ftc.teamcode.commands.intake;
+package org.firstinspires.ftc.teamcode.commands.auton;
 
 import com.arcrobotics.ftclib.command.CommandBase;
+import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
@@ -27,9 +28,16 @@ public class IntakeSetPower extends CommandBase {
     }
 
     @Override
+    public void execute() {
+        CommandScheduler.getInstance().run();
+    }
+
+    @Override
     public boolean isFinished() {
         if (this.timer.milliseconds() >= this.duration) {
             this.intake.setPower(0);
+
+            CommandScheduler.getInstance().run();
             return true;
         }
         return false;
