@@ -22,18 +22,14 @@ import org.firstinspires.ftc.teamcode.utils.CommandAction;
 public class TwoPlusZero extends CommandOpMode {
     private MultipleTelemetry multipleTelemetry;
     private CommandRobot robot;
-    private Trajectories.Close TRAJECTORIES;
     private Camera camera;
 
     @Override
     public void initialize() {
         this.multipleTelemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         this.robot = new CommandRobot(super.hardwareMap, new GamepadEx(this.gamepad1), new GamepadEx(this.gamepad2), this.multipleTelemetry, Positions.CLOSE.START);
-
         this.camera = new Camera(Camera.Color.BLUE, this.multipleTelemetry);
         this.camera.initCamera(super.hardwareMap);
-
-        this.TRAJECTORIES = new Trajectories(Camera.Color.BLUE, this.robot.getDrive()).new Close();
     }
 
     @Override
@@ -45,10 +41,12 @@ public class TwoPlusZero extends CommandOpMode {
             this.multipleTelemetry.addData("Region:", this.camera.getRegion());
             this.multipleTelemetry.update();
         }
-
-        Action initialPath = this.camera.getRegion() == 1 ? this.TRAJECTORIES.LEFT_SPIKEMARK : this.camera.getRegion() == 2 ? this.TRAJECTORIES.MID_SPIKEMARK : this.TRAJECTORIES.RIGHT_SPIKEMARK;
-
+        int region = this.camera.getRegion();
         this.camera.stopStreaming();
+
+        Trajectories.Close CLOSE = new Trajectories(Camera.Color.RED, this.robot.getDrive()).new Close();
+        Action initialPath = region == 1 ? CLOSE.LEFT_SPIKEMARK : this.camera.getRegion() == 2 ? CLOSE.MID_SPIKEMARK : CLOSE.RIGHT_SPIKEMARK;
+
         Actions.runBlocking(new ParallelAction(
                 initialPath,
                 new SequentialAction(
@@ -62,7 +60,7 @@ public class TwoPlusZero extends CommandOpMode {
                 )
         ));
 
-        Actions.runBlocking(this.TRAJECTORIES.getPark());
+        Actions.runBlocking(CLOSE.getPark());
 
         CommandScheduler.getInstance().cancelAll();
         CommandScheduler.getInstance().disable();
