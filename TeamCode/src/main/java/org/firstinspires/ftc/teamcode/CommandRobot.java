@@ -47,7 +47,7 @@ import org.firstinspires.ftc.teamcode.utils.GamepadTrigger;
 
 public class CommandRobot extends Robot {
     // COMMANDS
-    public final Command accepting, ready, scoreLow, scoreHigh, scoreMid, liftRaise, liftLower, scoreOne, scoreTwo, stack, launch, idle, lock;
+    public final Command accepting, ready, scoreLow, scoreHigh, scoreMid, liftRaise, liftLower, scoreOne, scoreTwo, stack, launch, idle, lock, scoreBottom;
 
     // SUBSYSTEMS & CONTROLLERS
     private final Arm arm;
@@ -98,36 +98,39 @@ public class CommandRobot extends Robot {
                 new IntakeReady(this.intake),
                 new BottomLift(this.lift));
 
+        this.scoreBottom = new ParallelCommandGroup(
+                new LockOuter(this.deposit),
+                new LockInner(this.deposit),
+                new BottomLift(this.lift),
+                new ArmScore(this.arm),
+                new DepositScore(this.deposit));
+
         this.scoreLow = new ParallelCommandGroup(
                 new LockOuter(this.deposit),
                 new LockInner(this.deposit),
                 new LowLift(this.lift),
                 new ArmScore(this.arm),
-                new DepositScore(this.deposit),
-                new IntakeReady(this.intake));
+                new DepositScore(this.deposit));
 
         this.scoreHigh = new ParallelCommandGroup(
                 new LockOuter(this.deposit),
                 new LockInner(this.deposit),
                 new HighLift(this.lift),
                 new ArmScore(this.arm),
-                new DepositScore(this.deposit),
-                new IntakeReady(this.intake));
+                new DepositScore(this.deposit));
 
         this.scoreMid = new ParallelCommandGroup(
                 new LockOuter(this.deposit),
                 new LockInner(this.deposit),
                 new MediumLift(this.lift),
                 new ArmScore(this.arm),
-                new DepositScore(this.deposit),
-                new IntakeReady(this.intake));
+                new DepositScore(this.deposit));
 
         this.liftRaise = new SequentialCommandGroup(
                 new LockOuter(this.deposit),
                 new LockInner(this.deposit),
                 new ArmScore(this.arm),
                 new DepositScore(this.deposit),
-                new IntakeReady(this.intake),
                 new LiftRaise(this.lift));
 
         this.liftLower = new SequentialCommandGroup(
@@ -135,7 +138,6 @@ public class CommandRobot extends Robot {
                 new LockInner(this.deposit),
                 new ArmScore(this.arm),
                 new DepositScore(this.deposit),
-                new IntakeReady(this.intake),
                 new LiftLower(this.lift));
 
         this.scoreOne = new SequentialCommandGroup(

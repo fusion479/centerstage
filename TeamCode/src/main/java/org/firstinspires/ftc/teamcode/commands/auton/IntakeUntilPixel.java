@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.commands.auton;
 
 import com.arcrobotics.ftclib.command.CommandBase;
-import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.commands.deposit.locks.LockInner;
@@ -22,7 +21,6 @@ public class IntakeUntilPixel extends CommandBase {
 
     @Override
     public void execute() {
-        CommandScheduler.getInstance().run();
         this.intake.setPower(-1);
     }
 
@@ -32,12 +30,11 @@ public class IntakeUntilPixel extends CommandBase {
             this.timer.reset();
         }
 
-        if (this.deposit.hasOuterPixel() && this.deposit.hasInnerPixel() && timer.milliseconds() >= 350) {
+        if (this.deposit.hasOuterPixel() && this.deposit.hasInnerPixel() && timer.milliseconds() >= 200) {
             new LockInner(this.deposit).schedule();
             new LockOuter(this.deposit).schedule();
 
             this.intake.setPower(0);
-            CommandScheduler.getInstance().run();
             return true;
         }
 
