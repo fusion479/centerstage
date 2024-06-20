@@ -36,8 +36,6 @@ public class Intake extends Subsystem {
     @Override
     public void periodic() {
         this.intake.setPower(power);
-        super.getTelemetry().addData("POWER: ", this.intake.getPower());
-        super.getTelemetry().update();
     }
 
     public void setPower(double power) {
