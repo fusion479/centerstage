@@ -11,9 +11,9 @@ import org.firstinspires.ftc.teamcode.utils.Subsystem;
 
 @Config
 public class Intake extends Subsystem {
-    public static double ACCEPTING_POS = .4;
+    public static double ACCEPTING_POS = .42;
     public static double READY_POS = .6;
-    public static double STACK_POS = .47;
+    public static double STACK_POS = .515;
 
     private final DcMotorEx intake;
     private final Servo intakeRight, intakeLeft;
@@ -36,6 +36,8 @@ public class Intake extends Subsystem {
     @Override
     public void periodic() {
         this.intake.setPower(power);
+        super.getTelemetry().addData("POWER: ", this.intake.getPower());
+        super.getTelemetry().update();
     }
 
     public void setPower(double power) {

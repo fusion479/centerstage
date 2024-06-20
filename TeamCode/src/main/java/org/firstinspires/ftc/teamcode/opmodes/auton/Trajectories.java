@@ -24,14 +24,15 @@ public class Trajectories {
 
     public class Far {
         // SPIKEMARK
+        public double Y_OFFSET = 3.0;
+        public double X_OFFSET = 12.0;
+
         public Action MID_SPIKEMARK = drive.actionBuilder(drive.pose)
                 .lineToY(Positions.modifyPose(Positions.FAR.SPIKEMARK_MID, 0, Constants.ROBOT_LENGTH / 2).y)
                 .lineToY(Positions.modifyPose(Positions.FAR.SPIKEMARK_MID, 0, Constants.ROBOT_LENGTH / 2).y + 5)
                 .setTangent(Math.toRadians(180))
-                .splineToLinearHeading(Positions.vectorToPose(Positions.modifyPose(Positions.GENERAL.STACK_ONE, 1.3 * Constants.ROBOT_LENGTH, 0), 0), Math.toRadians(0))
-                .lineToX(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH / 2, 0).x)
-                .lineToX(Positions.modifyPose(Positions.GENERAL.BACKDROP_MID, -Constants.TILE_LENGTH, 0).x)
-                .splineToConstantHeading(Positions.modifyPose(Positions.GENERAL.BACKDROP_MID, -Constants.ROBOT_LENGTH / 2, 0), 0)
+                .splineToLinearHeading(Positions.vectorToPose(Positions.modifyPose(Positions.GENERAL.STACK_ONE, 1.3 * Constants.ROBOT_LENGTH, -Y_OFFSET), 0), Math.toRadians(0))
+                .lineToX(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH / 2 - X_OFFSET, 0).x)
                 .build();
 
         public Action RIGHT_SPIKEMARK = drive.actionBuilder(drive.pose)
@@ -42,8 +43,6 @@ public class Trajectories {
                 .lineToY(Positions.GENERAL.STACK_ONE.y)
                 .turnTo(0)
                 .lineToX(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH / 2, 0).x)
-                .lineToX(Positions.modifyPose(Positions.GENERAL.BACKDROP_RIGHT, -Constants.TILE_LENGTH, 0).x)
-                .splineToConstantHeading(Positions.modifyPose(Positions.GENERAL.BACKDROP_RIGHT, -Constants.ROBOT_LENGTH / 2, 0), 0)
                 .build();
 
         public Action LEFT_SPIKEMARK = drive.actionBuilder(drive.pose)
@@ -54,8 +53,6 @@ public class Trajectories {
                 .lineToY(Positions.GENERAL.STACK_ONE.y)
                 .turnTo(0)
                 .lineToX(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH / 2, 0).x)
-                .lineToX(Positions.modifyPose(Positions.GENERAL.BACKDROP_LEFT, -Constants.TILE_LENGTH, 0).x)
-                .splineToConstantHeading(Positions.modifyPose(Positions.GENERAL.BACKDROP_LEFT, -Constants.ROBOT_LENGTH / 2, 0), 0)
                 .build();
 
         // PARK
@@ -68,6 +65,9 @@ public class Trajectories {
     }
 
     public class General {
+        public double Y_OFFSET = 5.0;
+        public double X_OFFSET = 8.0;
+
         public Action MID_BACKDROP_TO_STACK = drive.actionBuilder(drive.pose)
                 .waitSeconds(1)
                 .setTangent(Math.toRadians(180))
@@ -77,7 +77,7 @@ public class Trajectories {
 
         public Action STACK_TO_MID_BACKDROP = drive.actionBuilder(drive.pose)
                 .lineToX(Positions.modifyPose(Positions.GENERAL.BACKDROP_MID, -Constants.TILE_LENGTH, 0).x)
-                .splineToConstantHeading(Positions.modifyPose(Positions.GENERAL.BACKDROP_MID, -Constants.ROBOT_LENGTH / 2, 0), Math.toRadians(0))
+                .splineToConstantHeading(Positions.modifyPose(Positions.GENERAL.BACKDROP_MID, -Constants.ROBOT_LENGTH / 2 - X_OFFSET, -Y_OFFSET), Math.toRadians(0))
                 .build();
 
         public Action RIGHT_BACKDROP_TO_STACK = drive.actionBuilder(drive.pose)

@@ -16,6 +16,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.commands.arm.ArmAccepting;
 import org.firstinspires.ftc.teamcode.commands.arm.ArmReady;
 import org.firstinspires.ftc.teamcode.commands.arm.ArmScore;
+import org.firstinspires.ftc.teamcode.commands.auton.IntakeSetPower;
 import org.firstinspires.ftc.teamcode.commands.deposit.DepositAccepting;
 import org.firstinspires.ftc.teamcode.commands.deposit.DepositReady;
 import org.firstinspires.ftc.teamcode.commands.deposit.DepositScore;
@@ -26,7 +27,6 @@ import org.firstinspires.ftc.teamcode.commands.deposit.locks.OpenOuter;
 import org.firstinspires.ftc.teamcode.commands.drivetrain.ManualDrive;
 import org.firstinspires.ftc.teamcode.commands.intake.IntakeAccepting;
 import org.firstinspires.ftc.teamcode.commands.intake.IntakeReady;
-import org.firstinspires.ftc.teamcode.commands.intake.IntakeSetPower;
 import org.firstinspires.ftc.teamcode.commands.intake.IntakeStack;
 import org.firstinspires.ftc.teamcode.commands.launcher.Idle;
 import org.firstinspires.ftc.teamcode.commands.launcher.Launch;
@@ -46,13 +46,13 @@ import org.firstinspires.ftc.teamcode.subsystems.Lift;
 import org.firstinspires.ftc.teamcode.utils.GamepadTrigger;
 
 public class CommandRobot extends Robot {
-    public final Intake intake;
     // COMMANDS
     public final Command accepting, ready, scoreLow, scoreHigh, scoreMid, liftRaise, liftLower, scoreOne, scoreTwo, stack, launch, idle, lock;
 
     // SUBSYSTEMS & CONTROLLERS
     private final Arm arm;
     private final Drivetrain drive;
+    private final Intake intake;
     private final Lift lift;
     private final Launcher launcher;
     private final GamepadEx gamepad1;
@@ -231,6 +231,14 @@ public class CommandRobot extends Robot {
             new LockOuter(this.deposit).schedule();
             this.locked = true;
         }
+    }
+
+    public Intake getIntake() {
+        return this.intake;
+    }
+
+    public Deposit getDeposit() {
+        return this.deposit;
     }
 
     public MecanumDrive getDrive() {

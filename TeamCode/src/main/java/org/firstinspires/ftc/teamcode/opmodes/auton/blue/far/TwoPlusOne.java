@@ -14,7 +14,8 @@ import com.example.meepmeeptesting.Positions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.CommandRobot;
-import org.firstinspires.ftc.teamcode.commands.intake.IntakeSetPower;
+import org.firstinspires.ftc.teamcode.commands.auton.IntakeSetPower;
+import org.firstinspires.ftc.teamcode.commands.auton.IntakeUntilPixel;
 import org.firstinspires.ftc.teamcode.opmodes.auton.Trajectories;
 import org.firstinspires.ftc.teamcode.subsystems.camera.Camera;
 import org.firstinspires.ftc.teamcode.utils.CommandAction;
@@ -46,28 +47,34 @@ public class TwoPlusOne extends CommandOpMode {
             this.multipleTelemetry.addData("Region:", this.camera.getRegion());
             this.multipleTelemetry.update();
         }
+        int region = this.camera.getRegion();
 
-        Action initialPath = this.camera.getRegion() == 1 ? this.FAR.LEFT_SPIKEMARK : this.camera.getRegion() == 2 ? this.FAR.MID_SPIKEMARK : this.FAR.RIGHT_SPIKEMARK;
+        Action initialPath = region == 1 ? this.FAR.LEFT_SPIKEMARK : region == 2 ? this.FAR.MID_SPIKEMARK : this.FAR.RIGHT_SPIKEMARK;
 
         this.camera.stopStreaming();
         Actions.runBlocking(new ParallelAction(
                 initialPath,
                 new SequentialAction(
-                        new CommandAction(new WaitCommand(7000)),
+                        new CommandAction(new WaitCommand(6250)),
                         new CommandAction(this.robot.stack),
-                        new CommandAction(new IntakeSetPower(this.robot.intake, 1, 1000)),
-                        new CommandAction(new WaitCommand(1000)),
-                        new CommandAction(this.robot.lock),
-                        new CommandAction(new WaitCommand(1000)),
-                        new CommandAction(new IntakeSetPower(this.robot.intake, -1, 1000))
-                ),
+                        new CommandAction(new IntakeUntilPixel(this.robot.getDeposit(), this.robot.getIntake()))
+                )
+        ));
+
+        this.GENERAL = new Trajectories(Camera.Color.BLUE, this.robot.getDrive()).new General();
+        Action stackToBackdrop = region == 1 ? this.GENERAL.STACK_TO_LEFT_BACKDROP : region == 2 ? this.GENERAL.STACK_TO_MID_BACKDROP : this.GENERAL.STACK_TO_RIGHT_BACKDROP;
+
+        Actions.runBlocking(new ParallelAction(
+                stackToBackdrop,
                 new SequentialAction(
-                        new CommandAction(new WaitCommand(15000)),
+                        new CommandAction(new WaitCommand(250)),
+                        new CommandAction(new IntakeSetPower(this.robot.getIntake(), 1, 1000)),
+                        new CommandAction(new WaitCommand(6200)),
                         new CommandAction(this.robot.scoreLow),
-                        new CommandAction(new WaitCommand(2000)),
+                        new CommandAction(new WaitCommand(3000)),
                         new CommandAction(this.robot.scoreOne),
                         new CommandAction(this.robot.scoreTwo),
-                        new CommandAction(new WaitCommand(2000))
+                        new CommandAction(new WaitCommand(1000))
                 )
         ));
 
