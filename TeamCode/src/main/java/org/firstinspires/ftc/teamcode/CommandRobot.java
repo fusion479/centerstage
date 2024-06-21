@@ -47,7 +47,7 @@ import org.firstinspires.ftc.teamcode.utils.GamepadTrigger;
 
 public class CommandRobot extends Robot {
     // COMMANDS
-    public final Command accepting, ready, scoreLow, scoreHigh, scoreMid, liftRaise, liftLower, scoreOne, scoreTwo, stack, launch, idle, lock, scoreBottom;
+    public final Command accepting, ready, scoreLow, scoreHigh, scoreMid, liftRaise, liftLower, scoreOne, scoreTwo, stack, launch, idle, lock;
 
     // SUBSYSTEMS & CONTROLLERS
     private final Arm arm;
@@ -97,13 +97,6 @@ public class CommandRobot extends Robot {
                 new DepositReady(this.deposit),
                 new IntakeReady(this.intake),
                 new BottomLift(this.lift));
-
-        this.scoreBottom = new ParallelCommandGroup(
-                new LockOuter(this.deposit),
-                new LockInner(this.deposit),
-                new BottomLift(this.lift),
-                new ArmScore(this.arm),
-                new DepositScore(this.deposit));
 
         this.scoreLow = new ParallelCommandGroup(
                 new LockOuter(this.deposit),
@@ -197,7 +190,7 @@ public class CommandRobot extends Robot {
         this.gamepad1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT)
                 .whenPressed(this.stack);
         this.gamepad1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT)
-                .whenPressed(new IntakeSetPower(this.intake, 1, 1000));
+                .whenPressed(new IntakeSetPower(this.intake, 1));
         this.gamepad1.getGamepadButton(GamepadKeys.Button.B)
                 .whenPressed(this.scoreLow);
         this.gamepad1.getGamepadButton(GamepadKeys.Button.X)

@@ -17,7 +17,6 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import org.firstinspires.ftc.teamcode.CommandRobot;
 import org.firstinspires.ftc.teamcode.commands.auton.IntakeSetPower;
 import org.firstinspires.ftc.teamcode.commands.auton.IntakeUntilPixel;
-import org.firstinspires.ftc.teamcode.opmodes.auton.RunScheduler;
 import org.firstinspires.ftc.teamcode.opmodes.auton.Trajectories;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.camera.Camera;
@@ -52,17 +51,14 @@ public class TwoPlusOne extends CommandOpMode {
         Trajectories.Far FAR = new Trajectories(Camera.Color.RED, this.robot.getDrive()).new Far();
         Action initialPath = region == 1 ? FAR.LEFT_SPIKEMARK : region == 2 ? FAR.MID_SPIKEMARK : FAR.RIGHT_SPIKEMARK;
 
-        RunScheduler scheduler = new RunScheduler();
-        scheduler.start();
-
         Actions.runBlocking(new ParallelAction(
                 initialPath,
                 new SequentialAction(
-                        new CommandAction(new WaitCommand(6750)),
+                        new CommandAction(new WaitCommand(5750)),
                         new CommandAction(this.robot.stack),
                         new CommandAction(new IntakeUntilPixel(this.robot.getDeposit(), this.robot.getIntake())),
                         new CommandAction(new WaitCommand(250)),
-                        new CommandAction(new IntakeSetPower(this.robot.getIntake(), 1, 1000)),
+                        new CommandAction(new IntakeSetPower(this.robot.getIntake(), 1000)),
                         new CommandAction(new InstantCommand(() -> this.robot.getIntake().setPosition(Intake.ACCEPTING_POS))) // don't interfere
                 )
         ));
@@ -73,9 +69,9 @@ public class TwoPlusOne extends CommandOpMode {
         Actions.runBlocking(new ParallelAction(
                 stackToBackdrop,
                 new SequentialAction(
-                        new CommandAction(new WaitCommand(6750)),
-                        new CommandAction(this.robot.scoreBottom),
-                        new CommandAction(new WaitCommand(2750)),
+                        new CommandAction(new WaitCommand(6000)),
+                        new CommandAction(this.robot.scoreLow),
+                        new CommandAction(new WaitCommand(2250)),
                         new CommandAction(this.robot.scoreOne),
                         new CommandAction(this.robot.scoreTwo),
                         new CommandAction(new WaitCommand(1000))
