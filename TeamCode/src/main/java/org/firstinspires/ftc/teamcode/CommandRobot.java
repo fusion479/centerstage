@@ -60,14 +60,16 @@ public class CommandRobot extends Robot {
     private final Deposit deposit;
     private final GamepadTrigger intakeAccept;
     private final GamepadTrigger intakeReject;
+    private final Type type;
 
     // MISC. VARIABLES
     private final ElapsedTime timer;
     private boolean locked;
 
-    public CommandRobot(final HardwareMap hwMap, final GamepadEx gamepad1, final GamepadEx gamepad2, final MultipleTelemetry telemetry, Pose2d startPose) { // Create different bots for teleop, testing, and auton?
+    public CommandRobot(final HardwareMap hwMap, final GamepadEx gamepad1, final GamepadEx gamepad2, final MultipleTelemetry telemetry, final Pose2d startPose, final Type type) {
         this.timer = new ElapsedTime();
         this.locked = false;
+        this.type = type;
 
         this.deposit = new Deposit(hwMap, telemetry);
         this.arm = new Arm(hwMap, telemetry);
@@ -238,5 +240,14 @@ public class CommandRobot extends Robot {
 
     public MecanumDrive getDrive() {
         return this.drive.drive;
+    }
+
+    public Type getType() {
+        return this.type;
+    }
+
+    public enum Type {
+        AUTON,
+        TELEOP
     }
 }

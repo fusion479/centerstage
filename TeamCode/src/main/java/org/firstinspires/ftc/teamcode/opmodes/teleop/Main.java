@@ -5,7 +5,6 @@ import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.CommandScheduler;
-import com.arcrobotics.ftclib.command.Robot;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -24,7 +23,8 @@ public class Main extends CommandOpMode {
                 new GamepadEx(gamepad1),
                 new GamepadEx(gamepad2),
                 new MultipleTelemetry(telemetry, this.multipleTelemetry),
-                new Pose2d(0, 0, 0)
+                new Pose2d(0, 0, 0),
+                CommandRobot.Type.TELEOP
         );
 
         this.robot.configureCommands();

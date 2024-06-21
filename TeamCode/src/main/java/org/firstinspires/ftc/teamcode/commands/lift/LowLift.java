@@ -1,22 +1,17 @@
 package org.firstinspires.ftc.teamcode.commands.lift;
 
-import com.arcrobotics.ftclib.command.CommandBase;
-import com.arcrobotics.ftclib.command.CommandScheduler;
-
+import org.firstinspires.ftc.teamcode.CommandRobot;
 import org.firstinspires.ftc.teamcode.subsystems.Lift;
+import org.firstinspires.ftc.teamcode.utils.AutonCommandBase;
 
-public class LowLift extends CommandBase {
+public class LowLift extends AutonCommandBase {
     private final Lift lift;
 
     public LowLift(final Lift lift) {
+        super(CommandRobot.Type.AUTON);
         this.lift = lift;
 
         super.addRequirements(this.lift);
-    }
-
-    @Override
-    public void execute() {
-        CommandScheduler.getInstance().run();
     }
 
     @Override

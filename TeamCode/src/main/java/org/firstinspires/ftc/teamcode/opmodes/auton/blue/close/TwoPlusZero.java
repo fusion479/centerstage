@@ -27,7 +27,7 @@ public class TwoPlusZero extends CommandOpMode {
     @Override
     public void initialize() {
         this.multipleTelemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        this.robot = new CommandRobot(super.hardwareMap, new GamepadEx(this.gamepad1), new GamepadEx(this.gamepad2), this.multipleTelemetry, Positions.CLOSE.START);
+        this.robot = new CommandRobot(super.hardwareMap, new GamepadEx(this.gamepad1), new GamepadEx(this.gamepad2), this.multipleTelemetry, Positions.CLOSE.START, CommandRobot.Type.AUTON);
         this.camera = new Camera(Camera.Color.BLUE, this.multipleTelemetry);
         this.camera.initCamera(super.hardwareMap);
     }
