@@ -21,9 +21,8 @@ class TestingConstants {
 }
 public class MeepMeepTesting {
     public static void main(String[] args) {
-        TestingConstants testingConstants = new TestingConstants();
-
         MeepMeep meepMeep = new MeepMeep(800);
+        TestingConstants utils = new TestingConstants();
 
         RoadRunnerBotEntity myBot = new DefaultBotBuilder(meepMeep)
                 .setDimensions(Constants.ROBOT_WIDTH, Constants.ROBOT_LENGTH)
@@ -31,7 +30,22 @@ public class MeepMeepTesting {
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
                 .build();
 
-        myBot.runAction(myBot.getDrive().actionBuilder(testingConstants.reflectY(Positions.FAR.START))
+        myBot.runAction(myBot.getDrive().actionBuilder(utils.reflectY(Positions.FAR.START))
+                .lineToY(utils.reflectY(Positions.modifyPose(Positions.FAR.SPIKEMARK_MID, 0, Constants.ROBOT_LENGTH / 2)).y)
+                .lineToY(utils.reflectY(Positions.modifyPose(Positions.FAR.SPIKEMARK_MID, 0, Constants.ROBOT_LENGTH / 2 + 5)).y)
+                .setTangent(Math.toRadians(180))
+                .splineToLinearHeading(utils.reflectY(Positions.vectorToPose(Positions.modifyPose(Positions.GENERAL.STACK_ONE, 1.3 * Constants.ROBOT_LENGTH, 0), 0)), Math.toRadians(0))
+                .lineToX(utils.reflectY(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH / 2, 0)).x)
+                .lineToX(utils.reflectY(Positions.modifyPose(Positions.GENERAL.BACKDROP_MID, -Constants.TILE_LENGTH, 0)).x)
+                .splineToConstantHeading(utils.reflectY(Positions.modifyPose(Positions.GENERAL.BACKDROP_MID, -Constants.ROBOT_LENGTH / 2, 0)), Math.toRadians(0))
+                .setTangent(Math.toRadians(180))
+                .splineToConstantHeading(utils.reflectY(new Vector2d(Positions.modifyPose(Positions.GENERAL.BACKDROP_MID, -Constants.TILE_LENGTH, 0).x, Positions.GENERAL.STACK_ONE.y)), Math.toRadians(180))
+                .lineToX(utils.reflectY(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH / 2, 0)).x)
+                .lineToX(utils.reflectY(Positions.modifyPose(Positions.GENERAL.BACKDROP_MID, -Constants.TILE_LENGTH, 0)).x)
+                .splineToConstantHeading(utils.reflectY(Positions.modifyPose(Positions.GENERAL.BACKDROP_MID, -Constants.ROBOT_LENGTH / 2, 0)), Math.toRadians(0))
+                .setTangent(Math.toRadians(180))
+                .splineToConstantHeading(utils.reflectY(new Vector2d(Positions.modifyPose(Positions.GENERAL.BACKDROP_MID, -Constants.TILE_LENGTH, 0).x, Positions.GENERAL.STACK_ONE.y)), Math.toRadians(180))
+                .lineToX(utils.reflectY(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH / 2, 0)).x)
                 .build());
 
         meepMeep.setBackground(MeepMeep.Background.FIELD_CENTERSTAGE_JUICE_DARK)
