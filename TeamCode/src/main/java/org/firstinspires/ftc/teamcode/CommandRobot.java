@@ -58,8 +58,8 @@ public class CommandRobot extends Robot {
     private final GamepadEx gamepad1;
     private final GamepadEx gamepad2;
     private final Deposit deposit;
-    private final GamepadTrigger intakeAccept;
-    private final GamepadTrigger intakeReject;
+    private GamepadTrigger intakeAccept;
+    private GamepadTrigger intakeReject;
     private final Type type;
 
     // MISC. VARIABLES
@@ -175,10 +175,13 @@ public class CommandRobot extends Robot {
         this.idle = new Idle(this.launcher);
         this.launch = new Launch(this.launcher);
 
-        this.intakeAccept = new GamepadTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER, d -> this.intake.setPower(-d), this.gamepad1);
-        this.intakeReject = new GamepadTrigger(GamepadKeys.Trigger.LEFT_TRIGGER, this.intake::setPower, this.gamepad1);
+        if (this.type == Type.TELEOP) {
+            this.intakeAccept = new GamepadTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER, d -> this.intake.setPower(-d), this.gamepad1);
+            this.intakeReject = new GamepadTrigger(GamepadKeys.Trigger.LEFT_TRIGGER, this.intake::setPower, this.gamepad1);
 
-        this.drive.setDefaultCommand(new ManualDrive(this.drive, this.gamepad1));
+            this.drive.setDefaultCommand(new ManualDrive(this.drive, this.gamepad1));
+            this.configureCommands();
+        }
     }
 
     public void configureCommands() {
