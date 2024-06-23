@@ -47,7 +47,7 @@ import org.firstinspires.ftc.teamcode.utils.GamepadTrigger;
 
 public class CommandRobot extends Robot {
     // COMMANDS
-    public final Command accepting, ready, scoreLow, scoreHigh, scoreMid, liftRaise, liftLower, scoreOne, scoreTwo, stack, launch, idle, lock;
+    public final Command accepting, ready, scoreLow, scoreHigh, scoreMid, liftRaise, liftLower, scoreOne, scoreTwo, stack, launch, idle;
 
     // SUBSYSTEMS & CONTROLLERS
     private final Arm arm;
@@ -171,11 +171,6 @@ public class CommandRobot extends Robot {
                 new OpenInner(this.deposit),
                 new OpenOuter(this.deposit),
                 new BottomLift(this.lift));
-
-        this.lock = new ParallelCommandGroup(
-                new LockInner(this.deposit),
-                new LockOuter(this.deposit)
-        );
 
         this.idle = new Idle(this.launcher);
         this.launch = new Launch(this.launcher);
