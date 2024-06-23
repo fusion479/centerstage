@@ -7,8 +7,8 @@ import org.firstinspires.ftc.teamcode.utils.AutonCommandBase;
 public class LowLift extends AutonCommandBase {
     private final Lift lift;
 
-    public LowLift(final Lift lift) {
-        super(CommandRobot.Type.AUTON);
+    public LowLift(final Lift lift, final CommandRobot.Type type) {
+        super(type);
         this.lift = lift;
 
         super.addRequirements(this.lift);

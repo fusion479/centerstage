@@ -82,7 +82,7 @@ public class CommandRobot extends Robot {
         this.gamepad2 = gamepad2;
 
         this.accepting = new SequentialCommandGroup(
-                new LowLift(this.lift),
+                new LowLift(this.lift, this.type),
                 new DepositAccepting(this.deposit),
                 new WaitCommand(500),
                 new ArmAccepting(this.arm),
@@ -94,7 +94,7 @@ public class CommandRobot extends Robot {
         this.ready = new SequentialCommandGroup(
                 new LockInner(this.deposit),
                 new LockOuter(this.deposit),
-                new LowLift(this.lift),
+                new LowLift(this.lift, this.type),
                 new ArmReady(this.arm),
                 new DepositReady(this.deposit),
                 new IntakeReady(this.intake),
@@ -103,7 +103,7 @@ public class CommandRobot extends Robot {
         this.scoreLow = new ParallelCommandGroup(
                 new LockOuter(this.deposit),
                 new LockInner(this.deposit),
-                new LowLift(this.lift),
+                new LowLift(this.lift, this.type),
                 new ArmScore(this.arm),
                 new DepositScore(this.deposit));
 
@@ -153,7 +153,7 @@ public class CommandRobot extends Robot {
                     this.timer.reset();
                 }),
                 new WaitCommand(300),
-                new LowLift(this.lift),
+                new LowLift(this.lift, this.type),
                 new DepositAccepting(this.deposit),
                 new WaitCommand(500),
                 new ArmAccepting(this.arm),
@@ -163,7 +163,7 @@ public class CommandRobot extends Robot {
                 new BottomLift(this.lift));
 
         this.stack = new SequentialCommandGroup(
-                new LowLift(this.lift),
+                new LowLift(this.lift, this.type),
                 new DepositAccepting(this.deposit),
                 new WaitCommand(500),
                 new ArmAccepting(this.arm),
