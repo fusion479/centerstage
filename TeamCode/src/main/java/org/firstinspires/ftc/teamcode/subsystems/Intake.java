@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.utils.Subsystem;
 
 @Config
 public class Intake extends Subsystem {
-    public static double ACCEPTING_POS = .42;
+    public static double ACCEPTING_POS = .4;
     public static double READY_POS = .6;
     public static double STACK_POS = .5;
 
