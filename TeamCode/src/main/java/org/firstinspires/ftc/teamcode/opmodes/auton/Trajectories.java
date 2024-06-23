@@ -33,7 +33,7 @@ public class Trajectories {
 
         public Action MID_SPIKEMARK = drive.actionBuilder(drive.pose)
                 .lineToY(reflectY(Positions.modifyPose(Positions.FAR.SPIKEMARK_MID, 0, Constants.ROBOT_LENGTH / 2)).y)
-                .lineToY(reflectY(Positions.modifyPose(Positions.FAR.SPIKEMARK_MID, 0, Constants.ROBOT_LENGTH / 2)).y + 5)
+                .lineToY(reflectY(Positions.modifyPose(Positions.FAR.SPIKEMARK_MID, 0, Constants.ROBOT_LENGTH / 2 + 5)).y)
                 .setTangent(Math.toRadians(180))
                 .splineToLinearHeading(reflectY(Positions.vectorToPose(Positions.modifyPose(Positions.GENERAL.STACK_ONE, 1.3 * Constants.ROBOT_LENGTH, Y_OFFSET), 0)), Math.toRadians(0))
                 .lineToX(reflectY(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH / 2 + X_OFFSET, 0)).x)
@@ -114,7 +114,7 @@ public class Trajectories {
         // SPIKEMARK
         public Action MID_SPIKEMARK = drive.actionBuilder(drive.pose)
                 .lineToY(reflectY(Positions.modifyPose(Positions.CLOSE.SPIKEMARK_MID, 0, Constants.ROBOT_LENGTH / 2)).y)
-                .lineToY(reflectY(Positions.modifyPose(Positions.CLOSE.SPIKEMARK_MID, 0, Constants.ROBOT_LENGTH / 2)).y + 5)
+                .lineToY(reflectY(Positions.modifyPose(Positions.CLOSE.SPIKEMARK_MID, 0, Constants.ROBOT_LENGTH / 2 + 5)).y)
                 .setTangent(0)
                 .splineToLinearHeading(
                         reflectY(Positions.modifyPose(
