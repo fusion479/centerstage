@@ -26,8 +26,6 @@ public class Main extends CommandOpMode {
                 new Pose2d(0, 0, 0),
                 CommandRobot.Type.TELEOP
         );
-
-        this.robot.configureCommands();
     }
 
     @Override
