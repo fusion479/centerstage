@@ -1,10 +1,23 @@
 package com.example.meepmeeptesting;
 
+import com.acmerobotics.roadrunner.Pose2d;
+import com.acmerobotics.roadrunner.Vector2d;
 import com.noahbres.meepmeep.MeepMeep;
 import com.noahbres.meepmeep.roadrunner.DefaultBotBuilder;
 import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 
 public class MeepMeepTesting {
+    private enum Color {
+        BLUE, RED
+    }
+    private final Color color = Color.RED; // Change this for different colors
+    private Pose2d reflectY(Pose2d pose) {
+        return this.color == Color.RED ? new Pose2d(pose.position.x, -pose.position.y, Math.toRadians(360) - pose.heading.imag) : pose;
+    }
+
+    private Vector2d reflectY(Vector2d vector) {
+        return this.color == Color.RED ? new Vector2d(vector.x, -vector.y) : vector;
+    }
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(800);
 
