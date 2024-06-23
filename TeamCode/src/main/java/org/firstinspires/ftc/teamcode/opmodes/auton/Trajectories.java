@@ -19,7 +19,7 @@ public class Trajectories {
     }
 
     public Pose2d reflectY(Pose2d pose) {
-        return this.color == Camera.Color.RED ? new Pose2d(pose.position.x, -pose.position.y, Math.toRadians(360) - pose.heading.imag) : pose;
+        return this.color == Camera.Color.RED ? new Pose2d(pose.position.x, -pose.position.y, Math.toRadians(360) - pose.heading.toDouble()) : pose;
     }
 
     public Vector2d reflectY(Vector2d vector) {
