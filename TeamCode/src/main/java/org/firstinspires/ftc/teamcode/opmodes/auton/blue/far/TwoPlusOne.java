@@ -54,7 +54,7 @@ public class TwoPlusOne extends CommandOpMode {
         int region = this.camera.getRegion();
         this.camera.stopStreaming();
 
-        Trajectories.Far FAR = new Trajectories(Camera.Color.RED, this.robot.getDrive()).new Far();
+        Trajectories.Far FAR = new Trajectories(Camera.Color.BLUE, this.robot.getDrive()).new Far();
         Action initialPath = region == 1 ? FAR.LEFT_SPIKEMARK : region == 2 ? FAR.MID_SPIKEMARK : FAR.RIGHT_SPIKEMARK;
 
         Actions.runBlocking(new ParallelAction(
@@ -69,7 +69,9 @@ public class TwoPlusOne extends CommandOpMode {
                 )
         ));
 
-        Trajectories.General GENERAL = new Trajectories(Camera.Color.RED, this.robot.getDrive()).new General();
+
+
+        Trajectories.General GENERAL = new Trajectories(Camera.Color.BLUE, this.robot.getDrive()).new General();
         Action stackToBackdrop = region == 1 ? GENERAL.STACK_TO_LEFT_BACKDROP : region == 2 ? GENERAL.STACK_TO_MID_BACKDROP : GENERAL.STACK_TO_RIGHT_BACKDROP;
 
         Actions.runBlocking(new ParallelAction(
