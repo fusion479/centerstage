@@ -41,7 +41,9 @@ public class Test extends CommandOpMode {
         super.waitForStart();
         Actions.runBlocking(
                 new SequentialAction(
-                        new CommandAction(new IntakeUntilPixel(this.robot.getDeposit(), this.robot.getIntake()))
+                        new CommandAction(new Wait(3000)),
+                        new CommandAction(new IntakeUntilPixel(this.robot.getDeposit(), this.robot.getIntake())),
+                        new CommandAction(new Wait(3000))
                 )
         );
 
