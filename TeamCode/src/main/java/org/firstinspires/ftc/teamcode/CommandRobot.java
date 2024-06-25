@@ -176,10 +176,10 @@ public class CommandRobot extends Robot {
         this.launch = new Launch(this.launcher);
 
         if (this.type == Type.TELEOP) {
-            this.intakeAccept = new GamepadTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER, d -> this.intake.setPower(-d), this.gamepad2);
-            this.intakeReject = new GamepadTrigger(GamepadKeys.Trigger.LEFT_TRIGGER, this.intake::setPower, this.gamepad2);
+            this.intakeAccept = new GamepadTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER, d -> this.intake.setPower(-d), this.gamepad1);
+            this.intakeReject = new GamepadTrigger(GamepadKeys.Trigger.LEFT_TRIGGER, this.intake::setPower, this.gamepad1);
 
-            this.drive.setDefaultCommand(new ManualDrive(this.drive, this.gamepad2));
+            this.drive.setDefaultCommand(new ManualDrive(this.drive, this.gamepad1));
             this.configureCommands();
         }
     }
@@ -221,7 +221,7 @@ public class CommandRobot extends Robot {
             timer.reset();
         }
 
-        if ((this.deposit.hasOuterPixel() && this.deposit.hasInnerPixel()) && !this.locked && timer.milliseconds() >= 150) {
+        if ((this.deposit.hasOuterPixel() && this.deposit.hasInnerPixel()) && !this.locked && timer.milliseconds() >= 10) {
             new LockInner(this.deposit).schedule();
             new LockOuter(this.deposit).schedule();
             this.locked = true;
