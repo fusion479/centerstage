@@ -46,7 +46,7 @@ public class Trajectories {
                 .splineTo(reflectY(Positions.FAR.SPIKEMARK_SETUP), Math.toRadians(90))
                 .lineToY(reflectY(Positions.GENERAL.STACK_ONE).y)
                 .turnTo(0)
-                .lineToX(reflectY(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH / 2 + X_OFFSET, 0)).x)
+                .lineToX(reflectY(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH / 2 + X_OFFSET + 3, 0)).x)
                 .build();
 
         public Action LEFT_SPIKEMARK = drive.actionBuilder(drive.pose)
@@ -56,7 +56,7 @@ public class Trajectories {
                 .splineToLinearHeading(reflectY(Positions.vectorToPose(Positions.FAR.SPIKEMARK_SETUP, Math.toRadians(0))), Math.toRadians(90))
                 .lineToY(reflectY(Positions.GENERAL.STACK_ONE).y)
                 .turnTo(0)
-                .lineToX(reflectY(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH / 2 + X_OFFSET, 0)).x)
+                .lineToX(reflectY(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH / 2 + X_OFFSET + 3, 0)).x)
                 .build();
 
         // PARK

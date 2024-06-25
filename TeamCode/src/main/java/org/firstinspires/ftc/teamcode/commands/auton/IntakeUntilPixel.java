@@ -12,17 +12,21 @@ import org.firstinspires.ftc.teamcode.subsystems.Intake;
 public class IntakeUntilPixel extends CommandBase {
     private final Intake intake;
     private final Deposit deposit;
-    private final ElapsedTime timer;
+    private final ElapsedTime pixelTimer;
+    private final ElapsedTime durationTimer;
 
     public IntakeUntilPixel(Deposit deposit, Intake intake) {
         this.deposit = deposit;
         this.intake = intake;
-        this.timer = new ElapsedTime();
+        this.pixelTimer = new ElapsedTime();
+        this.durationTimer = new ElapsedTime();
     }
 
     @Override
     public void initialize() {
         this.intake.setPower(-1);
+        this.pixelTimer.reset();
+        this.durationTimer.reset();
     }
 
     @Override
@@ -32,11 +36,15 @@ public class IntakeUntilPixel extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        if (!this.deposit.hasOuterPixel() || !this.deposit.hasOuterPixel()) {
-            this.timer.reset();
+        if (this.durationTimer.milliseconds() >= 5000) {
+            return true;
         }
 
-        if (this.deposit.hasOuterPixel() && this.deposit.hasInnerPixel() && timer.milliseconds() >= 750) {
+        if (!this.deposit.hasOuterPixel() || !this.deposit.hasOuterPixel()) {
+            this.pixelTimer.reset();
+        }
+
+        if (this.deposit.hasOuterPixel() && this.deposit.hasInnerPixel() && pixelTimer.milliseconds() >= 825) {
             new LockInner(this.deposit).schedule();
             new LockOuter(this.deposit).schedule();
 

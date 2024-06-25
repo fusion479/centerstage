@@ -221,7 +221,7 @@ public class CommandRobot extends Robot {
             timer.reset();
         }
 
-        if ((this.deposit.hasOuterPixel() && this.deposit.hasInnerPixel()) && !this.locked && timer.milliseconds() >= 10) {
+        if ((this.deposit.hasOuterPixel() && this.deposit.hasInnerPixel()) && !this.locked && timer.milliseconds() >= 200) {
             new LockInner(this.deposit).schedule();
             new LockOuter(this.deposit).schedule();
             this.locked = true;

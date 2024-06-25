@@ -9,7 +9,6 @@ import com.acmerobotics.roadrunner.ftc.Actions;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.InstantCommand;
-import com.arcrobotics.ftclib.command.WaitCommand;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.example.meepmeeptesting.Positions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -21,6 +20,7 @@ import org.firstinspires.ftc.teamcode.opmodes.auton.Trajectories;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.camera.Camera;
 import org.firstinspires.ftc.teamcode.utils.CommandAction;
+import org.firstinspires.ftc.teamcode.utils.Wait;
 
 @Autonomous(name = "2+1 Blue Far", group = "_Auto")
 public class TwoPlusOne extends CommandOpMode {
@@ -60,11 +60,11 @@ public class TwoPlusOne extends CommandOpMode {
         Actions.runBlocking(new ParallelAction(
                 initialPath,
                 new SequentialAction(
-                        new CommandAction(new WaitCommand(5750)),
+                        new CommandAction(new Wait(5000)),
                         new CommandAction(this.robot.stack),
                         new CommandAction(new IntakeUntilPixel(this.robot.getDeposit(), this.robot.getIntake())),
-                        new CommandAction(new WaitCommand(250)),
-                        new CommandAction(new IntakeSetPower(this.robot.getIntake(), 1000)),
+                        new CommandAction(new Wait(250)),
+                        new CommandAction(new IntakeSetPower(this.robot.getIntake(), 500)),
                         new CommandAction(new InstantCommand(() -> this.robot.getIntake().setPosition(Intake.ACCEPTING_POS))) // don't interfere
                 )
         ));
@@ -77,16 +77,16 @@ public class TwoPlusOne extends CommandOpMode {
         Actions.runBlocking(new ParallelAction(
                 stackToBackdrop,
                 new SequentialAction(
-                        new CommandAction(new WaitCommand(6000)),
+                        new CommandAction(new Wait(6250)),
                         new CommandAction(this.robot.scoreLow),
-                        new CommandAction(new WaitCommand(2250)),
+                        new CommandAction(new Wait(2000)),
                         new CommandAction(this.robot.scoreOne),
                         new CommandAction(this.robot.scoreTwo),
-                        new CommandAction(new WaitCommand(1000))
+                        new CommandAction(new Wait(1000))
                 )
         ));
 
-        Actions.runBlocking(FAR.getPark());
+         Actions.runBlocking(FAR.getPark());
 
         CommandScheduler.getInstance().cancelAll();
         CommandScheduler.getInstance().disable();
