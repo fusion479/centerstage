@@ -18,7 +18,7 @@ import org.firstinspires.ftc.teamcode.opmodes.auton.Trajectories;
 import org.firstinspires.ftc.teamcode.subsystems.camera.Camera;
 import org.firstinspires.ftc.teamcode.utils.CommandAction;
 
-@Autonomous(name = "2+0 Blue Close", group = "_Auto")
+@Autonomous(name = "2+0 Red Close", group = "_Auto")
 public class TwoPlusZero extends CommandOpMode {
     private MultipleTelemetry multipleTelemetry;
     private CommandRobot robot;

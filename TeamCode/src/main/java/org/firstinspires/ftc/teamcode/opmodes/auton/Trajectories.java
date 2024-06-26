@@ -11,9 +11,6 @@ import org.firstinspires.ftc.teamcode.subsystems.camera.Camera;
 
 public class Trajectories {
     // FAR OFFSETS
-    public static double X_OFFSET_FAR = 3.25;
-    public static double Y_OFFSET_FAR = -3.0;
-
     private final Camera.Color color;
     private final MecanumDrive drive;
 
@@ -39,8 +36,8 @@ public class Trajectories {
                 .lineToY(reflectY(Positions.modifyPose(Positions.FAR.SPIKEMARK_MID, 0, Constants.ROBOT_LENGTH / 2)).y)
                 .lineToY(reflectY(Positions.modifyPose(Positions.FAR.SPIKEMARK_MID, 0, Constants.ROBOT_LENGTH / 2 + 5)).y)
                 .setTangent(Math.toRadians(180))
-                .splineToLinearHeading(reflectY(Positions.vectorToPose(Positions.modifyPose(Positions.GENERAL.STACK_ONE, 1.3 * Constants.ROBOT_LENGTH, Y_OFFSET_FAR), 0)), Math.toRadians(0))
-                .lineToX(reflectY(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH / 2 + X_OFFSET_FAR, 0)).x)
+                .splineToLinearHeading(reflectY(Positions.vectorToPose(Positions.modifyPose(Positions.GENERAL.STACK_ONE, 1.3 * Constants.ROBOT_LENGTH, Y_OFFSET), 0)), Math.toRadians(0))
+                .lineToX(reflectY(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH / 2 + X_OFFSET, 0)).x)
                 .build();
 
         public Action RIGHT_SPIKEMARK = drive.actionBuilder(drive.pose)
@@ -48,9 +45,9 @@ public class Trajectories {
                 .splineTo(reflectY(Positions.modifyPose(Positions.FAR.SPIKEMARK_RIGHT, 5, 5)), Math.toRadians(220))
                 .setReversed(true)
                 .splineTo(reflectY(Positions.FAR.SPIKEMARK_SETUP), Math.toRadians(90))
-                .lineToY(reflectY(Positions.GENERAL.STACK_ONE).y)
+                .lineToY(reflectY(Positions.modifyPose(Positions.GENERAL.STACK_ONE, 0, 3)).y)
                 .turnTo(0)
-                .lineToX(reflectY(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH / 2 + X_OFFSET + 3, 0)).x)
+                .lineToX(reflectY(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH / 2 + X_OFFSET + 4, 0)).x)
                 .build();
 
         public Action LEFT_SPIKEMARK = drive.actionBuilder(drive.pose)
@@ -58,9 +55,9 @@ public class Trajectories {
                 .splineTo(reflectY(Positions.modifyPose(Positions.FAR.SPIKEMARK_LEFT, -5, 5)), Math.toRadians(320))
                 .setReversed(true)
                 .splineToLinearHeading(reflectY(Positions.vectorToPose(Positions.FAR.SPIKEMARK_SETUP, Math.toRadians(0))), Math.toRadians(90))
-                .lineToY(reflectY(Positions.GENERAL.STACK_ONE).y)
+                .lineToY(reflectY(Positions.modifyPose(Positions.GENERAL.STACK_ONE, 0, Y_OFFSET)).y)
                 .turnTo(0)
-                .lineToX(reflectY(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH / 2 + X_OFFSET + 3, 0)).x)
+                .lineToX(reflectY(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH / 2 + X_OFFSET + 4.5, 0)).x)
                 .build();
 
         // PARK
@@ -73,8 +70,8 @@ public class Trajectories {
     }
 
     public class General {
-        public double Y_OFFSET = 1.5;
-        public double X_OFFSET = 0;
+        public double Y_OFFSET = 1;
+        public double X_OFFSET = -1.5;
 
         public Action MID_BACKDROP_TO_STACK = drive.actionBuilder(drive.pose)
                 .setTangent(Math.toRadians(180))
@@ -95,7 +92,7 @@ public class Trajectories {
 
         public Action STACK_TO_RIGHT_BACKDROP = drive.actionBuilder(drive.pose)
                 .lineToX(reflectY(Positions.modifyPose(Positions.GENERAL.BACKDROP_RIGHT, -Constants.TILE_LENGTH, 0)).x)
-                .splineToConstantHeading(reflectY(Positions.modifyPose(Positions.GENERAL.BACKDROP_RIGHT, -Constants.ROBOT_LENGTH / 2, 0)), Math.toRadians(0))
+                .splineToConstantHeading(reflectY(Positions.modifyPose(Positions.GENERAL.BACKDROP_RIGHT, -Constants.ROBOT_LENGTH / 2 - X_OFFSET, Y_OFFSET + 4.5)), Math.toRadians(0))
                 .build();
 
         public Action LEFT_BACKDROP_TO_STACK = drive.actionBuilder(drive.pose)
@@ -106,9 +103,14 @@ public class Trajectories {
 
         public Action STACK_TO_LEFT_BACKDROP = drive.actionBuilder(drive.pose)
                 .lineToX(reflectY(Positions.modifyPose(Positions.GENERAL.BACKDROP_LEFT, -Constants.TILE_LENGTH, 0)).x)
-                .splineToConstantHeading(reflectY(Positions.modifyPose(Positions.GENERAL.BACKDROP_LEFT, -Constants.ROBOT_LENGTH / 2, 0)), Math.toRadians(0))
+                .splineToConstantHeading(reflectY(Positions.modifyPose(Positions.GENERAL.BACKDROP_LEFT, -Constants.ROBOT_LENGTH / 2 + X_OFFSET + 3, Y_OFFSET + 3)), Math.toRadians(0))
                 .build();
 
+        public Action forward(Pose2d pose, double dX) {
+            return drive.actionBuilder(pose)
+                    .lineToX(pose.position.x + dX)
+                    .build();
+        }
     }
 
     public class Close {

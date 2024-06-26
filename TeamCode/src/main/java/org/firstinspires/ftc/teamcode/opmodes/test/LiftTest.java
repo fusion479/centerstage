@@ -20,10 +20,10 @@ import org.firstinspires.ftc.teamcode.subsystems.Lift;
 
 @TeleOp(name = "Lift Test", group = "Test")
 public class LiftTest extends CommandOpMode {
+    private final CommandRobot.Type type = CommandRobot.Type.TELEOP;
     private Lift lift;
     private GamepadEx gamepad;
     private MultipleTelemetry multipleTelemetry;
-    private final CommandRobot.Type type = CommandRobot.Type.TELEOP;
 
     @Override
     public void initialize() {
@@ -34,15 +34,15 @@ public class LiftTest extends CommandOpMode {
         this.gamepad.getGamepadButton(GamepadKeys.Button.A)
                 .whenPressed(new MediumLift(this.lift));
         this.gamepad.getGamepadButton(GamepadKeys.Button.B)
-                .whenPressed(new LowLift(this.lift, this.type));
+                .whenPressed(new LowLift(this.lift));
         this.gamepad.getGamepadButton(GamepadKeys.Button.X)
                 .whenPressed(new HighLift(this.lift));
         this.gamepad.getGamepadButton(GamepadKeys.Button.Y)
-                .whenPressed(new BottomLift(this.lift, this.type));
+                .whenPressed(new BottomLift(this.lift));
         this.gamepad.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
                 .whenPressed(new LiftLower(this.lift));
         this.gamepad.getGamepadButton(GamepadKeys.Button.DPAD_UP)
-                .whenPressed(new LiftRaise(this.lift, this.type));
+                .whenPressed(new LiftRaise(this.lift));
     }
 
     @Override

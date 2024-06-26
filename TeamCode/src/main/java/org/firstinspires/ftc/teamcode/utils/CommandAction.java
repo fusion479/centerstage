@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.arcrobotics.ftclib.command.Command;
+import com.arcrobotics.ftclib.command.CommandScheduler;
 
 public class CommandAction implements Action {
     private final Command command;
@@ -22,8 +23,10 @@ public class CommandAction implements Action {
             initialized = true;
         } else if (command.isFinished()) {
             command.end(false);
+            CommandScheduler.getInstance().run();
             finished = true;
         } else {
+            CommandScheduler.getInstance().run();
             command.execute();
         }
         return !finished;

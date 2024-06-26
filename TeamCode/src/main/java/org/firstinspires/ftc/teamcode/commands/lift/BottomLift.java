@@ -2,15 +2,12 @@ package org.firstinspires.ftc.teamcode.commands.lift;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 
-import org.firstinspires.ftc.teamcode.CommandRobot;
 import org.firstinspires.ftc.teamcode.subsystems.Lift;
-import org.firstinspires.ftc.teamcode.utils.AutonCommandBase;
 
-public class BottomLift extends AutonCommandBase {
+public class BottomLift extends CommandBase {
     private final Lift lift;
 
-    public BottomLift(final Lift lift, final CommandRobot.Type type) {
-        super(type);
+    public BottomLift(final Lift lift) {
         this.lift = lift;
 
         super.addRequirements(this.lift);

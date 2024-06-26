@@ -81,7 +81,7 @@ public class CommandRobot extends Robot {
         this.gamepad2 = gamepad2;
 
         this.accepting = new SequentialCommandGroup(
-                new LowLift(this.lift, this.type),
+                new LowLift(this.lift),
                 new IntakeAccepting(this.intake),
                 new ArmScore(this.arm),
                 new WaitCommand(300),
@@ -90,21 +90,21 @@ public class CommandRobot extends Robot {
                 new ArmAccepting(this.arm),
                 new OpenInner(this.deposit),
                 new OpenOuter(this.deposit),
-                new BottomLift(this.lift, this.type));
+                new BottomLift(this.lift));
 
         this.ready = new SequentialCommandGroup(
                 new LockInner(this.deposit),
                 new LockOuter(this.deposit),
-                new LowLift(this.lift, this.type),
+                new LowLift(this.lift),
                 new ArmReady(this.arm),
                 new DepositReady(this.deposit),
                 new IntakeReady(this.intake),
-                new BottomLift(this.lift, this.type));
+                new BottomLift(this.lift));
 
         this.scoreLow = new ParallelCommandGroup(
                 new LockOuter(this.deposit),
                 new LockInner(this.deposit),
-                new LowLift(this.lift, this.type),
+                new LowLift(this.lift),
                 new ArmScore(this.arm),
                 new DepositScore(this.deposit));
 
@@ -127,7 +127,7 @@ public class CommandRobot extends Robot {
                 new LockInner(this.deposit),
                 new ArmScore(this.arm),
                 new DepositScore(this.deposit),
-                new LiftRaise(this.lift, this.type));
+                new LiftRaise(this.lift));
 
         this.liftLower = new SequentialCommandGroup(
                 new LockOuter(this.deposit),
@@ -139,7 +139,7 @@ public class CommandRobot extends Robot {
         this.scoreOne = new SequentialCommandGroup(
                 new OpenOuter(this.deposit),
                 new WaitCommand(175),
-                new LiftRaise(this.lift, this.type),
+                new LiftRaise(this.lift),
                 new InstantCommand(() -> {
                     this.locked = false;
                     this.timer.reset();
@@ -148,38 +148,38 @@ public class CommandRobot extends Robot {
         this.scoreTwo = new SequentialCommandGroup(
                 new OpenInner(this.deposit),
                 new WaitCommand(250),
-                new LiftRaise(this.lift, this.type),
+                new LiftRaise(this.lift),
                 new InstantCommand(() -> {
                     this.locked = false;
                     this.timer.reset();
                 }),
                 new WaitCommand(300),
-                new LowLift(this.lift, this.type),
+                new LowLift(this.lift),
                 new DepositAccepting(this.deposit),
                 new WaitCommand(500),
                 new ArmAccepting(this.arm),
                 new IntakeAccepting(this.intake),
                 new OpenInner(this.deposit),
                 new OpenOuter(this.deposit),
-                new BottomLift(this.lift, this.type));
+                new BottomLift(this.lift));
 
         this.scoreBottom = new ParallelCommandGroup(
                 new LockOuter(this.deposit),
                 new LockInner(this.deposit),
-                new BottomLift(this.lift, this.type),
+                new BottomLift(this.lift),
                 new ArmScore(this.arm),
                 new DepositScore(this.deposit));
 
         this.stack = new SequentialCommandGroup(
                 new LockInner(this.deposit), // yellow pixel in inner
-                new LowLift(this.lift, this.type),
+                new LowLift(this.lift),
                 new IntakeStack(this.intake),
                 new ArmScore(this.arm),
                 new WaitCommand(300),
                 new DepositAccepting(this.deposit),
                 new WaitCommand(300),
                 new ArmAccepting(this.arm),
-                new BottomLift(this.lift, this.type),
+                new BottomLift(this.lift),
                 new OpenOuter(this.deposit));
 
         this.idle = new Idle(this.launcher);
