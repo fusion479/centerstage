@@ -10,11 +10,13 @@ public class IntakeSetPower extends CommandBase {
     private final Intake intake;
     private final int duration;
     private final ElapsedTime timer;
+    private final double power;
 
-    public IntakeSetPower(final Intake intake, final int duration) {
+    public IntakeSetPower(final Intake intake, final int duration, final double power) {
         this.intake = intake;
         this.duration = duration;
         this.timer = new ElapsedTime();
+        this.power = power;
 
         super.addRequirements(this.intake);
     }
@@ -22,7 +24,7 @@ public class IntakeSetPower extends CommandBase {
     @Override
     public void initialize() {
         this.timer.reset();
-        this.intake.setPower(1);
+        this.intake.setPower(this.power);
     }
 
     @Override

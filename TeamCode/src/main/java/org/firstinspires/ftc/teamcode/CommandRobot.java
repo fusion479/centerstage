@@ -47,7 +47,7 @@ import org.firstinspires.ftc.teamcode.utils.GamepadTrigger;
 
 public class CommandRobot extends Robot {
     // COMMANDS
-    public final Command accepting, ready, scoreLow, scoreHigh, scoreMid, liftRaise, liftLower, scoreOne, scoreTwo, stack, launch, idle;
+    public final Command accepting, ready, scoreLow, scoreHigh, scoreMid, liftRaise, liftLower, scoreOne, scoreTwo, stack, launch, idle, scoreBottom;
 
     // SUBSYSTEMS & CONTROLLERS
     private final Arm arm;
@@ -58,12 +58,11 @@ public class CommandRobot extends Robot {
     private final GamepadEx gamepad1;
     private final GamepadEx gamepad2;
     private final Deposit deposit;
-    private GamepadTrigger intakeAccept;
-    private GamepadTrigger intakeReject;
     private final Type type;
-
     // MISC. VARIABLES
     private final ElapsedTime timer;
+    private GamepadTrigger intakeAccept;
+    private GamepadTrigger intakeReject;
     private boolean locked;
 
     public CommandRobot(final HardwareMap hwMap, final GamepadEx gamepad1, final GamepadEx gamepad2, final MultipleTelemetry telemetry, final Pose2d startPose, final Type type) {
@@ -83,10 +82,12 @@ public class CommandRobot extends Robot {
 
         this.accepting = new SequentialCommandGroup(
                 new LowLift(this.lift, this.type),
-                new DepositAccepting(this.deposit),
-                new WaitCommand(500),
-                new ArmAccepting(this.arm),
                 new IntakeAccepting(this.intake),
+                new ArmScore(this.arm),
+                new WaitCommand(300),
+                new DepositAccepting(this.deposit),
+                new WaitCommand(300),
+                new ArmAccepting(this.arm),
                 new OpenInner(this.deposit),
                 new OpenOuter(this.deposit),
                 new BottomLift(this.lift, this.type));
@@ -162,15 +163,24 @@ public class CommandRobot extends Robot {
                 new OpenOuter(this.deposit),
                 new BottomLift(this.lift, this.type));
 
+        this.scoreBottom = new ParallelCommandGroup(
+                new LockOuter(this.deposit),
+                new LockInner(this.deposit),
+                new BottomLift(this.lift, this.type),
+                new ArmScore(this.arm),
+                new DepositScore(this.deposit));
+
         this.stack = new SequentialCommandGroup(
+                new LockInner(this.deposit), // yellow pixel in inner
                 new LowLift(this.lift, this.type),
-                new DepositAccepting(this.deposit),
-                new WaitCommand(500),
-                new ArmAccepting(this.arm),
                 new IntakeStack(this.intake),
-                new OpenInner(this.deposit),
-                new OpenOuter(this.deposit),
-                new BottomLift(this.lift, this.type));
+                new ArmScore(this.arm),
+                new WaitCommand(300),
+                new DepositAccepting(this.deposit),
+                new WaitCommand(300),
+                new ArmAccepting(this.arm),
+                new BottomLift(this.lift, this.type),
+                new OpenOuter(this.deposit));
 
         this.idle = new Idle(this.launcher);
         this.launch = new Launch(this.launcher);
@@ -190,7 +200,7 @@ public class CommandRobot extends Robot {
         this.gamepad1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT)
                 .whenPressed(this.stack);
         this.gamepad1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT)
-                .whenPressed(new IntakeSetPower(this.intake, 1));
+                .whenPressed(new IntakeSetPower(this.intake, 1000, -1));
         this.gamepad1.getGamepadButton(GamepadKeys.Button.B)
                 .whenPressed(this.scoreLow);
         this.gamepad1.getGamepadButton(GamepadKeys.Button.X)

@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.commands.auton;
 
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -14,6 +15,15 @@ public class IntakeUntilPixel extends CommandBase {
     private final Deposit deposit;
     private final ElapsedTime pixelTimer;
     private final ElapsedTime durationTimer;
+    private MultipleTelemetry multipleTelemetry;
+
+    public IntakeUntilPixel(Deposit deposit, Intake intake, MultipleTelemetry multipleTelemetry) {
+        this.deposit = deposit;
+        this.intake = intake;
+        this.pixelTimer = new ElapsedTime();
+        this.durationTimer = new ElapsedTime();
+        this.multipleTelemetry = multipleTelemetry;
+    }
 
     public IntakeUntilPixel(Deposit deposit, Intake intake) {
         this.deposit = deposit;
@@ -32,11 +42,15 @@ public class IntakeUntilPixel extends CommandBase {
     @Override
     public void execute() {
         CommandScheduler.getInstance().run();
+        this.multipleTelemetry.addLine("running scheduler");
+        this.multipleTelemetry.update();
     }
 
     @Override
     public boolean isFinished() {
         if (this.durationTimer.milliseconds() >= 5000) {
+            new LockInner(this.deposit).schedule();
+            new LockOuter(this.deposit).schedule();
             return true;
         }
 

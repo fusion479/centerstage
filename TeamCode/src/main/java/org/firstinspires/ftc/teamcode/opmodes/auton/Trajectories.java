@@ -10,6 +10,10 @@ import org.firstinspires.ftc.teamcode.roadrunner.MecanumDrive;
 import org.firstinspires.ftc.teamcode.subsystems.camera.Camera;
 
 public class Trajectories {
+    // FAR OFFSETS
+    public static double X_OFFSET_FAR = 3.25;
+    public static double Y_OFFSET_FAR = -3.0;
+
     private final Camera.Color color;
     private final MecanumDrive drive;
 
@@ -29,14 +33,14 @@ public class Trajectories {
     public class Far {
         // SPIKEMARK
         public double Y_OFFSET = -3.0;
-        public double X_OFFSET = 3.0;
+        public double X_OFFSET = 3.5;
 
         public Action MID_SPIKEMARK = drive.actionBuilder(drive.pose)
                 .lineToY(reflectY(Positions.modifyPose(Positions.FAR.SPIKEMARK_MID, 0, Constants.ROBOT_LENGTH / 2)).y)
                 .lineToY(reflectY(Positions.modifyPose(Positions.FAR.SPIKEMARK_MID, 0, Constants.ROBOT_LENGTH / 2 + 5)).y)
                 .setTangent(Math.toRadians(180))
-                .splineToLinearHeading(reflectY(Positions.vectorToPose(Positions.modifyPose(Positions.GENERAL.STACK_ONE, 1.3 * Constants.ROBOT_LENGTH, Y_OFFSET), 0)), Math.toRadians(0))
-                .lineToX(reflectY(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH / 2 + X_OFFSET, 0)).x)
+                .splineToLinearHeading(reflectY(Positions.vectorToPose(Positions.modifyPose(Positions.GENERAL.STACK_ONE, 1.3 * Constants.ROBOT_LENGTH, Y_OFFSET_FAR), 0)), Math.toRadians(0))
+                .lineToX(reflectY(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH / 2 + X_OFFSET_FAR, 0)).x)
                 .build();
 
         public Action RIGHT_SPIKEMARK = drive.actionBuilder(drive.pose)
@@ -85,7 +89,7 @@ public class Trajectories {
 
         public Action RIGHT_BACKDROP_TO_STACK = drive.actionBuilder(drive.pose)
                 .setTangent(Math.toRadians(180))
-                .splineToConstantHeading(reflectY(new Vector2d(Positions.modifyPose(Positions.GENERAL.BACKDROP_RIGHT, -Constants.TILE_LENGTH, 0).x, Positions.GENERAL.STACK_ONE.y)), Math.toRadians(180))
+                .splineToConstantHeading(reflectY(new Vector2d(Positions.modifyPose(Positions.GENERAL.BACKDROP_RIGHT, -Constants.TILE_LENGTH, Y_OFFSET).x, Positions.GENERAL.STACK_ONE.y)), Math.toRadians(180))
                 .lineToX(reflectY(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH / 2, 0)).x)
                 .build();
 

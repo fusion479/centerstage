@@ -66,11 +66,10 @@ public class TwoPlusThree extends CommandOpMode {
                         new CommandAction(this.robot.stack),
                         new CommandAction(new IntakeUntilPixel(this.robot.getDeposit(), this.robot.getIntake())),
                         new CommandAction(new Wait(250)),
-                        new CommandAction(new IntakeSetPower(this.robot.getIntake(), 500)),
+                        new CommandAction(new IntakeSetPower(this.robot.getIntake(), 500, 1)),
                         new CommandAction(new InstantCommand(() -> this.robot.getIntake().setPosition(Intake.ACCEPTING_POS))) // don't interfere
                 )
         ));
-
 
 
         Trajectories.General GENERAL = new Trajectories(Camera.Color.RED, this.robot.getDrive()).new General();
@@ -98,7 +97,7 @@ public class TwoPlusThree extends CommandOpMode {
                         new CommandAction(this.robot.stack),
                         new CommandAction(new IntakeUntilPixel(this.robot.getDeposit(), this.robot.getIntake())),
                         new CommandAction(new Wait(250)),
-                        new CommandAction(new IntakeSetPower(this.robot.getIntake(), 500)),
+                        new CommandAction(new IntakeSetPower(this.robot.getIntake(), 500, 1)),
                         new CommandAction(new InstantCommand(() -> this.robot.getIntake().setPosition(Intake.ACCEPTING_POS))) // don't interfere
                 )
         ));

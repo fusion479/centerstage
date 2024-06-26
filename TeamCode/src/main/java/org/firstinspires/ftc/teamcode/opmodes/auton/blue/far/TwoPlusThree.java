@@ -9,7 +9,6 @@ import com.acmerobotics.roadrunner.ftc.Actions;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.InstantCommand;
-import com.arcrobotics.ftclib.command.WaitCommand;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.example.meepmeeptesting.Positions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -67,11 +66,10 @@ public class TwoPlusThree extends CommandOpMode {
                         new CommandAction(this.robot.stack),
                         new CommandAction(new IntakeUntilPixel(this.robot.getDeposit(), this.robot.getIntake())),
                         new CommandAction(new Wait(250)),
-                        new CommandAction(new IntakeSetPower(this.robot.getIntake(), 500)),
+                        new CommandAction(new IntakeSetPower(this.robot.getIntake(), 500, 1)),
                         new CommandAction(new InstantCommand(() -> this.robot.getIntake().setPosition(Intake.ACCEPTING_POS))) // don't interfere
                 )
         ));
-
 
 
         Trajectories.General GENERAL = new Trajectories(Camera.Color.BLUE, this.robot.getDrive()).new General();
@@ -99,7 +97,7 @@ public class TwoPlusThree extends CommandOpMode {
                         new CommandAction(this.robot.stack),
                         new CommandAction(new IntakeUntilPixel(this.robot.getDeposit(), this.robot.getIntake())),
                         new CommandAction(new Wait(250)),
-                        new CommandAction(new IntakeSetPower(this.robot.getIntake(), 500)),
+                        new CommandAction(new IntakeSetPower(this.robot.getIntake(), 500, 1)),
                         new CommandAction(new InstantCommand(() -> this.robot.getIntake().setPosition(Intake.ACCEPTING_POS))) // don't interfere
                 )
         ));
