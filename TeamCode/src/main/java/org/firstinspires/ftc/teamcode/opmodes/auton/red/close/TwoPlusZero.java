@@ -2,35 +2,34 @@ package org.firstinspires.ftc.teamcode.opmodes.auton.red.close;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.roadrunner.ParallelAction;
+import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.CommandScheduler;
-import com.arcrobotics.ftclib.command.SequentialCommandGroup;
+import com.arcrobotics.ftclib.command.WaitCommand;
+import com.arcrobotics.ftclib.gamepad.GamepadEx;
+import com.example.meepmeeptesting.Positions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-import org.firstinspires.ftc.teamcode.commands.arm.ArmScore;
-import org.firstinspires.ftc.teamcode.commands.deposit.DepositScore;
-import org.firstinspires.ftc.teamcode.subsystems.Arm;
-import org.firstinspires.ftc.teamcode.subsystems.Deposit;
-import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
-import org.firstinspires.ftc.teamcode.subsystems.Intake;
-import org.firstinspires.ftc.teamcode.subsystems.Lift;
-import org.firstinspires.ftc.teamcode.utils.CommandGroupAction;
+import org.firstinspires.ftc.teamcode.CommandRobot;
+import org.firstinspires.ftc.teamcode.opmodes.auton.Trajectories;
+import org.firstinspires.ftc.teamcode.subsystems.camera.Camera;
+import org.firstinspires.ftc.teamcode.utils.CommandAction;
 
-@Autonomous(name = "2+0 Red Close", group = "_Auto")
+@Autonomous(name = "2+0 Blue Close", group = "_Auto")
 public class TwoPlusZero extends CommandOpMode {
     private MultipleTelemetry multipleTelemetry;
-    private Drivetrain drive;
-    private Lift lift;
-    private Arm arm;
-    private Deposit deposit;
-    private Intake intake;
+    private CommandRobot robot;
+    private Camera camera;
 
     @Override
     public void initialize() {
         this.multipleTelemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        this.arm = new Arm(hardwareMap, this.multipleTelemetry);
-        this.deposit = new Deposit(hardwareMap, this.multipleTelemetry);
+        this.robot = new CommandRobot(super.hardwareMap, new GamepadEx(this.gamepad1), new GamepadEx(this.gamepad2), this.multipleTelemetry, Positions.CLOSE.START, CommandRobot.Type.AUTON);
+        this.camera = new Camera(Camera.Color.RED, this.multipleTelemetry);
+        this.camera.initCamera(super.hardwareMap);
     }
 
     @Override
@@ -38,23 +37,33 @@ public class TwoPlusZero extends CommandOpMode {
         CommandScheduler.getInstance().enable();
         this.initialize();
 
-        super.waitForStart();
-
-        while (!super.isStopRequested() && super.opModeIsActive()) {
-            CommandScheduler.getInstance().run();
-
-            Actions.runBlocking(
-                    new CommandGroupAction(
-                            new SequentialCommandGroup(
-                                    new ArmScore(this.arm),
-                                    new DepositScore(this.deposit)
-                            )
-                    )
-            );
-
+        while (!super.isStarted()) {
+            this.multipleTelemetry.addData("Region:", this.camera.getRegion());
             this.multipleTelemetry.update();
         }
+        int region = this.camera.getRegion();
+        this.camera.stopStreaming();
 
+        Trajectories.Close CLOSE = new Trajectories(Camera.Color.RED, this.robot.getDrive()).new Close();
+        Action initialPath = region == 1 ? CLOSE.LEFT_SPIKEMARK : this.camera.getRegion() == 2 ? CLOSE.MID_SPIKEMARK : CLOSE.RIGHT_SPIKEMARK;
+
+        Actions.runBlocking(new ParallelAction(
+                initialPath,
+                new SequentialAction(
+                        new CommandAction(new WaitCommand(5000)),
+                        new CommandAction(this.robot.scoreLow),
+                        new CommandAction(new WaitCommand(2000)),
+                        new CommandAction(this.robot.scoreOne),
+                        new CommandAction(new WaitCommand(500)),
+                        new CommandAction(this.robot.ready),
+                        new CommandAction(new WaitCommand(1000))
+                )
+        ));
+
+        Actions.runBlocking(CLOSE.getPark());
+
+        CommandScheduler.getInstance().cancelAll();
         CommandScheduler.getInstance().disable();
+        CommandScheduler.getInstance().reset();
     }
 }
