@@ -186,10 +186,10 @@ public class CommandRobot extends Robot {
         this.launch = new Launch(this.launcher);
 
         if (this.type == Type.TELEOP) {
-            this.intakeAccept = new GamepadTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER, d -> this.intake.setPower(-d), this.gamepad1);
-            this.intakeReject = new GamepadTrigger(GamepadKeys.Trigger.LEFT_TRIGGER, this.intake::setPower, this.gamepad1);
+            this.intakeAccept = new GamepadTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER, d -> this.intake.setPower(-d), this.gamepad2);
+            this.intakeReject = new GamepadTrigger(GamepadKeys.Trigger.LEFT_TRIGGER, this.intake::setPower, this.gamepad2);
 
-            this.drive.setDefaultCommand(new ManualDrive(this.drive, this.gamepad1));
+            this.drive.setDefaultCommand(new ManualDrive(this.drive, this.gamepad2));
             this.configureCommands();
         }
     }
@@ -215,9 +215,9 @@ public class CommandRobot extends Robot {
                 .whenPressed(this.scoreOne);
         this.gamepad1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
                 .whenPressed(this.scoreTwo);
-        this.gamepad2.getGamepadButton(GamepadKeys.Button.X)
+        this.gamepad1.getGamepadButton(GamepadKeys.Button.X)
                 .whenPressed(this.launch);
-        this.gamepad2.getGamepadButton(GamepadKeys.Button.A)
+        this.gamepad1.getGamepadButton(GamepadKeys.Button.A)
                 .whenPressed(this.idle);
     }
 
