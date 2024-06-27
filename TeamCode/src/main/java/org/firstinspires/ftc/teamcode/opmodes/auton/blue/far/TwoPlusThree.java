@@ -75,7 +75,7 @@ public class TwoPlusThree extends CommandOpMode {
         ));
 
         Trajectories.General GENERAL = new Trajectories(Camera.Color.BLUE, this.robot.getDrive()).new General();
-        Action stackToBackdrop = region == 1 ? GENERAL.STACK_TO_LEFT_BACKDROP : region == 2 ? GENERAL.STACK_TO_MID_BACKDROP : GENERAL.STACK_TO_RIGHT_BACKDROP;
+        Action stackToBackdrop = region == 1 ? GENERAL.STACK_TO_LEFT_BACKDROP(this.robot.getDrive().pose) : region == 2 ? GENERAL.STACK_TO_MID_BACKDROP(this.robot.getDrive().pose) : GENERAL.STACK_TO_RIGHT_BACKDROP(this.robot.getDrive().pose);
 
         Actions.runBlocking(new ParallelAction(
                 stackToBackdrop,
@@ -95,30 +95,35 @@ public class TwoPlusThree extends CommandOpMode {
                 )
         ));
 
-        Action backdropToStack = region == 1 ? GENERAL.LEFT_BACKDROP_TO_STACK : region == 2 ? GENERAL.MID_BACKDROP_TO_STACK : GENERAL.RIGHT_BACKDROP_TO_STACK;
+        Action backdropToStack = region == 1 ? GENERAL.LEFT_BACKDROP_TO_STACK(this.robot.getDrive().pose) : region == 2 ? GENERAL.MID_BACKDROP_TO_STACK(this.robot.getDrive().pose) : GENERAL.RIGHT_BACKDROP_TO_STACK(this.robot.getDrive().pose);
 
         Actions.runBlocking(new ParallelAction(
                 backdropToStack,
                 new SequentialAction(
-                        new CommandAction(new WaitCommand(5000)),
+                        new CommandAction(new WaitCommand(200)),
                         new CommandAction(this.robot.accepting),
-                        new CommandAction(new IntakeUntilPixel(this.robot.getDeposit(), this.robot.getIntake())),
+                        new CommandAction(new WaitCommand(1000)),
+                        new CommandAction(new IntakeUntilPixel(this.robot.getDeposit(), this.robot.getIntake(), 5000)),
                         new CommandAction(new WaitCommand(250)),
                         new CommandAction(new IntakeSetPower(this.robot.getIntake(), 500, 1)),
                         new CommandAction(new InstantCommand(() -> this.robot.getIntake().setPosition(Intake.ACCEPTING_POS))) // don't interfere
                 )
         ));
 
+        stackToBackdrop = region == 1 ? GENERAL.STACK_TO_LEFT_BACKDROP(this.robot.getDrive().pose) : region == 2 ? GENERAL.STACK_TO_MID_BACKDROP(this.robot.getDrive().pose) : GENERAL.STACK_TO_RIGHT_BACKDROP(this.robot.getDrive().pose);
+
         Actions.runBlocking(new ParallelAction(
                 stackToBackdrop,
                 new SequentialAction(
-                        new CommandAction(new WaitCommand(6250)),
+                        new CommandAction(new WaitCommand(250)),
+                        new CommandAction(new InstantCommand(() -> this.robot.getIntake().setPosition(Intake.ACCEPTING_POS + 0.05))),
+                        new CommandAction(new WaitCommand(3500)),
                         new CommandAction(this.robot.scoreLow),
                         new CommandAction(new WaitCommand(2000)),
                         new CommandAction(this.robot.scoreOne),
                         new CommandAction(new WaitCommand(250)),
                         new CommandAction(this.robot.scoreTwo),
-                        new CommandAction(new WaitCommand(1000))
+                        new CommandAction(new WaitCommand(500))
                 )
         ));
 
