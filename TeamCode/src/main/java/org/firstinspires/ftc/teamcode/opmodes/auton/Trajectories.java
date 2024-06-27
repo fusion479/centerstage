@@ -73,38 +73,50 @@ public class Trajectories {
         public double Y_OFFSET = 1;
         public double X_OFFSET = -1.0;
 
-        public Action MID_BACKDROP_TO_STACK = drive.actionBuilder(drive.pose)
-                .setTangent(Math.toRadians(180))
-                .splineToConstantHeading(reflectY(new Vector2d(Positions.modifyPose(Positions.GENERAL.BACKDROP_MID, -Constants.TILE_LENGTH, 0).x, Positions.GENERAL.STACK_ONE.y)), Math.toRadians(180))
-                .lineToX(reflectY(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH / 2, 0)).x)
-                .build();
+        public Action RIGHT_BACKDROP_TO_STACK(Pose2d pose) {
+            return drive.actionBuilder(drive.pose)
+                    .setTangent(Math.toRadians(180))
+                    .splineToConstantHeading(reflectY(new Vector2d(Positions.modifyPose(Positions.GENERAL.BACKDROP_RIGHT, -Constants.TILE_LENGTH, Y_OFFSET).x, Positions.GENERAL.STACK_ONE.y)), Math.toRadians(180))
+                    .lineToX(reflectY(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH / 2, 0)).x)
+                    .build();
+        }
 
-        public Action STACK_TO_MID_BACKDROP = drive.actionBuilder(drive.pose)
-                .lineToX(reflectY(Positions.modifyPose(Positions.GENERAL.BACKDROP_MID, -Constants.TILE_LENGTH, 0)).x)
-                .splineToConstantHeading(reflectY(Positions.modifyPose(Positions.GENERAL.BACKDROP_MID, -Constants.ROBOT_LENGTH / 2 + X_OFFSET, Y_OFFSET)), Math.toRadians(0))
-                .build();
+        public Action STACK_TO_RIGHT_BACKDROP(Pose2d pose) {
+            return drive.actionBuilder(drive.pose)
+                    .lineToX(reflectY(Positions.modifyPose(Positions.GENERAL.BACKDROP_RIGHT, -Constants.TILE_LENGTH, 0)).x)
+                    .splineToConstantHeading(reflectY(Positions.modifyPose(Positions.GENERAL.BACKDROP_RIGHT, -Constants.ROBOT_LENGTH / 2 - X_OFFSET + 1, Y_OFFSET + 5)), Math.toRadians(0))
+                    .build();
+        }
 
-        public Action RIGHT_BACKDROP_TO_STACK = drive.actionBuilder(drive.pose)
-                .setTangent(Math.toRadians(180))
-                .splineToConstantHeading(reflectY(new Vector2d(Positions.modifyPose(Positions.GENERAL.BACKDROP_RIGHT, -Constants.TILE_LENGTH, Y_OFFSET).x, Positions.GENERAL.STACK_ONE.y)), Math.toRadians(180))
-                .lineToX(reflectY(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH / 2, 0)).x)
-                .build();
+        public Action LEFT_BACKDROP_TO_STACK(Pose2d pose) {
+            return drive.actionBuilder(pose)
+                    .setTangent(Math.toRadians(180))
+                    .splineToConstantHeading(reflectY(new Vector2d(Positions.modifyPose(Positions.GENERAL.BACKDROP_LEFT, -Constants.TILE_LENGTH, 0).x, Positions.GENERAL.STACK_ONE.y)), Math.toRadians(180))
+                    .lineToX(reflectY(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH / 2, 0)).x)
+                    .build();
+        }
 
-        public Action STACK_TO_RIGHT_BACKDROP = drive.actionBuilder(drive.pose)
-                .lineToX(reflectY(Positions.modifyPose(Positions.GENERAL.BACKDROP_RIGHT, -Constants.TILE_LENGTH, 0)).x)
-                .splineToConstantHeading(reflectY(Positions.modifyPose(Positions.GENERAL.BACKDROP_RIGHT, -Constants.ROBOT_LENGTH / 2 - X_OFFSET + 1, Y_OFFSET + 5)), Math.toRadians(0))
-                .build();
+        public Action STACK_TO_LEFT_BACKDROP(Pose2d pose) {
+            return drive.actionBuilder(pose)
+                    .lineToX(reflectY(Positions.modifyPose(Positions.GENERAL.BACKDROP_LEFT, -Constants.TILE_LENGTH, 0)).x)
+                    .splineToConstantHeading(reflectY(Positions.modifyPose(Positions.GENERAL.BACKDROP_LEFT, -Constants.ROBOT_LENGTH / 2 + X_OFFSET + 3, Y_OFFSET + 3)), Math.toRadians(0))
+                    .build();
+        }
 
-        public Action LEFT_BACKDROP_TO_STACK = drive.actionBuilder(drive.pose)
-                .setTangent(Math.toRadians(180))
-                .splineToConstantHeading(reflectY(new Vector2d(Positions.modifyPose(Positions.GENERAL.BACKDROP_LEFT, -Constants.TILE_LENGTH, 0).x, Positions.GENERAL.STACK_ONE.y)), Math.toRadians(180))
-                .lineToX(reflectY(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH / 2, 0)).x)
-                .build();
+        public Action STACK_TO_MID_BACKDROP(Pose2d pose) {
+            return drive.actionBuilder(pose)
+                    .lineToX(reflectY(Positions.modifyPose(Positions.GENERAL.BACKDROP_MID, -Constants.TILE_LENGTH, 0)).x)
+                    .splineToConstantHeading(reflectY(Positions.modifyPose(Positions.GENERAL.BACKDROP_MID, -Constants.ROBOT_LENGTH / 2 + X_OFFSET, Y_OFFSET + 1)), Math.toRadians(0))
+                    .build();
+        }
 
-        public Action STACK_TO_LEFT_BACKDROP = drive.actionBuilder(drive.pose)
-                .lineToX(reflectY(Positions.modifyPose(Positions.GENERAL.BACKDROP_LEFT, -Constants.TILE_LENGTH, 0)).x)
-                .splineToConstantHeading(reflectY(Positions.modifyPose(Positions.GENERAL.BACKDROP_LEFT, -Constants.ROBOT_LENGTH / 2 + X_OFFSET + 3, Y_OFFSET + 3)), Math.toRadians(0))
-                .build();
+        public Action MID_BACKDROP_TO_STACK(Pose2d pose) {
+            return drive.actionBuilder(pose)
+                    .setTangent(Math.toRadians(180))
+                    .splineToConstantHeading(reflectY(new Vector2d(Positions.modifyPose(Positions.GENERAL.BACKDROP_MID, -Constants.TILE_LENGTH, 0).x, Positions.GENERAL.STACK_ONE.y)), Math.toRadians(180))
+                    .lineToX(reflectY(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH / 2 + X_OFFSET - 4, Y_OFFSET)).x)
+                    .build();
+        }
 
         public Action forward(Pose2d pose, double dX) {
             return drive.actionBuilder(pose)

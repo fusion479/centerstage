@@ -75,7 +75,7 @@ public class TwoPlusOne extends CommandOpMode {
         ));
 
         Trajectories.General GENERAL = new Trajectories(Camera.Color.BLUE, this.robot.getDrive()).new General();
-        Action stackToBackdrop = region == 1 ? GENERAL.STACK_TO_LEFT_BACKDROP : region == 2 ? GENERAL.STACK_TO_MID_BACKDROP : GENERAL.STACK_TO_RIGHT_BACKDROP;
+        Action stackToBackdrop = region == 1 ? GENERAL.STACK_TO_LEFT_BACKDROP(this.robot.getDrive().pose) : region == 2 ? GENERAL.STACK_TO_MID_BACKDROP(this.robot.getDrive().pose) : GENERAL.STACK_TO_RIGHT_BACKDROP(this.robot.getDrive().pose);
 
         Actions.runBlocking(new ParallelAction(
                 stackToBackdrop,
