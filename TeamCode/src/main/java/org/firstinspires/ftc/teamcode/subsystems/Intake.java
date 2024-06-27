@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.utils.Subsystem;
 public class Intake extends Subsystem {
     public static double ACCEPTING_POS = .36;
     public static double READY_POS = .56;
-    public static double STACK_POS = .46;
+    public static double STACK_POS = .44;
 
     private final DcMotorEx intake;
     private final Servo intakeRight, intakeLeft;

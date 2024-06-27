@@ -58,6 +58,7 @@ public class TwoPlusThree extends CommandOpMode {
         Trajectories.Far FAR = new Trajectories(Camera.Color.BLUE, this.robot.getDrive()).new Far();
         Action initialPath = region == 1 ? FAR.LEFT_SPIKEMARK : region == 2 ? FAR.MID_SPIKEMARK : FAR.RIGHT_SPIKEMARK;
         int STACK_DELAY = region == 1 ? 2000 : region == 3 ? 3000 : 1000;
+        int INTAKE_DURATION = region == 1 ? 60000 : region == 2 ? 5000 : 7000;
 
         Actions.runBlocking(new ParallelAction(
                 initialPath,
@@ -66,7 +67,7 @@ public class TwoPlusThree extends CommandOpMode {
                         new CommandAction(new InstantCommand(() -> this.robot.getIntake().setPosition(Intake.ACCEPTING_POS))),
                         new CommandAction(new WaitCommand(STACK_DELAY)),
                         new CommandAction(this.robot.stack),
-                        new CommandAction(new IntakeUntilPixel(this.robot.getDeposit(), this.robot.getIntake(), this.multipleTelemetry)),
+                        new CommandAction(new IntakeUntilPixel(this.robot.getDeposit(), this.robot.getIntake(), INTAKE_DURATION)),
                         new CommandAction(new WaitCommand(250)),
                         new CommandAction(new IntakeSetPower(this.robot.getIntake(), 500, 1)),
                         new CommandAction(new InstantCommand(() -> this.robot.getIntake().setPosition(Intake.ACCEPTING_POS))) // don't interfere
@@ -85,8 +86,8 @@ public class TwoPlusThree extends CommandOpMode {
                         new CommandAction(this.robot.scoreLow),
                         new CommandAction(new WaitCommand(2000)),
                         new CommandAction(this.robot.scoreOne),
-                        //new CommandAction(new WaitCommand(250)),
-                        //new CommandAction(this.robot.scoreBottom),
+                        new CommandAction(new WaitCommand(250)),
+                        new CommandAction(this.robot.scoreBottom),
                         new CommandAction(new WaitCommand(500)),
                         new CommandAction(new InstantCommand(() -> this.robot.getDeposit().setOuterPosition(Deposit.OPEN_OUTER))),
                         new CommandAction(this.robot.scoreTwo),
