@@ -14,6 +14,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.commands.arm.ArmAccepting;
+import org.firstinspires.ftc.teamcode.commands.arm.ArmClimb;
 import org.firstinspires.ftc.teamcode.commands.arm.ArmReady;
 import org.firstinspires.ftc.teamcode.commands.arm.ArmScore;
 import org.firstinspires.ftc.teamcode.commands.auton.IntakeSetPower;
@@ -47,7 +48,7 @@ import org.firstinspires.ftc.teamcode.utils.GamepadTrigger;
 
 public class CommandRobot extends Robot {
     // COMMANDS
-    public final Command accepting, ready, scoreLow, scoreHigh, scoreMid, liftRaise, liftLower, scoreOne, scoreTwo, stack, launch, idle, scoreBottom;
+    public final Command accepting, ready, scoreLow, scoreHigh, scoreMid, liftRaise, liftLower, scoreOne, scoreTwo, stack, launch, idle, scoreBottom, climb;
 
     // SUBSYSTEMS & CONTROLLERS
     private final Arm arm;
@@ -182,6 +183,13 @@ public class CommandRobot extends Robot {
                 new BottomLift(this.lift),
                 new OpenOuter(this.deposit));
 
+        this.climb = new SequentialCommandGroup(
+                new IntakeReady(this.intake),
+                new ArmClimb(this.arm),
+                new WaitCommand(300),
+                new DepositAccepting(this.deposit));
+
+
         this.idle = new Idle(this.launcher);
         this.launch = new Launch(this.launcher);
 
@@ -211,14 +219,16 @@ public class CommandRobot extends Robot {
                 .whenPressed(this.liftRaise);
         this.gamepad1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
                 .whenPressed(this.liftLower);
-        this.gamepad1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
+        this.gamepad2.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
                 .whenPressed(this.scoreOne);
-        this.gamepad1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
+        this.gamepad2.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
                 .whenPressed(this.scoreTwo);
-        this.gamepad1.getGamepadButton(GamepadKeys.Button.X)
+        this.gamepad2.getGamepadButton(GamepadKeys.Button.X)
                 .whenPressed(this.launch);
-        this.gamepad1.getGamepadButton(GamepadKeys.Button.A)
+        this.gamepad2.getGamepadButton(GamepadKeys.Button.A)
                 .whenPressed(this.idle);
+        this.gamepad2.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT)
+                .whenPressed(this.climb);
     }
 
     public void updateTriggers() {

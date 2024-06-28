@@ -15,7 +15,7 @@ public class Lift extends Subsystem {
     public static int BOTTOM_POS = 10;
     public static int LOW_POS = 400;
     public static int MEDIUM_POS = 1000;
-    public static int INCREMENT = 100;
+    public static int INCREMENT = 150;
 
     public static int HIGH_POS = 1600;
     public static double kP = 0.007;
