@@ -17,7 +17,6 @@ import org.firstinspires.ftc.teamcode.commands.arm.ArmAccepting;
 import org.firstinspires.ftc.teamcode.commands.arm.ArmClimb;
 import org.firstinspires.ftc.teamcode.commands.arm.ArmReady;
 import org.firstinspires.ftc.teamcode.commands.arm.ArmScore;
-import org.firstinspires.ftc.teamcode.commands.auton.IntakeSetPower;
 import org.firstinspires.ftc.teamcode.commands.deposit.DepositAccepting;
 import org.firstinspires.ftc.teamcode.commands.deposit.DepositReady;
 import org.firstinspires.ftc.teamcode.commands.deposit.DepositScore;
@@ -32,6 +31,7 @@ import org.firstinspires.ftc.teamcode.commands.intake.IntakeStack;
 import org.firstinspires.ftc.teamcode.commands.launcher.Idle;
 import org.firstinspires.ftc.teamcode.commands.launcher.Launch;
 import org.firstinspires.ftc.teamcode.commands.lift.BottomLift;
+import org.firstinspires.ftc.teamcode.commands.lift.ClimbLift;
 import org.firstinspires.ftc.teamcode.commands.lift.HighLift;
 import org.firstinspires.ftc.teamcode.commands.lift.LiftLower;
 import org.firstinspires.ftc.teamcode.commands.lift.LiftRaise;
@@ -48,8 +48,7 @@ import org.firstinspires.ftc.teamcode.utils.GamepadTrigger;
 
 public class CommandRobot extends Robot {
     // COMMANDS
-    public final Command accepting, ready, scoreLow, scoreHigh, scoreMid, liftRaise, liftLower, scoreOne, scoreTwo, stack, launch, idle, scoreBottom, climb;
-
+    public final Command accepting, ready, scoreLow, scoreHigh, scoreMid, liftRaise, liftLower, scoreOne, scoreTwo, stack, launch, idle, scoreBottom, climbDown, climb;
     // SUBSYSTEMS & CONTROLLERS
     private final Arm arm;
     private final Drivetrain drive;
@@ -126,15 +125,11 @@ public class CommandRobot extends Robot {
         this.liftRaise = new SequentialCommandGroup(
                 new LockOuter(this.deposit),
                 new LockInner(this.deposit),
-                new ArmScore(this.arm),
-                new DepositScore(this.deposit),
                 new LiftRaise(this.lift));
 
         this.liftLower = new SequentialCommandGroup(
                 new LockOuter(this.deposit),
                 new LockInner(this.deposit),
-                new ArmScore(this.arm),
-                new DepositScore(this.deposit),
                 new LiftLower(this.lift));
 
         this.scoreOne = new SequentialCommandGroup(
@@ -184,11 +179,20 @@ public class CommandRobot extends Robot {
                 new OpenOuter(this.deposit));
 
         this.climb = new SequentialCommandGroup(
-                new IntakeReady(this.intake),
+                new ClimbLift(this.lift),
                 new ArmClimb(this.arm),
                 new WaitCommand(300),
-                new DepositAccepting(this.deposit));
+                new DepositAccepting(this.deposit),
+                new IntakeReady(this.intake)
+        );
 
+        this.climbDown = new SequentialCommandGroup(
+                new IntakeReady(this.intake),
+                new ArmClimb(this.arm),
+                new InstantCommand(() -> this.intake.setPosition(Intake.INIT_POS)),
+                new DepositAccepting(this.deposit),
+                new BottomLift(this.lift)
+        );
 
         this.idle = new Idle(this.launcher);
         this.launch = new Launch(this.launcher);
@@ -205,10 +209,6 @@ public class CommandRobot extends Robot {
     public void configureCommands() {
         this.gamepad1.getGamepadButton(GamepadKeys.Button.A)
                 .whenPressed(this.accepting);
-        this.gamepad1.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT)
-                .whenPressed(this.stack);
-        this.gamepad1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT)
-                .whenPressed(new IntakeSetPower(this.intake, 1000, -1));
         this.gamepad1.getGamepadButton(GamepadKeys.Button.B)
                 .whenPressed(this.scoreLow);
         this.gamepad1.getGamepadButton(GamepadKeys.Button.X)
@@ -227,8 +227,10 @@ public class CommandRobot extends Robot {
                 .whenPressed(this.launch);
         this.gamepad2.getGamepadButton(GamepadKeys.Button.A)
                 .whenPressed(this.idle);
-        this.gamepad2.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT)
+        this.gamepad1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
                 .whenPressed(this.climb);
+        this.gamepad1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
+                .whenPressed(this.climbDown);
     }
 
     public void updateTriggers() {

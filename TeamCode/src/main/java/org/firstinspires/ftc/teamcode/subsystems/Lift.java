@@ -16,8 +16,9 @@ public class Lift extends Subsystem {
     public static int LOW_POS = 400;
     public static int MEDIUM_POS = 1000;
     public static int INCREMENT = 150;
-
     public static int HIGH_POS = 1600;
+    public static int CLIMB_POS = 2000;
+    
     public static double kP = 0.007;
     public static double kG = 0.04;
     private final PIDController controller = new PIDController(kP);
