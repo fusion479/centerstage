@@ -17,9 +17,11 @@ import org.firstinspires.ftc.teamcode.commands.arm.ArmAccepting;
 import org.firstinspires.ftc.teamcode.commands.arm.ArmClimb;
 import org.firstinspires.ftc.teamcode.commands.arm.ArmReady;
 import org.firstinspires.ftc.teamcode.commands.arm.ArmScore;
+import org.firstinspires.ftc.teamcode.commands.arm.ArmTeleopScore;
 import org.firstinspires.ftc.teamcode.commands.deposit.DepositAccepting;
 import org.firstinspires.ftc.teamcode.commands.deposit.DepositReady;
 import org.firstinspires.ftc.teamcode.commands.deposit.DepositScore;
+import org.firstinspires.ftc.teamcode.commands.deposit.DepositTeleopScore;
 import org.firstinspires.ftc.teamcode.commands.deposit.locks.LockInner;
 import org.firstinspires.ftc.teamcode.commands.deposit.locks.LockOuter;
 import org.firstinspires.ftc.teamcode.commands.deposit.locks.OpenInner;
@@ -48,7 +50,7 @@ import org.firstinspires.ftc.teamcode.utils.GamepadTrigger;
 
 public class CommandRobot extends Robot {
     // COMMANDS
-    public final Command accepting, ready, scoreLow, scoreHigh, scoreMid, liftRaise, liftLower, scoreOne, scoreTwo, stack, launch, idle, scoreBottom, climbDown, climb;
+    public final Command accepting, ready, scoreLow, scoreHigh, scoreMid, liftRaise, liftLower, scoreOne, scoreTwo, stack, launch, idle, scoreBottom, climbDown, climb, teleop_scoreLow, teleop_scoreMid, teleop_scoreHigh;
     // SUBSYSTEMS & CONTROLLERS
     private final Arm arm;
     private final Drivetrain drive;
@@ -108,6 +110,14 @@ public class CommandRobot extends Robot {
                 new ArmScore(this.arm),
                 new DepositScore(this.deposit));
 
+        this.teleop_scoreLow = new ParallelCommandGroup(
+                new LockOuter(this.deposit),
+                new LockInner(this.deposit),
+                new LowLift(this.lift),
+                new ArmTeleopScore(this.arm),
+                new DepositTeleopScore(this.deposit)
+        );
+
         this.scoreHigh = new ParallelCommandGroup(
                 new LockOuter(this.deposit),
                 new LockInner(this.deposit),
@@ -115,12 +125,28 @@ public class CommandRobot extends Robot {
                 new ArmScore(this.arm),
                 new DepositScore(this.deposit));
 
+        this.teleop_scoreHigh = new ParallelCommandGroup(
+                new LockOuter(this.deposit),
+                new LockInner(this.deposit),
+                new HighLift(this.lift),
+                new ArmTeleopScore(this.arm),
+                new DepositTeleopScore(this.deposit)
+        );
+
         this.scoreMid = new ParallelCommandGroup(
                 new LockOuter(this.deposit),
                 new LockInner(this.deposit),
                 new MediumLift(this.lift),
                 new ArmScore(this.arm),
                 new DepositScore(this.deposit));
+
+        this.teleop_scoreMid = new ParallelCommandGroup(
+                new LockOuter(this.deposit),
+                new LockInner(this.deposit),
+                new MediumLift(this.lift),
+                new ArmTeleopScore(this.arm),
+                new DepositTeleopScore(this.deposit)
+        );
 
         this.liftRaise = new SequentialCommandGroup(
                 new LockOuter(this.deposit),
@@ -210,11 +236,11 @@ public class CommandRobot extends Robot {
         this.gamepad1.getGamepadButton(GamepadKeys.Button.A)
                 .whenPressed(this.accepting);
         this.gamepad1.getGamepadButton(GamepadKeys.Button.B)
-                .whenPressed(this.scoreLow);
+                .whenPressed(this.teleop_scoreLow);
         this.gamepad1.getGamepadButton(GamepadKeys.Button.X)
-                .whenPressed(this.scoreHigh);
+                .whenPressed(this.teleop_scoreHigh);
         this.gamepad1.getGamepadButton(GamepadKeys.Button.Y)
-                .whenPressed(this.scoreMid);
+                .whenPressed(this.teleop_scoreMid);
         this.gamepad1.getGamepadButton(GamepadKeys.Button.DPAD_UP)
                 .whenPressed(this.liftRaise);
         this.gamepad1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
