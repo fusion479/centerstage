@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.utils.Subsystem;
 
 @Config
 public class Lift extends Subsystem {
-    public static int BOTTOM_POS = 10;
+    public static int BOTTOM_POS = 0;
     public static int LOW_POS = 400;
     public static int MEDIUM_POS = 1000;
     public static int INCREMENT = 150;
@@ -20,7 +20,8 @@ public class Lift extends Subsystem {
     public static int CLIMB_POS = 2000;
     public static double kP = 0.007;
     public static double kG = 0.04;
-    private final PIDController controller = new PIDController(kP);
+    public static int allowedError = 25;
+    private final PIDController controller = new PIDController(kP, 0, 0, allowedError);
     private final DcMotorEx leftMotor;
     private final DcMotorEx rightMotor;
     private boolean liftUp = false;
@@ -57,13 +58,16 @@ public class Lift extends Subsystem {
         this.leftMotor.setPower(power);
         this.rightMotor.setPower(power);
 
+        super.getTelemetry().addData("currPower", power);
         super.getTelemetry().addData("currPos", this.leftMotor.getCurrentPosition());
+        super.getTelemetry().addData("targetPos", this.controller.getTarget());
+        super.getTelemetry().addData("error", this.controller.getLastError());
 
         this.liftUp = this.leftMotor.getCurrentPosition() > 20;
     }
 
     public boolean isFinished() {
-        return this.leftMotor.getCurrentPosition() > 20;
+        return this.controller.isFinished();
     }
 
     public void setPower(double power) {

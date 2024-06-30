@@ -47,31 +47,25 @@ public class TwoPlusZero extends CommandOpMode {
             this.multipleTelemetry.update();
         }
         int region = this.camera.getRegion();
-        if (region == 1) {
-            region = 3;
-        } else if (region == 3) {
-            region = 1;
-        }
         this.camera.stopStreaming();
 
         Trajectories.Close CLOSE = new Trajectories(Camera.Color.RED, this.robot.getDrive()).new Close();
         Action initialPath = region == 1 ? CLOSE.LEFT_SPIKEMARK : this.camera.getRegion() == 2 ? CLOSE.MID_SPIKEMARK : CLOSE.RIGHT_SPIKEMARK;
 
         Actions.runBlocking(new ParallelAction(
-                        initialPath,
-                        new SequentialAction(
-                                new CommandAction(new WaitCommand(3500)),
-                                new CommandAction(this.robot.scoreLow),
-                                new CommandAction(new WaitCommand(2000)),
-                                new CommandAction(this.robot.scoreOne),
-                                new CommandAction(new WaitCommand(500)),
-                                new CommandAction(this.robot.accepting))
+                initialPath,
+                new SequentialAction(
+                        new CommandAction(new WaitCommand(4000)),
+                        new CommandAction(this.robot.scoreBottom),
+                        new CommandAction(new WaitCommand(2000)),
+                        new CommandAction(this.robot.scoreOne),
+                        new CommandAction(new WaitCommand(500)),
+                        new CommandAction(this.robot.accepting),
+                        new CommandAction(new WaitCommand(1000))
                 )
-        );
-
+        ));
 
         Actions.runBlocking(CLOSE.getPark());
-
 
         CommandScheduler.getInstance().cancelAll();
         CommandScheduler.getInstance().disable();

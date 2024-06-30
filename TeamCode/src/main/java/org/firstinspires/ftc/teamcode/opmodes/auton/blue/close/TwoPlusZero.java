@@ -56,7 +56,7 @@ public class TwoPlusZero extends CommandOpMode {
                         new CommandAction(new WaitCommand(2000)),
                         new CommandAction(this.robot.scoreOne),
                         new CommandAction(new WaitCommand(500)),
-                        new CommandAction(this.robot.ready),
+                        new CommandAction(this.robot.accepting),
                         new CommandAction(new WaitCommand(1000))
                 )
         ));
