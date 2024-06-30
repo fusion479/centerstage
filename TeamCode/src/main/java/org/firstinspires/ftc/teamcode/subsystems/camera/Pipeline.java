@@ -19,9 +19,9 @@ public class Pipeline extends OpenCvPipeline {
     public static int blueHighHSVB = 180;
 
     public static int redLowHSVR = 0;
-    public static int redLowHSVG = 120;
-    public static int redLowHSVB = 0;
-    public static int redHighHSVR = 255;
+    public static int redLowHSVG = 80;
+    public static int redLowHSVB = 125;
+    public static int redHighHSVR = 75;
     public static int redHighHSVG = 255;
     public static int redHighHSVB = 255;
 
@@ -30,7 +30,7 @@ public class Pipeline extends OpenCvPipeline {
 
     public static int leftRectX = 0;
     public static int leftRectY = 125;
-    public static double tolerance = 0.3;
+    public static double tolerance = 0.5;
     private final Camera.Color color;
     private final Mat mat = new Mat();
     int region;
