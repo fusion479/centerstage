@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode.opmodes.auton;
 
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
+import com.acmerobotics.roadrunner.ProfileAccelConstraint;
+import com.acmerobotics.roadrunner.TranslationalVelConstraint;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.example.meepmeeptesting.Constants;
 import com.example.meepmeeptesting.Positions;
@@ -19,12 +21,17 @@ public class Trajectories {
         this.drive = drive;
     }
 
+
     public Pose2d reflectY(Pose2d pose) {
         return this.color == Camera.Color.RED ? new Pose2d(pose.position.x, -pose.position.y, Math.toRadians(360) - pose.heading.toDouble()) : pose;
     }
 
     public Vector2d reflectY(Vector2d vector) {
         return this.color == Camera.Color.RED ? new Vector2d(vector.x, -vector.y) : vector;
+    }
+
+    public double reflectY(double theta) {
+        return this.color == Camera.Color.RED ? Math.toRadians(360) - theta : theta;
     }
 
     public class Far {
@@ -42,9 +49,9 @@ public class Trajectories {
 
         public Action RIGHT_SPIKEMARK = drive.actionBuilder(drive.pose)
                 .lineToY(reflectY(Positions.FAR.SPIKEMARK_SETUP).y)
-                .splineTo(reflectY(Positions.modifyPose(Positions.FAR.SPIKEMARK_RIGHT, 5, 5)), Math.toRadians(220))
+                .splineTo(reflectY(Positions.modifyPose(Positions.FAR.SPIKEMARK_RIGHT, 5, 5)), reflectY(Math.toRadians(220)))
                 .setReversed(true)
-                .splineTo(reflectY(Positions.FAR.SPIKEMARK_SETUP), Math.toRadians(90))
+                .splineTo(reflectY(Positions.FAR.SPIKEMARK_SETUP), reflectY(Math.toRadians(90)))
                 .lineToY(reflectY(Positions.modifyPose(Positions.GENERAL.STACK_ONE, 0, 3)).y)
                 .turnTo(0)
                 .lineToX(reflectY(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH / 2 + X_OFFSET + 4, 0)).x)
@@ -52,9 +59,9 @@ public class Trajectories {
 
         public Action LEFT_SPIKEMARK = drive.actionBuilder(drive.pose)
                 .lineToY(reflectY(Positions.FAR.SPIKEMARK_SETUP).y)
-                .splineTo(reflectY(Positions.modifyPose(Positions.FAR.SPIKEMARK_LEFT, -5, 5)), Math.toRadians(320))
+                .splineTo(reflectY(Positions.modifyPose(Positions.FAR.SPIKEMARK_LEFT, -5, 5)), reflectY(Math.toRadians(320)))
                 .setReversed(true)
-                .splineToLinearHeading(reflectY(Positions.vectorToPose(Positions.FAR.SPIKEMARK_SETUP, Math.toRadians(0))), Math.toRadians(90))
+                .splineToLinearHeading(reflectY(Positions.vectorToPose(Positions.FAR.SPIKEMARK_SETUP, Math.toRadians(0))), reflectY(Math.toRadians(90)))
                 .lineToY(reflectY(Positions.modifyPose(Positions.GENERAL.STACK_ONE, 0, Y_OFFSET)).y)
                 .turnTo(0)
                 .lineToX(reflectY(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH / 2 + X_OFFSET + 4.5, 0)).x)
@@ -76,8 +83,8 @@ public class Trajectories {
         public Action RIGHT_BACKDROP_TO_STACK(Pose2d pose) {
             return drive.actionBuilder(drive.pose)
                     .setTangent(Math.toRadians(180))
-                    .splineToConstantHeading(reflectY(new Vector2d(Positions.modifyPose(Positions.GENERAL.BACKDROP_RIGHT, -Constants.TILE_LENGTH, Y_OFFSET).x, Positions.GENERAL.STACK_ONE.y)), Math.toRadians(180))
-                    .lineToX(reflectY(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH / 2, 0)).x)
+                    .splineToConstantHeading(reflectY(new Vector2d(Positions.modifyPose(Positions.GENERAL.BACKDROP_RIGHT, -Constants.TILE_LENGTH, Y_OFFSET).x, Positions.GENERAL.STACK_ONE.y)), reflectY(Math.toRadians(180)))
+                    .lineToX(reflectY(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH / 2, 0)).x, new TranslationalVelConstraint(50), new ProfileAccelConstraint(-30, 30))
                     .build();
         }
 
@@ -91,8 +98,8 @@ public class Trajectories {
         public Action LEFT_BACKDROP_TO_STACK(Pose2d pose) {
             return drive.actionBuilder(pose)
                     .setTangent(Math.toRadians(180))
-                    .splineToConstantHeading(reflectY(new Vector2d(Positions.modifyPose(Positions.GENERAL.BACKDROP_LEFT, -Constants.TILE_LENGTH, 0).x, Positions.GENERAL.STACK_ONE.y)), Math.toRadians(180))
-                    .lineToX(reflectY(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH / 2, 0)).x)
+                    .splineToConstantHeading(reflectY(new Vector2d(Positions.modifyPose(Positions.GENERAL.BACKDROP_LEFT, -Constants.TILE_LENGTH, 0).x, Positions.GENERAL.STACK_ONE.y)), reflectY(Math.toRadians(180)))
+                    .lineToX(reflectY(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH / 2, 0)).x, new TranslationalVelConstraint(50), new ProfileAccelConstraint(-30, 30))
                     .build();
         }
 
@@ -106,15 +113,15 @@ public class Trajectories {
         public Action STACK_TO_MID_BACKDROP(Pose2d pose) {
             return drive.actionBuilder(pose)
                     .lineToX(reflectY(Positions.modifyPose(Positions.GENERAL.BACKDROP_MID, -Constants.TILE_LENGTH, 0)).x)
-                    .splineToConstantHeading(reflectY(Positions.modifyPose(Positions.GENERAL.BACKDROP_MID, -Constants.ROBOT_LENGTH / 2 + X_OFFSET, Y_OFFSET + 1)), Math.toRadians(0))
+                    .splineToConstantHeading(reflectY(Positions.modifyPose(Positions.GENERAL.BACKDROP_MID, -Constants.ROBOT_LENGTH / 2 + X_OFFSET - 2, Y_OFFSET + 1)), Math.toRadians(0))
                     .build();
         }
 
         public Action MID_BACKDROP_TO_STACK(Pose2d pose) {
             return drive.actionBuilder(pose)
-                    .setTangent(Math.toRadians(180))
-                    .splineToConstantHeading(reflectY(new Vector2d(Positions.modifyPose(Positions.GENERAL.BACKDROP_MID, -Constants.TILE_LENGTH, 0).x, Positions.GENERAL.STACK_ONE.y)), Math.toRadians(180))
-                    .lineToX(reflectY(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH / 2 + X_OFFSET - 4, Y_OFFSET)).x)
+                    .setTangent(reflectY(Math.toRadians(180)))
+                    .splineToConstantHeading(reflectY(new Vector2d(Positions.modifyPose(Positions.GENERAL.BACKDROP_MID, -Constants.TILE_LENGTH, 0).x, Positions.GENERAL.STACK_ONE.y)), reflectY(Math.toRadians(180)))
+                    .lineToX(reflectY(Positions.modifyPose(Positions.GENERAL.STACK_ONE, Constants.ROBOT_LENGTH / 2 + X_OFFSET - 4, Y_OFFSET)).x, new TranslationalVelConstraint(50), new ProfileAccelConstraint(-30, 30))
                     .build();
         }
 
@@ -126,8 +133,8 @@ public class Trajectories {
     }
 
     public class Close {
-        public double Y_OFFSET = 7.0;
-        public double X_OFFSET = 2.0;
+        public double Y_OFFSET = 5.5;
+        public double X_OFFSET = 5.5;
 
         // SPIKEMARK
         public Action MID_SPIKEMARK = drive.actionBuilder(drive.pose)
@@ -142,23 +149,23 @@ public class Trajectories {
                 .build();
 
         public Action RIGHT_SPIKEMARK = drive.actionBuilder(drive.pose)
-                .lineToY(50)
-                .splineTo(reflectY(Positions.modifyPose(Positions.CLOSE.SPIKEMARK_RIGHT, 5, 5)), Math.toRadians(220))
+                .lineToY(reflectY(new Vector2d(0, 50)).y)
+                .splineTo(reflectY(Positions.modifyPose(Positions.CLOSE.SPIKEMARK_RIGHT, 5 - 1, 5 + 2)), reflectY(Math.toRadians(220)))
                 .setReversed(true)
-                .splineTo(reflectY(Positions.CLOSE.SPIKEMARK_SETUP), Math.toRadians(90))
+                .splineTo(reflectY(Positions.CLOSE.SPIKEMARK_SETUP), reflectY(Math.toRadians(90)))
                 .setTangent(0)
                 .splineToLinearHeading(reflectY(Positions.vectorToPose(Positions.modifyPose(Positions.GENERAL.BACKDROP_RIGHT, -Constants.ROBOT_LENGTH / 2 + X_OFFSET, Y_OFFSET - 2), 0)), Math.toRadians(0))
                 .build();
 
         public Action LEFT_SPIKEMARK = drive.actionBuilder(drive.pose)
-                .lineToY(50)
+                .lineToY(reflectY(new Vector2d(0, 50)).y)
                 .splineTo(
-                        reflectY(Positions.modifyPose(Positions.CLOSE.SPIKEMARK_LEFT, -5, 5)),
-                        Math.toRadians(320))
+                        reflectY(Positions.modifyPose(Positions.CLOSE.SPIKEMARK_LEFT, -5 + 1, 5 + 2)),
+                        reflectY(Math.toRadians(320)))
                 .setReversed(true)
                 .splineToLinearHeading(
                         reflectY(Positions.vectorToPose(Positions.CLOSE.SPIKEMARK_SETUP, Math.toRadians(0))),
-                        Math.toRadians(90))
+                        reflectY(Math.toRadians(90)))
                 .setTangent(0)
                 .splineToLinearHeading(reflectY(Positions.vectorToPose(Positions.modifyPose(Positions.GENERAL.BACKDROP_LEFT, -Constants.ROBOT_LENGTH / 2, Y_OFFSET), 0)), Math.toRadians(0))
                 .build();

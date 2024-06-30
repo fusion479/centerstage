@@ -14,11 +14,13 @@ import org.firstinspires.ftc.teamcode.utils.Subsystem;
 @Config
 public class Drivetrain extends Subsystem {
     public final MecanumDrive drive;
+    private final Lift lift;
 
-    public Drivetrain(final HardwareMap hwMap, final MultipleTelemetry telemetry, final Pose2d startPose) {
+    public Drivetrain(final HardwareMap hwMap, final MultipleTelemetry telemetry, Pose2d startPose, Lift lift) {
         super(telemetry);
 
         this.drive = new MecanumDrive(hwMap, startPose);
+        this.lift = lift;
     }
 
     public void manualDrive(final GamepadEx gamepad) {
@@ -28,7 +30,7 @@ public class Drivetrain extends Subsystem {
                         gamepad.getLeftX()
                 ),
                 -gamepad.getRightX()
-        ));
+        ), lift.getLiftUp());
         this.drive.updatePoseEstimate();
     }
 }

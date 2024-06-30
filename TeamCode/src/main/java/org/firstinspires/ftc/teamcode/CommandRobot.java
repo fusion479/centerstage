@@ -72,8 +72,8 @@ public class CommandRobot extends Robot {
 
         this.deposit = new Deposit(hwMap, telemetry);
         this.arm = new Arm(hwMap, telemetry);
-        this.drive = new Drivetrain(hwMap, telemetry, startPose);
         this.lift = new Lift(hwMap, telemetry);
+        this.drive = new Drivetrain(hwMap, telemetry, startPose, lift);
         this.launcher = new Launcher(hwMap, telemetry);
         this.intake = new Intake(hwMap, telemetry);
 

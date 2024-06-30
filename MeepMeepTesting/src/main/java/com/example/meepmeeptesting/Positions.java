@@ -36,7 +36,7 @@ public class Positions {
                 Constants.TILE_LENGTH + Constants.SPIKE_TAPE_LENGTH / 2);
         Vector2d PARK_CLOSE = new Vector2d(
                 Constants.TILE_LENGTH * 2,
-                Constants.TILE_LENGTH * 2.5);
+                Constants.TILE_LENGTH * 2.5 + 4);
     }
 
     public interface FAR {

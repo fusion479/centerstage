@@ -11,13 +11,14 @@ import org.firstinspires.ftc.teamcode.subsystems.camera.Camera;
 
 @TeleOp(name = "Camera Test", group = "Test")
 public class CameraTest extends CommandOpMode {
+    public static final String color = "red";
     private Camera camera;
     private MultipleTelemetry multipleTelemetry;
 
     @Override
     public void initialize() {
         this.multipleTelemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        this.camera = new Camera(Camera.Color.BLUE, this.multipleTelemetry);
+        this.camera = new Camera(Camera.Color.RED, this.multipleTelemetry);
 
         this.camera.initCamera(super.hardwareMap);
     }

@@ -82,7 +82,7 @@ public class TwoPlusOne extends CommandOpMode {
                 new SequentialAction(
                         new CommandAction(new WaitCommand(250)),
                         new CommandAction(new InstantCommand(() -> this.robot.getIntake().setPosition(Intake.ACCEPTING_POS + 0.05))),
-                        new CommandAction(new WaitCommand(4000)),
+                        new CommandAction(new WaitCommand(3500)),
                         new CommandAction(this.robot.scoreLow),
                         new CommandAction(new WaitCommand(2000)),
                         new CommandAction(this.robot.scoreOne),

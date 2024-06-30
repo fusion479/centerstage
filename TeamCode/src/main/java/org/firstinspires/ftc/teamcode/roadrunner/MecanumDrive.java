@@ -125,7 +125,7 @@ public final class MecanumDrive {
         this.pose = pose;
     }
 
-    public void setDrivePowers(PoseVelocity2d powers) {
+    public void setDrivePowers(PoseVelocity2d powers, boolean liftUp) {
         MecanumKinematics.WheelVelocities<Time> wheelVels = new MecanumKinematics(1).inverse(
                 PoseVelocity2dDual.constant(powers, 1));
 
@@ -134,10 +134,18 @@ public final class MecanumDrive {
             maxPowerMag = Math.max(maxPowerMag, power.value());
         }
 
-        leftFront.setPower(wheelVels.leftFront.get(0) / maxPowerMag);
-        leftBack.setPower(wheelVels.leftBack.get(0) / maxPowerMag);
-        rightBack.setPower(wheelVels.rightBack.get(0) / maxPowerMag);
-        rightFront.setPower(wheelVels.rightFront.get(0) / maxPowerMag);
+        if (liftUp) {
+            leftFront.setPower(wheelVels.leftFront.get(0) / maxPowerMag * 0.6);
+            leftBack.setPower(wheelVels.leftBack.get(0) / maxPowerMag * 0.6);
+            rightBack.setPower(wheelVels.rightBack.get(0) / maxPowerMag * 0.6);
+            rightFront.setPower(wheelVels.rightFront.get(0) / maxPowerMag * 0.6);
+        } else {
+            leftFront.setPower(wheelVels.leftFront.get(0) / maxPowerMag);
+            leftBack.setPower(wheelVels.leftBack.get(0) / maxPowerMag);
+            rightBack.setPower(wheelVels.rightBack.get(0) / maxPowerMag);
+            rightFront.setPower(wheelVels.rightFront.get(0) / maxPowerMag);
+        }
+
     }
 
     public void setMotorPowers(double v, double v1, double v2, double v3) {
@@ -214,9 +222,9 @@ public final class MecanumDrive {
         public double kA = 0.001;
 
         // path profile parameters (in inches / s)
-        public double maxWheelVel = 40;
-        public double minProfileAccel = -30.0;
-        public double maxProfileAccel = 30.0;
+        public double maxWheelVel = 50;
+        public double minProfileAccel = -37.5;
+        public double maxProfileAccel = 47.5;
 
         // turn profile parameters (in radians / s)
         public double maxAngVel = Math.toRadians(100); // shared with path

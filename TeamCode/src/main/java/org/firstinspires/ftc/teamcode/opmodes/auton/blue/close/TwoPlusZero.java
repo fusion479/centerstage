@@ -24,6 +24,7 @@ public class TwoPlusZero extends CommandOpMode {
     private CommandRobot robot;
     private Camera camera;
 
+
     @Override
     public void initialize() {
         this.multipleTelemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
@@ -44,14 +45,14 @@ public class TwoPlusZero extends CommandOpMode {
         int region = this.camera.getRegion();
         this.camera.stopStreaming();
 
-        Trajectories.Close CLOSE = new Trajectories(Camera.Color.RED, this.robot.getDrive()).new Close();
+        Trajectories.Close CLOSE = new Trajectories(Camera.Color.BLUE, this.robot.getDrive()).new Close();
         Action initialPath = region == 1 ? CLOSE.LEFT_SPIKEMARK : this.camera.getRegion() == 2 ? CLOSE.MID_SPIKEMARK : CLOSE.RIGHT_SPIKEMARK;
 
         Actions.runBlocking(new ParallelAction(
                 initialPath,
                 new SequentialAction(
-                        new CommandAction(new WaitCommand(5000)),
-                        new CommandAction(this.robot.scoreLow),
+                        new CommandAction(new WaitCommand(4000)),
+                        new CommandAction(this.robot.scoreBottom),
                         new CommandAction(new WaitCommand(2000)),
                         new CommandAction(this.robot.scoreOne),
                         new CommandAction(new WaitCommand(500)),

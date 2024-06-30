@@ -18,12 +18,12 @@ public class Lift extends Subsystem {
     public static int INCREMENT = 150;
     public static int HIGH_POS = 1600;
     public static int CLIMB_POS = 2000;
-    
     public static double kP = 0.007;
     public static double kG = 0.04;
     private final PIDController controller = new PIDController(kP);
     private final DcMotorEx leftMotor;
     private final DcMotorEx rightMotor;
+    private boolean liftUp = false;
     private double power;
 
     public Lift(final HardwareMap hwMap, final MultipleTelemetry telemetry) {
@@ -46,6 +46,10 @@ public class Lift extends Subsystem {
         this.setTarget(BOTTOM_POS);
     }
 
+    public boolean getLiftUp() {
+        return this.liftUp;
+    }
+
     @Override
     public void periodic() {
         this.power = this.controller.calculate(this.leftMotor.getCurrentPosition()) + kG;
@@ -54,10 +58,12 @@ public class Lift extends Subsystem {
         this.rightMotor.setPower(power);
 
         super.getTelemetry().addData("currPos", this.leftMotor.getCurrentPosition());
+
+        this.liftUp = this.leftMotor.getCurrentPosition() > 20;
     }
 
     public boolean isFinished() {
-        return this.controller.getLastError() < 20;
+        return this.leftMotor.getCurrentPosition() > 20;
     }
 
     public void setPower(double power) {

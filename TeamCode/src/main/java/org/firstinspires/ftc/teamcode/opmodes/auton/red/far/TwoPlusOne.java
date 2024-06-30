@@ -4,6 +4,7 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.ParallelAction;
+import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.arcrobotics.ftclib.command.CommandOpMode;
@@ -29,6 +30,10 @@ public class TwoPlusOne extends CommandOpMode {
     private CommandRobot robot;
     private Camera camera;
 
+    public static Pose2d reflectY(Pose2d pose) {
+        return new Pose2d(pose.position.x, -pose.position.y, Math.toRadians(360) - pose.heading.toDouble());
+    }
+
     @Override
     public void initialize() {
         this.multipleTelemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
@@ -37,7 +42,7 @@ public class TwoPlusOne extends CommandOpMode {
                 new GamepadEx(this.gamepad1),
                 new GamepadEx(this.gamepad2),
                 this.multipleTelemetry,
-                Positions.FAR.START,
+                reflectY(Positions.FAR.START),
                 CommandRobot.Type.AUTON);
         this.camera = new Camera(Camera.Color.RED, this.multipleTelemetry);
         this.camera.initCamera(super.hardwareMap);
